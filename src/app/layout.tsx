@@ -5,7 +5,7 @@ import { AppShell } from "@/components/app-shell/AppShell";
 import { sampleNews } from "@/data/sample/news";
 import { getEnv } from "@/lib/env";
 import { THEME_COOKIE, parseTheme } from "@/lib/theme";
-import { fraunces, instrumentSans } from "./fonts";
+import { onest } from "./fonts";
 import "@/styles/tokens.css";
 import "@/styles/global.css";
 
@@ -46,7 +46,7 @@ export default async function RootLayout({
     <html
       lang="en"
       data-theme={theme}
-      className={`${fraunces.variable} ${instrumentSans.variable}`}
+      className={onest.variable}
     >
       <body>
         <AppShell news={sampleNews}>{children}</AppShell>
