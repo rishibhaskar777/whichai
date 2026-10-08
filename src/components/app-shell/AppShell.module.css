@@ -1,0 +1,214 @@
+.shell {
+  --sidebar-col: var(--sidebar-width);
+  --news-col: var(--news-width);
+
+  display: grid;
+  grid-template-columns: var(--sidebar-col) minmax(0, 1fr) var(--news-col);
+  grid-template-areas: "sidebar main news";
+  min-height: 100dvh;
+  transition: grid-template-columns var(--duration-base) var(--ease-out);
+}
+
+.shell[data-sidebar="rail"] {
+  --sidebar-col: var(--sidebar-rail-width);
+}
+
+.shell[data-news="collapsed"] {
+  --news-col: var(--sidebar-rail-width);
+}
+
+.shell > aside {
+  grid-area: news;
+}
+
+.skipLink {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: var(--z-toast);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--accent);
+  color: var(--text-on-accent);
+  font-weight: var(--weight-strong);
+  transform: translateY(-200%);
+}
+
+.skipLink:focus {
+  transform: none;
+}
+
+.mobileBar {
+  display: none;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--surface-panel);
+  border-right: 1px solid var(--border-subtle);
+}
+
+.main {
+  grid-area: main;
+  min-width: 0;
+  padding: var(--space-8) var(--space-6) var(--space-16);
+}
+
+.main:focus {
+  outline: none;
+}
+
+.content {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+.drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(86vw, 300px);
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid var(--border-subtle);
+  background: var(--surface-panel);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(-100%);
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    display var(--duration-base) allow-discrete,
+    overlay var(--duration-base) allow-discrete;
+}
+
+.drawer[open] {
+  transform: none;
+}
+
+@starting-style {
+  .drawer[open] {
+    transform: translateX(-100%);
+  }
+}
+
+.drawer::backdrop {
+  background: var(--backdrop);
+  opacity: 0;
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    display var(--duration-base) allow-discrete,
+    overlay var(--duration-base) allow-discrete;
+}
+
+.drawer[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  .drawer[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+@media (min-width: 760px) {
+  .drawer {
+    display: none;
+  }
+}
+
+@media (max-width: 1179px) {
+  .shell {
+    grid-template-columns: var(--sidebar-col) minmax(0, 1fr);
+    grid-template-areas:
+      "sidebar main"
+      "sidebar news";
+    grid-template-rows: 1fr auto;
+  }
+}
+
+@media (max-width: 759px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "bar"
+      "main"
+      "news";
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .mobileBar {
+    grid-area: bar;
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--surface-page);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .menuButton {
+    display: grid;
+    place-items: center;
+    width: var(--target-min);
+    height: var(--target-min);
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  .menuButton:hover {
+    background: var(--surface-hover);
+  }
+
+  .menuButton:active {
+    transform: scale(0.94);
+  }
+
+  .main {
+    padding: var(--space-6) var(--space-4) var(--space-10);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell {
+    transition: none;
+  }
+
+  .drawer {
+    transform: none;
+    opacity: 0;
+    transition:
+      opacity var(--duration-base) var(--ease-out),
+      display var(--duration-base) allow-discrete,
+      overlay var(--duration-base) allow-discrete;
+  }
+
+  .drawer[open] {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .drawer[open] {
+      opacity: 0;
+      transform: none;
+    }
+  }
+}

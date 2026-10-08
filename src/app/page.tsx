@@ -1,3 +1,3 @@
 export default function HomePage() {
-  return <main>WhichAI</main>;
+  return <h1>WhichAI</h1>;
 }
