@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { ComingSoon } from "@/components/coming-soon/ComingSoon";
 
-export const metadata: Metadata = { title: "Compare Plans" };
+export const metadata: Metadata = {
+  title: "Compare Plans",
+  alternates: { canonical: "/compare-plans" },
+};
 
 export default function Page() {
   return (

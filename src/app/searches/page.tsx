@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { ComingSoon } from "@/components/coming-soon/ComingSoon";
 
-export const metadata: Metadata = { title: "Searches" };
+export const metadata: Metadata = {
+  title: "Searches",
+  alternates: { canonical: "/searches" },
+};
 
 export default function Page() {
   return (
