@@ -52,7 +52,7 @@ Next.js App Router with a `src/` directory: `app/` for routes, `components/` for
 ## What works now
 
 - Home page with a goal input, suggestion chips and a sample news panel. The input validates the text and shows a notice; it sends and stores nothing.
-- Collapsible sidebar, mobile drawer, light and dark themes (stored in a cookie).
+- Collapsible sidebar, mobile drawer, light, dark and system themes (the explicit choice is stored in a cookie).
 - Pages for Projects, Searches, Tool Library, What Changed and Compare Plans show a coming-soon notice.
 - The news panel is marked as sample content and contains no real announcements.
 

@@ -34,7 +34,7 @@ src/
     sidebar/           navigation, sign-in notice
     news-panel/        sample news panel
     goal-form/         search input, suggestions
-    theme-toggle/, wordmark/, coming-soon/, icons/
+    theme-control/, wordmark/, coming-soon/, icons/
   lib/
     env.ts             validated environment variables
     theme.ts           theme cookie name and parsing

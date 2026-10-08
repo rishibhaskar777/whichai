@@ -1,6 +1,6 @@
 # 0002: Typefaces
 
-Status: accepted
+Status: superseded by [0004](0004-visual-refresh.md)
 
 ## Context
 
