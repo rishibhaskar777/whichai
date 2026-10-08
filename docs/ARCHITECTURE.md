@@ -57,7 +57,7 @@ src/
   engine/              Phase 3
 docs/
   decisions/           architecture decision records
-  prompts/             phase prompts for Claude Code
+
 public/                static assets
 ```
 
