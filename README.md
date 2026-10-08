@@ -8,13 +8,13 @@ It does not do the task for the user. It recommends, explains the trade-offs, an
 
 Early development. See [docs/ROADMAP.md](docs/ROADMAP.md) for the phases.
 
-| Phase | Scope | State |
-|---|---|---|
-| 1 | Project setup, home page, security baseline | In progress |
-| 2 | Understanding step and plan result page | Planned |
-| 3 | Tool data, rules engine, database | Planned |
-| 4 | Accounts, saved plans, feedback | Planned |
-| 5 | News and update pipeline | Planned |
+| Phase | Scope                                       | State       |
+| ----- | ------------------------------------------- | ----------- |
+| 1     | Project setup, home page, security baseline | In progress |
+| 2     | Understanding step and plan result page     | Planned     |
+| 3     | Tool data, rules engine, database           | Planned     |
+| 4     | Accounts, saved plans, feedback             | Planned     |
+| 5     | News and update pipeline                    | Planned     |
 
 ## Tech
 
@@ -36,14 +36,14 @@ The site runs at http://localhost:3000.
 
 ## Scripts
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Start the development server |
-| `npm run build` | Production build |
-| `npm run start` | Serve the production build |
-| `npm run lint` | Run ESLint |
+| Command             | What it does                                       |
+| ------------------- | -------------------------------------------------- |
+| `npm run dev`       | Start the development server                       |
+| `npm run build`     | Production build                                   |
+| `npm run start`     | Serve the production build                         |
+| `npm run lint`      | Run ESLint                                         |
 | `npm run typecheck` | Run the TypeScript compiler without emitting files |
-| `npm test` | Run unit tests |
+| `npm test`          | Run unit tests                                     |
 
 ## Project layout
 
