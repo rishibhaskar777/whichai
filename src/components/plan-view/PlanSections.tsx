@@ -7,9 +7,9 @@ export function Overview({ level }: { level: PlanLevel }) {
   const titleId = useId();
   return (
     <section className={styles.section} aria-labelledby={titleId}>
-      <h3 id={titleId} className={styles.sectionTitle}>
+      <h2 id={titleId} className={styles.sectionTitle}>
         Overview
-      </h3>
+      </h2>
       <p className={styles.summary}>{level.summary}</p>
       <dl className={styles.overviewFacts}>
         <div>
@@ -33,13 +33,13 @@ export function TierBlock({
   const titleId = useId();
   return (
     <section className={styles.section} aria-labelledby={titleId}>
-      <h3 id={titleId} className={styles.sectionTitle}>
+      <h2 id={titleId} className={styles.sectionTitle}>
         {tiers.toolName} plans for this goal
-      </h3>
+      </h2>
       <ul className={styles.tiers}>
         {tiers.tiers.map((tier) => (
           <li key={tier.name} className={styles.tier}>
-            <h4 className={styles.tierName}>{tier.name}</h4>
+            <h3 className={styles.tierName}>{tier.name}</h3>
             <p>{tier.forThisGoal}</p>
           </li>
         ))}
@@ -55,9 +55,9 @@ export function Workflow({ steps }: { steps: PlanLevel["workflow"] }) {
   const titleId = useId();
   return (
     <section className={styles.section} aria-labelledby={titleId}>
-      <h3 id={titleId} className={styles.sectionTitle}>
+      <h2 id={titleId} className={styles.sectionTitle}>
         Workflow
-      </h3>
+      </h2>
       <ol className={styles.steps}>
         {steps.map((step) => (
           <li key={step.title} className={styles.step}>
@@ -84,9 +84,9 @@ export function StarterBrief({ brief }: { brief: string }) {
   return (
     <section className={styles.section} aria-labelledby={titleId}>
       <div className={styles.briefHeader}>
-        <h3 id={titleId} className={styles.sectionTitle}>
+        <h2 id={titleId} className={styles.sectionTitle}>
           Starter brief
-        </h3>
+        </h2>
         <CopyButton text={brief} label="Copy starter brief" />
       </div>
       <p className={styles.hint}>
@@ -101,9 +101,9 @@ export function CheckTheFacts({ text }: { text: string }) {
   const titleId = useId();
   return (
     <aside className={styles.facts} aria-labelledby={titleId}>
-      <h3 id={titleId} className={styles.factsTitle}>
+      <h2 id={titleId} className={styles.factsTitle}>
         Check the facts
-      </h3>
+      </h2>
       <p>{text}</p>
     </aside>
   );
@@ -118,9 +118,9 @@ export function BulletSection({ title, items }: BulletSectionProps) {
   const titleId = useId();
   return (
     <section className={styles.section} aria-labelledby={titleId}>
-      <h3 id={titleId} className={styles.sectionTitle}>
+      <h2 id={titleId} className={styles.sectionTitle}>
         {title}
-      </h3>
+      </h2>
       <ul className={styles.bullets}>
         {items.map((item) => (
           <li key={item}>{item}</li>

@@ -45,9 +45,9 @@ export function UnderstandingCard({
 
   return (
     <section className={styles.card} aria-labelledby={titleId}>
-      <h2 id={titleId} className={styles.title}>
+      <h1 id={titleId} className={styles.title}>
         Here&apos;s what we understood
-      </h2>
+      </h1>
 
       <ul
         ref={chipListRef}

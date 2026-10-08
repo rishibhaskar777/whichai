@@ -9,3 +9,10 @@ export async function seriousViolations(container: Element) {
       violation.impact === "serious" || violation.impact === "critical",
   );
 }
+
+export async function headingViolations(container: Element) {
+  const results = await axe.run(container, {
+    runOnly: ["heading-order", "empty-heading"],
+  });
+  return results.violations;
+}

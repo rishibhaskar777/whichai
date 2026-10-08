@@ -32,9 +32,9 @@ export function AccuracyCard({
 
   return (
     <section className={styles.card} aria-labelledby={titleId}>
-      <h3 id={titleId} className={styles.title}>
+      <h2 id={titleId} className={styles.title}>
         Make this more accurate
-      </h3>
+      </h2>
       <p className={styles.hint}>
         Optional. Your answers stay on this page and are not sent anywhere.
       </p>

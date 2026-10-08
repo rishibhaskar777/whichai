@@ -18,9 +18,9 @@ export function NoMatchCard({ goals, onChoose }: NoMatchCardProps) {
 
   return (
     <section className={styles.card} aria-labelledby={titleId}>
-      <h2 id={titleId} className={styles.title}>
+      <h1 id={titleId} className={styles.title}>
         We don&apos;t have a plan for this goal yet
-      </h2>
+      </h1>
       <p className={styles.text}>
         Nothing we cover matches what you wrote, and we won&apos;t guess. For
         now we can plan the goals below. Tap one, or describe something else.

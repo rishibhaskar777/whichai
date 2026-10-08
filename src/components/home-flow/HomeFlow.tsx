@@ -98,7 +98,11 @@ export function HomeFlow() {
 
       <div className={styles.intro} data-collapsed={started}>
         <div className={styles.introInner}>
-          <h1 className={styles.greeting}>What do you want to do with AI?</h1>
+          {started ? (
+            <p className={styles.greeting}>What do you want to do with AI?</p>
+          ) : (
+            <h1 className={styles.greeting}>What do you want to do with AI?</h1>
+          )}
           <p className={styles.lead}>
             Describe your goal. WhichAI suggests which AI tools to use and how
             to use them, at three levels: Simple, Polished and Advanced.
@@ -107,6 +111,9 @@ export function HomeFlow() {
       </div>
 
       <div className={styles.thread}>
+        {stage.kind === "editing" ? (
+          <h1 className={controls.srOnly}>Edit your goal</h1>
+        ) : null}
         {showsGoalEcho ? (
           <p className={styles.goalEcho}>
             <span className={controls.srOnly}>Your goal: </span>

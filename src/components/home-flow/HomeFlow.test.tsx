@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
 import { sampleNews } from "@/data/sample/news";
-import { seriousViolations } from "@/test/axe";
+import { headingViolations, seriousViolations } from "@/test/axe";
 import { HomeFlow } from "./HomeFlow";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
@@ -30,6 +30,14 @@ async function submit(user: ReturnType<typeof userEvent.setup>, text: string) {
 
 async function confirm(user: ReturnType<typeof userEvent.setup>) {
   await user.click(screen.getByRole("button", { name: "Yes, show my plan" }));
+}
+
+async function expectSingleH1(container: HTMLElement, name: string) {
+  const inDom = container.querySelectorAll("h1");
+  expect(inDom).toHaveLength(1);
+  expect(inDom[0]).toHaveTextContent(name);
+  expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+  expect(await headingViolations(container)).toEqual([]);
 }
 
 let fetchSpy: ReturnType<typeof vi.spyOn>;
@@ -66,17 +74,12 @@ describe("understanding a goal", () => {
     const user = userEvent.setup();
     renderHome();
     const greeting = screen.getByRole("heading", { level: 1 });
-    expect(greeting.closest("[data-collapsed]")).toHaveAttribute(
-      "data-collapsed",
-      "false",
-    );
+    const intro = greeting.closest("[data-collapsed]");
+    expect(intro).toHaveAttribute("data-collapsed", "false");
 
     await submit(user, PORTFOLIO_GOAL);
 
-    expect(greeting.closest("[data-collapsed]")).toHaveAttribute(
-      "data-collapsed",
-      "true",
-    );
+    expect(intro).toHaveAttribute("data-collapsed", "true");
     expect(searchBox()).toHaveValue("");
     expect(screen.getByText(PORTFOLIO_GOAL)).toBeInTheDocument();
     expect(
@@ -349,5 +352,57 @@ describe("privacy", () => {
         expect(JSON.stringify(call)).not.toContain(PORTFOLIO_GOAL);
       }
     }
+  });
+});
+
+describe("heading structure", () => {
+  it("has exactly one h1 in the empty home state", async () => {
+    const { container } = renderHome();
+    await expectSingleH1(container, "What do you want to do with AI?");
+  });
+
+  it("makes the understanding card title the h1", async () => {
+    const user = userEvent.setup();
+    const { container } = renderHome();
+    await submit(user, PORTFOLIO_GOAL);
+
+    await expectSingleH1(container, "Here's what we understood");
+  });
+
+  it("makes the no-match title the h1", async () => {
+    const user = userEvent.setup();
+    const { container } = renderHome();
+    await submit(user, UNKNOWN_GOAL);
+
+    await expectSingleH1(container, "We don't have a plan for this goal yet");
+  });
+
+  it("makes the plan headline the h1 at every level", async () => {
+    const user = userEvent.setup();
+    const { container } = renderHome();
+    await submit(user, PORTFOLIO_GOAL);
+    await confirm(user);
+
+    await expectSingleH1(container, "Your portfolio website plan");
+    await user.click(screen.getByRole("radio", { name: "Advanced" }));
+    await expectSingleH1(container, "Your portfolio website plan");
+  });
+
+  it("keeps one h1 while the goal is being edited", async () => {
+    const user = userEvent.setup();
+    const { container } = renderHome();
+    await submit(user, PORTFOLIO_GOAL);
+    await user.click(screen.getByRole("button", { name: "Edit" }));
+
+    await expectSingleH1(container, "Edit your goal");
+  });
+
+  it("returns to the greeting h1 after New plan", async () => {
+    const user = userEvent.setup();
+    const { container } = renderHome();
+    await submit(user, PORTFOLIO_GOAL);
+    await user.click(screen.getAllByRole("link", { name: "New plan" })[0]!);
+
+    await expectSingleH1(container, "What do you want to do with AI?");
   });
 });

@@ -34,7 +34,7 @@ describe("PlanView basics", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
-        level: 2,
+        level: 1,
         name: "Your portfolio website plan",
       }),
     ).toBeInTheDocument();

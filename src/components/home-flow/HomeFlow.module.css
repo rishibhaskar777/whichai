@@ -62,6 +62,8 @@
 
 .greeting {
   font-size: var(--text-headline);
+  font-weight: var(--weight-strong);
+  text-wrap: balance;
   letter-spacing: -0.02em;
   line-height: var(--leading-tight);
 }

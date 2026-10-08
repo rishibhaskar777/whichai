@@ -49,6 +49,7 @@ The glow layer is fixed behind the page. It has three large blobs made from radi
 - WCAG AA contrast in both themes
 - Full keyboard operation with a visible focus ring
 - Semantic HTML first; ARIA only where HTML is not enough
+- Exactly one `h1` per page state. On the home page it is the greeting while empty, then the understanding card title, the no-match title or the plan headline; while a goal is being edited it is a screen-reader-only heading. The greeting becomes a paragraph once the hero collapses. Headings below it do not skip levels.
 - Touch targets at least 44px
 - Works at 200% zoom and at 320px width
 

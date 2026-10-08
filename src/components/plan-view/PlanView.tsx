@@ -61,14 +61,14 @@ export function PlanView({ plan, initialLevel }: PlanViewProps) {
         not verified.
       </p>
 
-      <h2
+      <h1
         id="plan-headline"
         ref={headlineRef}
         tabIndex={-1}
         className={styles.headline}
       >
         {plan.headline}
-      </h2>
+      </h1>
 
       <LevelSwitch level={level} onChange={changeLevel} />
       <p role="status" className={controls.srOnly}>
@@ -79,9 +79,9 @@ export function PlanView({ plan, initialLevel }: PlanViewProps) {
         <Overview level={content} />
 
         <section className={styles.section} aria-labelledby={jobsTitleId}>
-          <h3 id={jobsTitleId} className={styles.sectionTitle}>
+          <h2 id={jobsTitleId} className={styles.sectionTitle}>
             What to use
-          </h3>
+          </h2>
           <ul className={styles.jobs}>
             {content.jobs.map((job) => (
               <li key={job.jobName}>

@@ -40,9 +40,9 @@ export function JobCard({ job, tag, alternatives }: JobCardProps) {
       <header className={styles.header}>
         <div>
           <p className={styles.jobName}>{job.jobName}</p>
-          <h4 id={titleId} className={styles.toolName}>
+          <h3 id={titleId} className={styles.toolName}>
             {job.toolName}
-          </h4>
+          </h3>
         </div>
         <span className={styles.tag} data-tag={tag}>
           {TAG_LABELS[tag]}
