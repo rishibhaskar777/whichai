@@ -52,8 +52,9 @@ export function AppShell({ news, initialTheme, children }: AppShellProps) {
       data-news={newsChoice}
     >
       <div className={styles.glow} aria-hidden="true">
-        <span className={styles.glowAccent} />
-        <span className={styles.glowNeutral} />
+        <span className={styles.blobOne} />
+        <span className={styles.blobTwo} />
+        <span className={styles.blobThree} />
       </div>
 
       <a href="#main" className={styles.skipLink}>

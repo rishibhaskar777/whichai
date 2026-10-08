@@ -26,43 +26,83 @@
   inset: 0;
   z-index: -1;
   overflow: hidden;
+  opacity: 0.83;
   pointer-events: none;
+  -webkit-mask-image: radial-gradient(
+    ellipse 62% 60% at 50% 42%,
+    #000 25%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 62% 60% at 50% 42%,
+    #000 25%,
+    transparent 100%
+  );
+  transition: opacity var(--duration-slow) var(--ease-out);
 }
 
-.glowAccent,
-.glowNeutral {
+.shell:has(textarea:focus) .glow {
+  opacity: 1;
+}
+
+.blobOne,
+.blobTwo,
+.blobThree {
   position: absolute;
+  width: 62vmax;
+  height: 62vmax;
   border-radius: 50%;
   will-change: transform;
 }
 
-.glowAccent {
-  top: -30vmax;
-  left: 25%;
-  width: 75vmax;
-  height: 75vmax;
-  background: radial-gradient(closest-side, var(--glow-accent), transparent);
-  animation: drift-accent 34s ease-in-out infinite alternate;
+.blobOne {
+  top: calc(38% - 31vmax);
+  left: calc(44% - 31vmax);
+  background: radial-gradient(closest-side, var(--glow-1), transparent);
+  animation: drift-one 16s ease-in-out infinite alternate;
 }
 
-.glowNeutral {
-  right: -10vmax;
-  bottom: -35vmax;
-  width: 80vmax;
-  height: 80vmax;
-  background: radial-gradient(closest-side, var(--glow-neutral), transparent);
-  animation: drift-neutral 28s ease-in-out infinite alternate;
+.blobTwo {
+  top: calc(48% - 31vmax);
+  left: calc(60% - 31vmax);
+  background: radial-gradient(closest-side, var(--glow-2), transparent);
+  animation: drift-two 22s ease-in-out infinite alternate;
 }
 
-@keyframes drift-accent {
+.blobThree {
+  top: calc(56% - 31vmax);
+  left: calc(38% - 31vmax);
+  background: radial-gradient(closest-side, var(--glow-3), transparent);
+  animation: drift-three 28s ease-in-out infinite alternate;
+}
+
+@keyframes drift-one {
+  from {
+    transform: translate3d(-6vw, 4vh, 0) scale(0.92);
+  }
+
   to {
-    transform: translate3d(10vmax, 8vmax, 0);
+    transform: translate3d(7vw, -5vh, 0) scale(1.15);
   }
 }
 
-@keyframes drift-neutral {
+@keyframes drift-two {
+  from {
+    transform: translate3d(8vw, -4vh, 0) scale(1.12);
+  }
+
   to {
-    transform: translate3d(-12vmax, -6vmax, 0);
+    transform: translate3d(-7vw, 6vh, 0) scale(0.9);
+  }
+}
+
+@keyframes drift-three {
+  from {
+    transform: translate3d(-4vw, -7vh, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(6vw, 5vh, 0) scale(1.14);
   }
 }
 
@@ -239,8 +279,9 @@
     transition: none;
   }
 
-  .glowAccent,
-  .glowNeutral {
+  .blobOne,
+  .blobTwo,
+  .blobThree {
     animation: none;
   }
 

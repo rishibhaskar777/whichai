@@ -122,10 +122,13 @@ describe.each([
     ).toBeGreaterThanOrEqual(3);
   });
 
-  it.each(["text", "text-muted"])(
-    "%s on the glass search surface over the strongest glow meets AA",
+  it.each(["text", "text-on-glass"])(
+    "%s on the glass search surface over all three glows at full strength meets AA",
     (fg) => {
-      const glow = over(token(palette, "glow-accent"), token(palette, "bg"));
+      const glow = ["glow-1", "glow-2", "glow-3"].reduce(
+        (backdrop, name) => over(token(palette, name), backdrop),
+        token(palette, "bg"),
+      );
       const glass = over(token(palette, "glass-fill"), glow);
       expect(ratio(token(palette, fg), glass)).toBeGreaterThanOrEqual(4.5);
     },
