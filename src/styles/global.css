@@ -17,9 +17,9 @@ html {
 body {
   min-height: 100vh;
   min-height: 100dvh;
-  background: var(--surface-page);
+  background: var(--bg);
   color: var(--text);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-size: var(--text-base);
   font-weight: var(--weight-regular);
   line-height: var(--leading-body);
@@ -30,7 +30,6 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--font-heading);
   font-weight: var(--weight-strong);
   line-height: var(--leading-tight);
   text-wrap: balance;
@@ -60,7 +59,7 @@ button {
 }
 
 a {
-  color: var(--accent-text);
+  color: var(--accent);
   text-underline-offset: 0.2em;
 }
 
@@ -71,13 +70,13 @@ ol {
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--text-on-accent);
+  background: var(--accent-soft);
+  color: var(--text);
 }
 
 @media (prefers-reduced-motion: reduce) {
