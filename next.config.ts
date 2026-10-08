@@ -6,6 +6,7 @@ getEnv();
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  devIndicators: false,
 };
 
 export default nextConfig;
