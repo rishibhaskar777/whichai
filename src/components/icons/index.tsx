@@ -130,3 +130,12 @@ export const NewsIcon = createIcon(
 );
 
 export const ChevronDownIcon = createIcon(<path d="m6 9 6 6 6-6" />);
+
+export const CheckIcon = createIcon(<path d="m5 12.5 4.5 4.5L19 7.5" />);
+
+export const CopyIcon = createIcon(
+  <>
+    <rect x="8.5" y="8.5" width="11" height="11" rx="2" />
+    <path d="M15.5 8.5v-2a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2" />
+  </>,
+);

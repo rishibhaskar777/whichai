@@ -1,0 +1,69 @@
+.switch {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 3px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+}
+
+.indicator {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc((100% - 6px) / 3);
+  border-radius: calc(var(--radius-lg) - 3px);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.switch[data-level="polished"] .indicator {
+  transform: translateX(100%);
+}
+
+.switch[data-level="advanced"] .indicator {
+  transform: translateX(200%);
+}
+
+.option {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: var(--control-height);
+  cursor: pointer;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.text {
+  color: var(--text-muted);
+  font-size: var(--text-nav);
+  font-weight: var(--weight-medium);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.input:checked + .text,
+.option:hover .text {
+  color: var(--text);
+}
+
+.option:has(.input:focus-visible) {
+  border-radius: calc(var(--radius-lg) - 3px);
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicator {
+    transition: none;
+  }
+}

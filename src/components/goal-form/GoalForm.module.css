@@ -271,3 +271,37 @@
     opacity: 0;
   }
 }
+
+.wrapper[data-compact="true"] {
+  gap: 0;
+}
+
+.wrapper[data-compact="true"] .glass {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 52px;
+  padding-block: var(--space-2);
+}
+
+.wrapper[data-compact="true"] .textarea {
+  flex: 1;
+  min-width: 0;
+}
+
+.wrapper[data-compact="true"] .toolbar {
+  flex: none;
+}
+
+.wrapper[data-compact="true"] .exampleStatic {
+  right: calc(var(--space-5) + 36px + var(--space-3));
+}
+
+.wrapper[data-compact="true"] .message {
+  min-height: 0;
+}
+
+.wrapper[data-compact="true"] .exampleStatic {
+  top: 50%;
+  transform: translateY(-50%);
+}

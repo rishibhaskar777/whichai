@@ -16,6 +16,7 @@ import {
   UserIcon,
 } from "@/components/icons";
 import { ThemeControl } from "@/components/theme-control/ThemeControl";
+import { useNewPlanSignal } from "@/lib/new-plan-signal";
 import type { ThemeChoice } from "@/lib/theme";
 import { Wordmark } from "@/components/wordmark/Wordmark";
 import styles from "./SidebarContent.module.css";
@@ -51,6 +52,7 @@ export function SidebarContent({
   onClose,
 }: SidebarContentProps) {
   const pathname = usePathname();
+  const { request: requestNewPlan } = useNewPlanSignal();
   const [signInNotice, setSignInNotice] = useState(false);
 
   useEffect(() => {
@@ -63,6 +65,10 @@ export function SidebarContent({
   }, [signInNotice]);
 
   const closeDrawer = () => onClose?.();
+  const startNewPlan = () => {
+    requestNewPlan();
+    closeDrawer();
+  };
   const labelClass = collapsed ? styles.srOnly : styles.label;
 
   return (
@@ -94,7 +100,7 @@ export function SidebarContent({
         ) : null}
       </div>
 
-      <Link href="/" className={styles.newPlan} onClick={closeDrawer}>
+      <Link href="/" className={styles.newPlan} onClick={startNewPlan}>
         <PlusIcon />
         <span className={labelClass}>New plan</span>
       </Link>

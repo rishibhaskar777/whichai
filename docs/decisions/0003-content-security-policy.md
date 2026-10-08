@@ -20,7 +20,7 @@ Development adds `'unsafe-eval'` to scripts, `'unsafe-inline'` to styles and `ws
 
 The theme is stored in a cookie that the server reads, so the correct `data-theme` is in the first HTML and no inline script is needed.
 
-Zod is configured with `jitless: true` where schemas run in the browser, because Zod's default probe calls `new Function()`, which the policy blocks and reports.
+Zod is configured with `jitless: true` in `src/lib/schemas/zod.ts`, which every schema file imports, because Zod's default probe calls `new Function()`, which the policy blocks and reports.
 
 ## Consequences
 

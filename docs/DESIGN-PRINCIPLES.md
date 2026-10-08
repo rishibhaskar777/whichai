@@ -49,6 +49,7 @@ The glow layer is fixed behind the page. It has three large blobs made from radi
 - WCAG AA contrast in both themes
 - Full keyboard operation with a visible focus ring
 - Semantic HTML first; ARIA only where HTML is not enough
+- Exactly one `h1` per page state. On the home page it is the greeting while empty, then the understanding card title, the no-match title or the plan headline; while a goal is being edited it is a screen-reader-only heading. The greeting becomes a paragraph once the hero collapses. Headings below it do not skip levels.
 - Touch targets at least 44px
 - Works at 200% zoom and at 320px width
 
@@ -64,3 +65,12 @@ The glow layer is fixed behind the page. It has three large blobs made from radi
 | Accent      | 5.3   | 7.4  |
 
 Motion exception: collapsing the sidebar or the news panel animates the grid column width, which is a layout property, because the page must reflow. It is switched off under `prefers-reduced-motion`.
+
+Second motion exception: when a goal is submitted, the greeting collapses (a grid row going from `1fr` to `0fr`) and the search moves to the bottom (`flex-grow` on the spacers and the thread) in 350ms. A single layout transition moves everything together, so no script measures positions. The level switch indicator, the card reveals and the fade-in of plan content after a level change use `transform` and `opacity` only. Disclosures expand with a grid row transition. All of it is removed under `prefers-reduced-motion`, leaving fades.
+
+## Plan view
+
+- The plan reads like a document, not a wall of cards: only the job cards and the understanding card have borders; overview, workflow, brief and lists are open sections with headings.
+- Tags (Keep, Better option, New) are words with a thin outline, not colour alone. The accent outline marks a better option; status colours are kept for warnings.
+- The sample notice sits at the top of every sample plan and cannot be dismissed.
+- The sticky search keeps the glass treatment and respects `env(safe-area-inset-bottom)`.
