@@ -15,7 +15,8 @@ import {
   SearchIcon,
   UserIcon,
 } from "@/components/icons";
-import { ThemeToggle } from "@/components/theme-toggle/ThemeToggle";
+import { ThemeControl } from "@/components/theme-control/ThemeControl";
+import type { ThemeChoice } from "@/lib/theme";
 import { Wordmark } from "@/components/wordmark/Wordmark";
 import styles from "./SidebarContent.module.css";
 
@@ -38,12 +39,14 @@ const SIGN_IN_NOTICE_MS = 5000;
 
 interface SidebarContentProps {
   collapsed: boolean;
+  initialTheme: ThemeChoice;
   onToggleCollapse?: () => void;
   onClose?: () => void;
 }
 
 export function SidebarContent({
   collapsed,
+  initialTheme,
   onToggleCollapse,
   onClose,
 }: SidebarContentProps) {
@@ -132,7 +135,7 @@ export function SidebarContent({
             {signInNotice ? "Accounts arrive in a later release." : ""}
           </p>
         </div>
-        <ThemeToggle showLabel={!collapsed} />
+        <ThemeControl initialChoice={initialTheme} compact={collapsed} />
       </div>
     </div>
   );

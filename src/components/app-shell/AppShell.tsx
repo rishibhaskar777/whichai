@@ -5,22 +5,24 @@ import { MenuIcon } from "@/components/icons";
 import { NewsPanel, type NewsChoice } from "@/components/news-panel/NewsPanel";
 import { SidebarContent } from "@/components/sidebar/SidebarContent";
 import { Wordmark } from "@/components/wordmark/Wordmark";
+import type { ThemeChoice } from "@/lib/theme";
 import type { NewsItem } from "@/data/sample/news";
 import { useMediaQuery } from "@/lib/use-media-query";
 import styles from "./AppShell.module.css";
 
 interface AppShellProps {
   news: readonly NewsItem[];
+  initialTheme: ThemeChoice;
   children: ReactNode;
 }
 
-export function AppShell({ news, children }: AppShellProps) {
+export function AppShell({ news, initialTheme, children }: AppShellProps) {
   const [railMode, setRailMode] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [newsChoice, setNewsChoice] = useState<NewsChoice>("auto");
   const drawerRef = useRef<HTMLDialogElement>(null);
 
-  const hasSideNews = useMediaQuery("(min-width: 1180px)", true);
+  const hasSideNews = useMediaQuery("(min-width: 1280px)", true);
 
   const newsExpanded =
     newsChoice === "auto" ? hasSideNews : newsChoice === "open";
@@ -49,6 +51,11 @@ export function AppShell({ news, children }: AppShellProps) {
       data-sidebar={railMode ? "rail" : "full"}
       data-news={newsChoice}
     >
+      <div className={styles.glow} aria-hidden="true">
+        <span className={styles.glowAccent} />
+        <span className={styles.glowNeutral} />
+      </div>
+
       <a href="#main" className={styles.skipLink}>
         Skip to main content
       </a>
@@ -69,6 +76,7 @@ export function AppShell({ news, children }: AppShellProps) {
       <div className={styles.sidebar}>
         <SidebarContent
           collapsed={railMode}
+          initialTheme={initialTheme}
           onToggleCollapse={() => setRailMode((current) => !current)}
         />
       </div>
@@ -82,7 +90,11 @@ export function AppShell({ news, children }: AppShellProps) {
           if (event.target === event.currentTarget) closeDrawer();
         }}
       >
-        <SidebarContent collapsed={false} onClose={closeDrawer} />
+        <SidebarContent
+          collapsed={false}
+          initialTheme={initialTheme}
+          onClose={closeDrawer}
+        />
       </dialog>
 
       <main id="main" tabIndex={-1} className={styles.main}>

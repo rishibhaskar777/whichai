@@ -43,13 +43,11 @@ export default async function RootLayout({
   const theme = parseTheme((await cookies()).get(THEME_COOKIE)?.value);
 
   return (
-    <html
-      lang="en"
-      data-theme={theme}
-      className={onest.variable}
-    >
+    <html lang="en" data-theme={theme} className={onest.variable}>
       <body>
-        <AppShell news={sampleNews}>{children}</AppShell>
+        <AppShell news={sampleNews} initialTheme={theme ?? "system"}>
+          {children}
+        </AppShell>
       </body>
     </html>
   );

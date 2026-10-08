@@ -36,12 +36,10 @@ export function NewsPanel({
     >
       <div className={styles.header}>
         <NewsIcon className={styles.headerIcon} />
-        <div className={styles.titles}>
-          <h2 id="news-heading" className={styles.title}>
-            AI news
-          </h2>
-          <p className={styles.sample}>Sample content</p>
-        </div>
+        <h2 id="news-heading" className={styles.title}>
+          AI news
+        </h2>
+        <span className={styles.badge}>Sample content</span>
         <button
           type="button"
           className={styles.toggle}
@@ -60,21 +58,27 @@ export function NewsPanel({
             <article className={styles.article}>
               <div className={styles.meta}>
                 <span className={styles.source}>{item.source}</span>
-                <time dateTime={item.date}>
+                <time dateTime={item.date} className={styles.date}>
                   {dateFormat.format(new Date(item.date))}
                 </time>
               </div>
               <p className={styles.summary}>{item.summary}</p>
               <div className={styles.footer}>
-                <span className={styles.tag}>{item.tag}</span>
+                <span className={styles.tag}>
+                  <span
+                    className={styles.dot}
+                    data-tag={item.tag}
+                    aria-hidden="true"
+                  />
+                  {item.tag}
+                </span>
                 <a
                   href={item.url}
                   className={styles.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`Visit ${item.source} (opens in a new tab)`}
                 >
-                  Visit {item.source}
-                  <span className={styles.srOnly}> (opens in a new tab)</span>
                   <ExternalLinkIcon width="16" height="16" />
                 </a>
               </div>

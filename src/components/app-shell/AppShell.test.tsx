@@ -8,7 +8,7 @@ vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
 
 function renderShell() {
   return render(
-    <AppShell news={sampleNews}>
+    <AppShell news={sampleNews} initialTheme="system">
       <h1>Page</h1>
     </AppShell>,
   );

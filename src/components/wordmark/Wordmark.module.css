@@ -1,7 +1,7 @@
 .wordmark {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   color: var(--text);
 }
 
@@ -9,32 +9,11 @@
   flex: none;
 }
 
-.tile {
-  fill: var(--accent);
-}
-
-.branches {
-  fill: none;
-  stroke: var(--text-on-accent);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.nodes {
-  fill: var(--text-on-accent);
-}
-
 .name {
-  font-family: var(--font-heading);
-  font-weight: var(--weight-strong);
   font-size: var(--text-md);
+  font-weight: var(--weight-strong);
   line-height: 1;
   letter-spacing: -0.01em;
-}
-
-.accent {
-  color: var(--accent-text);
 }
 
 .visuallyHidden {

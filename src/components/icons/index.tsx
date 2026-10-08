@@ -36,6 +36,13 @@ export const MoonIcon = createIcon(
   <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" />,
 );
 
+export const MonitorIcon = createIcon(
+  <>
+    <rect x="3.5" y="4.5" width="17" height="11" rx="2" />
+    <path d="M9 20h6M12 15.5V20" />
+  </>,
+);
+
 export const HomeIcon = createIcon(
   <>
     <path d="m4 11 8-7 8 7" />

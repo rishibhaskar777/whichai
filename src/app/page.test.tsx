@@ -10,7 +10,7 @@ vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
 describe("home page", () => {
   it("has no serious or critical axe violations", async () => {
     const { container } = render(
-      <AppShell news={sampleNews}>
+      <AppShell news={sampleNews} initialTheme="system">
         <HomePage />
       </AppShell>,
     );

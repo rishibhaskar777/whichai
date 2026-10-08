@@ -9,26 +9,22 @@ export function Wordmark({ showName = true }: WordmarkProps) {
     <span className={styles.wordmark}>
       <svg
         className={styles.mark}
-        viewBox="0 0 32 32"
-        width="32"
-        height="32"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         aria-hidden="true"
         focusable="false"
       >
-        <rect width="32" height="32" rx="9" className={styles.tile} />
-        <g className={styles.branches}>
-          <path d="M16 25v-10M16 15 9 8M16 15V7M16 15l7-7" />
-        </g>
-        <g className={styles.nodes}>
-          <circle cx="9" cy="8" r="2" />
-          <circle cx="16" cy="7" r="2" />
-          <circle cx="23" cy="8" r="2" />
-        </g>
+        <rect x="2" y="2" width="20" height="20" rx="6" />
+        <path d="M12 18v-5M12 13 8 8.5M12 13V8M12 13l4-4.5" />
       </svg>
       {showName ? (
-        <span className={styles.name}>
-          Which<span className={styles.accent}>AI</span>
-        </span>
+        <span className={styles.name}>WhichAI</span>
       ) : (
         <span className={styles.visuallyHidden}>WhichAI</span>
       )}
