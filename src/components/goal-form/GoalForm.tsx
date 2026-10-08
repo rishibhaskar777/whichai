@@ -130,7 +130,11 @@ export function GoalForm() {
             >
               {nearLimit ? `${value.length} / ${GOAL_MAX_LENGTH}` : ""}
             </span>
-            <button type="submit" className={styles.submit}>
+            <button
+              type="submit"
+              className={styles.submit}
+              disabled={value.trim().length === 0}
+            >
               <ArrowUpIcon />
               <span className={styles.srOnly}>Get a plan</span>
             </button>
