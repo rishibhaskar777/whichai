@@ -5,6 +5,7 @@ import { MenuIcon } from "@/components/icons";
 import { NewsPanel, type NewsChoice } from "@/components/news-panel/NewsPanel";
 import { SidebarContent } from "@/components/sidebar/SidebarContent";
 import { Wordmark } from "@/components/wordmark/Wordmark";
+import { NewPlanProvider } from "@/lib/new-plan-signal";
 import type { ThemeChoice } from "@/lib/theme";
 import type { NewsItem } from "@/data/sample/news";
 import { useMediaQuery } from "@/lib/use-media-query";
@@ -46,68 +47,70 @@ export function AppShell({ news, initialTheme, children }: AppShellProps) {
   const closeDrawer = () => setDrawerOpen(false);
 
   return (
-    <div
-      className={styles.shell}
-      data-sidebar={railMode ? "rail" : "full"}
-      data-news={newsChoice}
-    >
-      <div className={styles.glow} aria-hidden="true">
-        <span className={styles.blobOne} />
-        <span className={styles.blobTwo} />
-        <span className={styles.blobThree} />
-      </div>
-
-      <a href="#main" className={styles.skipLink}>
-        Skip to main content
-      </a>
-
-      <header className={styles.mobileBar}>
-        <button
-          type="button"
-          className={styles.menuButton}
-          onClick={() => setDrawerOpen(true)}
-          aria-label="Open menu"
-          aria-haspopup="dialog"
-        >
-          <MenuIcon />
-        </button>
-        <Wordmark />
-      </header>
-
-      <div className={styles.sidebar}>
-        <SidebarContent
-          collapsed={railMode}
-          initialTheme={initialTheme}
-          onToggleCollapse={() => setRailMode((current) => !current)}
-        />
-      </div>
-
-      <dialog
-        ref={drawerRef}
-        className={styles.drawer}
-        aria-label="Main menu"
-        onClose={closeDrawer}
-        onClick={(event) => {
-          if (event.target === event.currentTarget) closeDrawer();
-        }}
+    <NewPlanProvider>
+      <div
+        className={styles.shell}
+        data-sidebar={railMode ? "rail" : "full"}
+        data-news={newsChoice}
       >
-        <SidebarContent
-          collapsed={false}
-          initialTheme={initialTheme}
+        <div className={styles.glow} aria-hidden="true">
+          <span className={styles.blobOne} />
+          <span className={styles.blobTwo} />
+          <span className={styles.blobThree} />
+        </div>
+
+        <a href="#main" className={styles.skipLink}>
+          Skip to main content
+        </a>
+
+        <header className={styles.mobileBar}>
+          <button
+            type="button"
+            className={styles.menuButton}
+            onClick={() => setDrawerOpen(true)}
+            aria-label="Open menu"
+            aria-haspopup="dialog"
+          >
+            <MenuIcon />
+          </button>
+          <Wordmark />
+        </header>
+
+        <div className={styles.sidebar}>
+          <SidebarContent
+            collapsed={railMode}
+            initialTheme={initialTheme}
+            onToggleCollapse={() => setRailMode((current) => !current)}
+          />
+        </div>
+
+        <dialog
+          ref={drawerRef}
+          className={styles.drawer}
+          aria-label="Main menu"
           onClose={closeDrawer}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) closeDrawer();
+          }}
+        >
+          <SidebarContent
+            collapsed={false}
+            initialTheme={initialTheme}
+            onClose={closeDrawer}
+          />
+        </dialog>
+
+        <main id="main" tabIndex={-1} className={styles.main}>
+          <div className={styles.content}>{children}</div>
+        </main>
+
+        <NewsPanel
+          items={news}
+          choice={newsChoice}
+          expanded={newsExpanded}
+          onToggle={() => setNewsChoice(newsExpanded ? "collapsed" : "open")}
         />
-      </dialog>
-
-      <main id="main" tabIndex={-1} className={styles.main}>
-        <div className={styles.content}>{children}</div>
-      </main>
-
-      <NewsPanel
-        items={news}
-        choice={newsChoice}
-        expanded={newsExpanded}
-        onToggle={() => setNewsChoice(newsExpanded ? "collapsed" : "open")}
-      />
-    </div>
+      </div>
+    </NewPlanProvider>
   );
 }

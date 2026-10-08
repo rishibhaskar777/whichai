@@ -271,3 +271,20 @@
     opacity: 0;
   }
 }
+
+.wrapper[data-compact="true"] {
+  gap: 0;
+}
+
+.wrapper[data-compact="true"] .glass {
+  min-height: 52px;
+  padding-block: var(--space-2);
+}
+
+.wrapper[data-compact="true"] .message {
+  min-height: 0;
+}
+
+.wrapper[data-compact="true"] .exampleStatic {
+  top: calc(var(--space-2) + var(--space-1));
+}

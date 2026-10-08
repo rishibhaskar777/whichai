@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useState, type KeyboardEvent, type RefObject } from "react";
 import { ArrowUpIcon } from "@/components/icons";
 import { placeholderExamples, suggestions } from "@/data/suggestions";
 import { GOAL_MAX_LENGTH, goalSchema } from "@/lib/schemas/goal";
@@ -9,25 +9,34 @@ import styles from "./GoalForm.module.css";
 
 const COUNTER_THRESHOLD = 400;
 const PLACEHOLDER_INTERVAL_MS = 4000;
+const COMPACT_PLACEHOLDER = "Describe another goal";
 
-interface Message {
-  kind: "error" | "info";
-  text: string;
+interface GoalFormProps {
+  value: string;
+  onValueChange: (value: string) => void;
+  onSubmit: (goal: string) => void;
+  inputRef: RefObject<HTMLTextAreaElement | null>;
+  compact?: boolean;
 }
 
-export function GoalForm() {
-  const [value, setValue] = useState("");
+export function GoalForm({
+  value,
+  onValueChange,
+  onSubmit,
+  inputRef: textareaRef,
+  compact = false,
+}: GoalFormProps) {
   const [focused, setFocused] = useState(false);
-  const [message, setMessage] = useState<Message | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [exampleIndex, setExampleIndex] = useState(0);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const reducedMotion = useMediaQuery(
     "(prefers-reduced-motion: reduce)",
     false,
   );
 
   const showExample = !focused && value.length === 0;
-  const cycling = showExample && !reducedMotion;
+  const staticExample = reducedMotion || compact;
+  const cycling = showExample && !staticExample;
 
   useEffect(() => {
     if (!cycling) return;
@@ -44,21 +53,16 @@ export function GoalForm() {
     if (!textarea) return;
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight}px`;
-  }, [value]);
+  }, [textareaRef, value]);
 
   function submit() {
     const result = goalSchema.safeParse({ goal: value });
     if (!result.success) {
-      setMessage({
-        kind: "error",
-        text: result.error.issues[0]?.message ?? "Check what you typed.",
-      });
+      setError(result.error.issues[0]?.message ?? "Check what you typed.");
       return;
     }
-    setMessage({
-      kind: "info",
-      text: "The planner arrives in the next release. Nothing you typed was sent or saved.",
-    });
+    setError(null);
+    onSubmit(result.data.goal);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -73,16 +77,16 @@ export function GoalForm() {
   }
 
   function fillSuggestion(goal: string) {
-    setValue(goal);
-    setMessage(null);
+    onValueChange(goal);
+    setError(null);
     textareaRef.current?.focus();
   }
 
   const nearLimit = value.length >= COUNTER_THRESHOLD;
-  const hasError = message?.kind === "error";
+  const hasError = error !== null;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-compact={compact}>
       <form
         className={styles.search}
         noValidate
@@ -99,12 +103,12 @@ export function GoalForm() {
             id="goal"
             ref={textareaRef}
             className={styles.textarea}
-            rows={2}
+            rows={compact ? 1 : 2}
             maxLength={GOAL_MAX_LENGTH}
             value={value}
             onChange={(event) => {
-              setValue(event.target.value);
-              setMessage(null);
+              onValueChange(event.target.value);
+              setError(null);
             }}
             onKeyDown={handleKeyDown}
             onFocus={() => setFocused(true)}
@@ -114,11 +118,13 @@ export function GoalForm() {
           />
           {showExample ? (
             <span
-              key={reducedMotion ? "static" : exampleIndex}
-              className={reducedMotion ? styles.exampleStatic : styles.example}
+              key={staticExample ? "static" : exampleIndex}
+              className={staticExample ? styles.exampleStatic : styles.example}
               aria-hidden="true"
             >
-              {placeholderExamples[reducedMotion ? 0 : exampleIndex]}
+              {compact
+                ? COMPACT_PLACEHOLDER
+                : placeholderExamples[staticExample ? 0 : exampleIndex]}
             </span>
           ) : null}
           <div className={styles.toolbar}>
@@ -144,25 +150,27 @@ export function GoalForm() {
           id="goal-message"
           role={hasError ? "alert" : "status"}
           className={styles.message}
-          data-kind={message?.kind}
+          data-kind={hasError ? "error" : undefined}
         >
-          {message?.text}
+          {error}
         </p>
       </form>
 
-      <ul className={styles.chips} aria-label="Suggestions">
-        {suggestions.map((suggestion) => (
-          <li key={suggestion.label}>
-            <button
-              type="button"
-              className={styles.chip}
-              onClick={() => fillSuggestion(suggestion.goal)}
-            >
-              {suggestion.label}
-            </button>
-          </li>
-        ))}
-      </ul>
+      {compact ? null : (
+        <ul className={styles.chips} aria-label="Suggestions">
+          {suggestions.map((suggestion) => (
+            <li key={suggestion.label}>
+              <button
+                type="button"
+                className={styles.chip}
+                onClick={() => fillSuggestion(suggestion.goal)}
+              >
+                {suggestion.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

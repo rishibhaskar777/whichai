@@ -3,6 +3,7 @@ import type { Chip, GoalType, Level, UnderstoodGoal } from "@/lib/schemas/plan";
 interface GoalRule {
   goalType: GoalType;
   title: string;
+  example: string;
   patterns: readonly RegExp[];
 }
 
@@ -25,11 +26,13 @@ const GOAL_RULES: readonly GoalRule[] = [
   {
     goalType: "portfolio-website",
     title: "Portfolio website",
+    example: "Build a portfolio website to show my work",
     patterns: [/\bportfolios?\b/, /\bweb\s?sites?\b/, /\bsites?\b/],
   },
   {
     goalType: "study-plan",
     title: "Study plan",
+    example: "Make a study plan for my upcoming exams",
     patterns: [
       /\bstud(?:y|ies|ying|ied)\b/,
       /\bexams?\b/,
@@ -96,8 +99,15 @@ export const featureOptions: readonly Chip[] = FEATURE_RULES.map(
   (rule) => rule.chip,
 );
 
-export const coveredGoals: readonly { goalType: GoalType; title: string }[] =
-  GOAL_RULES.map(({ goalType, title }) => ({ goalType, title }));
+export const coveredGoals: readonly {
+  goalType: GoalType;
+  title: string;
+  example: string;
+}[] = GOAL_RULES.map(({ goalType, title, example }) => ({
+  goalType,
+  title,
+  example,
+}));
 
 function matchGoal(text: string): GoalRule | null {
   let best: { rule: GoalRule; hits: number; firstIndex: number } | null = null;
