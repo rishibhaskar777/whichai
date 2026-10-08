@@ -1,8 +1,4 @@
-import { z } from "zod";
-
-// Zod probes for eval support with new Function(), which the CSP blocks and
-// reports as a violation. Skipping the probe keeps the browser console clean.
-z.config({ jitless: true });
+import { z } from "./zod";
 
 export const GOAL_MAX_LENGTH = 500;
 
