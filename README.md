@@ -10,11 +10,13 @@ Early development. See [docs/ROADMAP.md](docs/ROADMAP.md) for the phases.
 
 | Phase | Scope                                       | State       |
 | ----- | ------------------------------------------- | ----------- |
-| 1     | Project setup, home page, security baseline | In progress |
-| 2     | Understanding step and plan result page     | Planned     |
-| 3     | Tool data, rules engine, database           | Planned     |
-| 4     | Accounts, saved plans, feedback             | Planned     |
+| 1     | Project setup, home page, security baseline | Done        |
+| 2     | Understanding step and plan view (samples)  | In progress |
+| 3     | Tool data in JSON, rules engine             | Planned     |
+| 4     | Saved plans and feedback in the browser     | Planned     |
 | 5     | News and update pipeline                    | Planned     |
+
+The project follows a [zero-cost rule](docs/decisions/0006-zero-cost.md): no paid APIs, no AI APIs, no hosted databases, no trackers.
 
 ## Tech
 
@@ -51,7 +53,12 @@ Next.js App Router with a `src/` directory: `app/` for routes, `components/` for
 
 ## What works now
 
-- Home page with a goal input, suggestion chips and a sample news panel. The input validates the text and shows a notice; it sends and stores nothing.
+- Home page with a goal input, suggestion chips and a sample news panel.
+- Describe a goal and a local, rule-based interpreter (no AI service) shows what it understood as chips you can remove or add. Goals it does not cover get an honest "no plan yet" message.
+- Confirm to see a sample plan for a portfolio website or a 60-day study plan, at Simple, Polished and Advanced levels, with job cards, tool plan comparison, workflow, copyable prompts and a starter brief.
+- A "Make this more accurate" card marks tools you already use as Keep and hides paid-only alternatives at a ₹0 budget.
+- **All plan content is sample data.** Tool names are examples; every price, limit and date is a placeholder, and the plan says so. Nothing you type is sent, stored or put in the URL.
+- Save, Download PDF and Share are visible but disabled until a later release.
 - Collapsible sidebar, mobile drawer, light, dark and system themes (the explicit choice is stored in a cookie).
 - Pages for Projects, Searches, Tool Library, What Changed and Compare Plans show a coming-soon notice.
 - The news panel is marked as sample content and contains no real announcements.
