@@ -24,9 +24,17 @@ The interface should look designed for this product, not assembled from a templa
 
 ## Glass effect and glow layer
 
-Glass is used on the search field only. Light: `rgb(255 255 255 / 0.65)`. Dark: `rgb(24 24 30 / 0.55)`. Both use `blur(20px) saturate(140%)`, a 1px strong border, an inset top highlight and a layered shadow. It needs a solid fallback when `backdrop-filter` is unsupported or the user prefers reduced transparency. Text contrast must meet WCAG AA on the glass over the strongest point of the glow; the contrast tests check this. Do not apply glass to cards, sidebar or news panel.
+Glass is used on the search field only.
 
-Behind the page sits one fixed decorative layer of two soft radial glows (accent and neutral) that drift over about 30 seconds. It is `aria-hidden`, ignores pointer events, animates `transform` only, causes no layout shift and is off under `prefers-reduced-motion`.
+| Value                                   | Light                     | Dark                      |
+| --------------------------------------- | ------------------------- | ------------------------- |
+| Fill                                    | `rgb(255 255 255 / 0.45)` | `rgb(20 20 26 / 0.40)`    |
+| Edge gradient, top-left to bottom-right | white 80% to black 6%     | white 18% to white 4%     |
+| Outer shadow                            | `0 8px 32px` blue at 12%  | `0 8px 32px` black at 45% |
+
+Both themes use `blur(24px) saturate(180%)` and an inset top highlight. The 1px gradient edge is drawn by a masked pseudo-element, so the markup stays unchanged. On focus a 45% accent edge fades in over the gradient, a 4px soft ring appears and the box lifts 2px. The solid fill is used when `backdrop-filter` is unsupported or reduced transparency is requested. Placeholder text and the counter use `--text-on-glass`, a stronger tone than muted text, because the translucent fill sits on top of the glow. The contrast tests check the text on the glass over all three glows at full strength. Do not apply glass to cards, sidebar or news panel.
+
+The glow layer is fixed behind the page. It has three large blobs made from radial gradients in the blue family only: accent blue, sky blue and deep indigo-blue. Each drifts and scales on its own loop (16s, 22s and 28s, ease-in-out, alternate) by about 6 to 10 percent of the viewport and a scale of 0.9 to 1.15. Only `transform` and `opacity` are animated. A radial mask fades the layer out towards the edges so the sidebar and news panel stay clean. When the search field is focused the layer brightens by about 20 percent over 400ms. The layer is `aria-hidden`, ignores pointer events and causes no layout shift. Under `prefers-reduced-motion` the blobs stay still and the glow is static.
 
 ## Motion
 
@@ -46,7 +54,7 @@ Behind the page sits one fixed decorative layer of two soft radial glows (accent
 
 ## Contrast checks
 
-`src/styles/contrast.test.ts` reads `tokens.css` and checks every text colour against every surface it can appear on, in the light theme and in both dark selectors. Text needs 4.5:1, the accent as a control needs 3:1, and the search text is checked on the glass over the strongest glow. Ratios on the page background:
+`src/styles/contrast.test.ts` reads `tokens.css` and checks every text colour against every surface it can appear on, in the light theme and in both dark selectors. Text needs 4.5:1, the accent as a control needs 3:1, and the search text is checked on the glass over all three glows at full strength. Ratios on the page background:
 
 | Pair        | Light | Dark |
 | ----------- | ----- | ---- |
