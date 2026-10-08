@@ -41,3 +41,18 @@ Use it on the search field only. It needs a solid fallback when `backdrop-filter
 - Semantic HTML first; ARIA only where HTML is not enough
 - Touch targets at least 44px
 - Works at 200% zoom and at 320px width
+
+## Contrast checks
+
+`src/styles/contrast.test.ts` reads `tokens.css` and checks every text and control colour pair in the light theme and in both dark selectors. Text pairs need 4.5:1 and control borders need 3:1. Selected ratios on the page background:
+
+| Pair                   | Light | Dark |
+| ---------------------- | ----- | ---- |
+| Body text              | 15.5  | 15.8 |
+| Muted text             | 7.1   | 8.5  |
+| Text on accent button  | 5.6   | 7.5  |
+| Accent text            | 7.2   | 9.0  |
+| Control border         | 3.9   | 4.5  |
+| Warning (sample label) | 5.5   | 9.8  |
+
+Motion exception: collapsing the sidebar or the news panel animates the grid column width, which is a layout property, because the panel must reflow the page. It is switched off under `prefers-reduced-motion`.

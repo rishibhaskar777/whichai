@@ -22,7 +22,7 @@ TypeScript throughout. Next.js (App Router), React, CSS Modules with CSS custom 
 
 ## Getting started
 
-Requirements: Node.js (current LTS) and npm.
+Requirements: Node.js 24 (see `.nvmrc`) and npm. The first build downloads the font files once, so it needs network access.
 
 ```bash
 git clone https://github.com/rishibhaskar777/whichai-1.git
@@ -47,7 +47,14 @@ The site runs at http://localhost:3000.
 
 ## Project layout
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Next.js App Router with a `src/` directory: `app/` for routes, `components/` for UI, `lib/` for validation and security helpers, `styles/` for design tokens, `data/sample/` for sample content. `src/proxy.ts` sets the CSP nonce and security headers on every request. Details are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## What works now
+
+- Home page with a goal input, suggestion chips and a sample news panel. The input validates the text and shows a notice; it sends and stores nothing.
+- Collapsible sidebar, mobile drawer, light and dark themes (stored in a cookie).
+- Pages for Projects, Searches, Tool Library, What Changed and Compare Plans show a coming-soon notice.
+- The news panel is marked as sample content and contains no real announcements.
 
 ## Security
 
