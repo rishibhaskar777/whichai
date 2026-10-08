@@ -33,6 +33,8 @@ Apply to every release and re-check when a phase adds a new input, route or depe
 - [ ] New dependencies reviewed for maintenance, size and licence
 - [ ] No third-party scripts or trackers without a documented reason
 
+Documented exception: `braces` (GHSA-vfj7-8cjw-p6xm, high, no patched version as of 2026-10-09) is reachable only through `eslint-config-next`, a development dependency that is not part of the production build. CI therefore runs `npm audit --omit=dev --audit-level=high`. Remove the exception when a fix is released.
+
 ## Deployment
 
 - [ ] HTTPS only, with HSTS

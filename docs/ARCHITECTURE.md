@@ -2,13 +2,13 @@
 
 ## Overview
 
-A single Next.js application. Pages are rendered on the server. A small set of route handlers and a middleware layer provide the server behaviour. Recommendation logic is plain TypeScript, separate from the UI, so it can be tested without a browser.
+A single Next.js application. Pages are rendered on the server. A small set of route handlers and a proxy (the Next.js 16 name for middleware) provide the server behaviour. Recommendation logic is plain TypeScript, separate from the UI, so it can be tested without a browser.
 
 ```
 Browser
   |
   v
-middleware.ts        security headers, CSP nonce, basic request checks
+proxy.ts             security headers, CSP nonce
   |
   v
 app/                 routes, layouts, server components
@@ -19,20 +19,33 @@ app/                 routes, layouts, server components
   +--> engine/       (Phase 3) rules engine that selects tools for a goal
 ```
 
-## Directory layout (target)
+## Directory layout
 
 ```
 src/
+  proxy.ts             nonce, CSP and security headers on every request
   app/                 routes and layouts
+    api/health/        health check route
+    .well-known/       security.txt
+    projects/, searches/, tool-library/, what-changed/, compare-plans/
+                       coming-soon pages
   components/          UI components, one folder per component
+    app-shell/         three-region layout, drawer, panel state
+    sidebar/           navigation, sign-in notice
+    news-panel/        sample news panel
+    goal-form/         search input, suggestions
+    theme-control/, wordmark/, coming-soon/, icons/
   lib/
     env.ts             validated environment variables
-    security/          CSP builder, rate limiter, input schemas
+    theme.ts           theme cookie name and parsing
+    schemas/           Zod schemas shared by client and future endpoints
+    security/          CSP builder and static security headers
   styles/
     tokens.css         design tokens (colour, type, spacing, motion)
     global.css         reset and base styles
   data/
     sample/            clearly marked sample data, never shown as real
+    suggestions.ts     suggestion chips and placeholder examples
   engine/              Phase 3
 docs/
   decisions/           architecture decision records

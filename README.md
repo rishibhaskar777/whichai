@@ -8,13 +8,13 @@ It does not do the task for the user. It recommends, explains the trade-offs, an
 
 Early development. See [docs/ROADMAP.md](docs/ROADMAP.md) for the phases.
 
-| Phase | Scope | State |
-|---|---|---|
-| 1 | Project setup, home page, security baseline | In progress |
-| 2 | Understanding step and plan result page | Planned |
-| 3 | Tool data, rules engine, database | Planned |
-| 4 | Accounts, saved plans, feedback | Planned |
-| 5 | News and update pipeline | Planned |
+| Phase | Scope                                       | State       |
+| ----- | ------------------------------------------- | ----------- |
+| 1     | Project setup, home page, security baseline | In progress |
+| 2     | Understanding step and plan result page     | Planned     |
+| 3     | Tool data, rules engine, database           | Planned     |
+| 4     | Accounts, saved plans, feedback             | Planned     |
+| 5     | News and update pipeline                    | Planned     |
 
 ## Tech
 
@@ -22,7 +22,7 @@ TypeScript throughout. Next.js (App Router), React, CSS Modules with CSS custom 
 
 ## Getting started
 
-Requirements: Node.js (current LTS) and npm.
+Requirements: Node.js 24 (see `.nvmrc`) and npm. The first build downloads the font files once, so it needs network access.
 
 ```bash
 git clone https://github.com/rishibhaskar777/whichai-1.git
@@ -36,18 +36,25 @@ The site runs at http://localhost:3000.
 
 ## Scripts
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Start the development server |
-| `npm run build` | Production build |
-| `npm run start` | Serve the production build |
-| `npm run lint` | Run ESLint |
+| Command             | What it does                                       |
+| ------------------- | -------------------------------------------------- |
+| `npm run dev`       | Start the development server                       |
+| `npm run build`     | Production build                                   |
+| `npm run start`     | Serve the production build                         |
+| `npm run lint`      | Run ESLint                                         |
 | `npm run typecheck` | Run the TypeScript compiler without emitting files |
-| `npm test` | Run unit tests |
+| `npm test`          | Run unit tests                                     |
 
 ## Project layout
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Next.js App Router with a `src/` directory: `app/` for routes, `components/` for UI, `lib/` for validation and security helpers, `styles/` for design tokens, `data/sample/` for sample content. `src/proxy.ts` sets the CSP nonce and security headers on every request. Details are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## What works now
+
+- Home page with a goal input, suggestion chips and a sample news panel. The input validates the text and shows a notice; it sends and stores nothing.
+- Collapsible sidebar, mobile drawer, light, dark and system themes (the explicit choice is stored in a cookie).
+- Pages for Projects, Searches, Tool Library, What Changed and Compare Plans show a coming-soon notice.
+- The news panel is marked as sample content and contains no real announcements.
 
 ## Security
 

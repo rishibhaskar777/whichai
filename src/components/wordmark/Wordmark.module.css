@@ -1,0 +1,26 @@
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text);
+}
+
+.mark {
+  flex: none;
+}
+
+.name {
+  font-size: var(--text-md);
+  font-weight: var(--weight-strong);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

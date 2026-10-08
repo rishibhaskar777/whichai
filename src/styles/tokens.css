@@ -1,0 +1,176 @@
+:root {
+  color-scheme: light;
+
+  --bg: #fafafa;
+  --sidebar: #f4f4f5;
+  --surface: #ffffff;
+  --surface-2: #f4f4f5;
+  --border: rgb(0 0 0 / 0.08);
+  --border-strong: rgb(0 0 0 / 0.14);
+  --text: #111114;
+  --text-muted: #5f5f67;
+  --text-subtle: #6b6b74;
+  --text-on-glass: #4a4a52;
+  --accent: #4f5bd5;
+  --accent-soft: rgb(79 91 213 / 0.12);
+  --backdrop: rgb(17 17 20 / 0.4);
+  --status-success: #15803d;
+  --status-warning: #8f5a06;
+  --status-danger: #b91c1c;
+  --status-info: #1d4ed8;
+  --glass-fill: rgb(255 255 255 / 0.45);
+  --glass-edge-from: rgb(255 255 255 / 0.8);
+  --glass-edge-to: rgb(0 0 0 / 0.06);
+  --glass-solid: #ffffff;
+  --glass-highlight: rgb(255 255 255 / 0.5);
+  --glow-1: rgb(79 91 213 / 0.3);
+  --glow-2: rgb(56 140 255 / 0.26);
+  --glow-3: rgb(99 110 255 / 0.18);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 4px 16px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 16px 40px rgb(0 0 0 / 0.14);
+  --shadow-glass: 0 1px 2px rgb(0 0 0 / 0.05), 0 8px 32px rgb(79 91 213 / 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --bg: #0a0a0c;
+    --sidebar: #0f0f12;
+    --surface: #141418;
+    --surface-2: #1b1b21;
+    --border: rgb(255 255 255 / 0.08);
+    --border-strong: rgb(255 255 255 / 0.14);
+    --text: #ededef;
+    --text-muted: #a1a1aa;
+    --text-subtle: #82828c;
+    --text-on-glass: #bcbcc6;
+    --accent: #8b96ff;
+    --accent-soft: rgb(139 150 255 / 0.14);
+    --backdrop: rgb(0 0 0 / 0.6);
+    --status-success: #4ade80;
+    --status-warning: #fbbf24;
+    --status-danger: #f87171;
+    --status-info: #60a5fa;
+    --glass-fill: rgb(20 20 26 / 0.4);
+    --glass-edge-from: rgb(255 255 255 / 0.18);
+    --glass-edge-to: rgb(255 255 255 / 0.04);
+    --glass-solid: #141418;
+    --glass-highlight: rgb(255 255 255 / 0.06);
+    --glow-1: rgb(139 150 255 / 0.28);
+    --glow-2: rgb(70 150 255 / 0.22);
+    --glow-3: rgb(110 120 255 / 0.16);
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+    --shadow-md: 0 4px 16px rgb(0 0 0 / 0.5);
+    --shadow-lg: 0 16px 40px rgb(0 0 0 / 0.6);
+    --shadow-glass: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 32px rgb(0 0 0 / 0.45);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0a0a0c;
+  --sidebar: #0f0f12;
+  --surface: #141418;
+  --surface-2: #1b1b21;
+  --border: rgb(255 255 255 / 0.08);
+  --border-strong: rgb(255 255 255 / 0.14);
+  --text: #ededef;
+  --text-muted: #a1a1aa;
+  --text-subtle: #82828c;
+  --text-on-glass: #bcbcc6;
+  --accent: #8b96ff;
+  --accent-soft: rgb(139 150 255 / 0.14);
+  --backdrop: rgb(0 0 0 / 0.6);
+  --status-success: #4ade80;
+  --status-warning: #fbbf24;
+  --status-danger: #f87171;
+  --status-info: #60a5fa;
+  --glass-fill: rgb(20 20 26 / 0.4);
+  --glass-edge-from: rgb(255 255 255 / 0.18);
+  --glass-edge-to: rgb(255 255 255 / 0.04);
+  --glass-solid: #141418;
+  --glass-highlight: rgb(255 255 255 / 0.06);
+  --glow-1: rgb(139 150 255 / 0.28);
+  --glow-2: rgb(70 150 255 / 0.22);
+  --glow-3: rgb(110 120 255 / 0.16);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 16px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 16px 40px rgb(0 0 0 / 0.6);
+  --shadow-glass: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 32px rgb(0 0 0 / 0.45);
+}
+
+:root {
+  --font-sans:
+    var(--font-onest), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-nav: 0.875rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-headline: 1.75rem;
+
+  --leading-tight: 1.15;
+  --leading-body: 1.55;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-drawer: 30;
+  --z-toast: 50;
+
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-distance: 8px;
+
+  --control-height: 2.25rem;
+  --sidebar-width: 248px;
+  --sidebar-rail-width: 64px;
+  --news-width: 300px;
+  --content-max: 720px;
+}
+
+@media (min-width: 760px) {
+  :root {
+    --text-headline: 2.25rem;
+  }
+}
+
+@media (pointer: coarse) {
+  :root {
+    --control-height: 2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-distance: 0px;
+  }
+}
