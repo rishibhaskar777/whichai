@@ -117,6 +117,13 @@
   }
 }
 
+.dialog .panel {
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: inherit;
+}
+
 .panel {
   display: flex;
   flex-direction: column;
@@ -148,23 +155,39 @@
 .provider {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: var(--space-3);
   width: 100%;
   min-height: 2.75rem;
   padding: 0 var(--space-4);
   border: 1px solid var(--border-strong);
-  border-radius: var(--radius-md);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
   font-size: var(--text-nav);
   font-weight: var(--weight-medium);
   text-decoration: none;
   transition:
+    background-color var(--duration-fast) var(--ease-out),
     opacity var(--duration-fast) var(--ease-out),
     transform var(--duration-fast) var(--ease-out);
 }
 
+.mark,
+.spinner {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+/* The label stays centred while the icon sits at the left edge. */
+.providerLabel {
+  flex: 1;
+  padding-right: 18px;
+  text-align: center;
+}
+
 .provider:hover:not([aria-disabled="true"]) {
-  opacity: 0.88;
+  background: var(--surface-2);
 }
 
 .provider:active:not([aria-disabled="true"]) {
@@ -181,22 +204,59 @@
   opacity: 1;
 }
 
-/* Google's sign-in guidelines: white button in light themes, #131314 in dark. */
-.google {
-  border-color: light-dark(#747775, #8e918f);
-  background: light-dark(#ffffff, #131314);
-  color: light-dark(#1f1f1f, #e3e3e3);
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-on-glass);
+  font-size: var(--text-sm);
 }
 
-.github {
-  border-color: transparent;
-  background: light-dark(#24292f, #f0f6fc);
-  color: light-dark(#ffffff, #1f2328);
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.noticeSlot {
+  min-height: 0;
+}
+
+.notice {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: var(--text-nav);
+  animation: notice-in var(--duration-fast) var(--ease-out);
+}
+
+@keyframes notice-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.dismiss {
+  align-self: center;
+  min-height: 2.75rem;
+  padding: 0 var(--space-3);
+  border: 0;
+  background: transparent;
+  color: var(--text-on-glass);
+  font-size: var(--text-nav);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.dismiss:hover {
+  color: var(--text);
 }
 
 .spinner {
-  width: 18px;
-  height: 18px;
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
@@ -209,23 +269,14 @@
   }
 }
 
-.error,
-.notice {
+.error {
   width: 100%;
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
   font-size: var(--text-nav);
-}
-
-.error {
   border-color: var(--status-danger);
   color: var(--status-danger);
-}
-
-.notice {
-  background: var(--surface-2);
-  color: var(--text);
 }
 
 .fine {
@@ -278,6 +329,11 @@
     .dialog[open] {
       transform: translateY(100%);
     }
+  }
+
+  .dialog .panel {
+    max-height: calc(100dvh - 1rem);
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
   }
 
   .panel {

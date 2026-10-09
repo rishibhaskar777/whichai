@@ -55,22 +55,107 @@ describe("SignInPanel", () => {
     ).toHaveAttribute("href", "/api/auth/sign-in/github?next=%2Fprojects");
   });
 
-  it("shows only the providers that are set up", () => {
-    renderPanel({ providers: { google: false, github: true } });
+  it("always lists every option in order, with an or divider", () => {
+    renderPanel({ providers: none });
+    const labels = [...document.querySelectorAll("a, button")]
+      .map((element) => element.textContent)
+      .filter((text) => text?.startsWith("Continue with "));
+    expect(labels).toEqual([
+      "Continue with Google",
+      "Continue with GitHub",
+      "Continue with Microsoft",
+      "Continue with Apple",
+      "Continue with email",
+      "Continue with phone number",
+    ]);
+    expect(screen.getByText("or")).toBeInTheDocument();
+  });
+
+  it("never shows a configuration error in the popup", () => {
+    renderPanel({ providers: none, error: "not-configured" });
+    expect(screen.queryByText(/not configured/i)).toBeNull();
+    expect(screen.queryByRole("alert")).toBeNull();
+  });
+
+  it("shows coming soon for Google and GitHub when they are not configured", async () => {
+    const user = userEvent.setup();
+    renderPanel({ providers: none });
     expect(
-      screen.queryByRole("link", { name: "Continue with Google" }),
-    ).not.toBeInTheDocument();
+      screen.queryByRole("link", { name: /Continue with (Google|GitHub)/ }),
+    ).toBeNull();
+
+    await user.click(
+      screen.getByRole("button", { name: "Continue with Google" }),
+    );
     expect(
-      screen.getByRole("link", { name: "Continue with GitHub" }),
+      screen.getByText("Google sign-in is coming in an upcoming update."),
+    ).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("button", { name: "Continue with GitHub" }),
+    );
+    expect(
+      screen.getByText("GitHub sign-in is coming in an upcoming update."),
     ).toBeInTheDocument();
   });
 
-  it("says sign-in is not configured instead of showing buttons", () => {
-    renderPanel({ providers: none });
+  it("starts OAuth for Google and GitHub when they are configured", () => {
+    renderPanel({ providers: both });
     expect(
-      screen.getByText("Sign-in is not configured on this server."),
-    ).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /Continue with/ })).toBeNull();
+      screen.getByRole("link", { name: "Continue with Google" }),
+    ).toHaveAttribute("href", "/api/auth/sign-in/google?next=%2F");
+    expect(
+      screen.getByRole("link", { name: "Continue with GitHub" }),
+    ).toHaveAttribute("href", "/api/auth/sign-in/github?next=%2F");
+  });
+
+  it.each([
+    [
+      "Continue with Microsoft",
+      "Microsoft sign-in is coming in an upcoming update.",
+    ],
+    ["Continue with Apple", "Apple sign-in is coming in an upcoming update."],
+    ["Continue with email", "Email sign-in is coming in an upcoming update."],
+    [
+      "Continue with phone number",
+      "Phone number sign-in is coming in an upcoming update.",
+    ],
+  ])(
+    "%s shows its message and makes no network request",
+    async (name, message) => {
+      const user = userEvent.setup();
+      const fetchMock = vi.fn();
+      vi.stubGlobal("fetch", fetchMock);
+      renderPanel();
+
+      await user.click(screen.getByRole("button", { name }));
+
+      expect(screen.getByText(message)).toBeInTheDocument();
+      expect(fetchMock).not.toHaveBeenCalled();
+      expect(document.querySelector("input")).toBeNull();
+      vi.unstubAllGlobals();
+    },
+  );
+
+  it("announces the message politely and replaces the previous one", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+
+    await user.click(
+      screen.getByRole("button", { name: "Continue with Microsoft" }),
+    );
+    const live = screen
+      .getByText(/Microsoft sign-in is coming/)
+      .closest("[aria-live]");
+    expect(live).toHaveAttribute("aria-live", "polite");
+
+    await user.click(
+      screen.getByRole("button", { name: "Continue with Apple" }),
+    );
+    expect(screen.queryByText(/Microsoft sign-in is coming/)).toBeNull();
+    expect(screen.getAllByText(/is coming in an upcoming update/)).toHaveLength(
+      1,
+    );
   });
 
   it("shows a friendly error", () => {
@@ -93,9 +178,10 @@ describe("SignInPanel", () => {
     expect(google).toHaveAttribute("aria-disabled", "true");
     expect(google).toHaveAttribute("data-loading", "true");
     expect(github).toHaveAttribute("aria-disabled", "true");
-    expect(screen.getByRole("status")).toHaveTextContent(
-      "Opening Google sign-in",
-    );
+    expect(
+      screen.getByRole("button", { name: "Continue with Microsoft" }),
+    ).toHaveAttribute("aria-disabled", "true");
+    expect(screen.getByText("Opening Google sign-in")).toBeInTheDocument();
   });
 
   it("has no serious accessibility violations", async () => {
@@ -136,6 +222,22 @@ describe("sign-in popup", () => {
     await user.click(
       within(signInDialog()).getByRole("button", { name: "Close sign-in" }),
     );
+    expect(signInDialog()).not.toHaveAttribute("open");
+    expect(signIn).toHaveFocus();
+  });
+
+  it("Continue without signing in closes the popup and returns focus", async () => {
+    const user = userEvent.setup();
+    renderShell(null);
+    const [signIn] = screen.getAllByRole("button", { name: "Sign in" });
+    await user.click(signIn as HTMLElement);
+
+    await user.click(
+      within(signInDialog()).getByRole("button", {
+        name: "Continue without signing in",
+      }),
+    );
+
     expect(signInDialog()).not.toHaveAttribute("open");
     expect(signIn).toHaveFocus();
   });

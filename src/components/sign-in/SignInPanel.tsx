@@ -1,13 +1,51 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentType, type SVGProps } from "react";
+import { MailIcon, PhoneIcon, UserIcon } from "@/components/icons";
 import { Wordmark } from "@/components/wordmark/Wordmark";
 import { AUTH_ERRORS, type AuthErrorCode } from "@/lib/auth/errors";
 import type { ProviderAvailability } from "@/lib/auth/config";
-import type { ProviderId } from "@/lib/env";
-import { GitHubMark, GoogleMark } from "./ProviderMarks";
+import { GitHubMark, GoogleMark, MicrosoftMark } from "./ProviderMarks";
 import styles from "./SignIn.module.css";
+
+type OptionId = "google" | "github" | "microsoft" | "apple" | "email" | "phone";
+
+interface Option {
+  id: OptionId;
+  label: string;
+  name: string;
+  Mark: ComponentType<SVGProps<SVGSVGElement>>;
+}
+
+/* Apple's rules require its own button style, so it gets a neutral icon until it is built. */
+const PRIMARY_OPTIONS: readonly Option[] = [
+  { id: "google", label: "Google", name: "Google", Mark: GoogleMark },
+  { id: "github", label: "GitHub", name: "GitHub", Mark: GitHubMark },
+  {
+    id: "microsoft",
+    label: "Microsoft",
+    name: "Microsoft",
+    Mark: MicrosoftMark,
+  },
+  { id: "apple", label: "Apple", name: "Apple", Mark: UserIcon },
+];
+
+const SECONDARY_OPTIONS: readonly Option[] = [
+  { id: "email", label: "email", name: "Email", Mark: MailIcon },
+  {
+    id: "phone",
+    label: "phone number",
+    name: "Phone number",
+    Mark: PhoneIcon,
+  },
+];
+
+type LiveProvider = "google" | "github";
+
+function isLive(id: OptionId): id is LiveProvider {
+  return id === "google" || id === "github";
+}
 
 interface SignInPanelProps {
   providers: ProviderAvailability;
@@ -15,13 +53,10 @@ interface SignInPanelProps {
   headingLevel: "h1" | "h2";
   titleId: string;
   error?: AuthErrorCode | null;
+  /* The dialog passes this; the standalone page falls back to a link. */
+  onDismiss?: () => void;
   onNavigate?: () => void;
 }
-
-const PROVIDER_LABELS: Record<ProviderId, string> = {
-  google: "Google",
-  github: "GitHub",
-};
 
 export function SignInPanel({
   providers,
@@ -29,14 +64,13 @@ export function SignInPanel({
   headingLevel: Heading,
   titleId,
   error = null,
+  onDismiss,
   onNavigate,
 }: SignInPanelProps) {
-  const [loading, setLoading] = useState<ProviderId | null>(null);
-  const available = (["google", "github"] as const).filter(
-    (provider) => providers[provider],
+  const [loading, setLoading] = useState<LiveProvider | null>(null);
+  const [notice, setNotice] = useState<{ text: string; count: number } | null>(
+    null,
   );
-  const notConfigured = available.length === 0;
-  const message = notConfigured ? AUTH_ERRORS["not-configured"] : null;
 
   // Coming back with the browser's back button restores this page as it was.
   useEffect(() => {
@@ -46,6 +80,61 @@ export function SignInPanel({
     window.addEventListener("pageshow", reset);
     return () => window.removeEventListener("pageshow", reset);
   }, []);
+
+  const showComingSoon = (option: Option) =>
+    setNotice((current) => ({
+      text: `${option.name} sign-in is coming in an upcoming update.`,
+      count: (current?.count ?? 0) + 1,
+    }));
+
+  const renderOption = (option: Option) => {
+    const { id, Mark } = option;
+    const text = `Continue with ${option.label}`;
+
+    if (isLive(id) && providers[id]) {
+      const busy = loading !== null;
+      return (
+        <a
+          key={id}
+          href={`/api/auth/sign-in/${id}?next=${encodeURIComponent(next)}`}
+          className={styles.provider}
+          aria-disabled={busy}
+          data-loading={loading === id}
+          onClick={(event) => {
+            if (busy) {
+              event.preventDefault();
+              return;
+            }
+            setLoading(id);
+          }}
+        >
+          {loading === id ? (
+            <span className={styles.spinner} aria-hidden="true" />
+          ) : (
+            <Mark className={styles.mark} />
+          )}
+          <span className={styles.providerLabel}>{text}</span>
+        </a>
+      );
+    }
+
+    return (
+      <button
+        key={id}
+        type="button"
+        className={styles.provider}
+        aria-disabled={loading !== null}
+        onClick={() => {
+          if (loading === null) showComingSoon(option);
+        }}
+      >
+        <Mark className={styles.mark} />
+        <span className={styles.providerLabel}>{text}</span>
+      </button>
+    );
+  };
+
+  const visibleError = error && error !== "not-configured" ? error : null;
 
   return (
     <div className={styles.panel}>
@@ -59,49 +148,41 @@ export function SignInPanel({
         Sign in to keep your plans. For now your plans stay in this browser.
       </p>
 
-      {error && !notConfigured ? (
+      {visibleError ? (
         <p role="alert" className={styles.error}>
-          {AUTH_ERRORS[error]}
+          {AUTH_ERRORS[visibleError]}
         </p>
       ) : null}
 
-      {message ? (
-        <p role="status" className={styles.notice}>
-          {message}
-        </p>
-      ) : (
-        <div className={styles.buttons}>
-          {available.map((provider) => {
-            const busy = loading !== null;
-            const Mark = provider === "google" ? GoogleMark : GitHubMark;
-            return (
-              <a
-                key={provider}
-                href={`/api/auth/sign-in/${provider}?next=${encodeURIComponent(next)}`}
-                className={`${styles.provider} ${styles[provider]}`}
-                aria-disabled={busy}
-                data-loading={loading === provider}
-                onClick={(event) => {
-                  if (busy) {
-                    event.preventDefault();
-                    return;
-                  }
-                  setLoading(provider);
-                }}
-              >
-                {loading === provider ? (
-                  <span className={styles.spinner} aria-hidden="true" />
-                ) : (
-                  <Mark />
-                )}
-                <span>Continue with {PROVIDER_LABELS[provider]}</span>
-              </a>
-            );
-          })}
-          <p role="status" className={styles.srOnly}>
-            {loading ? `Opening ${PROVIDER_LABELS[loading]} sign-in` : ""}
-          </p>
+      <div className={styles.buttons}>
+        {PRIMARY_OPTIONS.map(renderOption)}
+        <div className={styles.divider}>
+          <span>or</span>
         </div>
+        {SECONDARY_OPTIONS.map(renderOption)}
+
+        <div role="status" aria-live="polite" className={styles.noticeSlot}>
+          {notice ? (
+            <p key={notice.count} className={styles.notice}>
+              {notice.text}
+            </p>
+          ) : null}
+        </div>
+        <p role="status" className={styles.srOnly}>
+          {loading
+            ? `Opening ${loading === "google" ? "Google" : "GitHub"} sign-in`
+            : ""}
+        </p>
+      </div>
+
+      {onDismiss ? (
+        <button type="button" className={styles.dismiss} onClick={onDismiss}>
+          Continue without signing in
+        </button>
+      ) : (
+        <Link href={next} className={styles.dismiss}>
+          Continue without signing in
+        </Link>
       )}
 
       <p className={styles.fine}>

@@ -80,6 +80,7 @@ export function SignInProvider({ providers, children }: SignInProviderProps) {
           next={safeRedirectPath(pathname)}
           headingLevel="h2"
           titleId="sign-in-dialog-title"
+          onDismiss={close}
           onNavigate={close}
         />
         <button
