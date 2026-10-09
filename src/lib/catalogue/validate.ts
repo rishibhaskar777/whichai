@@ -85,6 +85,14 @@ export function findProblems(catalogue: Catalogue): string[] {
         problems.push(`tool ${tool.id}: unknown job ${jobId}`);
       }
     }
+    for (const includedId of tool.includes) {
+      if (!jobIds.has(includedId)) {
+        problems.push(`tool ${tool.id}: includes unknown job ${includedId}`);
+      }
+      if (tool.jobs.includes(includedId)) {
+        problems.push(`tool ${tool.id}: includes a job it already lists`);
+      }
+    }
     for (const otherId of tool.worksWith) {
       if (!toolIds.has(otherId)) {
         problems.push(`tool ${tool.id}: worksWith unknown tool ${otherId}`);

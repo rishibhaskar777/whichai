@@ -89,6 +89,8 @@ export const toolSchema = z
     pricing: text(200),
     platforms: z.array(platformSchema).min(1),
     worksWith: z.array(slug),
+    /** Jobs the tool also does on its own, such as hosting in a site builder. */
+    includes: z.array(slug).default([]),
     strengths: z.array(text(110)).min(1).max(4),
     watchOutFor: z.array(text(120)).min(1).max(4),
     fitScores: z.record(slug, z.number().int().min(1).max(5)),

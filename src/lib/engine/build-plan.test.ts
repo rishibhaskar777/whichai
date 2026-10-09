@@ -307,6 +307,59 @@ describe("level and budget in a real plan", () => {
   });
 });
 
+describe("tools that bundle another job", () => {
+  const goal = goalOf("pick-an-ai", [
+    taskChip("ui-templates", "UI templates"),
+    taskChip("hosting", "Hosting"),
+  ]);
+  const withWix = () =>
+    buildPlan(goal, { ...NO_OPTIONS, toolsUsed: new Set(["wix"]) });
+
+  it("skips a later job that the pick already covers, and says so", () => {
+    const jobs = withWix().levels.simple.jobs;
+
+    expect(jobs.map((job) => job.jobId)).toEqual(["ui-templates"]);
+    expect(jobs[0]?.toolId).toBe("wix");
+    expect(jobs[0]?.why).toMatch(/also covers hosting/);
+  });
+
+  it("names the bundling tool wherever the skipped job is mentioned", () => {
+    const template = catalogue.goals.find((g) => g.id === "business-website")!;
+    const plan = buildPlan(goalOf("business-website"), {
+      ...NO_OPTIONS,
+      toolsUsed: new Set(["wix"]),
+    });
+    const text = collectStrings(plan.levels.polished).join(" ");
+    expect(template.levels.polished.jobs).toContain("hosting");
+    expect(plan.levels.polished.jobs.map((job) => job.jobId)).not.toContain(
+      "hosting",
+    );
+    expect(text).not.toMatch(/your hosting/);
+  });
+
+  it("keeps the later job when the pick does not cover it", () => {
+    const jobs = buildPlan(goal, {
+      ...NO_OPTIONS,
+      toolsUsed: new Set(["astro-themes"]),
+    }).levels.advanced.jobs;
+
+    expect(jobs.map((job) => job.jobId)).toEqual(["ui-templates", "hosting"]);
+  });
+
+  it("does not skip a job that came earlier in the plan", () => {
+    const earlier = goalOf("pick-an-ai", [
+      taskChip("hosting", "Hosting"),
+      taskChip("ui-templates", "UI templates"),
+    ]);
+    const jobs = buildPlan(earlier, {
+      ...NO_OPTIONS,
+      toolsUsed: new Set(["wix"]),
+    }).levels.simple.jobs;
+
+    expect(jobs.map((job) => job.jobId)).toEqual(["hosting", "ui-templates"]);
+  });
+});
+
 describe("tools already used", () => {
   it("tags a used tool Keep and puts it in the plan", () => {
     const base = buildPlan(goalOf("study-plan"), NO_OPTIONS);

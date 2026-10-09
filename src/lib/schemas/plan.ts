@@ -83,7 +83,7 @@ export const jobRecommendationSchema = z.object({
   toolId: text(60),
   toolName: text(60),
   kind: toolKindSchema,
-  why: text(300),
+  why: text(400),
   tag: tagSchema,
   pricing: text(200),
   watchOutFor: text(300),

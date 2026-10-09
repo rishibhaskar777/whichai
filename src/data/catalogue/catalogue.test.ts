@@ -224,6 +224,13 @@ describe("findProblems", () => {
     );
   });
 
+  it("reports an included job that is unknown or already listed", () => {
+    const unknown = withTool({ includes: ["nope"] });
+    expect(findProblems(unknown).join()).toMatch(/includes unknown job nope/);
+    const listed = withTool({ includes: [catalogue.tools[0]!.jobs[0]!] });
+    expect(findProblems(listed).join()).toMatch(/already lists/);
+  });
+
   it("reports duplicate ids and non-root links", () => {
     const duplicate = {
       ...catalogue,

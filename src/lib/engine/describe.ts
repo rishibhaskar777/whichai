@@ -16,6 +16,13 @@ export function whyText(
   return tool.summary;
 }
 
+/** Tells the reader which separate tools they can skip because of this one. */
+export function coverText(covers: readonly Job[]): string {
+  if (covers.length === 0) return "";
+  const names = joinNames(covers.map((job) => job.name.toLowerCase()));
+  return ` It also covers ${names}, so you need no separate tool for that.`;
+}
+
 /**
  * Unverified records never show a price. A verified record carries the text
  * its reviewer wrote in `pricing`.

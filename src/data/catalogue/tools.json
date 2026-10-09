@@ -157,7 +157,10 @@
       "A link does not prove the summary is right. Open the source.",
       "Web pages it cites can be wrong or biased."
     ],
-    "fitScores": { "research-with-sources": 5, "ai-assistant": 3 },
+    "fitScores": {
+      "research-with-sources": 5,
+      "ai-assistant": 3
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.perplexity.ai",
     "verified": false,
@@ -213,7 +216,9 @@
       "It focuses on academic papers, so it is weaker for general web questions.",
       "Read the paper before you rely on an extracted detail."
     ],
-    "fitScores": { "research-with-sources": 4 },
+    "fitScores": {
+      "research-with-sources": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://elicit.com",
     "verified": false,
@@ -239,7 +244,9 @@
       "Not every paper it finds is free to read.",
       "It lists papers but does not judge their quality."
     ],
-    "fitScores": { "research-with-sources": 4 },
+    "fitScores": {
+      "research-with-sources": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://scholar.google.com",
     "verified": false,
@@ -265,7 +272,9 @@
       "Translations can be old and dated in language.",
       "Note which edition and translator you read."
     ],
-    "fitScores": { "source-library": 5 },
+    "fitScores": {
+      "source-library": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.gutenberg.org",
     "verified": false,
@@ -291,7 +300,9 @@
       "Scans can be hard to search or read.",
       "Borrowing rules apply to some books."
     ],
-    "fitScores": { "source-library": 4 },
+    "fitScores": {
+      "source-library": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://archive.org",
     "verified": false,
@@ -317,7 +328,9 @@
       "Most translations are older public-domain ones. Name the translator when you quote.",
       "It is not a scholarly edition. Cross-check key claims."
     ],
-    "fitScores": { "source-library": 4 },
+    "fitScores": {
+      "source-library": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://sacred-texts.com",
     "verified": false,
@@ -343,7 +356,9 @@
       "Review every suggestion. It can write insecure or wrong code.",
       "Students and teachers may have separate access terms."
     ],
-    "fitScores": { "coding-assistant": 5 },
+    "fitScores": {
+      "coding-assistant": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://github.com",
     "verified": false,
@@ -369,7 +384,9 @@
       "It is easy to accept changes you have not read.",
       "Usage limits on free plans can end a session early."
     ],
-    "fitScores": { "coding-assistant": 5 },
+    "fitScores": {
+      "coding-assistant": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://cursor.com",
     "verified": false,
@@ -395,7 +412,9 @@
       "You need to be comfortable with the command line and Git.",
       "Review every change before you keep it."
     ],
-    "fitScores": { "coding-assistant": 4 },
+    "fitScores": {
+      "coding-assistant": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.anthropic.com",
     "verified": false,
@@ -413,6 +432,7 @@
     "pricing": "[verify]",
     "platforms": ["web", "android", "ios"],
     "worksWith": [],
+    "includes": ["hosting"],
     "strengths": [
       "coding and running a project with nothing to install",
       "sharing a working project by link"
@@ -421,7 +441,9 @@
       "Free plan limits on AI help and hosting can change.",
       "Projects can be tied to the platform."
     ],
-    "fitScores": { "coding-assistant": 4 },
+    "fitScores": {
+      "coding-assistant": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://replit.com",
     "verified": false,
@@ -439,6 +461,7 @@
     "pricing": "[verify]",
     "platforms": ["web"],
     "worksWith": ["supabase"],
+    "includes": ["hosting"],
     "strengths": [
       "a working app draft from a description",
       "no setup on your computer"
@@ -447,7 +470,9 @@
       "The draft can hide bugs. Test every feature before sharing.",
       "Check login and data rules carefully before real users arrive."
     ],
-    "fitScores": { "coding-assistant": 4 },
+    "fitScores": {
+      "coding-assistant": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://lovable.dev",
     "verified": false,
@@ -473,7 +498,10 @@
       "Read the generated code before you ship it.",
       "It is aimed at React, so it suits React projects best."
     ],
-    "fitScores": { "coding-assistant": 3, "ui-templates": 4 },
+    "fitScores": {
+      "coding-assistant": 3,
+      "ui-templates": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://vercel.com",
     "verified": false,
@@ -499,7 +527,9 @@
       "Check the terms before using images commercially.",
       "Text inside images is often wrong."
     ],
-    "fitScores": { "image-generation": 5 },
+    "fitScores": {
+      "image-generation": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.midjourney.com",
     "verified": false,
@@ -525,7 +555,9 @@
       "You need a capable computer and some setup.",
       "Each model has its own licence. Read it before commercial use."
     ],
-    "fitScores": { "image-generation": 4 },
+    "fitScores": {
+      "image-generation": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://stability.ai",
     "verified": false,
@@ -548,7 +580,9 @@
       "Generation credits are limited on free use.",
       "Check the licence terms for your kind of use."
     ],
-    "fitScores": { "image-generation": 4 },
+    "fitScores": {
+      "image-generation": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.adobe.com",
     "verified": false,
@@ -574,7 +608,9 @@
       "Clip length and credits are limited. Check before planning a long video.",
       "Results vary a lot between tries."
     ],
-    "fitScores": { "video-generation": 5 },
+    "fitScores": {
+      "video-generation": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://runwayml.com",
     "verified": false,
@@ -600,7 +636,9 @@
       "Clips are short and credits are limited.",
       "Faces and hands can look wrong."
     ],
-    "fitScores": { "video-generation": 4 },
+    "fitScores": {
+      "video-generation": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://lumalabs.ai",
     "verified": false,
@@ -626,7 +664,9 @@
       "Use only faces and voices you have permission to use.",
       "Viewers may find avatar videos less personal."
     ],
-    "fitScores": { "video-generation": 4 },
+    "fitScores": {
+      "video-generation": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.heygen.com",
     "verified": false,
@@ -652,7 +692,9 @@
       "Check that it is available where you live. Some countries restrict it.",
       "Some effects and exports may need a paid plan."
     ],
-    "fitScores": { "video-editing": 4 },
+    "fitScores": {
+      "video-editing": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.capcut.com",
     "verified": false,
@@ -678,7 +720,9 @@
       "It has fewer advanced features than professional editors.",
       "Export quality options may depend on your plan."
     ],
-    "fitScores": { "video-editing": 4 },
+    "fitScores": {
+      "video-editing": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://clipchamp.com",
     "verified": false,
@@ -704,7 +748,9 @@
       "It needs a fairly powerful computer.",
       "The learning curve is steep for a first video."
     ],
-    "fitScores": { "video-editing": 4 },
+    "fitScores": {
+      "video-editing": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.blackmagicdesign.com",
     "verified": false,
@@ -730,7 +776,9 @@
       "It is a subscription product, with a trial rather than a free plan.",
       "Powerful but takes time to learn."
     ],
-    "fitScores": { "video-editing": 4 },
+    "fitScores": {
+      "video-editing": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.adobe.com",
     "verified": false,
@@ -756,7 +804,10 @@
       "Check the transcript for errors before you rely on it.",
       "Free plans limit transcription and exports."
     ],
-    "fitScores": { "video-editing": 4, "voice-and-audio": 3 },
+    "fitScores": {
+      "video-editing": 4,
+      "voice-and-audio": 3
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.descript.com",
     "verified": false,
@@ -779,7 +830,9 @@
       "Clone only voices you have permission to use.",
       "Check the licence if you publish the audio commercially."
     ],
-    "fitScores": { "voice-and-audio": 5 },
+    "fitScores": {
+      "voice-and-audio": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://elevenlabs.io",
     "verified": false,
@@ -805,7 +858,9 @@
       "It is not an AI voice tool. It records and edits sound only.",
       "The interface takes time to learn."
     ],
-    "fitScores": { "voice-and-audio": 4 },
+    "fitScores": {
+      "voice-and-audio": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.audacityteam.org",
     "verified": false,
@@ -831,7 +886,9 @@
       "Generated slides still need your facts checked and your own words.",
       "Exporting may be limited on free plans."
     ],
-    "fitScores": { "presentation-maker": 4 },
+    "fitScores": {
+      "presentation-maker": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://gamma.app",
     "verified": false,
@@ -857,7 +914,9 @@
       "It has fewer design extras than dedicated tools.",
       "Complex animation is limited."
     ],
-    "fitScores": { "presentation-maker": 4 },
+    "fitScores": {
+      "presentation-maker": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://workspace.google.com",
     "verified": false,
@@ -883,7 +942,9 @@
       "Some features need a paid Microsoft 365 plan.",
       "Files may look different on another computer if fonts are missing."
     ],
-    "fitScores": { "presentation-maker": 4 },
+    "fitScores": {
+      "presentation-maker": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.microsoft.com",
     "verified": false,
@@ -945,7 +1006,9 @@
       "It suggests. You decide. Do not accept every change.",
       "Your text is sent to its servers. Read its privacy terms."
     ],
-    "fitScores": { "writing-and-editing": 4 },
+    "fitScores": {
+      "writing-and-editing": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.grammarly.com",
     "verified": false,
@@ -971,7 +1034,9 @@
       "Its free version has limits.",
       "It catches errors but does not improve your argument."
     ],
-    "fitScores": { "writing-and-editing": 3 },
+    "fitScores": {
+      "writing-and-editing": 3
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://languagetool.org",
     "verified": false,
@@ -997,7 +1062,9 @@
       "It can get complicated. Start with one page.",
       "AI features may need a paid plan."
     ],
-    "fitScores": { "note-taking": 4 },
+    "fitScores": {
+      "note-taking": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.notion.com",
     "verified": false,
@@ -1023,7 +1090,9 @@
       "Syncing across devices may cost extra.",
       "It takes time to set up a system that suits you."
     ],
-    "fitScores": { "note-taking": 4 },
+    "fitScores": {
+      "note-taking": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://obsidian.md",
     "verified": false,
@@ -1049,7 +1118,9 @@
       "The interface takes a little time to learn.",
       "The iPhone app may be paid."
     ],
-    "fitScores": { "flashcards-and-quizzes": 5 },
+    "fitScores": {
+      "flashcards-and-quizzes": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://apps.ankiweb.net",
     "verified": false,
@@ -1075,7 +1146,9 @@
       "Some study modes may need a paid plan.",
       "Shared sets can contain mistakes."
     ],
-    "fitScores": { "flashcards-and-quizzes": 4 },
+    "fitScores": {
+      "flashcards-and-quizzes": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://quizlet.com",
     "verified": false,
@@ -1101,7 +1174,9 @@
       "Most themes need a build step and some command-line use.",
       "Check each theme's licence."
     ],
-    "fitScores": { "ui-templates": 4 },
+    "fitScores": {
+      "ui-templates": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://astro.build",
     "verified": false,
@@ -1119,6 +1194,7 @@
     "pricing": "[verify]",
     "platforms": ["web"],
     "worksWith": [],
+    "includes": ["hosting"],
     "strengths": [
       "designing and publishing a site visually",
       "built-in animation effects"
@@ -1127,7 +1203,10 @@
       "Your site lives on its platform. Check what you can export.",
       "Custom domains may need a paid plan."
     ],
-    "fitScores": { "ui-templates": 4, "design-tool": 3 },
+    "fitScores": {
+      "ui-templates": 4,
+      "design-tool": 3
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.framer.com",
     "verified": false,
@@ -1145,6 +1224,7 @@
     "pricing": "[verify]",
     "platforms": ["web"],
     "worksWith": [],
+    "includes": ["hosting"],
     "strengths": [
       "detailed layout control without code",
       "built-in hosting and content editing"
@@ -1153,7 +1233,9 @@
       "It has a learning curve.",
       "Hosting and site plans have limits you should check."
     ],
-    "fitScores": { "ui-templates": 4 },
+    "fitScores": {
+      "ui-templates": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://webflow.com",
     "verified": false,
@@ -1171,6 +1253,7 @@
     "pricing": "[verify]",
     "platforms": ["web"],
     "worksWith": [],
+    "includes": ["hosting"],
     "strengths": [
       "a drag-and-drop editor with many templates",
       "hosting, forms and shop tools in one place"
@@ -1179,7 +1262,9 @@
       "Moving your site to another service later can be difficult.",
       "Your own domain may need a paid plan."
     ],
-    "fitScores": { "ui-templates": 4 },
+    "fitScores": {
+      "ui-templates": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.wix.com",
     "verified": false,
@@ -1205,7 +1290,10 @@
       "It expects React and Tailwind CSS.",
       "Left unchanged, every site built with it looks alike."
     ],
-    "fitScores": { "component-library": 5, "ui-templates": 3 },
+    "fitScores": {
+      "component-library": 5,
+      "ui-templates": 3
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://ui.shadcn.com",
     "verified": false,
@@ -1231,7 +1319,9 @@
       "The default look is easy to recognise. Customise it.",
       "Some advanced components may be paid."
     ],
-    "fitScores": { "component-library": 4 },
+    "fitScores": {
+      "component-library": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://mui.com",
     "verified": false,
@@ -1257,7 +1347,9 @@
       "It needs Tailwind CSS set up first.",
       "Themes can make sites look alike."
     ],
-    "fitScores": { "component-library": 4 },
+    "fitScores": {
+      "component-library": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://daisyui.com",
     "verified": false,
@@ -1283,7 +1375,9 @@
       "Heavy motion slows pages. Respect reduced-motion settings.",
       "You need to know basic React."
     ],
-    "fitScores": { "animation-library": 5 },
+    "fitScores": {
+      "animation-library": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://motion.dev",
     "verified": false,
@@ -1309,7 +1403,9 @@
       "The learning curve is steep.",
       "Check the licence terms for your kind of use."
     ],
-    "fitScores": { "animation-library": 5 },
+    "fitScores": {
+      "animation-library": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://gsap.com",
     "verified": false,
@@ -1335,7 +1431,9 @@
       "Large animations slow down a page.",
       "You still need a tool to make the animation."
     ],
-    "fitScores": { "animation-library": 3 },
+    "fitScores": {
+      "animation-library": 3
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://lottiefiles.com",
     "verified": false,
@@ -1387,7 +1485,9 @@
       "You need to know React first.",
       "Its server features take time to learn."
     ],
-    "fitScores": { "framework": 5 },
+    "fitScores": {
+      "framework": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://nextjs.org",
     "verified": false,
@@ -1432,7 +1532,9 @@
       "It is a library, not a full framework. You choose routing and structure yourself.",
       "Beginners face many setup choices."
     ],
-    "fitScores": { "framework": 4 },
+    "fitScores": {
+      "framework": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://react.dev",
     "verified": false,
@@ -1476,7 +1578,9 @@
       "It is less suited to apps with many interactive screens.",
       "You still need some HTML and command-line comfort."
     ],
-    "fitScores": { "framework": 5 },
+    "fitScores": {
+      "framework": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://astro.build",
     "verified": false,
@@ -1510,7 +1614,9 @@
       "Publishing to app stores has its own steps and fees.",
       "It suits mobile apps, not ordinary websites."
     ],
-    "fitScores": { "framework": 3 },
+    "fitScores": {
+      "framework": 3
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://expo.dev",
     "verified": false,
@@ -1536,7 +1642,9 @@
       "A developer needs to set up the editing studio.",
       "Free limits and plans may change."
     ],
-    "fitScores": { "content-management": 4 },
+    "fitScores": {
+      "content-management": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.sanity.io",
     "verified": false,
@@ -1562,7 +1670,9 @@
       "Self-hosting means you run and secure the server.",
       "A hosted version, if you want one, is a paid service."
     ],
-    "fitScores": { "content-management": 4 },
+    "fitScores": {
+      "content-management": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://strapi.io",
     "verified": false,
@@ -1588,7 +1698,9 @@
       "Keep plugins and themes updated. Old ones are a security risk.",
       "Hosting is a separate cost."
     ],
-    "fitScores": { "content-management": 4 },
+    "fitScores": {
+      "content-management": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://wordpress.org",
     "verified": false,
@@ -1614,7 +1726,10 @@
       "Learn its access rules before storing private data.",
       "Free projects may pause when unused."
     ],
-    "fitScores": { "database": 5, "authentication": 4 },
+    "fitScores": {
+      "database": 5,
+      "authentication": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://supabase.com",
     "verified": false,
@@ -1640,7 +1755,11 @@
       "Costs can grow with usage. Set budget alerts.",
       "Data is shaped for its own model, which can make later moves harder."
     ],
-    "fitScores": { "database": 4, "authentication": 4, "hosting": 3 },
+    "fitScores": {
+      "database": 4,
+      "authentication": 4,
+      "hosting": 3
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://firebase.google.com",
     "verified": false,
@@ -1666,7 +1785,9 @@
       "Check free tier limits before relying on it.",
       "Flexible data still needs a plan to stay tidy."
     ],
-    "fitScores": { "database": 4 },
+    "fitScores": {
+      "database": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.mongodb.com",
     "verified": false,
@@ -1692,7 +1813,9 @@
       "You manage more of the set-up yourself.",
       "Security details matter. Follow the documentation closely."
     ],
-    "fitScores": { "authentication": 4 },
+    "fitScores": {
+      "authentication": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://authjs.dev",
     "verified": false,
@@ -1715,7 +1838,9 @@
       "Free limits and per-user costs can change.",
       "Your users' accounts live on its service."
     ],
-    "fitScores": { "authentication": 4 },
+    "fitScores": {
+      "authentication": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://clerk.com",
     "verified": false,
@@ -1741,7 +1866,9 @@
       "It can be complex to configure.",
       "Costs can rise with the number of users."
     ],
-    "fitScores": { "authentication": 4 },
+    "fitScores": {
+      "authentication": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://auth0.com",
     "verified": false,
@@ -1767,7 +1894,9 @@
       "You need to complete business verification before taking real payments.",
       "Check fees and settlement times."
     ],
-    "fitScores": { "payments-india": 5 },
+    "fitScores": {
+      "payments-india": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://razorpay.com",
     "verified": false,
@@ -1793,7 +1922,9 @@
       "Check fees and settlement times.",
       "Real payments need business verification."
     ],
-    "fitScores": { "payments-india": 4 },
+    "fitScores": {
+      "payments-india": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.cashfree.com",
     "verified": false,
@@ -1819,7 +1950,9 @@
       "Check fees and onboarding steps.",
       "Real payments need business verification."
     ],
-    "fitScores": { "payments-india": 4 },
+    "fitScores": {
+      "payments-india": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://payu.in",
     "verified": false,
@@ -1845,7 +1978,9 @@
       "Free plans can limit commercial use.",
       "Check bandwidth and function limits."
     ],
-    "fitScores": { "hosting": 4 },
+    "fitScores": {
+      "hosting": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://vercel.com",
     "verified": false,
@@ -1871,7 +2006,10 @@
       "Free plans have bandwidth and form limits.",
       "Check the terms if the site earns money."
     ],
-    "fitScores": { "hosting": 4, "contact-form": 3 },
+    "fitScores": {
+      "hosting": 4,
+      "contact-form": 3
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.netlify.com",
     "verified": false,
@@ -1897,7 +2035,9 @@
       "Some Next.js features need extra set-up.",
       "Check the free limits before you rely on it."
     ],
-    "fitScores": { "hosting": 4 },
+    "fitScores": {
+      "hosting": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://pages.cloudflare.com",
     "verified": false,
@@ -1923,7 +2063,9 @@
       "Static files only. There is no server code.",
       "Check its usage limits and terms."
     ],
-    "fitScores": { "hosting": 4 },
+    "fitScores": {
+      "hosting": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://pages.github.com",
     "verified": false,
@@ -1949,7 +2091,9 @@
       "Many regions require a cookie notice.",
       "The reports can be overwhelming for a small site."
     ],
-    "fitScores": { "analytics": 4 },
+    "fitScores": {
+      "analytics": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://analytics.google.com",
     "verified": false,
@@ -1975,7 +2119,9 @@
       "The hosted service may be paid. Self-hosting is possible.",
       "It is less detailed than larger tools."
     ],
-    "fitScores": { "analytics": 4 },
+    "fitScores": {
+      "analytics": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://plausible.io",
     "verified": false,
@@ -2001,7 +2147,9 @@
       "Self-hosting means you run the server and database.",
       "A hosted version may be paid."
     ],
-    "fitScores": { "analytics": 4 },
+    "fitScores": {
+      "analytics": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://umami.is",
     "verified": false,
@@ -2027,7 +2175,9 @@
       "Free plans limit the number of submissions.",
       "Add spam protection to the form."
     ],
-    "fitScores": { "contact-form": 4 },
+    "fitScores": {
+      "contact-form": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://formspree.io",
     "verified": false,
@@ -2053,7 +2203,9 @@
       "Check submission limits on free use.",
       "Add spam protection to the form."
     ],
-    "fitScores": { "contact-form": 4 },
+    "fitScores": {
+      "contact-form": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://web3forms.com",
     "verified": false,
@@ -2079,7 +2231,9 @@
       "It looks like a Google form unless you style the page around it.",
       "You need a Google account."
     ],
-    "fitScores": { "contact-form": 3 },
+    "fitScores": {
+      "contact-form": 3
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://forms.google.com",
     "verified": false,
@@ -2105,7 +2259,9 @@
       "Check that the exported file opens and copies cleanly.",
       "Keep your own copy of the content."
     ],
-    "fitScores": { "resume-builder": 4 },
+    "fitScores": {
+      "resume-builder": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://rxresu.me",
     "verified": false,
@@ -2131,7 +2287,9 @@
       "Downloads may need a paid plan.",
       "Heavy design can be hard for applicant systems to read."
     ],
-    "fitScores": { "resume-builder": 4 },
+    "fitScores": {
+      "resume-builder": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://enhancv.com",
     "verified": false,
@@ -2157,7 +2315,9 @@
       "It takes a while to learn.",
       "Free plans limit files and team features."
     ],
-    "fitScores": { "design-tool": 5 },
+    "fitScores": {
+      "design-tool": 5
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.figma.com",
     "verified": false,
@@ -2183,7 +2343,9 @@
       "The community and plug-in library are smaller than the biggest tools.",
       "Self-hosting means you run the server."
     ],
-    "fitScores": { "design-tool": 4 },
+    "fitScores": {
+      "design-tool": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://penpot.app",
     "verified": false,
@@ -2209,7 +2371,9 @@
       "It is a subscription product, with a trial rather than a free plan.",
       "It takes time to learn."
     ],
-    "fitScores": { "design-tool": 4 },
+    "fitScores": {
+      "design-tool": 4
+    },
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.adobe.com",
     "verified": false,

@@ -25,6 +25,7 @@ function tool(id: string, patch: Partial<Tool> = {}): Tool {
     pricing: "[verify]",
     platforms: ["web"],
     worksWith: [],
+    includes: [],
     strengths: [`${id} strength`],
     watchOutFor: [`${id} caution`],
     fitScores: Object.fromEntries(jobs.map((job) => [job, 3])),

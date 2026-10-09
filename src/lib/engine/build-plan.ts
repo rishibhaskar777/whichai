@@ -23,6 +23,7 @@ import { LEVELS } from "@/lib/schemas/plan";
 import {
   compatibilityNote,
   costText,
+  coverText,
   fillToolNames,
   pricingText,
   toAlternative,
@@ -46,6 +47,8 @@ export interface BuildOptions {
 interface Picked {
   job: Job;
   selection: Selection;
+  /** Later jobs in this plan that the pick already covers on its own. */
+  covers: Job[];
 }
 
 export function jobIdsFor(
@@ -72,13 +75,14 @@ function pickTools(
   level: Level,
   options: BuildOptions,
   data: Catalogue,
-): Picked[] {
+): { picked: Picked[]; coveredBy: Map<string, Tool> } {
   const picked: Picked[] = [];
   const chosen: Tool[] = [];
+  const coveredBy = new Map<string, Tool>();
 
-  for (const jobId of jobIds) {
+  jobIds.forEach((jobId, position) => {
     const job = data.jobs.find((candidate) => candidate.id === jobId);
-    if (!job) continue;
+    if (!job || coveredBy.has(jobId)) return;
     const selection = selectForJob(jobId, data.tools, {
       level,
       budget: options.budget,
@@ -86,11 +90,21 @@ function pickTools(
       chosen,
       seed: `${template.id}:${jobId}`,
     });
-    if (!selection) continue;
+    if (!selection) return;
+
+    const covers = selection.pick.includes.flatMap((includedId) => {
+      const later = jobIds.indexOf(includedId) > position;
+      const included = data.jobs.find(
+        (candidate) => candidate.id === includedId,
+      );
+      if (!later || !included) return [];
+      coveredBy.set(includedId, selection.pick);
+      return [included];
+    });
     chosen.push(selection.pick);
-    picked.push({ job, selection });
-  }
-  return picked;
+    picked.push({ job, selection, covers });
+  });
+  return { picked, coveredBy };
 }
 
 function modelGuidanceFor(
@@ -112,7 +126,7 @@ function modelGuidanceFor(
 }
 
 function recommend(
-  { job, selection }: Picked,
+  { job, selection, covers }: Picked,
   buildPeers: readonly Tool[],
   goalLevel: GoalLevel,
   options: BuildOptions,
@@ -125,7 +139,7 @@ function recommend(
     toolId: pick.id,
     toolName: pick.name,
     kind: pick.kind,
-    why: whyText(pick, tag, outscored),
+    why: whyText(pick, tag, outscored) + coverText(covers),
     tag,
     pricing: pricingText(pick, options.budget),
     watchOutFor: watchOutText(pick, levelStretched),
@@ -171,7 +185,13 @@ function buildLevel(
 ): PlanLevel {
   const goalLevel = template.levels[level];
   const jobIds = jobIdsFor(template, goal.chips, level);
-  const picked = pickTools(jobIds, template, level, options, data);
+  const { picked, coveredBy } = pickTools(
+    jobIds,
+    template,
+    level,
+    options,
+    data,
+  );
   if (picked.length === 0) {
     throw new Error(`No tools could be chosen for ${template.id} at ${level}.`);
   }
@@ -179,9 +199,12 @@ function buildLevel(
   const buildPeers = picked
     .filter(({ job }) => job.category === "build")
     .map(({ selection }) => selection.pick);
-  const toolNames = new Map(
-    picked.map(({ job, selection }) => [job.id, selection.pick.name]),
-  );
+  const toolNames = new Map<string, string>([
+    ...[...coveredBy].map(([jobId, tool]) => [jobId, tool.name] as const),
+    ...picked.map(
+      ({ job, selection }) => [job.id, selection.pick.name] as const,
+    ),
+  ]);
   const jobsById = new Map(data.jobs.map((job) => [job.id, job]));
   const fill = (text: string) => fillToolNames(text, toolNames, jobsById);
 
