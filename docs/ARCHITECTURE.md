@@ -30,8 +30,9 @@ src/
     api/auth/          OAuth sign-in, callback and sign-out routes
     sign-in/, privacy/ sign-in page for users without JavaScript, privacy page
     .well-known/       security.txt
-    projects/, searches/, tool-library/, what-changed/, compare-plans/
-                       coming-soon pages
+    plan/              plan from a saved id or a share link
+    projects/, searches/, settings/, help/, about/, not-found
+    tool-library/, what-changed/, compare-plans/   coming-soon pages
   components/          UI components, one folder per component
     app-shell/         three-region layout, drawer, panel state
     sidebar/           navigation, sign-in button, account menu
@@ -44,11 +45,18 @@ src/
     plan-view/         level switch, toolkit, job cards, model guidance,
                        workflow, accuracy card
     copy-button/       clipboard copy with visible success and failure states
+    local-data/        provider over the storage layer, plan actions, storage notice
+    projects/, searches/, settings/, plan-route/   the pages' interface
+    toast/, dialog/, shortcuts/, state-page/, content/   shared interface pieces
     theme-control/, wordmark/, coming-soon/, icons/
   lib/
     env.ts             validated environment variables (sign-in variables are optional)
     auth/              sessions, OAuth flow, CSRF, redirect allowlist, rate limiter
     theme.ts           theme cookie name and parsing
+    preferences.ts     writes the theme and language cookies, motion attribute
+    i18n/              typed English and Hindi dictionaries, translator, provider
+    storage/           local storage layer (see below)
+    share/             share-link encode and decode
     new-plan-signal.tsx lets the sidebar reset the home flow
     plan/              goal interpreter, text matching, chip helpers
     engine/            tool selection, plan assembly, text for cards
@@ -157,6 +165,29 @@ Sign in button --> /api/auth/sign-in/{provider}   state (+ PKCE for Google) in a
 - `csrf.ts` makes the sign-out token (an HMAC of the session cookie) and checks the origin. `redirect.ts` is the path allowlist. `rate-limit.ts` is the in-memory limiter.
 - `get-session.ts` exports `getSession()` for server components and route handlers, and `getViewer()` for the layout. The layout passes the viewer and the available providers to `AppShell`, which shows the popup or the account menu.
 - `config.ts` returns `null` when sign-in is not set up, and every caller then shows the "coming soon" message.
+
+## Local data
+
+Saved plans, search history and settings live in the browser ([0009](decisions/0009-local-first-data.md)). `src/lib/storage/`:
+
+- `backend.ts`: a string key-value interface with three implementations, chosen in order: IndexedDB, localStorage, in-memory. In-memory means nothing survives the page and the interface says so.
+- `envelope.ts`: every collection is stored as `{ schemaVersion, data }`. `readEnvelope` runs registered migrations up to the current version and refuses data from a newer version.
+- `schemas.ts`: Zod schemas for `SavedPlan`, `HistoryEntry`, `Settings` and the backup file. Items are validated one by one on read and invalid ones are dropped. Each setting falls back to its default on its own.
+- `store.ts`: loads and saves the three collections, never throws, reports `full` or `unavailable`, and refuses writes past a total size limit.
+- `operations.ts`: pure functions for add, rename, duplicate, remove, restore, history grouping, backup parsing and merge or replace.
+- `catalogue-version.ts`: a hash of the catalogue data. A saved plan stores the version it was saved with; a different version shows the "Updated tools" badge.
+
+A saved plan holds the plan request (`src/lib/schemas/plan-request.ts`), not the plan, so `buildPlan` always uses current data. Limits: 100 plans, 200 history entries, 1.5 million characters in total, 1 MB for an imported file.
+
+`LocalDataProvider` keeps the data in React state, writes through a queue, applies settings to the page at once and turns failures into messages. Components only talk to `useLocalData()`.
+
+## Share links
+
+`/plan#<base64url JSON>` holds a plan request. The fragment is never sent to a server. `decodePlanRequest` rejects anything over 4 KB, any character outside base64url, invalid UTF-8 or JSON, and anything that fails the strict request schema. `/plan?id=<id>` opens a saved plan. Both rebuild with `buildPlan`.
+
+## Internationalisation
+
+`src/lib/i18n/en.ts` is the source of truth and `hi.ts` is typed to the same keys, so a missing translation fails the compile. `createI18n(locale)` gives `t`, `tn` (plurals), `rich` (placeholders that are elements) and Intl formatting. The language is a cookie read by the root layout, which sets `<html lang>` and the provider's locale; server components use `getI18n()`. Changing it in Settings writes the cookie, updates the page and calls `router.refresh()`. Catalogue content stays in English ([0010](decisions/0010-i18n.md)).
 
 ## Principles
 

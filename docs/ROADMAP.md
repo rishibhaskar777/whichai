@@ -47,11 +47,13 @@ Every phase follows the [zero-cost rule](decisions/0006-zero-cost.md): local cod
 - Privacy page, account menu with a CSRF-protected sign-out, setup guide in [AUTH-SETUP.md](AUTH-SETUP.md)
 - Plans still stay in the browser; nothing is stored per user on a server
 
-### 4b: Saved plans and feedback (next)
+### 4b: Saved plans and app basics (done, [0009](decisions/0009-local-first-data.md), [0010](decisions/0010-i18n.md))
 
-- Plans and search history saved in the browser (local storage or IndexedDB), with export and import as a file
-- Saving per account on a server needs a free storage option that has not been approved, so plans stay in the browser
-- Feedback through a prefilled link to the repository's issue form. Aggregated feedback with response thresholds needs a server and waits for a free option that has been approved
+- Local storage layer (IndexedDB with a localStorage fallback), Zod-validated, versioned and limited
+- Saved plans (Projects), search history (Searches), settings, export and import, share links and print to PDF
+- English and Hindi interface text, help, about and not-found pages, keyboard shortcuts
+- Feedback through a GitHub issue form. Saving per account on a server and aggregated feedback wait for a free option that has been approved
+- Follow-ups: native review of the Hindi text, translated catalogue content, goal understanding in Hindi, syncing between devices
 
 ## Phase 5: News and updates
 
