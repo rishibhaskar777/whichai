@@ -3,6 +3,8 @@ import { cleanup } from "@testing-library/react";
 import { afterEach, beforeAll } from "vitest";
 
 beforeAll(() => {
+  if (typeof window === "undefined") return;
+
   window.matchMedia = (query: string) =>
     ({
       matches: false,
