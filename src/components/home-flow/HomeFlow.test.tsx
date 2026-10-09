@@ -14,7 +14,12 @@ const UNKNOWN_GOAL = "What is the weather in Delhi today";
 
 function renderHome() {
   return render(
-    <AppShell news={sampleNews} initialTheme="system">
+    <AppShell
+      news={sampleNews}
+      initialTheme="system"
+      viewer={null}
+      providers={{ google: true, github: true }}
+    >
       <HomeFlow />
     </AppShell>,
   );

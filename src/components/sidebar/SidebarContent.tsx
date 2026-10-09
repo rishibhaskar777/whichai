@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, type ComponentType, type SVGProps } from "react";
+import type { ComponentType, SVGProps } from "react";
 import {
   ChangesIcon,
   CloseIcon,
@@ -13,10 +13,12 @@ import {
   PanelLeftIcon,
   PlusIcon,
   SearchIcon,
-  UserIcon,
 } from "@/components/icons";
+import { AccountMenu } from "./AccountMenu";
+import { SignInButton } from "./SignInButton";
 import { ThemeControl } from "@/components/theme-control/ThemeControl";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
+import type { Viewer } from "@/lib/auth/get-session";
 import type { ThemeChoice } from "@/lib/theme";
 import { Wordmark } from "@/components/wordmark/Wordmark";
 import styles from "./SidebarContent.module.css";
@@ -36,11 +38,10 @@ const NAV_ITEMS: readonly NavItem[] = [
   { href: "/compare-plans", label: "Compare Plans", Icon: CompareIcon },
 ];
 
-const SIGN_IN_NOTICE_MS = 5000;
-
 interface SidebarContentProps {
   collapsed: boolean;
   initialTheme: ThemeChoice;
+  viewer: Viewer | null;
   onToggleCollapse?: () => void;
   onClose?: () => void;
 }
@@ -48,22 +49,12 @@ interface SidebarContentProps {
 export function SidebarContent({
   collapsed,
   initialTheme,
+  viewer,
   onToggleCollapse,
   onClose,
 }: SidebarContentProps) {
   const pathname = usePathname();
   const { request: requestNewPlan } = useNewPlanSignal();
-  const [signInNotice, setSignInNotice] = useState(false);
-
-  useEffect(() => {
-    if (!signInNotice) return;
-    const timer = window.setTimeout(
-      () => setSignInNotice(false),
-      SIGN_IN_NOTICE_MS,
-    );
-    return () => window.clearTimeout(timer);
-  }, [signInNotice]);
-
   const closeDrawer = () => onClose?.();
   const startNewPlan = () => {
     requestNewPlan();
@@ -124,23 +115,11 @@ export function SidebarContent({
       </nav>
 
       <div className={styles.bottom}>
-        <div className={styles.signIn}>
-          <button
-            type="button"
-            className={styles.action}
-            onClick={() => setSignInNotice(true)}
-          >
-            <UserIcon />
-            <span className={labelClass}>Sign in</span>
-          </button>
-          <p
-            role="status"
-            className={styles.notice}
-            data-visible={signInNotice}
-          >
-            {signInNotice ? "Accounts arrive in a later release." : ""}
-          </p>
-        </div>
+        {viewer ? (
+          <AccountMenu viewer={viewer} collapsed={collapsed} />
+        ) : (
+          <SignInButton collapsed={collapsed} />
+        )}
         <ThemeControl initialChoice={initialTheme} compact={collapsed} />
       </div>
     </div>
