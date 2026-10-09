@@ -3,6 +3,8 @@ import { cookies, headers } from "next/headers";
 import type { ReactNode } from "react";
 import { AppShell } from "@/components/app-shell/AppShell";
 import { sampleNews } from "@/data/sample/news";
+import { getProviderAvailability } from "@/lib/auth/config";
+import { getViewer } from "@/lib/auth/get-session";
 import { getEnv } from "@/lib/env";
 import { THEME_COOKIE, parseTheme } from "@/lib/theme";
 import { onest } from "./fonts";
@@ -45,7 +47,12 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme={theme} className={onest.variable}>
       <body>
-        <AppShell news={sampleNews} initialTheme={theme ?? "system"}>
+        <AppShell
+          news={sampleNews}
+          initialTheme={theme ?? "system"}
+          viewer={await getViewer()}
+          providers={getProviderAvailability()}
+        >
           {children}
         </AppShell>
       </body>

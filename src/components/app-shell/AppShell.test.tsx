@@ -8,7 +8,12 @@ vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
 
 function renderShell() {
   return render(
-    <AppShell news={sampleNews} initialTheme="system">
+    <AppShell
+      news={sampleNews}
+      initialTheme="system"
+      viewer={null}
+      providers={{ google: true, github: true }}
+    >
       <h1>Page</h1>
     </AppShell>,
   );
@@ -58,18 +63,6 @@ describe("AppShell sidebar", () => {
     expect(
       within(primaryNav()).getByRole("link", { name: "Home" }),
     ).toHaveAttribute("aria-current", "page");
-  });
-
-  it("shows an honest notice when Sign in is pressed", async () => {
-    const user = userEvent.setup();
-    renderShell();
-
-    const [signIn] = screen.getAllByRole("button", { name: "Sign in" });
-    await user.click(signIn as HTMLElement);
-
-    expect(
-      screen.getAllByText("Accounts arrive in a later release.")[0],
-    ).toBeInTheDocument();
   });
 });
 
