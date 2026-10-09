@@ -14,9 +14,10 @@ proxy.ts             security headers, CSP nonce
 app/                 routes, layouts, server components
   |
   +--> components/   presentational and interactive UI
-  +--> lib/          schemas, goal interpreter, env, pure helpers
-  +--> data/         typed data; sample data lives in data/sample/ only
-  +--> engine/       (Phase 3) rules engine that selects tools for a goal
+  +--> lib/plan/     goal interpreter (keywords, typos, tasks)
+  +--> lib/engine/   rules engine that chooses tools and builds the plan
+  +--> lib/schemas/  Zod schemas: goal input, plan contract, catalogue
+  +--> data/         JSON catalogue; sample news in data/sample/
 ```
 
 ## Directory layout
@@ -37,29 +38,49 @@ src/
     goal-form/         search input (full and compact), suggestions
     understanding-card/ editable chips, confirm and edit
     no-match-card/     honest "no plan yet" state
-    plan-view/         level switch, job cards, tiers, workflow, accuracy card
+    plan-view/         level switch, toolkit, job cards, model guidance,
+                       workflow, accuracy card
     copy-button/       clipboard copy with visible success and failure states
     theme-control/, wordmark/, coming-soon/, icons/
   lib/
     env.ts             validated environment variables
     theme.ts           theme cookie name and parsing
     new-plan-signal.tsx lets the sidebar reset the home flow
-    plan/              rule-based goal interpreter
-    schemas/           Zod schemas: goal input and the plan contract
+    plan/              goal interpreter, text matching, chip helpers
+    engine/            tool selection, plan assembly, text for cards
+    catalogue/         cross-file data checks and the data report
+    schemas/           goal input, plan contract and catalogue schemas
     security/          CSP builder and static security headers
   styles/
     tokens.css         design tokens (colour, type, spacing, motion)
     global.css         reset and base styles
     controls.module.css shared button and screen-reader-only classes
   data/
-    sample/            clearly marked sample data, never shown as real
+    catalogue/         providers, jobs, tools, model classes, goal templates
+    sample/            sample news only
     suggestions.ts     suggestion chips and placeholder examples
-  engine/              Phase 3
+scripts/
+  data-report.ts       prints verification status of the catalogue
 docs/
   decisions/           architecture decision records
+  VERIFYING-DATA.md    how to check a tool record
 
 public/                static assets
 ```
+
+## The catalogue
+
+Five JSON files in `src/data/catalogue/`, described by `src/lib/schemas/catalogue.ts`:
+
+| File                 | Holds                                                                                                                                                          |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `providers.json`     | Company or project id, name and homepage                                                                                                                       |
+| `jobs.json`          | The roles a tool can play (AI assistant, hosting, flashcards ...) with a category and keywords for matching tasks                                              |
+| `tools.json`         | Each tool: provider, jobs, plain summary, kind, skill level, free-option flag, strengths, cautions, per-job fit score, compatible tools, official link, status |
+| `model-classes.json` | Capability classes with plain "use it for" and effort advice. No model names                                                                                   |
+| `goals.json`         | Goal templates: keywords, synonyms, features and, for each of the three levels, the jobs, workflow, mistakes, upgrade advice and model guidance                |
+
+`src/data/catalogue/index.ts` parses the files with the schemas and runs `findProblems` from `src/lib/catalogue/validate.ts` when the module loads. A test runs the same checks, so a bad reference, a duplicate id, a non-https link or a stray price fails both the tests and the build. Every tool is unverified and uses placeholders for prices ([0007](decisions/0007-catalogue-and-engine.md)).
 
 ## Plan data flow
 
@@ -73,34 +94,49 @@ empty -> understanding -> plan
 ```
 
 1. The person submits a goal. `goalSchema` trims and validates it (1 to 500 characters).
-2. `interpretGoal(text)` runs in the browser and returns an `UnderstoodGoal` or `null`. It makes no request.
-3. On a match, the understanding card shows the chips. Feature, skill and constraint chips can be removed; features can be added from a fixed list. The goal chip is fixed.
-4. "Yes, show my plan" recomputes the level from the chips that remain (`inferLevel`) and looks up the sample plan for the goal type.
-5. `PlanView` shows one `PlanLevel` at a time. The level, the tools the person already uses and the monthly budget are component state. Nothing is stored, sent or put in the URL, and the goal text stays in memory until the page is closed or "New plan" is pressed.
+2. `interpretGoal(text)` runs in the browser and returns an `UnderstoodGoal` or `null`. It reads keywords from the catalogue and makes no request.
+3. On a match, the understanding card shows the chips. Feature, task and skill chips can be removed. The chips that can be added come from the matched goal (`addableChips`). The goal chip is fixed.
+4. "Yes, show my plan" recomputes the level from the chips that remain (`inferLevel`) and renders `PlanView` with the understood goal.
+5. `PlanView` calls `buildPlan(goal, { level, budget, toolsUsed })` and shows one `PlanLevel` at a time. The level, the tools the person already uses and the monthly budget are component state. Changing the budget or the tools used rebuilds the plan. Nothing is stored, sent or put in the URL, and the goal text stays in memory until the page is closed or "New plan" is pressed.
+
+```
+text --interpretGoal--> UnderstoodGoal --buildPlan--> Plan --PlanView--> cards
+         |                    chips                      |
+   goals.json, jobs.json     (goal, features,     tools.json, goals.json,
+                              tasks, skills)      model-classes.json
+```
 
 "New plan" in the sidebar calls a small context signal (`new-plan-signal`) that `HomeFlow` listens to; it resets the stage, clears the text and focuses the search.
 
 ### Schemas
 
-`src/lib/schemas/plan.ts` holds the Zod schemas and inferred types for `UnderstoodGoal`, `Plan`, `PlanLevel`, `JobRecommendation`, `TierComparison` and `WorkflowStep`. They are the contract between the interface and whatever produces plans; see [0005](decisions/0005-plan-contract.md). Sample plans in `src/data/sample/plans.ts` are validated against them in a unit test.
+`src/lib/schemas/plan.ts` holds the Zod schemas and inferred types for `UnderstoodGoal`, `Plan`, `PlanLevel`, `JobRecommendation`, `ToolkitGroup`, `ModelGuidance`, `TierComparison` and `WorkflowStep`. They are the contract between the interface and the engine; see [0005](decisions/0005-plan-contract.md) and the extensions in [0007](decisions/0007-catalogue-and-engine.md). `src/lib/schemas/catalogue.ts` holds the schemas for the data files.
 
-### The rule-based goal interpreter
+### The goal interpreter
 
-`src/lib/plan/interpret-goal.ts` is a pure function. Its rules are plain data at the top of the file:
+`src/lib/plan/interpret-goal.ts` is a pure function over the goal templates and job keywords in the catalogue:
 
-- **Goal rules**: a list of keyword patterns per goal type. The goal with more distinct keyword hits wins; a tie goes to the keyword mentioned first. No hit means `null`.
-- **Feature rules**: one pattern per feature chip (animation, blog, contact form, dark mode, notes, quiz). A chip appears only when the feature is mentioned.
-- **Skill rules**: one pattern and a level per skill (React, Next.js, API, Git, deploying). The inferred level is the highest level among the skill chips present, and `simple` when there are none.
+- **Goals**: each goal lists keywords and synonyms. A phrase scores its word count divided by the number of goals that list it. The highest score wins; a tie goes to the phrase mentioned first.
+- **Typos**: `text-match.ts` lowercases, drops filler words and compares words by exact match, plural, or a small edit distance (words under 5 letters must match exactly and the first letter must agree).
+- **Features**: each goal lists feature words. A feature chip appears only when the feature is mentioned, and it adds that feature's jobs to the plan.
+- **Tasks**: when no goal matches but the text names a task ("make a logo"), the generic `pick-an-ai` goal is returned with a chip for each matching job.
+- **Skills**: one pattern and a level per skill (React, Next.js, API, Git, deploying). The inferred level is the highest level among the skill chips present, and `simple` when there are none.
 
-Later phases extend it in place: more goal types, synonym lists, typo-tolerant matching and constraint rules (for example a budget). Because the output type is fixed by the schemas, the understanding card and the plan view need no changes when the rules grow. Goal understanding never calls an AI service ([0006](decisions/0006-zero-cost.md)).
+Goal understanding never calls an AI service ([0006](decisions/0006-zero-cost.md)). No match is returned only when nothing is recognised.
 
-### Later phases
+### The rules engine
 
-Phase 3 replaces the sample plan lookup with an engine that selects tools from validated JSON data and builds the same `Plan` shape. The interface does not change.
+`src/lib/engine/` holds pure functions:
+
+- `select-tools.ts`: level and budget filters, ranking (fit score, provider variety, compatibility, rotating tie-break), keep, better and new tags, and the choice of up to two alternatives.
+- `describe.ts`: the text on a card (why, pricing placeholder, cautions, "Choose X if ..."), the cost line, compatibility notes and `{job:id}` filling.
+- `build-plan.ts`: `buildPlan`, which picks tools for each job at each level, skips jobs a chosen tool already covers, attaches model guidance to AI tools, groups the chosen tools into the toolkit and assembles a `Plan`.
+
+The engine imports no component, and no component imports a ranking rule.
 
 ## Principles
 
 - Server decides, client displays. Nothing security-relevant depends on client code.
-- Recommendations come from verified, dated data, not generated text.
+- Recommendations come from reviewed, dated data, not generated text. Until a record is verified the interface says so.
 - Every external input is validated at the boundary.
 - Features are built phase by phase; see ROADMAP.md.
