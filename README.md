@@ -13,7 +13,7 @@ Early development. See [docs/ROADMAP.md](docs/ROADMAP.md) for the phases.
 | 1     | Project setup, home page, security baseline | Done        |
 | 2     | Understanding step and plan view            | Done        |
 | 3     | Tool data in JSON, rules engine             | In progress |
-| 4     | Saved plans and feedback in the browser     | Planned     |
+| 4     | Sign-in, saved plans and feedback           | In progress |
 | 5     | News and update pipeline                    | Planned     |
 
 The project follows a [zero-cost rule](docs/decisions/0006-zero-cost.md): no paid APIs, no AI APIs, no hosted databases, no trackers.
@@ -34,7 +34,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-The site runs at http://localhost:3000.
+The site runs at http://localhost:3000. Sign-in is optional and needs free Google and GitHub OAuth credentials; see [docs/AUTH-SETUP.md](docs/AUTH-SETUP.md).
 
 ## Scripts
 
@@ -61,6 +61,8 @@ Next.js App Router with a `src/` directory: `app/` for routes, `components/` for
 - **All tool data is unverified.** The catalogue (about 80 tools) holds stable facts only. Every price and limit is a placeholder, and fit scores are editorial estimates, not test results. Each card says "Not verified" and the plan says "Sample data, not verified" until records are checked ([docs/VERIFYING-DATA.md](docs/VERIFYING-DATA.md)). Nothing you type is sent, stored or put in the URL.
 - Save, Download PDF and Share are visible but disabled until a later release.
 - Collapsible sidebar, mobile drawer, light, dark and system themes (the explicit choice is stored in a cookie).
+- Sign in with Google or GitHub from the sidebar, in a glass popup (or at `/sign-in` without JavaScript). The session is an encrypted cookie that holds only your provider, provider id and name; there is no database, and your plans still stay in this browser. Without credentials the popup says sign-in is not configured. See [0008](docs/decisions/0008-sign-in.md).
+- A plain-language [privacy page](src/app/privacy/page.tsx) at `/privacy`.
 - Pages for Projects, Searches, Tool Library, What Changed and Compare Plans show a coming-soon notice.
 - The news panel is marked as sample content and contains no real announcements.
 

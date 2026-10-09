@@ -21,9 +21,13 @@ Apply to every release and re-check when a phase adds a new input, route or depe
 - [ ] Rate limiting on every route that accepts input
 - [ ] Request body size limits
 - [ ] Error responses do not leak stack traces or internals
-- [ ] Cookies (once used): `HttpOnly`, `Secure`, `SameSite`
-- [ ] State-changing requests protected against CSRF
-- [ ] Authorization checked on the server for every protected action (Phase 4)
+- [ ] Cookies: `HttpOnly`, `Secure` in production, `SameSite=Lax`, `Path=/`, `__Host-` prefix in production, contents encrypted and expiring (session 7 days, sign-in transaction 10 minutes); nothing but provider, provider id and display name stored
+- [ ] State-changing requests protected against CSRF (sign-out is POST only, with an HMAC token bound to the session and an Origin check)
+- [ ] OAuth: authorization code flow with a random `state` verified on callback; PKCE for providers that support it (GitHub does not through `arctic`, see 0008); minimum scopes only (Google `openid profile email`, GitHub `read:user user:email`)
+- [ ] OAuth: post-sign-in redirects only to the path allowlist; redirect URLs built from `NEXT_PUBLIC_SITE_URL`, not the `Host` header
+- [ ] OAuth: no tokens, codes, emails or cookies logged or shown; user-facing errors are generic
+- [ ] OAuth: `AUTH_SECRET` and client secrets only in the host environment and `.env.local`, never in client code; the CSP is not widened for sign-in
+- [ ] Authorization checked on the server for every protected action, using `getSession()` (once a protected action exists)
 - [ ] Logs contain no secrets or personal data
 
 ## Dependencies

@@ -27,12 +27,15 @@ src/
   proxy.ts             nonce, CSP and security headers on every request
   app/                 routes and layouts
     api/health/        health check route
+    api/auth/          OAuth sign-in, callback and sign-out routes
+    sign-in/, privacy/ sign-in page for users without JavaScript, privacy page
     .well-known/       security.txt
     projects/, searches/, tool-library/, what-changed/, compare-plans/
                        coming-soon pages
   components/          UI components, one folder per component
     app-shell/         three-region layout, drawer, panel state
-    sidebar/           navigation, sign-in notice
+    sidebar/           navigation, sign-in button, account menu
+    sign-in/           glass sign-in popup (native dialog), shared panel, provider marks
     news-panel/        sample news panel
     home-flow/         home page state: empty, understanding, no match, plan
     goal-form/         search input (full and compact), suggestions
@@ -43,7 +46,8 @@ src/
     copy-button/       clipboard copy with visible success and failure states
     theme-control/, wordmark/, coming-soon/, icons/
   lib/
-    env.ts             validated environment variables
+    env.ts             validated environment variables (sign-in variables are optional)
+    auth/              sessions, OAuth flow, CSRF, redirect allowlist, rate limiter
     theme.ts           theme cookie name and parsing
     new-plan-signal.tsx lets the sidebar reset the home flow
     plan/              goal interpreter, text matching, chip helpers
@@ -133,6 +137,26 @@ Goal understanding never calls an AI service ([0006](decisions/0006-zero-cost.md
 - `build-plan.ts`: `buildPlan`, which picks tools for each job at each level, skips jobs a chosen tool already covers, attaches model guidance to AI tools, groups the chosen tools into the toolkit and assembles a `Plan`.
 
 The engine imports no component, and no component imports a ranking rule.
+
+## Sign-in
+
+Optional and stateless ([0008](decisions/0008-sign-in.md)). `src/lib/auth/` holds the logic and the routes under `src/app/api/auth/` are thin:
+
+```
+Sign in button --> /api/auth/sign-in/{provider}   state (+ PKCE for Google) in an encrypted 10 minute cookie
+                          |
+                          v
+                  Google or GitHub  --> /api/auth/callback/{provider}
+                          |   check state, exchange code, keep provider + id + name
+                          v
+               encrypted session cookie (7 days) --> allowlisted page
+```
+
+- `session.ts` encodes and decodes the cookie (JWE, A256GCM) and defines the cookie flags. `transaction.ts` does the same for the short sign-in cookie.
+- `providers.ts` wraps `arctic`: authorization URLs, scopes, code exchange, and reducing the profile to three values.
+- `csrf.ts` makes the sign-out token (an HMAC of the session cookie) and checks the origin. `redirect.ts` is the path allowlist. `rate-limit.ts` is the in-memory limiter.
+- `get-session.ts` exports `getSession()` for server components and route handlers, and `getViewer()` for the layout. The layout passes the viewer and the available providers to `AppShell`, which shows the popup or the account menu.
+- `config.ts` returns `null` when sign-in is not set up, and every caller then shows the "not configured" message.
 
 ## Principles
 

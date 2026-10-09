@@ -38,10 +38,19 @@ Every phase follows the [zero-cost rule](decisions/0006-zero-cost.md): local cod
 - Add sources and tier details to verified records, and re-examine the editorial fit scores once records are checked
 - A check that every verified record has a source and a date, and a way to flag records older than a set age
 
-## Phase 4: Saved plans and feedback in the browser
+## Phase 4: Sign-in, saved plans and feedback
+
+### 4a: Sign-in (done, [0008](decisions/0008-sign-in.md))
+
+- Sign in with Google or GitHub (free OAuth, no database, no hosted auth service), shown as a glass popup and at `/sign-in`
+- Stateless encrypted session cookie holding provider, provider id and display name; `getSession()` for later phases
+- Privacy page, account menu with a CSRF-protected sign-out, setup guide in [AUTH-SETUP.md](AUTH-SETUP.md)
+- Plans still stay in the browser; nothing is stored per user on a server
+
+### 4b: Saved plans and feedback (next)
 
 - Plans and search history saved in the browser (local storage or IndexedDB), with export and import as a file
-- No server accounts and no sign-in
+- Saving per account on a server needs a free storage option that has not been approved, so plans stay in the browser
 - Feedback through a prefilled link to the repository's issue form. Aggregated feedback with response thresholds needs a server and waits for a free option that has been approved
 
 ## Phase 5: News and updates
