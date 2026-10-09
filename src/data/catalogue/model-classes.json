@@ -1,0 +1,38 @@
+[
+  {
+    "id": "fast-and-cheap",
+    "name": "Fast and cheap",
+    "useFor": "Quick drafts, rewording, short answers and brainstorming lists, anything you will check or rewrite anyway.",
+    "effortAdvice": "Low effort is usually enough. Raise it only if the answers feel shallow."
+  },
+  {
+    "id": "balanced-everyday",
+    "name": "Balanced everyday",
+    "useFor": "Everyday writing, explaining ideas, summarising short material and most questions.",
+    "effortAdvice": "Medium effort is a good default. Go higher only for harder questions."
+  },
+  {
+    "id": "deep-reasoning",
+    "name": "Deep reasoning",
+    "useFor": "Planning, multi-step problems, trade-off decisions and anything where a wrong answer is costly.",
+    "effortAdvice": "Use high effort for plans and hard problems. It is slower and may use more of your limit."
+  },
+  {
+    "id": "long-documents",
+    "name": "Long documents",
+    "useFor": "Reading and comparing long files, whole chapters, big pasted notes or many pages at once.",
+    "effortAdvice": "Medium effort is usually enough. The size of what you give it matters more than the effort setting."
+  },
+  {
+    "id": "coding",
+    "name": "Coding",
+    "useFor": "Writing, reading and fixing code, and explaining error messages.",
+    "effortAdvice": "Medium effort for small edits. High effort for design decisions or bugs you cannot find."
+  },
+  {
+    "id": "image",
+    "name": "Image",
+    "useFor": "Making or editing pictures from a text description.",
+    "effortAdvice": "Start with a short prompt and refine it. Many image tools have no effort setting."
+  }
+]

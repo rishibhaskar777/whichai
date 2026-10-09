@@ -1,0 +1,332 @@
+[
+  {
+    "id": "ai-assistant",
+    "name": "AI assistant",
+    "description": "A general chat assistant for drafting, explaining, planning and brainstorming.",
+    "category": "ai",
+    "keywords": [
+      "chatbot",
+      "brainstorm",
+      "summarise",
+      "summarize",
+      "summary",
+      "translate",
+      "explain",
+      "draft",
+      "ask ai"
+    ]
+  },
+  {
+    "id": "coding-assistant",
+    "name": "Coding assistant",
+    "description": "An AI helper that writes, explains and fixes code.",
+    "category": "ai",
+    "keywords": [
+      "coding",
+      "code",
+      "programming",
+      "debug",
+      "script",
+      "bug",
+      "program"
+    ]
+  },
+  {
+    "id": "research-with-sources",
+    "name": "Research with sources",
+    "description": "Finding answers and papers while keeping track of where each claim came from.",
+    "category": "research",
+    "keywords": [
+      "research",
+      "sources",
+      "citations",
+      "cite",
+      "papers",
+      "literature review",
+      "references",
+      "pdf"
+    ]
+  },
+  {
+    "id": "source-library",
+    "name": "Books and primary sources",
+    "description": "Free libraries of books, manuscripts and original texts you can read yourself.",
+    "category": "research",
+    "keywords": [
+      "books",
+      "book",
+      "ebooks",
+      "manuscripts",
+      "scriptures",
+      "classics",
+      "original texts",
+      "archive"
+    ]
+  },
+  {
+    "id": "image-generation",
+    "name": "Image generation",
+    "description": "Making pictures, illustrations and artwork from a text description.",
+    "category": "media",
+    "keywords": [
+      "image",
+      "images",
+      "picture",
+      "illustration",
+      "artwork",
+      "photo",
+      "poster",
+      "logo",
+      "avatar",
+      "thumbnail"
+    ]
+  },
+  {
+    "id": "video-generation",
+    "name": "Video generation",
+    "description": "Creating video clips or presenter videos from text or images.",
+    "category": "media",
+    "keywords": [
+      "ai video",
+      "video generation",
+      "text to video",
+      "avatar video",
+      "generate video"
+    ]
+  },
+  {
+    "id": "video-editing",
+    "name": "Video editing",
+    "description": "Cutting, arranging and finishing video footage.",
+    "category": "media",
+    "keywords": [
+      "edit video",
+      "video editing",
+      "editing videos",
+      "trim",
+      "subtitles",
+      "captions",
+      "footage",
+      "clip",
+      "clips"
+    ]
+  },
+  {
+    "id": "voice-and-audio",
+    "name": "Voice and audio",
+    "description": "Voiceovers, speech to text, recording and cleaning up sound.",
+    "category": "media",
+    "keywords": [
+      "voice",
+      "voiceover",
+      "audio",
+      "narration",
+      "podcast",
+      "music",
+      "speech",
+      "transcribe",
+      "transcription",
+      "text to speech",
+      "sound"
+    ]
+  },
+  {
+    "id": "presentation-maker",
+    "name": "Presentation maker",
+    "description": "Building slide decks, with or without AI help.",
+    "category": "productivity",
+    "keywords": [
+      "presentation",
+      "presentations",
+      "slides",
+      "slide deck",
+      "deck",
+      "pitch deck",
+      "powerpoint",
+      "ppt"
+    ]
+  },
+  {
+    "id": "writing-and-editing",
+    "name": "Writing and editing",
+    "description": "Checking grammar, improving clarity and rewriting text.",
+    "category": "productivity",
+    "keywords": [
+      "write",
+      "writing",
+      "essay",
+      "proofread",
+      "grammar",
+      "rewrite",
+      "paraphrase",
+      "article",
+      "email",
+      "cover letter"
+    ]
+  },
+  {
+    "id": "note-taking",
+    "name": "Note-taking",
+    "description": "Keeping and organising notes, with search and links between them.",
+    "category": "productivity",
+    "keywords": ["notes", "note taking", "notebook", "journal", "second brain"]
+  },
+  {
+    "id": "resume-builder",
+    "name": "Resume builder",
+    "description": "Laying out a resume or CV and checking it reads well.",
+    "category": "productivity",
+    "keywords": [
+      "resume",
+      "resumes",
+      "cv",
+      "curriculum vitae",
+      "job application"
+    ]
+  },
+  {
+    "id": "flashcards-and-quizzes",
+    "name": "Flashcards and quizzes",
+    "description": "Practice tools for remembering what you study, including spaced repetition.",
+    "category": "learning",
+    "keywords": [
+      "flashcards",
+      "flashcard",
+      "quiz",
+      "quizzes",
+      "revision",
+      "revise",
+      "memorise",
+      "memorize",
+      "spaced repetition"
+    ]
+  },
+  {
+    "id": "ui-templates",
+    "name": "UI templates",
+    "description": "Ready-made page layouts and themes you fill with your own content.",
+    "category": "design",
+    "keywords": [
+      "template",
+      "templates",
+      "theme",
+      "themes",
+      "landing page",
+      "website builder"
+    ]
+  },
+  {
+    "id": "design-tool",
+    "name": "Design tool",
+    "description": "Drawing layouts, logos, graphics and mock-ups.",
+    "category": "design",
+    "keywords": [
+      "design",
+      "logo",
+      "mockup",
+      "wireframe",
+      "banner",
+      "brand",
+      "graphic",
+      "graphics",
+      "figma"
+    ]
+  },
+  {
+    "id": "component-library",
+    "name": "UI components",
+    "description": "Pre-built buttons, forms, menus and other interface parts.",
+    "category": "build",
+    "keywords": [
+      "components",
+      "ui kit",
+      "buttons",
+      "design system",
+      "component library"
+    ]
+  },
+  {
+    "id": "animation-library",
+    "name": "Animation library",
+    "description": "Code libraries that add motion to a web page.",
+    "category": "build",
+    "keywords": [
+      "animation",
+      "animations",
+      "motion",
+      "transitions",
+      "scroll effects"
+    ]
+  },
+  {
+    "id": "framework",
+    "name": "Framework",
+    "description": "The base that organises your site or app: pages, routing and structure.",
+    "category": "build",
+    "keywords": ["framework", "react", "frontend", "front end"]
+  },
+  {
+    "id": "content-management",
+    "name": "Content management",
+    "description": "A place to write and edit posts and pages without touching code.",
+    "category": "build",
+    "keywords": ["cms", "content management", "blog", "articles", "editor"]
+  },
+  {
+    "id": "database",
+    "name": "Database",
+    "description": "Where your app stores its data.",
+    "category": "build",
+    "keywords": ["database", "store data", "save data", "sql", "backend"]
+  },
+  {
+    "id": "authentication",
+    "name": "Authentication",
+    "description": "Sign-up, sign-in and password handling for your users.",
+    "category": "build",
+    "keywords": [
+      "login",
+      "sign in",
+      "sign up",
+      "signup",
+      "authentication",
+      "accounts",
+      "passwords"
+    ]
+  },
+  {
+    "id": "payments-india",
+    "name": "Payments (India)",
+    "description": "Taking payments from customers in India, including UPI.",
+    "category": "build",
+    "keywords": [
+      "payments",
+      "payment",
+      "upi",
+      "checkout",
+      "accept money",
+      "donations"
+    ]
+  },
+  {
+    "id": "hosting",
+    "name": "Hosting",
+    "description": "Putting your site or app online at a public address.",
+    "category": "build",
+    "keywords": ["hosting", "deploy", "publish", "domain", "go live", "host"]
+  },
+  {
+    "id": "analytics",
+    "name": "Analytics",
+    "description": "Counting visitors and seeing which pages they read.",
+    "category": "build",
+    "keywords": ["analytics", "visitors", "traffic", "statistics", "tracking"]
+  },
+  {
+    "id": "contact-form",
+    "name": "Contact form",
+    "description": "A form that sends your visitors' messages to your email.",
+    "category": "build",
+    "keywords": ["contact form", "forms", "survey", "feedback form"]
+  }
+]
