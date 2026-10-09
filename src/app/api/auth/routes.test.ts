@@ -61,7 +61,7 @@ function request(
 ) {
   return new NextRequest(`${siteOrigin}${path}`, {
     method: init.method ?? "GET",
-    body: init.body,
+    ...(init.body === undefined ? {} : { body: init.body }),
     headers: { "x-forwarded-for": freshIp(), ...init.headers },
   });
 }
