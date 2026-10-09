@@ -121,6 +121,8 @@
   max-height: calc(100dvh - 2rem);
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
   border-radius: inherit;
 }
 
@@ -128,8 +130,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-4);
-  padding: var(--space-8);
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-8);
 }
 
 .brand {
@@ -148,7 +150,7 @@
 .buttons {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
   width: 100%;
 }
 
