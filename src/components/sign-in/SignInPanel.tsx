@@ -1,12 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type ComponentType, type SVGProps } from "react";
-import { MailIcon, PhoneIcon, UserIcon } from "@/components/icons";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type SVGProps,
+} from "react";
+import { MailIcon, PhoneIcon } from "@/components/icons";
 import { Wordmark } from "@/components/wordmark/Wordmark";
 import { AUTH_ERRORS, type AuthErrorCode } from "@/lib/auth/errors";
 import type { ProviderAvailability } from "@/lib/auth/config";
-import { GitHubMark, GoogleMark, MicrosoftMark } from "./ProviderMarks";
+import {
+  AppleMark,
+  GitHubMark,
+  GoogleMark,
+  MicrosoftMark,
+} from "./ProviderMarks";
 import styles from "./SignIn.module.css";
 
 type OptionId = "google" | "github" | "microsoft" | "apple" | "email" | "phone";
@@ -18,7 +29,6 @@ interface Option {
   Mark: ComponentType<SVGProps<SVGSVGElement>>;
 }
 
-/* Apple's rules require its own button style, so it gets a neutral icon until it is built. */
 const PRIMARY_OPTIONS: readonly Option[] = [
   { id: "google", label: "Google", name: "Google", Mark: GoogleMark },
   { id: "github", label: "GitHub", name: "GitHub", Mark: GitHubMark },
@@ -28,7 +38,7 @@ const PRIMARY_OPTIONS: readonly Option[] = [
     name: "Microsoft",
     Mark: MicrosoftMark,
   },
-  { id: "apple", label: "Apple", name: "Apple", Mark: UserIcon },
+  { id: "apple", label: "Apple", name: "Apple", Mark: AppleMark },
 ];
 
 const SECONDARY_OPTIONS: readonly Option[] = [
@@ -67,6 +77,7 @@ export function SignInPanel({
   onDismiss,
   onNavigate,
 }: SignInPanelProps) {
+  const panelRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<LiveProvider | null>(null);
   const [notice, setNotice] = useState<{ text: string; count: number } | null>(
     null,
@@ -80,6 +91,27 @@ export function SignInPanel({
     window.addEventListener("pageshow", reset);
     return () => window.removeEventListener("pageshow", reset);
   }, []);
+
+  // Shows the fade at the bottom edge only while more content is below.
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    const update = () => {
+      const hidden = panel.scrollHeight - panel.scrollTop - panel.clientHeight;
+      panel.dataset.more = String(hidden > 4);
+    };
+    update();
+    panel.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    const observer =
+      typeof ResizeObserver === "undefined" ? null : new ResizeObserver(update);
+    observer?.observe(panel);
+    return () => {
+      panel.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      observer?.disconnect();
+    };
+  }, [notice]);
 
   const showComingSoon = (option: Option) =>
     setNotice((current) => ({
@@ -137,7 +169,7 @@ export function SignInPanel({
   const visibleError = error && error !== "not-configured" ? error : null;
 
   return (
-    <div className={styles.panel}>
+    <div ref={panelRef} className={styles.panel}>
       <div className={styles.brand}>
         <Wordmark />
       </div>
