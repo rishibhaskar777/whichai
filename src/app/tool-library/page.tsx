@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 import { ComingSoon } from "@/components/coming-soon/ComingSoon";
+import { getI18n } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "Tool Library",
-  alternates: { canonical: "/tool-library" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return {
+    title: t("nav.toolLibrary"),
+    alternates: { canonical: "/tool-library" },
+  };
+}
 
-export default function Page() {
+export default async function Page() {
+  const { t } = await getI18n();
   return (
     <ComingSoon
-      title="Tool Library"
-      description="A browsable library of AI tools, with verified details, is planned for a later release."
+      title={t("nav.toolLibrary")}
+      description={t("comingSoon.toolLibrary")}
     />
   );
 }

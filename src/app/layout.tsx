@@ -6,8 +6,10 @@ import { sampleNews } from "@/data/sample/news";
 import { getProviderAvailability } from "@/lib/auth/config";
 import { getViewer } from "@/lib/auth/get-session";
 import { getEnv } from "@/lib/env";
+import { I18nProvider } from "@/lib/i18n/provider";
+import { getLocale } from "@/lib/i18n/server";
 import { THEME_COOKIE, parseTheme } from "@/lib/theme";
-import { onest } from "./fonts";
+import { notoDevanagari, onest } from "./fonts";
 import "@/styles/tokens.css";
 import "@/styles/global.css";
 
@@ -43,18 +45,25 @@ export default async function RootLayout({
   // which Next.js needs in order to apply the CSP nonce to its scripts.
   await headers();
   const theme = parseTheme((await cookies()).get(THEME_COOKIE)?.value);
+  const locale = await getLocale();
 
   return (
-    <html lang="en" data-theme={theme} className={onest.variable}>
+    <html
+      lang={locale}
+      data-theme={theme}
+      className={`${onest.variable} ${notoDevanagari.variable}`}
+    >
       <body>
-        <AppShell
-          news={sampleNews}
-          initialTheme={theme ?? "system"}
-          viewer={await getViewer()}
-          providers={getProviderAvailability()}
-        >
-          {children}
-        </AppShell>
+        <I18nProvider locale={locale}>
+          <AppShell
+            news={sampleNews}
+            initialTheme={theme ?? "system"}
+            viewer={await getViewer()}
+            providers={getProviderAvailability()}
+          >
+            {children}
+          </AppShell>
+        </I18nProvider>
       </body>
     </html>
   );

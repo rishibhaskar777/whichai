@@ -14,6 +14,7 @@ import {
 import { CloseIcon } from "@/components/icons";
 import type { ProviderAvailability } from "@/lib/auth/config";
 import { safeRedirectPath } from "@/lib/auth/redirect";
+import { useI18n } from "@/lib/i18n/provider";
 import { SignInPanel } from "./SignInPanel";
 import styles from "./SignIn.module.css";
 
@@ -36,6 +37,7 @@ interface SignInProviderProps {
 }
 
 export function SignInProvider({ providers, children }: SignInProviderProps) {
+  const { t } = useI18n();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const pathname = usePathname();
@@ -87,7 +89,7 @@ export function SignInProvider({ providers, children }: SignInProviderProps) {
           type="button"
           className={styles.close}
           onClick={close}
-          aria-label="Close sign-in"
+          aria-label={t("signin.close")}
         >
           <CloseIcon />
         </button>

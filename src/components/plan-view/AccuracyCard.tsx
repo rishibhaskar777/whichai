@@ -1,14 +1,13 @@
 import { useId } from "react";
+import { useI18n } from "@/lib/i18n/provider";
+import {
+  BUDGET_VALUES,
+  budgetLabel,
+  type Currency,
+} from "@/lib/plan/budget-labels";
 import type { Budget } from "@/lib/schemas/plan";
 import controls from "@/styles/controls.module.css";
 import styles from "./AccuracyCard.module.css";
-
-const BUDGET_OPTIONS: readonly { value: Budget; label: string }[] = [
-  { value: "zero", label: "₹0" },
-  { value: "under-1000", label: "Under ₹1,000" },
-  { value: "1000-3000", label: "₹1,000 to ₹3,000" },
-  { value: "more", label: "More" },
-];
 
 export interface ToolOption {
   id: string;
@@ -21,6 +20,7 @@ interface AccuracyCardProps {
   onToggleTool: (toolId: string) => void;
   budget: Budget | null;
   onBudgetChange: (budget: Budget) => void;
+  currency: Currency;
 }
 
 export function AccuracyCard({
@@ -29,19 +29,24 @@ export function AccuracyCard({
   onToggleTool,
   budget,
   onBudgetChange,
+  currency,
 }: AccuracyCardProps) {
+  const i18n = useI18n();
+  const { t } = i18n;
   const titleId = useId();
   const toolsLabelId = useId();
   const budgetName = useId();
 
   return (
-    <section className={styles.card} aria-labelledby={titleId}>
+    <section
+      className={styles.card}
+      aria-labelledby={titleId}
+      data-print-hide=""
+    >
       <h2 id={titleId} className={styles.title}>
-        Make this more accurate
+        {t("accuracy.title")}
       </h2>
-      <p className={styles.hint}>
-        Optional. Your answers stay on this page and are not sent anywhere.
-      </p>
+      <p className={styles.hint}>{t("accuracy.hint")}</p>
 
       <div
         role="group"
@@ -49,7 +54,7 @@ export function AccuracyCard({
         className={styles.question}
       >
         <p id={toolsLabelId} className={styles.questionText}>
-          Which of these do you already use?
+          {t("accuracy.toolsQuestion")}
         </p>
         <ul className={styles.options}>
           {tools.map((tool) => (
@@ -68,26 +73,26 @@ export function AccuracyCard({
       </div>
 
       <fieldset className={styles.question}>
-        <legend className={styles.questionText}>Monthly budget?</legend>
+        <legend className={styles.questionText}>
+          {t("accuracy.budgetQuestion")}
+        </legend>
         <div className={styles.options}>
-          {BUDGET_OPTIONS.map((option) => (
-            <label key={option.value} className={styles.radio}>
+          {BUDGET_VALUES.map((value) => (
+            <label key={value} className={styles.radio}>
               <input
                 type="radio"
                 name={budgetName}
-                value={option.value}
-                checked={budget === option.value}
-                onChange={() => onBudgetChange(option.value)}
+                value={value}
+                checked={budget === value}
+                onChange={() => onBudgetChange(value)}
                 className={controls.srOnly}
               />
-              <span>{option.label}</span>
+              <span>{budgetLabel(value, currency, i18n)}</span>
             </label>
           ))}
         </div>
         <p role="status" className={styles.note}>
-          {budget === "zero"
-            ? "Showing only tools with a free option, or one we have not confirmed yet. Free plans have limits, so check them on the official page."
-            : null}
+          {budget === "zero" ? t("accuracy.zeroNote") : null}
         </p>
       </fieldset>
     </section>

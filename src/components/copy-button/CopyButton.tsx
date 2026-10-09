@@ -2,12 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { CheckIcon, CopyIcon } from "@/components/icons";
+import { useI18n } from "@/lib/i18n/provider";
 import controls from "@/styles/controls.module.css";
 import styles from "./CopyButton.module.css";
 
 const COPIED_VISIBLE_MS = 2000;
-const FAILURE_MESSAGE =
-  "Couldn't copy automatically. Select the text and copy it yourself.";
 
 type CopyState = "idle" | "copied" | "failed";
 
@@ -22,6 +21,7 @@ export function CopyButton({
   label,
   variant = "small",
 }: CopyButtonProps) {
+  const { t } = useI18n();
   const [state, setState] = useState<CopyState>("idle");
   const timer = useRef<number | undefined>(undefined);
 
@@ -57,18 +57,18 @@ export function CopyButton({
         {state === "copied" ? <CheckIcon /> : <CopyIcon />}
         <span aria-hidden="true">
           {state === "copied"
-            ? "Copied"
+            ? t("copy.done")
             : variant === "primary"
               ? label
-              : "Copy"}
+              : t("copy.short")}
         </span>
       </button>
       <span
         role="status"
         className={state === "failed" ? styles.failure : controls.srOnly}
       >
-        {state === "copied" ? "Copied to clipboard." : null}
-        {state === "failed" ? FAILURE_MESSAGE : null}
+        {state === "copied" ? t("copy.announce") : null}
+        {state === "failed" ? t("copy.failed") : null}
       </span>
     </span>
   );

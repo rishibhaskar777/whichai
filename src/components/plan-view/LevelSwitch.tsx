@@ -1,12 +1,7 @@
 import { useId } from "react";
+import { useI18n } from "@/lib/i18n/provider";
 import { LEVELS, type Level } from "@/lib/schemas/plan";
 import styles from "./LevelSwitch.module.css";
-
-export const LEVEL_LABELS: Record<Level, string> = {
-  simple: "Simple",
-  polished: "Polished",
-  advanced: "Advanced",
-};
 
 interface LevelSwitchProps {
   level: Level;
@@ -14,12 +9,13 @@ interface LevelSwitchProps {
 }
 
 export function LevelSwitch({ level, onChange }: LevelSwitchProps) {
+  const { t } = useI18n();
   const name = useId();
 
   return (
     <div
       role="radiogroup"
-      aria-label="Plan level"
+      aria-label={t("plan.levelGroup")}
       className={styles.switch}
       data-level={level}
     >
@@ -34,7 +30,7 @@ export function LevelSwitch({ level, onChange }: LevelSwitchProps) {
             onChange={() => onChange(option)}
             className={styles.input}
           />
-          <span className={styles.text}>{LEVEL_LABELS[option]}</span>
+          <span className={styles.text}>{t(`level.${option}`)}</span>
         </label>
       ))}
     </div>

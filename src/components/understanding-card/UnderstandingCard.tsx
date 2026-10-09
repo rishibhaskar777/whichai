@@ -2,6 +2,7 @@
 
 import { useId, useRef, useState } from "react";
 import { CloseIcon, PlusIcon } from "@/components/icons";
+import { useI18n } from "@/lib/i18n/provider";
 import type { Chip } from "@/lib/schemas/plan";
 import controls from "@/styles/controls.module.css";
 import styles from "./UnderstandingCard.module.css";
@@ -23,6 +24,7 @@ export function UnderstandingCard({
   onEdit,
   onConfirm,
 }: UnderstandingCardProps) {
+  const { t } = useI18n();
   const titleId = useId();
   const addLabelId = useId();
   const chipListRef = useRef<HTMLUListElement>(null);
@@ -34,27 +36,27 @@ export function UnderstandingCard({
 
   function remove(chip: Chip) {
     onRemoveChip(chip.id);
-    setChange(`Removed ${chip.label}.`);
+    setChange(t("understanding.removed", { label: chip.label }));
     chipListRef.current?.focus();
   }
 
   function add(chip: Chip) {
     onAddChip(chip);
-    setChange(`Added ${chip.label}.`);
+    setChange(t("understanding.added", { label: chip.label }));
     chipListRef.current?.focus();
   }
 
   return (
     <section className={styles.card} aria-labelledby={titleId}>
       <h1 id={titleId} className={styles.title}>
-        Here&apos;s what we understood
+        {t("understanding.title")}
       </h1>
 
       <ul
         ref={chipListRef}
         tabIndex={-1}
         className={styles.chips}
-        aria-label="What we understood"
+        aria-label={t("understanding.chips")}
       >
         {chips.map((chip) => (
           <li key={chip.id} className={styles.chip} data-kind={chip.kind}>
@@ -63,7 +65,7 @@ export function UnderstandingCard({
               <button
                 type="button"
                 className={styles.remove}
-                aria-label={`Remove ${chip.label}`}
+                aria-label={t("understanding.remove", { label: chip.label })}
                 onClick={() => remove(chip)}
               >
                 <CloseIcon />
@@ -76,7 +78,7 @@ export function UnderstandingCard({
       {addable.length > 0 ? (
         <div className={styles.add} role="group" aria-labelledby={addLabelId}>
           <p id={addLabelId} className={styles.addLabel}>
-            Add something we missed
+            {t("understanding.addLabel")}
           </p>
           <ul className={styles.addList}>
             {addable.map((option) => (
@@ -84,7 +86,7 @@ export function UnderstandingCard({
                 <button
                   type="button"
                   className={styles.addButton}
-                  aria-label={`Add ${option.label}`}
+                  aria-label={t("understanding.add", { label: option.label })}
                   onClick={() => add(option)}
                 >
                   <PlusIcon />
@@ -106,10 +108,10 @@ export function UnderstandingCard({
           className={`${controls.button} ${controls.primary}`}
           onClick={onConfirm}
         >
-          Yes, show my plan
+          {t("understanding.confirm")}
         </button>
         <button type="button" className={controls.button} onClick={onEdit}>
-          Edit
+          {t("understanding.edit")}
         </button>
       </div>
     </section>

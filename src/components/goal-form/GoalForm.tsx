@@ -4,12 +4,12 @@ import { useEffect, useState, type KeyboardEvent, type RefObject } from "react";
 import { ArrowUpIcon } from "@/components/icons";
 import { placeholderExamples, suggestions } from "@/data/suggestions";
 import { GOAL_MAX_LENGTH, goalSchema } from "@/lib/schemas/goal";
+import { useI18n } from "@/lib/i18n/provider";
 import { useMediaQuery } from "@/lib/use-media-query";
 import styles from "./GoalForm.module.css";
 
 const COUNTER_THRESHOLD = 400;
 const PLACEHOLDER_INTERVAL_MS = 4000;
-const COMPACT_PLACEHOLDER = "Describe another goal";
 
 interface GoalFormProps {
   value: string;
@@ -26,6 +26,7 @@ export function GoalForm({
   inputRef: textareaRef,
   compact = false,
 }: GoalFormProps) {
+  const { t } = useI18n();
   const [focused, setFocused] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [exampleIndex, setExampleIndex] = useState(0);
@@ -58,7 +59,14 @@ export function GoalForm({
   function submit() {
     const result = goalSchema.safeParse({ goal: value });
     if (!result.success) {
-      setError(result.error.issues[0]?.message ?? "Check what you typed.");
+      const issue = result.error.issues[0];
+      setError(
+        issue?.code === "too_small"
+          ? t("goal.errorEmpty")
+          : issue?.code === "too_big"
+            ? t("goal.errorTooLong", { max: GOAL_MAX_LENGTH })
+            : t("goal.errorGeneric"),
+      );
       return;
     }
     setError(null);
@@ -97,7 +105,7 @@ export function GoalForm({
       >
         <div className={styles.glass}>
           <label htmlFor="goal" className={styles.srOnly}>
-            What do you want to do with AI?
+            {t("home.greeting")}
           </label>
           <textarea
             id="goal"
@@ -123,7 +131,7 @@ export function GoalForm({
               aria-hidden="true"
             >
               {compact
-                ? COMPACT_PLACEHOLDER
+                ? t("goal.compactPlaceholder")
                 : placeholderExamples[staticExample ? 0 : exampleIndex]}
             </span>
           ) : null}
@@ -142,7 +150,7 @@ export function GoalForm({
               disabled={value.trim().length === 0}
             >
               <ArrowUpIcon />
-              <span className={styles.srOnly}>Get a plan</span>
+              <span className={styles.srOnly}>{t("goal.submit")}</span>
             </button>
           </div>
         </div>
@@ -157,15 +165,15 @@ export function GoalForm({
       </form>
 
       {compact ? null : (
-        <ul className={styles.chips} aria-label="Suggestions">
+        <ul className={styles.chips} aria-label={t("goal.suggestions")}>
           {suggestions.map((suggestion) => (
-            <li key={suggestion.label}>
+            <li key={suggestion.labelKey}>
               <button
                 type="button"
                 className={styles.chip}
                 onClick={() => fillSuggestion(suggestion.goal)}
               >
-                {suggestion.label}
+                {t(suggestion.labelKey)}
               </button>
             </li>
           ))}
