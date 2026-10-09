@@ -28,7 +28,14 @@ Apply to every release and re-check when a phase adds a new input, route or depe
 - [ ] OAuth: no tokens, codes, emails or cookies logged or shown; user-facing errors are generic
 - [ ] OAuth: `AUTH_SECRET` and client secrets only in the host environment and `.env.local`, never in client code; the CSP is not widened for sign-in
 - [ ] Authorization checked on the server for every protected action, using `getSession()` (once a protected action exists)
-- [ ] Logs contain no secrets or personal data
+- [ ] Logs contain no secrets or personal data, and no goal text
+- [ ] Local data: everything read from IndexedDB or localStorage is validated with Zod and invalid records are dropped; stored text is only ever rendered as text
+- [ ] Untrusted imports: a backup file is size-checked (1 MB) before it is read, parsed as JSON, validated against the backup schema and per record, and counts are previewed before Merge or Replace; Replace needs confirmation
+- [ ] Fragment links: `/plan#...` is limited to 4 KB, must be base64url, and is validated with the strict plan-request schema before use; failures show a friendly message and nothing is logged
+- [ ] The share link holds the plan request only, never the goal text, and sits after the `#` so it is not sent to the server
+- [ ] Local data limits are enforced (100 plans, 200 history entries, total size) and a clear message is shown when full
+- [ ] "Clear all data" needs the word CLEAR typed and also removes the theme and language cookies
+- [ ] Only theme and language are stored in cookies, as one word each, with `SameSite=Lax` and no personal data
 
 ## Dependencies
 

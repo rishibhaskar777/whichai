@@ -1,23 +1,25 @@
 import { useId } from "react";
 import { CopyButton } from "@/components/copy-button/CopyButton";
+import { useI18n } from "@/lib/i18n/provider";
 import type { PlanLevel } from "@/lib/schemas/plan";
 import styles from "./PlanView.module.css";
 
 export function Overview({ level }: { level: PlanLevel }) {
+  const { t } = useI18n();
   const titleId = useId();
   return (
     <section className={styles.section} aria-labelledby={titleId}>
       <h2 id={titleId} className={styles.sectionTitle}>
-        Overview
+        {t("plan.overview")}
       </h2>
       <p className={styles.summary}>{level.summary}</p>
       <dl className={styles.overviewFacts}>
         <div>
-          <dt>Estimated cost</dt>
+          <dt>{t("plan.estimatedCost")}</dt>
           <dd>{level.estimatedCost}</dd>
         </div>
         <div>
-          <dt>Estimated time</dt>
+          <dt>{t("plan.estimatedTime")}</dt>
           <dd>{level.estimatedTime}</dd>
         </div>
       </dl>
@@ -30,11 +32,12 @@ export function TierBlock({
 }: {
   tiers: NonNullable<PlanLevel["tiers"]>;
 }) {
+  const { t } = useI18n();
   const titleId = useId();
   return (
     <section className={styles.section} aria-labelledby={titleId}>
       <h2 id={titleId} className={styles.sectionTitle}>
-        {tiers.toolName} plans for this goal
+        {t("plan.tiersTitle", { tool: tiers.toolName })}
       </h2>
       <ul className={styles.tiers}>
         {tiers.tiers.map((tier) => (
@@ -45,18 +48,20 @@ export function TierBlock({
         ))}
       </ul>
       <p className={styles.upgradeLine}>
-        <strong>Start free.</strong> Upgrade only if {tiers.upgradeTrigger}.
+        <strong>{t("plan.startFree")}</strong>{" "}
+        {t("plan.upgradeOnlyIf", { trigger: tiers.upgradeTrigger })}
       </p>
     </section>
   );
 }
 
 export function Workflow({ steps }: { steps: PlanLevel["workflow"] }) {
+  const { t } = useI18n();
   const titleId = useId();
   return (
     <section className={styles.section} aria-labelledby={titleId}>
       <h2 id={titleId} className={styles.sectionTitle}>
-        Workflow
+        {t("plan.workflow")}
       </h2>
       <ol className={styles.steps}>
         {steps.map((step) => (
@@ -68,7 +73,7 @@ export function Workflow({ steps }: { steps: PlanLevel["workflow"] }) {
                 <p className={styles.promptText}>{step.examplePrompt}</p>
                 <CopyButton
                   text={step.examplePrompt}
-                  label="Copy example prompt"
+                  label={t("plan.copyPrompt")}
                 />
               </div>
             ) : null}
@@ -80,29 +85,29 @@ export function Workflow({ steps }: { steps: PlanLevel["workflow"] }) {
 }
 
 export function StarterBrief({ brief }: { brief: string }) {
+  const { t } = useI18n();
   const titleId = useId();
   return (
     <section className={styles.section} aria-labelledby={titleId}>
       <div className={styles.briefHeader}>
         <h2 id={titleId} className={styles.sectionTitle}>
-          Starter brief
+          {t("plan.starterBrief")}
         </h2>
-        <CopyButton text={brief} label="Copy starter brief" />
+        <CopyButton text={brief} label={t("plan.copyBrief")} />
       </div>
-      <p className={styles.hint}>
-        Fill in the brackets, then paste this into your AI assistant to begin.
-      </p>
+      <p className={styles.hint}>{t("plan.starterBriefHint")}</p>
       <pre className={styles.brief}>{brief}</pre>
     </section>
   );
 }
 
 export function CheckTheFacts({ text }: { text: string }) {
+  const { t } = useI18n();
   const titleId = useId();
   return (
     <aside className={styles.facts} aria-labelledby={titleId}>
       <h2 id={titleId} className={styles.factsTitle}>
-        Check the facts
+        {t("plan.checkFacts")}
       </h2>
       <p>{text}</p>
     </aside>

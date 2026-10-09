@@ -10,8 +10,10 @@ import {
 } from "react";
 import { MailIcon, PhoneIcon } from "@/components/icons";
 import { Wordmark } from "@/components/wordmark/Wordmark";
-import { AUTH_ERRORS, type AuthErrorCode } from "@/lib/auth/errors";
+import type { AuthErrorCode } from "@/lib/auth/errors";
 import type { ProviderAvailability } from "@/lib/auth/config";
+import { useI18n } from "@/lib/i18n/provider";
+import type { MessageKey } from "@/lib/i18n/en";
 import {
   AppleMark,
   GitHubMark,
@@ -24,7 +26,8 @@ type OptionId = "google" | "github" | "microsoft" | "apple" | "email" | "phone";
 
 interface Option {
   id: OptionId;
-  label: string;
+  /* A brand name, or a message key for a generic method such as email. */
+  label: string | MessageKey;
   name: string;
   Mark: ComponentType<SVGProps<SVGSVGElement>>;
 }
@@ -42,10 +45,10 @@ const PRIMARY_OPTIONS: readonly Option[] = [
 ];
 
 const SECONDARY_OPTIONS: readonly Option[] = [
-  { id: "email", label: "email", name: "Email", Mark: MailIcon },
+  { id: "email", label: "signin.method.email", name: "Email", Mark: MailIcon },
   {
     id: "phone",
-    label: "phone number",
+    label: "signin.method.phone",
     name: "Phone number",
     Mark: PhoneIcon,
   },
@@ -77,6 +80,7 @@ export function SignInPanel({
   onDismiss,
   onNavigate,
 }: SignInPanelProps) {
+  const { t } = useI18n();
   const panelRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<LiveProvider | null>(null);
   const [notice, setNotice] = useState<{ text: string; count: number } | null>(
@@ -115,13 +119,16 @@ export function SignInPanel({
 
   const showComingSoon = (option: Option) =>
     setNotice((current) => ({
-      text: `${option.name} sign-in is coming in an upcoming update.`,
+      text: t("signin.comingSoon", { name: option.name }),
       count: (current?.count ?? 0) + 1,
     }));
 
   const renderOption = (option: Option) => {
     const { id, Mark } = option;
-    const text = `Continue with ${option.label}`;
+    const method = option.label.startsWith("signin.method.")
+      ? t(option.label as MessageKey)
+      : option.label;
+    const text = t("signin.continueWith", { method });
 
     if (isLive(id) && providers[id]) {
       const busy = loading !== null;
@@ -174,22 +181,20 @@ export function SignInPanel({
         <Wordmark />
       </div>
       <Heading id={titleId} className={styles.title}>
-        Sign in to WhichAI
+        {t("signin.title")}
       </Heading>
-      <p className={styles.lede}>
-        Sign in to keep your plans. For now your plans stay in this browser.
-      </p>
+      <p className={styles.lede}>{t("signin.lede")}</p>
 
       {visibleError ? (
         <p role="alert" className={styles.error}>
-          {AUTH_ERRORS[visibleError]}
+          {t(`auth.error.${visibleError}`)}
         </p>
       ) : null}
 
       <div className={styles.buttons}>
         {PRIMARY_OPTIONS.map(renderOption)}
         <div className={styles.divider}>
-          <span>or</span>
+          <span>{t("signin.or")}</span>
         </div>
         {SECONDARY_OPTIONS.map(renderOption)}
 
@@ -202,26 +207,27 @@ export function SignInPanel({
         </div>
         <p role="status" className={styles.srOnly}>
           {loading
-            ? `Opening ${loading === "google" ? "Google" : "GitHub"} sign-in`
+            ? t("signin.opening", {
+                name: loading === "google" ? "Google" : "GitHub",
+              })
             : ""}
         </p>
       </div>
 
       {onDismiss ? (
         <button type="button" className={styles.dismiss} onClick={onDismiss}>
-          Continue without signing in
+          {t("signin.dismiss")}
         </button>
       ) : (
         <Link href={next} className={styles.dismiss}>
-          Continue without signing in
+          {t("signin.dismiss")}
         </Link>
       )}
 
       <p className={styles.fine}>
-        We only receive your name from Google or GitHub. We never see your
-        password.{" "}
+        {t("signin.fine")}{" "}
         <Link href="/privacy" onClick={() => onNavigate?.()}>
-          Privacy
+          {t("signin.privacy")}
         </Link>
       </p>
     </div>

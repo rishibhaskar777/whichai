@@ -90,3 +90,31 @@ ol {
     animation-iteration-count: 1 !important;
   }
 }
+
+/*
+ * The Reduce motion setting. "On" forces the reduced behaviour even when the
+ * device does not ask for it. "Off" restores movement that the device
+ * preference would remove; the component styles add their own "off" rules.
+ */
+html[data-motion="reduce"] {
+  --motion-distance: 0px;
+
+  scroll-behavior: auto;
+}
+
+html[data-motion="reduce"] *,
+html[data-motion="reduce"] *::before,
+html[data-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-delay: 0ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-motion="full"] {
+  --motion-distance: 8px;
+
+  scroll-behavior: smooth;
+}

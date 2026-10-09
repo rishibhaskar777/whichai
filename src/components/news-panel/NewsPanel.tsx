@@ -4,6 +4,7 @@ import {
   NewsIcon,
 } from "@/components/icons";
 import type { NewsItem } from "@/data/sample/news";
+import { useI18n } from "@/lib/i18n/provider";
 import styles from "./NewsPanel.module.css";
 
 export type NewsChoice = "auto" | "open" | "collapsed";
@@ -15,38 +16,33 @@ interface NewsPanelProps {
   onToggle: () => void;
 }
 
-const dateFormat = new Intl.DateTimeFormat("en", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-  timeZone: "UTC",
-});
-
 export function NewsPanel({
   items,
   choice,
   expanded,
   onToggle,
 }: NewsPanelProps) {
+  const { t, formatDate } = useI18n();
   return (
     <aside
       className={styles.panel}
+      data-print-hide=""
       data-choice={choice}
       aria-labelledby="news-heading"
     >
       <div className={styles.header}>
         <NewsIcon className={styles.headerIcon} />
         <h2 id="news-heading" className={styles.title}>
-          AI news
+          {t("news.title")}
         </h2>
-        <span className={styles.badge}>Sample content</span>
+        <span className={styles.badge}>{t("news.sample")}</span>
         <button
           type="button"
           className={styles.toggle}
           onClick={onToggle}
           aria-expanded={expanded}
           aria-controls="news-list"
-          aria-label={expanded ? "Collapse AI news" : "Expand AI news"}
+          aria-label={expanded ? t("news.collapse") : t("news.expand")}
         >
           <ChevronDownIcon className={styles.chevron} />
         </button>
@@ -59,7 +55,7 @@ export function NewsPanel({
               <div className={styles.meta}>
                 <span className={styles.source}>{item.source}</span>
                 <time dateTime={item.date} className={styles.date}>
-                  {dateFormat.format(new Date(item.date))}
+                  {formatDate(item.date, "short", "UTC")}
                 </time>
               </div>
               <p className={styles.summary}>{item.summary}</p>
@@ -77,7 +73,7 @@ export function NewsPanel({
                   className={styles.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Visit ${item.source} (opens in a new tab)`}
+                  aria-label={t("news.visit", { source: item.source })}
                 >
                   <ExternalLinkIcon width="16" height="16" />
                 </a>

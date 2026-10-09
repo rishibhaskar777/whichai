@@ -1,17 +1,7 @@
 import { useId } from "react";
-import type { JobCategory } from "@/lib/schemas/catalogue";
+import { useI18n } from "@/lib/i18n/provider";
 import type { ToolkitGroup } from "@/lib/schemas/plan";
 import styles from "./Toolkit.module.css";
-
-const CATEGORY_LABELS: Record<JobCategory, string> = {
-  ai: "AI",
-  build: "Build",
-  design: "Design",
-  media: "Media",
-  productivity: "Productivity",
-  learning: "Learning",
-  research: "Research",
-};
 
 interface ToolkitProps {
   groups: readonly ToolkitGroup[];
@@ -19,13 +9,14 @@ interface ToolkitProps {
 }
 
 export function Toolkit({ groups, onSelect }: ToolkitProps) {
+  const { t } = useI18n();
   const titleId = useId();
   const labelPrefix = useId();
 
   return (
     <section className={styles.toolkit} aria-labelledby={titleId}>
       <h2 id={titleId} className={styles.title}>
-        Your toolkit at a glance
+        {t("plan.toolkitTitle")}
       </h2>
       <div className={styles.groups}>
         {groups.map((group) => {
@@ -38,7 +29,7 @@ export function Toolkit({ groups, onSelect }: ToolkitProps) {
               className={styles.group}
             >
               <p id={labelId} className={styles.groupLabel}>
-                {CATEGORY_LABELS[group.category]}
+                {t(`category.${group.category}`)}
               </p>
               <ul className={styles.chips}>
                 {group.tools.map((tool) => (
@@ -46,7 +37,7 @@ export function Toolkit({ groups, onSelect }: ToolkitProps) {
                     <button
                       type="button"
                       className={styles.chip}
-                      aria-label={`Go to ${tool.toolName}`}
+                      aria-label={t("plan.goTo", { tool: tool.toolName })}
                       onClick={() => onSelect(tool.jobId)}
                     >
                       {tool.toolName}

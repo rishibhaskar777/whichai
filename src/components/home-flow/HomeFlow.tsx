@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GoalForm } from "@/components/goal-form/GoalForm";
 import { NoMatchCard } from "@/components/no-match-card/NoMatchCard";
+import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { PlanView } from "@/components/plan-view/PlanView";
 import { UnderstandingCard } from "@/components/understanding-card/UnderstandingCard";
 import {
@@ -11,6 +12,7 @@ import {
   inferLevel,
   interpretGoal,
 } from "@/lib/plan/interpret-goal";
+import { useI18n } from "@/lib/i18n/provider";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
 import type { Chip, UnderstoodGoal } from "@/lib/schemas/plan";
 import controls from "@/styles/controls.module.css";
@@ -23,21 +25,22 @@ type Stage =
   | { kind: "editing" }
   | { kind: "plan"; goal: UnderstoodGoal };
 
-const ANNOUNCEMENTS: Record<Stage["kind"], string> = {
-  empty: "",
-  editing: "",
-  understanding: "Goal understood. Check the details and confirm.",
-  "no-match": "No plan for this goal yet. Pick a goal we cover.",
-  plan: "Plan ready",
-};
+const ANNOUNCEMENT_KEYS = {
+  understanding: "home.announce.understanding",
+  "no-match": "home.announce.noMatch",
+  plan: "home.announce.plan",
+} as const;
 
 export function HomeFlow() {
+  const { t, locale } = useI18n();
+  const { settings, recordGoal } = useLocalData();
   const [stage, setStage] = useState<Stage>({ kind: "empty" });
   const [submittedGoal, setSubmittedGoal] = useState("");
   const [draft, setDraft] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const { count: newPlanCount } = useNewPlanSignal();
+  const { count: newPlanCount, pendingGoal, consumeGoal } = useNewPlanSignal();
   const [handledNewPlan, setHandledNewPlan] = useState(newPlanCount);
+  const [handledGoalToken, setHandledGoalToken] = useState(0);
 
   if (handledNewPlan !== newPlanCount) {
     setHandledNewPlan(newPlanCount);
@@ -57,12 +60,32 @@ export function HomeFlow() {
     textarea.setSelectionRange(textarea.value.length, textarea.value.length);
   }, [stage.kind]);
 
-  function submitGoal(goalText: string) {
+  function showGoal(goalText: string) {
     const goal = interpretGoal(goalText);
     setSubmittedGoal(goalText);
     setDraft("");
     setStage(goal ? { kind: "understanding", goal } : { kind: "no-match" });
+    return goal;
   }
+
+  function submitGoal(goalText: string) {
+    const goal = showGoal(goalText);
+    void recordGoal(goalText, goal?.goalType ?? null);
+  }
+
+  // A goal re-run from the Searches page arrives through the signal, not the URL.
+  if (pendingGoal && pendingGoal.token !== handledGoalToken) {
+    setHandledGoalToken(pendingGoal.token);
+    showGoal(pendingGoal.text);
+  }
+  useEffect(() => {
+    if (!pendingGoal) return;
+    void recordGoal(
+      pendingGoal.text,
+      interpretGoal(pendingGoal.text)?.goalType ?? null,
+    );
+    consumeGoal();
+  }, [pendingGoal, consumeGoal, recordGoal]);
 
   function updateChips(update: (chips: readonly Chip[]) => Chip[]) {
     setStage((current) =>
@@ -99,24 +122,24 @@ export function HomeFlow() {
       <div className={styles.intro} data-collapsed={started}>
         <div className={styles.introInner}>
           {started ? (
-            <p className={styles.greeting}>What do you want to do with AI?</p>
+            <p className={styles.greeting}>{t("home.greeting")}</p>
           ) : (
-            <h1 className={styles.greeting}>What do you want to do with AI?</h1>
+            <h1 className={styles.greeting}>{t("home.greeting")}</h1>
           )}
-          <p className={styles.lead}>
-            Describe your goal. WhichAI suggests which AI tools to use and how
-            to use them, at three levels: Simple, Polished and Advanced.
-          </p>
+          <p className={styles.lead}>{t("home.lead")}</p>
+          {locale === "hi" ? (
+            <p className={styles.lead}>{t("home.englishOnly")}</p>
+          ) : null}
         </div>
       </div>
 
       <div className={styles.thread}>
         {stage.kind === "editing" ? (
-          <h1 className={controls.srOnly}>Edit your goal</h1>
+          <h1 className={controls.srOnly}>{t("home.editGoal")}</h1>
         ) : null}
         {showsGoalEcho ? (
           <p className={styles.goalEcho}>
-            <span className={controls.srOnly}>Your goal: </span>
+            <span className={controls.srOnly}>{t("home.yourGoal")}</span>
             {submittedGoal}
           </p>
         ) : null}
@@ -139,11 +162,19 @@ export function HomeFlow() {
         ) : null}
 
         {stage.kind === "plan" ? (
-          <PlanView goal={stage.goal} initialLevel={stage.goal.inferredLevel} />
+          <PlanView
+            goal={stage.goal}
+            initialLevel={
+              settings.defaultLevel === "auto"
+                ? stage.goal.inferredLevel
+                : settings.defaultLevel
+            }
+            initialBudget={settings.defaultBudget}
+          />
         ) : null}
       </div>
 
-      <div className={styles.dock}>
+      <div className={styles.dock} data-print-hide="">
         <GoalForm
           value={draft}
           onValueChange={setDraft}
@@ -156,7 +187,9 @@ export function HomeFlow() {
       <div className={styles.spacer} aria-hidden="true" />
 
       <p role="status" className={controls.srOnly}>
-        {ANNOUNCEMENTS[stage.kind]}
+        {stage.kind in ANNOUNCEMENT_KEYS
+          ? t(ANNOUNCEMENT_KEYS[stage.kind as keyof typeof ANNOUNCEMENT_KEYS])
+          : ""}
       </p>
     </div>
   );

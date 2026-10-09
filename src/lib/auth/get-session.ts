@@ -10,6 +10,7 @@ export async function getSession(): Promise<SessionData | null> {
 
 export interface Viewer {
   name: string;
+  provider: SessionData["provider"];
   signOutToken: string;
 }
 
@@ -19,6 +20,7 @@ export async function getViewer(): Promise<Viewer | null> {
   if (!found) return null;
   return {
     name: found.session.name,
+    provider: found.session.provider,
     signOutToken: await createCsrfToken(found.token, found.secret),
   };
 }

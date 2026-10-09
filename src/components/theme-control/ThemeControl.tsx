@@ -7,24 +7,19 @@ import {
   type SVGProps,
 } from "react";
 import { MonitorIcon, MoonIcon, SunIcon } from "@/components/icons";
-import {
-  THEME_COOKIE,
-  parseTheme,
-  type Theme,
-  type ThemeChoice,
-} from "@/lib/theme";
+import { useLocalData } from "@/components/local-data/LocalDataProvider";
+import { useI18n } from "@/lib/i18n/provider";
+import { parseTheme, type ThemeChoice } from "@/lib/theme";
 import styles from "./ThemeControl.module.css";
-
-const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
 
 const OPTIONS: readonly {
   value: ThemeChoice;
-  label: string;
+  label: "theme.system" | "theme.light" | "theme.dark";
   Icon: ComponentType<SVGProps<SVGSVGElement>>;
 }[] = [
-  { value: "system", label: "System", Icon: MonitorIcon },
-  { value: "light", label: "Light", Icon: SunIcon },
-  { value: "dark", label: "Dark", Icon: MoonIcon },
+  { value: "system", label: "theme.system", Icon: MonitorIcon },
+  { value: "light", label: "theme.light", Icon: SunIcon },
+  { value: "dark", label: "theme.dark", Icon: MoonIcon },
 ];
 
 function subscribe(onChange: () => void) {
@@ -40,18 +35,6 @@ function readChoice(): ThemeChoice {
   return parseTheme(document.documentElement.dataset.theme) ?? "system";
 }
 
-function applyChoice(choice: ThemeChoice) {
-  const secure = window.location.protocol === "https:" ? "; Secure" : "";
-  if (choice === "system") {
-    delete document.documentElement.dataset.theme;
-    document.cookie = `${THEME_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax${secure}`;
-    return;
-  }
-  const theme: Theme = choice;
-  document.documentElement.dataset.theme = theme;
-  document.cookie = `${THEME_COOKIE}=${theme}; Path=/; Max-Age=${ONE_YEAR_SECONDS}; SameSite=Lax${secure}`;
-}
-
 interface ThemeControlProps {
   initialChoice: ThemeChoice;
   compact: boolean;
@@ -63,11 +46,13 @@ export function ThemeControl({ initialChoice, compact }: ThemeControlProps) {
     readChoice,
     () => initialChoice,
   );
+  const { t } = useI18n();
+  const { updateSettings } = useLocalData();
   const name = useId();
 
   return (
     <fieldset className={styles.group} data-compact={compact}>
-      <legend className={styles.srOnly}>Theme</legend>
+      <legend className={styles.srOnly}>{t("theme.label")}</legend>
       {OPTIONS.map(({ value, label, Icon }) => (
         <label key={value} className={styles.option}>
           <input
@@ -76,11 +61,13 @@ export function ThemeControl({ initialChoice, compact }: ThemeControlProps) {
             value={value}
             className={styles.input}
             checked={choice === value}
-            onChange={() => applyChoice(value)}
+            onChange={() => void updateSettings({ theme: value })}
           />
-          <span className={styles.face} title={label}>
+          <span className={styles.face} title={t(label)}>
             <Icon width="16" height="16" />
-            <span className={compact ? styles.srOnly : undefined}>{label}</span>
+            <span className={compact ? styles.srOnly : undefined}>
+              {t(label)}
+            </span>
           </span>
         </label>
       ))}

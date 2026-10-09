@@ -1,21 +1,36 @@
+import type { MessageKey } from "@/lib/i18n/en";
+
 export interface Suggestion {
-  label: string;
+  labelKey: MessageKey;
+  /* Stays in English: the goal interpreter reads English keywords. */
   goal: string;
 }
 
 export const suggestions: readonly Suggestion[] = [
-  { label: "Study plan", goal: "Make a study plan for my upcoming exams" },
   {
-    label: "Portfolio website",
+    labelKey: "suggest.study",
+    goal: "Make a study plan for my upcoming exams",
+  },
+  {
+    labelKey: "suggest.portfolio",
     goal: "Build a portfolio website to show my work",
   },
   {
-    label: "Reading and stories",
+    labelKey: "suggest.reading",
     goal: "Read and write stories with AI help",
   },
-  { label: "Resume help", goal: "Improve my resume for a job application" },
-  { label: "Make a video", goal: "Make a short video from my own footage" },
-  { label: "Build an app", goal: "Build a simple app without much coding" },
+  {
+    labelKey: "suggest.resume",
+    goal: "Improve my resume for a job application",
+  },
+  {
+    labelKey: "suggest.video",
+    goal: "Make a short video from my own footage",
+  },
+  {
+    labelKey: "suggest.app",
+    goal: "Build a simple app without much coding",
+  },
 ];
 
 export const placeholderExamples: readonly string[] = [

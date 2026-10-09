@@ -1,4 +1,5 @@
 import { useId } from "react";
+import { useI18n } from "@/lib/i18n/provider";
 import controls from "@/styles/controls.module.css";
 import styles from "./NoMatchCard.module.css";
 
@@ -14,18 +15,16 @@ interface NoMatchCardProps {
 }
 
 export function NoMatchCard({ goals, onChoose }: NoMatchCardProps) {
+  const { t } = useI18n();
   const titleId = useId();
 
   return (
     <section className={styles.card} aria-labelledby={titleId}>
       <h1 id={titleId} className={styles.title}>
-        We don&apos;t have a plan for this goal yet
+        {t("noMatch.title")}
       </h1>
-      <p className={styles.text}>
-        Nothing we cover matches what you wrote, and we won&apos;t guess. For
-        now we can plan the goals below. Tap one, or describe something else.
-      </p>
-      <ul className={styles.goals} aria-label="Goals we cover">
+      <p className={styles.text}>{t("noMatch.text")}</p>
+      <ul className={styles.goals} aria-label={t("noMatch.goals")}>
         {goals.map((goal) => (
           <li key={goal.goalType}>
             <button

@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 import { ComingSoon } from "@/components/coming-soon/ComingSoon";
+import { getI18n } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "What Changed",
-  alternates: { canonical: "/what-changed" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return {
+    title: t("nav.whatChanged"),
+    alternates: { canonical: "/what-changed" },
+  };
+}
 
-export default function Page() {
+export default async function Page() {
+  const { t } = await getI18n();
   return (
     <ComingSoon
-      title="What Changed"
-      description="A log of verified changes to AI tools and plans is planned for a later release."
+      title={t("nav.whatChanged")}
+      description={t("comingSoon.whatChanged")}
     />
   );
 }

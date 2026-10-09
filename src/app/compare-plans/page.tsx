@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 import { ComingSoon } from "@/components/coming-soon/ComingSoon";
+import { getI18n } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "Compare Plans",
-  alternates: { canonical: "/compare-plans" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return {
+    title: t("nav.comparePlans"),
+    alternates: { canonical: "/compare-plans" },
+  };
+}
 
-export default function Page() {
+export default async function Page() {
+  const { t } = await getI18n();
   return (
     <ComingSoon
-      title="Compare Plans"
-      description="Side-by-side comparison of plans from different tools is planned for a later release."
+      title={t("nav.comparePlans")}
+      description={t("comingSoon.comparePlans")}
     />
   );
 }

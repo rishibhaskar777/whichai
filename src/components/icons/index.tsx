@@ -150,3 +150,65 @@ export const MailIcon = createIcon(
 export const PhoneIcon = createIcon(
   <path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2Z" />,
 );
+
+export const MoreIcon = createIcon(
+  <>
+    <circle cx="5" cy="12" r="1" />
+    <circle cx="12" cy="12" r="1" />
+    <circle cx="19" cy="12" r="1" />
+  </>,
+);
+
+export const TrashIcon = createIcon(
+  <path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" />,
+);
+
+export const PencilIcon = createIcon(
+  <path d="M4 20h4L19 9l-4-4L4 16v4ZM13.5 6.5l4 4" />,
+);
+
+export const DownloadIcon = createIcon(
+  <path d="M12 4v11M7 11l5 5 5-5M5 20h14" />,
+);
+
+export const UploadIcon = createIcon(<path d="M12 16V5M7 9l5-5 5 5M5 20h14" />);
+
+export const ShareIcon = createIcon(
+  <path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1" />,
+);
+
+export const BookmarkIcon = createIcon(
+  <path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4-6 4V5a1 1 0 0 1 1-1Z" />,
+);
+
+export const SettingsIcon = createIcon(
+  <>
+    <circle cx="12" cy="12" r="3" />
+    <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4" />
+  </>,
+);
+
+export const HelpIcon = createIcon(
+  <>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01" />
+  </>,
+);
+
+export const InfoIcon = createIcon(
+  <>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 11v5M12 8h.01" />
+  </>,
+);
+
+export const CopyPlusIcon = createIcon(
+  <>
+    <rect x="9" y="9" width="11" height="11" rx="2" />
+    <path d="M5 15V6a2 2 0 0 1 2-2h8M14.5 12.5v5M12 15h5" />
+  </>,
+);
+
+export const RefreshIcon = createIcon(
+  <path d="M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4" />,
+);

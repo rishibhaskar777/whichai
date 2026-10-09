@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import type { Viewer } from "@/lib/auth/get-session";
 import { getInitials } from "@/lib/auth/initials";
+import { useI18n } from "@/lib/i18n/provider";
 import styles from "./SidebarContent.module.css";
 
 interface AccountMenuProps {
@@ -11,6 +13,7 @@ interface AccountMenuProps {
 }
 
 export function AccountMenu({ viewer, collapsed }: AccountMenuProps) {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -53,10 +56,17 @@ export function AccountMenu({ viewer, collapsed }: AccountMenuProps) {
       </button>
       {open ? (
         <div id={menuId} className={styles.menu}>
+          <Link
+            href="/settings"
+            className={styles.menuItem}
+            onClick={() => setOpen(false)}
+          >
+            {t("nav.settings")}
+          </Link>
           <form method="post" action="/api/auth/sign-out">
             <input type="hidden" name="csrf" value={viewer.signOutToken} />
             <button type="submit" className={styles.menuItem}>
-              Sign out
+              {t("nav.signOut")}
             </button>
           </form>
         </div>

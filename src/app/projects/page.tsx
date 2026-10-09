@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/coming-soon/ComingSoon";
+import { ProjectsView } from "@/components/projects/ProjectsView";
+import { getI18n } from "@/lib/i18n/server";
 
-export const metadata: Metadata = {
-  title: "Projects",
-  alternates: { canonical: "/projects" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return { title: t("nav.projects"), alternates: { canonical: "/projects" } };
+}
 
 export default function Page() {
-  return (
-    <ComingSoon
-      title="Projects"
-      description="Saved plans for each of your projects will live here once accounts are available."
-    />
-  );
+  return <ProjectsView />;
 }
