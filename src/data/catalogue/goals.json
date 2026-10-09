@@ -1,0 +1,2346 @@
+[
+  {
+    "id": "portfolio-website",
+    "title": "Portfolio website",
+    "headline": "Your portfolio website plan",
+    "example": "Build a portfolio website to show my work",
+    "keywords": [
+      "portfolio",
+      "personal website",
+      "personal site",
+      "personal page",
+      "website",
+      "site",
+      "my work online"
+    ],
+    "synonyms": [
+      "showcase my work",
+      "online portfolio",
+      "about me page",
+      "personal brand",
+      "photography website"
+    ],
+    "starterBrief": "Goal: a portfolio website for [your name], [your role].\nAudience: [who should see it, for example hiring managers or clients].\nPages: Home, Work (3 to 5 projects), About, Contact.\nTone: plain, confident, no buzzwords.\nMust have: fast on a phone, easy to update, readable in dark mode.\nBudget: [your monthly limit].\nMy experience with websites: [none / some / comfortable with code].\nAsk me anything you need before suggesting a design.",
+    "features": [
+      {
+        "id": "animation",
+        "label": "Animation",
+        "keywords": ["animation", "animated", "animate", "motion"],
+        "jobs": ["animation-library"]
+      },
+      {
+        "id": "blog",
+        "label": "Blog",
+        "keywords": ["blog", "blogging"],
+        "jobs": ["content-management"]
+      },
+      {
+        "id": "contact-form",
+        "label": "Contact form",
+        "keywords": ["contact form"],
+        "jobs": ["contact-form"]
+      },
+      {
+        "id": "dark-mode",
+        "label": "Dark mode",
+        "keywords": ["dark mode", "dark theme"],
+        "jobs": ["component-library"]
+      },
+      {
+        "id": "analytics",
+        "label": "Analytics",
+        "keywords": ["analytics", "visitor stats", "visitor statistics"],
+        "jobs": ["analytics"]
+      }
+    ],
+    "levels": {
+      "simple": {
+        "summary": "Start from a finished template, let {job:ai-assistant} draft your text, and publish with a simple host. You edit words and images; you do not write code.",
+        "estimatedTime": "About a weekend (rough estimate)",
+        "jobs": ["ai-assistant", "ui-templates", "hosting"],
+        "steps": [
+          {
+            "title": "Collect your material",
+            "detail": "Gather 3 to 5 projects with a photo, a one-line result and a link for each, plus a short bio.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Draft the words",
+            "detail": "Ask {job:ai-assistant} for a first version of your about text, then rewrite it in your own voice.",
+            "examplePrompt": "Write a short about section for my portfolio. I am a [role] who works on [type of work]. Keep it under 80 words and plain."
+          },
+          {
+            "title": "Pick and fill a template",
+            "detail": "Choose a template from {job:ui-templates} with the pages you listed. Replace every placeholder before you publish.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Publish and test",
+            "detail": "Publish with {job:hosting}, then open the link on your phone and ask a friend to find your contact details.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Showing ten projects instead of the three you are proudest of.",
+          "Leaving template placeholder text in place.",
+          "Publishing without checking the page on a phone."
+        ],
+        "whenToUpgrade": [
+          "You want custom animation or layout the template cannot do.",
+          "You need your own domain name and a contact form.",
+          "You keep editing the site every week."
+        ],
+        "checkTheFacts": null,
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "drafting your about text",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              },
+              {
+                "task": "planning the pages",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      },
+      "polished": {
+        "summary": "Build with a framework and a ready component kit, add motion where it helps, and publish from a Git repository so each change goes live on its own.",
+        "estimatedTime": "About 1 to 2 weeks of evenings (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "framework",
+          "component-library",
+          "animation-library",
+          "hosting"
+        ],
+        "steps": [
+          {
+            "title": "Set up the project",
+            "detail": "Create the repository, start a project with {job:framework} and publish the empty page first so publishing is never a surprise.",
+            "examplePrompt": "I am making a portfolio with [framework]. List the exact steps to create the project, push it to GitHub and deploy it, for a beginner."
+          },
+          {
+            "title": "Build the layout from components",
+            "detail": "Add a header, a project grid and a footer from {job:component-library}. Change the colours and type to match you.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Write the content",
+            "detail": "Keep project text in one file so changing a project never means editing layout code. Ask {job:ai-assistant} to tighten your wording.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Add motion with restraint",
+            "detail": "Use {job:animation-library} on the first screen and the project cards only. Test with reduced motion switched on.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Publish and check",
+            "detail": "Deploy with {job:hosting}. Check the page on a phone, with the keyboard only, and in dark mode.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Adding animation to everything. It slows the page and annoys readers.",
+          "Leaving a component kit's default look unchanged, so the site looks like many others.",
+          "Skipping alt text and keyboard checks."
+        ],
+        "whenToUpgrade": [
+          "You want to edit posts without touching code.",
+          "You need a contact form, analytics or a blog.",
+          "You want AI help that works across your whole project."
+        ],
+        "checkTheFacts": null,
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "drafting copy",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              },
+              {
+                "task": "planning the structure",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              }
+            ]
+          }
+        ]
+      },
+      "advanced": {
+        "summary": "Own the whole stack: an AI coding assistant, a typed framework, an editing system for content, a form, analytics and a repeatable deploy.",
+        "estimatedTime": "About 2 to 4 weeks of evenings (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "coding-assistant",
+          "framework",
+          "component-library",
+          "animation-library",
+          "content-management",
+          "hosting",
+          "analytics",
+          "contact-form"
+        ],
+        "steps": [
+          {
+            "title": "Plan the architecture",
+            "detail": "Decide pages, data and what is static. Ask {job:ai-assistant} to challenge the plan before you build.",
+            "examplePrompt": "Here is my portfolio plan: [plan]. List the three biggest risks and what I should decide before writing code."
+          },
+          {
+            "title": "Build with an assistant in the editor",
+            "detail": "Use {job:coding-assistant} for repetitive code, and read every change before you commit it.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Connect content",
+            "detail": "Set up {job:content-management} so projects and posts are edited outside the code.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Add form and analytics",
+            "detail": "Wire {job:contact-form} with spam protection, and add {job:analytics} with a clear note about what you collect.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Deploy and monitor",
+            "detail": "Publish with {job:hosting}. Run an accessibility and speed check, then fix what it finds.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Building a custom system for content you update twice a year.",
+          "Accepting generated code without reading it.",
+          "Collecting visitor data without telling visitors."
+        ],
+        "whenToUpgrade": [
+          "Traffic or content outgrows free plans.",
+          "You want automated tests and checks on each change.",
+          "You need a custom domain email address."
+        ],
+        "checkTheFacts": null,
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "reviewing the plan",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              },
+              {
+                "task": "drafting copy",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              }
+            ]
+          },
+          {
+            "jobId": "coding-assistant",
+            "steps": [
+              {
+                "task": "small edits",
+                "modelClass": "coding",
+                "effort": "medium"
+              },
+              {
+                "task": "design decisions and hard bugs",
+                "modelClass": "coding",
+                "effort": "high"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "study-plan",
+    "title": "Study plan",
+    "headline": "Your 60-day study plan",
+    "example": "Make a study plan for my upcoming exams",
+    "keywords": [
+      "study",
+      "studying",
+      "studies",
+      "studied",
+      "exam",
+      "syllabus",
+      "syllabuses",
+      "syllabi",
+      "learn",
+      "learning",
+      "revise",
+      "revision"
+    ],
+    "synonyms": [
+      "board exams",
+      "entrance exam",
+      "test preparation",
+      "exam preparation",
+      "jee",
+      "neet",
+      "upsc",
+      "homework",
+      "semester"
+    ],
+    "starterBrief": "Goal: prepare for [exam or subject] on [exam date].\nTime available: [hours per day] on weekdays, [hours] on weekends.\nWhere I am now: [topics I know well] and [topics I find hard].\nMaterials I have: [syllabus, textbook, past papers].\nHow I learn best: [reading, practice questions, discussion].\nAsk me anything you need, then tell me honestly if this goal is realistic.",
+    "features": [
+      {
+        "id": "notes",
+        "label": "Notes",
+        "keywords": ["notes", "note taking"],
+        "jobs": ["note-taking"]
+      },
+      {
+        "id": "quiz",
+        "label": "Quiz",
+        "keywords": ["quiz", "quizzes", "flashcard"],
+        "jobs": ["flashcards-and-quizzes"]
+      },
+      {
+        "id": "research",
+        "label": "Research",
+        "keywords": ["research", "papers"],
+        "jobs": ["research-with-sources"]
+      }
+    ],
+    "levels": {
+      "simple": {
+        "summary": "Use {job:ai-assistant} to turn your syllabus and exam date into a day-by-day plan, and keep your notes in one place with {job:note-taking}.",
+        "estimatedTime": "An hour to set up, then daily study (rough estimate)",
+        "jobs": ["ai-assistant", "note-taking"],
+        "steps": [
+          {
+            "title": "Write down the facts",
+            "detail": "Collect the exam date, the syllabus and how many hours you can really study each day.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Ask for a realistic plan",
+            "detail": "Give {job:ai-assistant} your facts and ask it to be honest if the goal is unrealistic.",
+            "examplePrompt": "Make a 60-day plan. Tell me honestly if my goal is unrealistic. List the three biggest risks in this plan."
+          },
+          {
+            "title": "Set up your notes",
+            "detail": "Make one page per topic in {job:note-taking}. Write each note in your own words.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Review every week",
+            "detail": "Once a week, tell the assistant what you finished and ask it to adjust the plan.",
+            "examplePrompt": "Here is what I finished this week: [list]. Adjust the remaining plan and tell me what to drop first if I am behind."
+          }
+        ],
+        "commonMistakes": [
+          "Planning more hours than you can really study.",
+          "Copying the AI's explanations into notes without understanding them.",
+          "Never testing yourself, only re-reading."
+        ],
+        "whenToUpgrade": [
+          "You keep forgetting what you studied last week.",
+          "You have more material than one chat can hold.",
+          "You want practice questions that match your syllabus."
+        ],
+        "checkTheFacts": "AI answers about your subject can be wrong or out of date. Check facts, formulas and dates against your textbook or the official syllabus.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "building the plan",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              },
+              {
+                "task": "explaining a topic",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      },
+      "polished": {
+        "summary": "Add active recall: {job:flashcards-and-quizzes} schedules your reviews, {job:note-taking} holds your notes and {job:ai-assistant} builds and adjusts the plan.",
+        "estimatedTime": "Two hours to set up, then daily study (rough estimate)",
+        "jobs": ["ai-assistant", "note-taking", "flashcards-and-quizzes"],
+        "steps": [
+          {
+            "title": "Build the plan",
+            "detail": "Give {job:ai-assistant} your syllabus, your dates and your weak topics.",
+            "examplePrompt": "Make a 60-day plan. Tell me honestly if my goal is unrealistic. List the three biggest risks in this plan."
+          },
+          {
+            "title": "Take notes in your own words",
+            "detail": "Keep one page per topic in {job:note-taking}. Mark anything you are unsure about.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Turn notes into cards",
+            "detail": "Make question-and-answer cards in {job:flashcards-and-quizzes}. Write the questions yourself where you can.",
+            "examplePrompt": "Here are my notes on [topic]. Write 10 question-and-answer flashcards. Mark any answer you are unsure about."
+          },
+          {
+            "title": "Test yourself weekly",
+            "detail": "Ask for a practice quiz on the week's topics, answer without notes, then review the mistakes.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Making hundreds of cards you never review.",
+          "Trusting generated cards without checking them against your book.",
+          "Skipping the weekly review."
+        ],
+        "whenToUpgrade": [
+          "You need answers grounded in your own course material.",
+          "Your reading list is long and you need to find sources fast.",
+          "You want to track progress across several subjects."
+        ],
+        "checkTheFacts": "Generated flashcards and explanations can contain mistakes. Check each one against your textbook or syllabus before you memorise it.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "building the plan",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              },
+              {
+                "task": "making flashcards",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              },
+              {
+                "task": "explaining hard topics",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      },
+      "advanced": {
+        "summary": "Ground your study in your own sources: {job:research-with-sources} answers from your material, {job:flashcards-and-quizzes} schedules reviews and {job:ai-assistant} manages the plan.",
+        "estimatedTime": "Half a day to set up, then daily study (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "research-with-sources",
+          "note-taking",
+          "flashcards-and-quizzes"
+        ],
+        "steps": [
+          {
+            "title": "Load your sources",
+            "detail": "Add your syllabus, textbook chapters and past papers to {job:research-with-sources}.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Plan with the assistant",
+            "detail": "Ask {job:ai-assistant} for a 60-day plan built from the syllabus, and ask it to list the biggest risks.",
+            "examplePrompt": "Make a 60-day plan. Tell me honestly if my goal is unrealistic. List the three biggest risks in this plan."
+          },
+          {
+            "title": "Study from your sources",
+            "detail": "Ask questions of your own material and check each answer against the cited page.",
+            "examplePrompt": "Using only my uploaded material, explain [topic] and point to the page for each claim."
+          },
+          {
+            "title": "Keep notes and cards in step",
+            "detail": "Write notes in {job:note-taking} and turn the key points into cards in {job:flashcards-and-quizzes}.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Run mock tests",
+            "detail": "Simulate a past paper under time limits, mark it honestly and move weak topics earlier in the plan.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Believing an answer because it sounds confident, without opening the cited page.",
+          "Studying only what the AI summarises and never reading the original.",
+          "Skipping timed practice until the last week."
+        ],
+        "whenToUpgrade": [
+          "You study several subjects and need one dashboard.",
+          "You want a study group to share the same decks and notes.",
+          "Free limits stop you in the middle of a session."
+        ],
+        "checkTheFacts": "Even answers that cite your sources can misread them. Open the cited page and confirm it says what the answer claims.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "building and adjusting the plan",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              },
+              {
+                "task": "explaining topics",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "research-with-sources",
+            "steps": [
+              {
+                "task": "reading long chapters",
+                "modelClass": "long-documents",
+                "effort": "medium"
+              },
+              {
+                "task": "comparing two sources",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "resume-and-job-search",
+    "title": "Resume and job search",
+    "headline": "Your resume and job search plan",
+    "example": "Improve my resume for a job application",
+    "keywords": [
+      "resume",
+      "cv",
+      "cover letter",
+      "job application",
+      "job search",
+      "job hunt",
+      "interview",
+      "linkedin"
+    ],
+    "synonyms": [
+      "curriculum vitae",
+      "find a job",
+      "apply for jobs",
+      "internship",
+      "placement",
+      "get hired"
+    ],
+    "starterBrief": "Goal: a resume and application for [job title] at [type of company].\nMy background: [education, experience, projects].\nThe job post: [paste the job description].\nTone: plain and specific, with results where I have them.\nRule: use only facts I give you. Do not invent skills, numbers or employers.\nAsk me for anything you are missing before you write.",
+    "features": [
+      {
+        "id": "cover-letter",
+        "label": "Cover letter",
+        "keywords": ["cover letter"],
+        "jobs": ["writing-and-editing"]
+      },
+      {
+        "id": "interview",
+        "label": "Interview practice",
+        "keywords": ["interview", "interview practice"],
+        "jobs": ["ai-assistant"]
+      },
+      {
+        "id": "company-research",
+        "label": "Company research",
+        "keywords": ["company research", "research companies"],
+        "jobs": ["research-with-sources"]
+      }
+    ],
+    "levels": {
+      "simple": {
+        "summary": "Build a clean resume from a template in {job:resume-builder}, then ask {job:ai-assistant} to tighten the wording using only facts you give it.",
+        "estimatedTime": "An evening (rough estimate)",
+        "jobs": ["resume-builder", "ai-assistant"],
+        "steps": [
+          {
+            "title": "List your facts",
+            "detail": "Write down your education, work, projects and results. Include numbers only when they are true.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Choose a template",
+            "detail": "Use {job:resume-builder} and pick a plain one-page layout.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Tighten the wording",
+            "detail": "Ask {job:ai-assistant} to shorten and sharpen each line, without adding anything.",
+            "examplePrompt": "Here is my resume text: [text]. Tighten each bullet. Do not add any fact, number or skill that I did not give you."
+          },
+          {
+            "title": "Check and export",
+            "detail": "Read every line aloud, confirm it is true, then export a PDF and test that it opens on a phone.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Letting AI add skills or numbers you cannot defend in an interview.",
+          "Using a fancy layout that is hard to read or copy from.",
+          "Sending the same resume for every job."
+        ],
+        "whenToUpgrade": [
+          "You apply to different kinds of jobs and need a version for each.",
+          "You need a cover letter for each application.",
+          "You want practice for interviews."
+        ],
+        "checkTheFacts": "Every line on your resume must be true. AI can invent achievements, numbers and skills. Remove anything you could not explain in an interview.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "tightening bullets",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              }
+            ]
+          }
+        ]
+      },
+      "polished": {
+        "summary": "Tailor each application: {job:resume-builder} holds your master resume, {job:ai-assistant} matches it to a job post and {job:writing-and-editing} polishes the final text.",
+        "estimatedTime": "A weekend for the first set, then an hour per application (rough estimate)",
+        "jobs": ["resume-builder", "ai-assistant", "writing-and-editing"],
+        "steps": [
+          {
+            "title": "Keep a master resume",
+            "detail": "Store every project and result in one longer document in {job:resume-builder}. Cut it down for each job.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Match it to the job post",
+            "detail": "Ask {job:ai-assistant} which parts of the post you already meet, and which you do not.",
+            "examplePrompt": "Compare my resume with this job post. List what matches, what is missing, and what I should not claim. Job post: [paste]."
+          },
+          {
+            "title": "Write the cover letter",
+            "detail": "Draft with {job:ai-assistant}, then edit it in your own voice with {job:writing-and-editing}.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Proofread",
+            "detail": "Run a final check for grammar and tone, and read it aloud once more.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Copying phrases from the job post that do not describe you.",
+          "Sending a cover letter that could belong to anyone.",
+          "Skipping the final read-aloud."
+        ],
+        "whenToUpgrade": [
+          "You are applying to many companies and need to research them quickly.",
+          "You want realistic interview practice.",
+          "You are building a portfolio to go with the resume."
+        ],
+        "checkTheFacts": "Check every date, job title, employer name and number against your own records before you send anything.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "matching your resume to a post",
+                "modelClass": "deep-reasoning",
+                "effort": "medium"
+              },
+              {
+                "task": "drafting the cover letter",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      },
+      "advanced": {
+        "summary": "Run your search like a project: research companies with sources, tailor every application, practise interviews with {job:ai-assistant} and keep everything consistent.",
+        "estimatedTime": "A week to set up, then steady weekly effort (rough estimate)",
+        "jobs": [
+          "resume-builder",
+          "ai-assistant",
+          "writing-and-editing",
+          "research-with-sources"
+        ],
+        "steps": [
+          {
+            "title": "Research the company",
+            "detail": "Use {job:research-with-sources} to learn what the company does, and open the sources it cites.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Tailor the resume",
+            "detail": "Keep your facts in {job:resume-builder}. Adjust emphasis for each role, never the truth.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Write and refine",
+            "detail": "Draft the cover letter with {job:ai-assistant}, then refine tone and clarity with {job:writing-and-editing}.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Practise the interview",
+            "detail": "Ask {job:ai-assistant} to play the interviewer, answer aloud, then ask for honest feedback.",
+            "examplePrompt": "Act as an interviewer for [job title]. Ask me one question at a time, wait for my answer, then give honest feedback before the next question."
+          },
+          {
+            "title": "Track applications",
+            "detail": "Keep a simple list of where you applied, when, and what you sent.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Relying on AI summaries of a company without opening the source.",
+          "Practising only easy questions.",
+          "Losing track of which version of the resume went where."
+        ],
+        "whenToUpgrade": [
+          "You need to track many applications across several months.",
+          "You want a personal website to show your work.",
+          "You want feedback from a real person, such as a mentor."
+        ],
+        "checkTheFacts": "Check company facts such as size, products, news and salaries against the company's own pages. AI summaries of companies are often out of date.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "interview practice",
+                "modelClass": "deep-reasoning",
+                "effort": "medium"
+              },
+              {
+                "task": "drafting letters",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "research-with-sources",
+            "steps": [
+              {
+                "task": "researching a company",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "make-a-video",
+    "title": "Make a video",
+    "headline": "Your video plan",
+    "example": "Make a short video from my own footage",
+    "keywords": [
+      "make video",
+      "create video",
+      "make short video",
+      "short video",
+      "youtube",
+      "youtube video",
+      "reel",
+      "vlog",
+      "video script",
+      "film",
+      "shorts"
+    ],
+    "synonyms": [
+      "video from my footage",
+      "video for instagram",
+      "video for social media",
+      "explainer video",
+      "video project",
+      "youtube channel"
+    ],
+    "starterBrief": "Goal: a [length] video about [topic] for [audience].\nWhere it will be posted: [YouTube, Instagram, school project].\nWhat I have: [footage, photos, nothing yet].\nStyle: [talking to camera, voiceover, slides, screen recording].\nRule: use only music, images and voices I have the right to use.\nAsk me anything you need, then give me a script outline I can film.",
+    "features": [
+      {
+        "id": "script",
+        "label": "Script",
+        "keywords": ["script", "scriptwriting"],
+        "jobs": ["ai-assistant"]
+      },
+      {
+        "id": "voiceover",
+        "label": "Voiceover",
+        "keywords": ["voiceover", "voice over", "narration", "narrate"],
+        "jobs": ["voice-and-audio"]
+      },
+      {
+        "id": "thumbnail",
+        "label": "Thumbnail",
+        "keywords": ["thumbnail"],
+        "jobs": ["image-generation", "design-tool"]
+      },
+      {
+        "id": "ai-clips",
+        "label": "AI video clips",
+        "keywords": ["ai video", "ai clips", "ai generated video"],
+        "jobs": ["video-generation"]
+      }
+    ],
+    "levels": {
+      "simple": {
+        "summary": "Write a short script with {job:ai-assistant}, record your footage and voice, and cut it together in {job:video-editing}.",
+        "estimatedTime": "A day for a short video (rough estimate)",
+        "jobs": ["ai-assistant", "video-editing", "voice-and-audio"],
+        "steps": [
+          {
+            "title": "Decide the one point",
+            "detail": "Write one sentence about what a viewer should know or feel at the end.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Script it",
+            "detail": "Ask {job:ai-assistant} for an outline and a short script, then rewrite it so it sounds like you.",
+            "examplePrompt": "Write a 60-second script about [topic] for [audience]. Start with a hook, keep sentences short, and mark where I should show footage."
+          },
+          {
+            "title": "Record",
+            "detail": "Film in good light and record voice in a quiet room. Use {job:voice-and-audio} if you prefer a recorded or generated voice.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Edit",
+            "detail": "Cut out pauses and mistakes in {job:video-editing}, add captions, and keep the first five seconds strong.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Starting to film without a script.",
+          "Using music you do not have the right to use.",
+          "Making the video longer than the idea."
+        ],
+        "whenToUpgrade": [
+          "You want custom thumbnails or graphics.",
+          "You need a voiceover or subtitles in other languages.",
+          "You post often and want a repeatable process."
+        ],
+        "checkTheFacts": "Check facts, names and numbers in your script before you record. Use only music, images and voices you have the right to use, and read each platform's rules.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "drafting the script",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              },
+              {
+                "task": "brainstorming titles",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              }
+            ]
+          }
+        ]
+      },
+      "polished": {
+        "summary": "Add polish: a designed thumbnail in {job:design-tool}, clean audio, captions and an edit that follows your script.",
+        "estimatedTime": "A weekend for the first video (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "video-editing",
+          "voice-and-audio",
+          "design-tool"
+        ],
+        "steps": [
+          {
+            "title": "Plan the structure",
+            "detail": "Ask {job:ai-assistant} for a hook, three key points and a closing line. Cut anything that is not needed.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Record clean audio",
+            "detail": "Clear sound matters more than picture. Record a test, then use {job:voice-and-audio} to remove noise or add a voiceover.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Edit to the script",
+            "detail": "Assemble the story in {job:video-editing}, then add captions and simple titles.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Design the thumbnail",
+            "detail": "Make a simple, readable thumbnail in {job:design-tool}: a clear face or object and a few big words.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Publish and learn",
+            "detail": "Post, then look at where viewers stop watching and fix that in the next video.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Ignoring audio quality.",
+          "Putting too much text on the thumbnail.",
+          "Copying a trending format that does not fit your topic."
+        ],
+        "whenToUpgrade": [
+          "You want AI-generated clips or a presenter avatar.",
+          "You need professional colour and sound editing.",
+          "You make several videos a week."
+        ],
+        "checkTheFacts": "Check every fact in your script against a source. If you use a generated voice or avatar, use only ones you have permission to use, and follow the platform's rules for altered or AI-made content.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "structuring the script",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              },
+              {
+                "task": "titles and descriptions",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              }
+            ]
+          }
+        ]
+      },
+      "advanced": {
+        "summary": "Use AI where it helps: generated clips and images for b-roll, a clean voice track and a pro editor for the final cut.",
+        "estimatedTime": "A week for a polished video (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "video-generation",
+          "image-generation",
+          "video-editing",
+          "voice-and-audio",
+          "design-tool"
+        ],
+        "steps": [
+          {
+            "title": "Storyboard",
+            "detail": "Ask {job:ai-assistant} to break the script into scenes, and mark which need real footage and which can be generated.",
+            "examplePrompt": "Break this script into scenes: [script]. For each scene, say whether it needs real footage, a generated clip or a still image."
+          },
+          {
+            "title": "Generate b-roll",
+            "detail": "Create short clips with {job:video-generation} and stills with {job:image-generation}. Keep only what looks right.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Record and clean the voice",
+            "detail": "Use {job:voice-and-audio} for recording or a generated voice you have the right to use.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Edit the final cut",
+            "detail": "Combine everything in {job:video-editing}. Match pacing to the script and add captions.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Create the thumbnail",
+            "detail": "Design the thumbnail in {job:design-tool}, and test two versions if you can.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Using generated clips that look uncanny or misleading.",
+          "Not telling viewers when something is AI-made, where the platform requires it.",
+          "Spending credits on clips you later cut."
+        ],
+        "whenToUpgrade": [
+          "You run out of generation credits regularly.",
+          "You work with a team and need shared projects.",
+          "You need licences for commercial use."
+        ],
+        "checkTheFacts": "Check each tool's licence for commercial use and each platform's rules on AI-made content. Do not use anyone's face or voice without permission.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "storyboarding",
+                "modelClass": "deep-reasoning",
+                "effort": "medium"
+              },
+              {
+                "task": "titles and descriptions",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              }
+            ]
+          },
+          {
+            "jobId": "image-generation",
+            "steps": [
+              {
+                "task": "making stills",
+                "modelClass": "image",
+                "effort": null
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "build-an-app",
+    "title": "Build an app",
+    "headline": "Your app plan",
+    "example": "Build a simple app without much coding",
+    "keywords": [
+      "app",
+      "application",
+      "mobile app",
+      "web app",
+      "todo app",
+      "to do app",
+      "todo",
+      "build app",
+      "software",
+      "prototype"
+    ],
+    "synonyms": [
+      "without much coding",
+      "no code app",
+      "side project",
+      "mvp",
+      "saas",
+      "android app",
+      "ios app"
+    ],
+    "starterBrief": "Goal: an app that lets [who] do [main task].\nMust have: [3 to 5 features], nothing more.\nPlatform: [web, Android, iPhone].\nMy experience with code: [none / some / comfortable].\nBudget: [your monthly limit].\nRule: never ask me to paste real passwords, keys or customer data.\nAsk me anything you need, then suggest the smallest version I can finish in a week.",
+    "features": [
+      {
+        "id": "login",
+        "label": "Login",
+        "keywords": [
+          "login",
+          "log in",
+          "sign in",
+          "sign up",
+          "signup",
+          "accounts",
+          "authentication"
+        ],
+        "jobs": ["authentication"]
+      },
+      {
+        "id": "database",
+        "label": "Database",
+        "keywords": ["database", "save data", "store data", "saves data"],
+        "jobs": ["database"]
+      },
+      {
+        "id": "payments",
+        "label": "Payments",
+        "keywords": ["payment", "upi", "checkout"],
+        "jobs": ["payments-india"]
+      },
+      {
+        "id": "analytics",
+        "label": "Analytics",
+        "keywords": ["analytics", "usage stats"],
+        "jobs": ["analytics"]
+      }
+    ],
+    "levels": {
+      "simple": {
+        "summary": "Describe the app to {job:coding-assistant}, get a working draft you can try, and publish it with {job:hosting}. You test and refine; you do not need to write much code.",
+        "estimatedTime": "A weekend for a first working version (rough estimate)",
+        "jobs": ["ai-assistant", "coding-assistant", "hosting"],
+        "steps": [
+          {
+            "title": "Shrink the idea",
+            "detail": "Write the one thing the app must do. Cut everything else for version one.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Describe it",
+            "detail": "Give {job:coding-assistant} a plain description of the screens and what each button does.",
+            "examplePrompt": "Build a simple [type] app. Screens: [list]. A user can: [actions]. Keep it to one page and tell me what you assumed."
+          },
+          {
+            "title": "Try every feature",
+            "detail": "Click through each feature yourself. Write down what breaks and ask for fixes one at a time.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Publish a test version",
+            "detail": "Publish with {job:hosting} and share the link with two friends. Ask them to try to break it.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Asking for ten features at once.",
+          "Never testing edge cases such as empty fields.",
+          "Pasting real passwords or personal data into an AI tool."
+        ],
+        "whenToUpgrade": [
+          "You need to save data between visits.",
+          "Different people need their own accounts.",
+          "You want to change the code yourself."
+        ],
+        "checkTheFacts": "Generated code can contain security mistakes. Never paste real passwords, keys or customer data into an AI tool, and review sign-in and payment code before real people use it.",
+        "modelGuidance": [
+          {
+            "jobId": "coding-assistant",
+            "steps": [
+              {
+                "task": "first draft",
+                "modelClass": "coding",
+                "effort": "medium"
+              },
+              {
+                "task": "fixing a bug you cannot find",
+                "modelClass": "coding",
+                "effort": "high"
+              }
+            ]
+          },
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "shaping the idea",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      },
+      "polished": {
+        "summary": "Choose a standard stack: {job:framework} for the screens, {job:database} for the data and {job:hosting} to publish, with {job:coding-assistant} helping you write and understand the code.",
+        "estimatedTime": "2 to 4 weeks of evenings (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "coding-assistant",
+          "framework",
+          "database",
+          "hosting"
+        ],
+        "steps": [
+          {
+            "title": "Plan the data",
+            "detail": "List what the app stores and how items relate. Ask {job:ai-assistant} to question your plan before you build.",
+            "examplePrompt": "Here is my app idea: [idea]. List the data it needs to store and the three decisions I should make before writing code."
+          },
+          {
+            "title": "Set up the project",
+            "detail": "Start with {job:framework} and publish the empty app with {job:hosting} first.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Build one feature at a time",
+            "detail": "Use {job:coding-assistant} to write a feature, read the result, run it, then commit.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Connect the data",
+            "detail": "Store and read data with {job:database}. Test with fake data only.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Test and share",
+            "detail": "Write down five things a user might do wrong, try each, and fix what breaks.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Skipping version control, so one bad change cannot be undone.",
+          "Letting the assistant rewrite large parts of the code at once.",
+          "Storing real user data before you understand access rules."
+        ],
+        "whenToUpgrade": [
+          "You need sign-in, payments or analytics.",
+          "More than a few people use the app.",
+          "You want automated tests."
+        ],
+        "checkTheFacts": "Generated code can contain security mistakes. Never paste real passwords, keys or customer data into an AI tool, and review sign-in and payment code carefully.",
+        "modelGuidance": [
+          {
+            "jobId": "coding-assistant",
+            "steps": [
+              {
+                "task": "small edits",
+                "modelClass": "coding",
+                "effort": "medium"
+              },
+              {
+                "task": "design decisions and hard bugs",
+                "modelClass": "coding",
+                "effort": "high"
+              }
+            ]
+          },
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "planning the data",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              }
+            ]
+          }
+        ]
+      },
+      "advanced": {
+        "summary": "Build a production-minded app: a typed framework, tested components, a database with sign-in, analytics and a repeatable deploy, with {job:coding-assistant} as a reviewer and pair.",
+        "estimatedTime": "1 to 2 months of evenings (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "coding-assistant",
+          "framework",
+          "component-library",
+          "database",
+          "authentication",
+          "hosting",
+          "analytics"
+        ],
+        "steps": [
+          {
+            "title": "Write the spec",
+            "detail": "Describe users, data and rules. Ask {job:ai-assistant} to find gaps and risks.",
+            "examplePrompt": "Review this app spec: [spec]. List missing cases, security risks and what could go wrong at scale."
+          },
+          {
+            "title": "Scaffold the project",
+            "detail": "Set up {job:framework} with {job:component-library} and automatic deploys to {job:hosting}.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Add data and sign-in",
+            "detail": "Use {job:database} and {job:authentication}. Check who can read and write each record.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Build and review",
+            "detail": "Ask {job:coding-assistant} to write code and then to review it. Read both, and write tests for important rules.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Measure",
+            "detail": "Add {job:analytics} with a clear note on what you collect, and watch errors after launch.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Trusting generated sign-in code without a security review.",
+          "Having no backups or no way to roll back.",
+          "Collecting more user data than you need."
+        ],
+        "whenToUpgrade": [
+          "You take payments and need a gateway.",
+          "Free tiers limit users, storage or requests.",
+          "You need legal pages such as a privacy policy."
+        ],
+        "checkTheFacts": "Treat generated code as untrusted. Review sign-in, payment and data-access code carefully, and never share real secrets or customer data with an AI tool.",
+        "modelGuidance": [
+          {
+            "jobId": "coding-assistant",
+            "steps": [
+              {
+                "task": "routine code",
+                "modelClass": "coding",
+                "effort": "medium"
+              },
+              {
+                "task": "security and design review",
+                "modelClass": "coding",
+                "effort": "high"
+              }
+            ]
+          },
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "reviewing the spec",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "research-and-reading",
+    "title": "Research and reading",
+    "headline": "Your research and reading plan",
+    "example": "Research ancient Indian stories and read the originals",
+    "keywords": [
+      "research",
+      "reading",
+      "read",
+      "book",
+      "stories",
+      "story",
+      "history",
+      "historical",
+      "ancient",
+      "myths",
+      "mythology",
+      "epics",
+      "scriptures",
+      "literature",
+      "novel"
+    ],
+    "synonyms": [
+      "primary sources",
+      "reading list",
+      "folk tales",
+      "folktales",
+      "mahabharata",
+      "ramayana",
+      "puranas",
+      "vedas",
+      "panchatantra",
+      "jataka"
+    ],
+    "starterBrief": "Topic: [what I want to understand, for example ancient Indian stories].\nWhy: [school, curiosity, writing, a talk].\nWhat I already know: [a little / some].\nMy reading level and language: [language, level].\nRule: separate what the sources say from your own summary. Name the book, edition and translator for every claim.\nAsk me anything you need, then suggest a reading order from easy to hard.",
+    "features": [
+      {
+        "id": "notes",
+        "label": "Notes",
+        "keywords": ["notes", "note taking"],
+        "jobs": ["note-taking"]
+      },
+      {
+        "id": "citations",
+        "label": "Citations",
+        "keywords": ["citations", "cite", "references", "bibliography"],
+        "jobs": ["research-with-sources"]
+      },
+      {
+        "id": "quiz",
+        "label": "Quiz",
+        "keywords": ["quiz", "quizzes", "flashcards"],
+        "jobs": ["flashcards-and-quizzes"]
+      }
+    ],
+    "levels": {
+      "simple": {
+        "summary": "Ask {job:ai-assistant} for an overview and a reading order, then read real texts from {job:source-library} instead of relying on summaries.",
+        "estimatedTime": "A few evenings to start (rough estimate)",
+        "jobs": ["ai-assistant", "source-library"],
+        "steps": [
+          {
+            "title": "Get the map",
+            "detail": "Ask {job:ai-assistant} for an overview of the topic, the main texts and a beginner-friendly reading order.",
+            "examplePrompt": "Give me an overview of [topic]. List the main texts, the best order to read them for a beginner, and which parts are most disputed."
+          },
+          {
+            "title": "Find real texts",
+            "detail": "Look for the texts in {job:source-library}. Note the translator and year for each.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Read, then ask",
+            "detail": "Read a passage yourself first. Then ask {job:ai-assistant} to explain what you did not understand.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Keep a short log",
+            "detail": "After each session write two lines: what you learned and what you want to check.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Treating an AI retelling as if it were the original text.",
+          "Mixing different versions of a story without noticing.",
+          "Not noting which edition or translator you read."
+        ],
+        "whenToUpgrade": [
+          "You need to check claims across several books.",
+          "You want to keep notes that connect ideas.",
+          "You are writing something and need citations."
+        ],
+        "checkTheFacts": "AI can retell a story or event with confident but wrong details, and may blend several versions. For ancient texts, name the edition and translator, and check names, dates and quotes against the source text or a scholarly reference.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "an overview and reading order",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              },
+              {
+                "task": "explaining a hard passage",
+                "modelClass": "deep-reasoning",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      },
+      "polished": {
+        "summary": "Add research tools: {job:research-with-sources} finds what scholars say with links, {job:source-library} holds the originals and {job:note-taking} keeps what you learn.",
+        "estimatedTime": "A few weeks of regular reading (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "research-with-sources",
+          "source-library",
+          "note-taking"
+        ],
+        "steps": [
+          {
+            "title": "Frame the question",
+            "detail": "Write one clear question, such as how a story changes between versions. Ask {job:ai-assistant} to sharpen it.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Find background",
+            "detail": "Use {job:research-with-sources} for background and open the sources it links.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Read the originals",
+            "detail": "Get the texts from {job:source-library}. Compare at least two versions or translations.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Take linked notes",
+            "detail": "In {job:note-taking}, write one note per idea and link it to the text and page that supports it.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Summarise in your words",
+            "detail": "Write a short summary, then ask {job:ai-assistant} to point out anything unsupported by your notes.",
+            "examplePrompt": "Here is my summary and my notes: [text]. List every claim in the summary that my notes do not support."
+          }
+        ],
+        "commonMistakes": [
+          "Quoting an AI answer as if it were a source.",
+          "Reading only summaries and never the original.",
+          "Losing track of which note came from which book."
+        ],
+        "whenToUpgrade": [
+          "You need to work with long PDFs or many sources at once.",
+          "You want to be quizzed on what you read.",
+          "You are writing a paper and need proper citations."
+        ],
+        "checkTheFacts": "Open each linked source and confirm it says what the answer claims. For ancient texts, check names, dates and quotes against the source or a scholarly reference.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "sharpening the question",
+                "modelClass": "deep-reasoning",
+                "effort": "medium"
+              },
+              {
+                "task": "checking a summary against notes",
+                "modelClass": "long-documents",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "research-with-sources",
+            "steps": [
+              {
+                "task": "background reading",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      },
+      "advanced": {
+        "summary": "Treat it as research: ground answers in your own sources with {job:research-with-sources}, compare versions in {job:source-library}, keep linked notes and test yourself on what you read.",
+        "estimatedTime": "A month or more of regular work (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "research-with-sources",
+          "source-library",
+          "note-taking",
+          "flashcards-and-quizzes"
+        ],
+        "steps": [
+          {
+            "title": "Collect your sources",
+            "detail": "Gather the texts from {job:source-library} and scholarly work through {job:research-with-sources}. Record edition and translator for each.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Compare versions",
+            "detail": "Ask {job:ai-assistant} to compare passages from two versions, then check its comparison against the texts.",
+            "examplePrompt": "Compare these two versions of the same passage: [A] and [B]. List differences in events, names and tone, and quote the exact words for each difference."
+          },
+          {
+            "title": "Build linked notes",
+            "detail": "In {job:note-taking}, link every claim to its source and page, and mark what is only an interpretation.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Test your memory",
+            "detail": "Make cards in {job:flashcards-and-quizzes} for names, dates and key ideas, and check each card against the source.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Write it up",
+            "detail": "Draft your own account, with every claim tied to a source you opened.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Letting the AI choose which sources matter.",
+          "Citing a source you never opened.",
+          "Treating one translation as the only version."
+        ],
+        "whenToUpgrade": [
+          "You need to read texts in their original language.",
+          "You need help from a librarian, teacher or subject expert.",
+          "Your reference collection outgrows simple notes."
+        ],
+        "checkTheFacts": "Open each cited page. Confirm the quote, the page and the translator. When two sources disagree, report the disagreement instead of picking one silently.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "comparing versions",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              },
+              {
+                "task": "reading long texts",
+                "modelClass": "long-documents",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "research-with-sources",
+            "steps": [
+              {
+                "task": "reading across sources",
+                "modelClass": "long-documents",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "business-website",
+    "title": "Business website",
+    "headline": "Your business website plan",
+    "example": "Build a website for my small business",
+    "keywords": [
+      "business",
+      "businesses",
+      "business website",
+      "small business",
+      "company website",
+      "online store",
+      "storefront",
+      "shop",
+      "startup",
+      "restaurant",
+      "clinic",
+      "salon",
+      "customers",
+      "website",
+      "site"
+    ],
+    "synonyms": [
+      "website for my business",
+      "website for my shop",
+      "local business",
+      "sell online",
+      "online shop",
+      "company site"
+    ],
+    "starterBrief": "Business: [what you sell or do], in [city].\nCustomers: [who they are and how they find you].\nPages: Home, Services or Products, About, Contact.\nMust have: [phone and WhatsApp link, map, opening hours, enquiry form].\nTone: friendly, clear, no jargon.\nBudget: [your monthly limit].\nRule: do not invent reviews, awards or numbers.\nAsk me anything you need, then suggest the simplest site that brings in enquiries.",
+    "features": [
+      {
+        "id": "contact-form",
+        "label": "Contact form",
+        "keywords": [
+          "contact form",
+          "enquiry form",
+          "inquiry form",
+          "booking form"
+        ],
+        "jobs": ["contact-form"]
+      },
+      {
+        "id": "payments",
+        "label": "Payments",
+        "keywords": [
+          "payment",
+          "upi",
+          "sell online",
+          "online store",
+          "checkout"
+        ],
+        "jobs": ["payments-india"]
+      },
+      {
+        "id": "blog",
+        "label": "Blog",
+        "keywords": ["blog", "news section"],
+        "jobs": ["content-management"]
+      },
+      {
+        "id": "analytics",
+        "label": "Analytics",
+        "keywords": ["analytics", "visitor stats", "traffic"],
+        "jobs": ["analytics"]
+      }
+    ],
+    "levels": {
+      "simple": {
+        "summary": "Use a no-code builder from {job:ui-templates} for the site, let {job:ai-assistant} draft the words, and add an enquiry form with {job:contact-form}.",
+        "estimatedTime": "A few days (rough estimate)",
+        "jobs": ["ai-assistant", "ui-templates", "contact-form"],
+        "steps": [
+          {
+            "title": "Gather the basics",
+            "detail": "Collect your services, photos, address, opening hours and contact details in one document.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Draft the words",
+            "detail": "Ask {job:ai-assistant} for a first version of your home and services text. Replace anything that is not true.",
+            "examplePrompt": "Write home page text for a [type of business] in [city]. Use only these facts: [facts]. Keep it plain and friendly. Do not invent reviews, awards or numbers."
+          },
+          {
+            "title": "Pick a template",
+            "detail": "Choose a template in {job:ui-templates} built for your kind of business and swap in your content.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Add a way to reach you",
+            "detail": "Add {job:contact-form} and a phone or WhatsApp link, and send yourself a test message.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Launch and check",
+            "detail": "Open the site on a phone and ask a customer to find your address and contact details.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Hiding phone number and address.",
+          "Using stock photos that do not look like your business.",
+          "Leaving template text in place."
+        ],
+        "whenToUpgrade": [
+          "You want to take payments online.",
+          "You want to update content without a builder.",
+          "You want to see how many visitors you get."
+        ],
+        "checkTheFacts": "Details such as prices, opening hours, GST number, privacy policy and refund terms must be correct for your business. Check legal text with an accountant or lawyer; do not rely on AI-written legal pages.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "drafting page text",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              }
+            ]
+          }
+        ]
+      },
+      "polished": {
+        "summary": "Design the look in {job:design-tool}, run the site on a template or CMS, and add visitor counts with {job:analytics} so you can see what works.",
+        "estimatedTime": "1 to 2 weeks (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "design-tool",
+          "ui-templates",
+          "content-management",
+          "contact-form",
+          "hosting",
+          "analytics"
+        ],
+        "steps": [
+          {
+            "title": "Define the look",
+            "detail": "Pick two colours, one font and a logo in {job:design-tool}. Keep it consistent across pages.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Write the content",
+            "detail": "Draft pages with {job:ai-assistant} using only your real facts, then edit in your voice.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Build on a template",
+            "detail": "Use {job:ui-templates} for the layout and {job:content-management} so you can change text without help.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Add enquiries and analytics",
+            "detail": "Set up {job:contact-form} and {job:analytics}. Tell visitors what you collect.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Test on real devices",
+            "detail": "Check the site on an old phone and a slow connection, and fix anything that is hard to read.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Choosing a template for looks, not for the pages you need.",
+          "Not telling visitors what analytics collects.",
+          "Forgetting to update hours and prices."
+        ],
+        "whenToUpgrade": [
+          "You want to sell online.",
+          "You want a custom design.",
+          "You need bookings or a customer login."
+        ],
+        "checkTheFacts": "Check prices, hours, addresses and legal pages. Have an accountant or lawyer review any legal text, and do not publish AI-written terms as they are.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "drafting page text",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              },
+              {
+                "task": "planning the site structure",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      },
+      "advanced": {
+        "summary": "Build a custom site on a framework with a CMS, a payment gateway for India, analytics and a form, with an AI assistant to speed up the work.",
+        "estimatedTime": "3 to 6 weeks (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "coding-assistant",
+          "framework",
+          "component-library",
+          "content-management",
+          "payments-india",
+          "hosting",
+          "analytics",
+          "contact-form"
+        ],
+        "steps": [
+          {
+            "title": "Plan pages and data",
+            "detail": "List pages, products and what the owner must be able to edit. Ask {job:ai-assistant} to find gaps.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Build the front end",
+            "detail": "Use {job:framework} and {job:component-library}, with {job:coding-assistant} helping. Read every change.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Connect content",
+            "detail": "Set up {job:content-management} so the owner can update products and posts.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Take payments",
+            "detail": "Integrate {job:payments-india}. Test with the gateway's test mode before any real payment.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Publish and monitor",
+            "detail": "Deploy to {job:hosting}, add {job:analytics} and {job:contact-form}, and check speed and accessibility.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Going live with payments before completing the gateway's business checks.",
+          "Storing customer data you do not need.",
+          "Building a custom admin when a CMS already does the job."
+        ],
+        "whenToUpgrade": [
+          "You need inventory, shipping or accounting links.",
+          "You outgrow free hosting or form limits.",
+          "You need legal advice on selling online."
+        ],
+        "checkTheFacts": "Check payment gateway fees, onboarding requirements, tax rules and legal pages on the official pages and with a professional. Do not rely on AI for legal or tax advice.",
+        "modelGuidance": [
+          {
+            "jobId": "coding-assistant",
+            "steps": [
+              {
+                "task": "routine code",
+                "modelClass": "coding",
+                "effort": "medium"
+              },
+              {
+                "task": "payment and security code review",
+                "modelClass": "coding",
+                "effort": "high"
+              }
+            ]
+          },
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "planning pages and data",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "presentation",
+    "title": "Presentation",
+    "headline": "Your presentation plan",
+    "example": "Make a presentation for my project",
+    "keywords": [
+      "presentation",
+      "slide",
+      "slide deck",
+      "deck",
+      "pitch deck",
+      "powerpoint",
+      "ppt",
+      "pptx"
+    ],
+    "synonyms": [
+      "present my project",
+      "talk",
+      "seminar",
+      "pitch",
+      "project demo"
+    ],
+    "starterBrief": "Goal: a [number]-minute presentation on [topic] for [audience].\nOne thing the audience should remember: [message].\nMy facts and sources: [list].\nStyle: [formal, friendly, visual].\nRule: use only facts and numbers I give you, and mark anything you are unsure about.\nAsk me anything you need, then give me a slide-by-slide outline.",
+    "features": [
+      {
+        "id": "images",
+        "label": "Images",
+        "keywords": ["images", "pictures", "illustrations"],
+        "jobs": ["image-generation"]
+      },
+      {
+        "id": "research",
+        "label": "Research",
+        "keywords": ["research", "sources", "statistics"],
+        "jobs": ["research-with-sources"]
+      },
+      {
+        "id": "voiceover",
+        "label": "Voiceover",
+        "keywords": ["voiceover", "narration"],
+        "jobs": ["voice-and-audio"]
+      }
+    ],
+    "levels": {
+      "simple": {
+        "summary": "Outline with {job:ai-assistant}, then build the slides in {job:presentation-maker}. Keep one idea per slide.",
+        "estimatedTime": "A few hours (rough estimate)",
+        "jobs": ["ai-assistant", "presentation-maker"],
+        "steps": [
+          {
+            "title": "Decide the message",
+            "detail": "Write the one thing the audience should remember. Everything else supports it.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Outline the slides",
+            "detail": "Ask {job:ai-assistant} for a slide-by-slide outline with one idea per slide.",
+            "examplePrompt": "Make a [number]-slide outline for a presentation on [topic] for [audience]. One idea per slide. Mark any fact you are unsure about."
+          },
+          {
+            "title": "Build the slides",
+            "detail": "Use {job:presentation-maker}. Keep text short and use large, readable type.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Rehearse aloud",
+            "detail": "Practise once with a timer and cut anything that runs long.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Putting full sentences on slides and reading them out.",
+          "Using too many fonts and colours.",
+          "Not rehearsing with a timer."
+        ],
+        "whenToUpgrade": [
+          "You need charts or images made for your topic.",
+          "You need to back claims with sources.",
+          "You want a recorded version with narration."
+        ],
+        "checkTheFacts": "Check every number, quote and chart the AI gave you against a real source before you present it.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "outlining the slides",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              },
+              {
+                "task": "rewording slide text",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              }
+            ]
+          }
+        ]
+      },
+      "polished": {
+        "summary": "Add visual support: images for key slides, a consistent design in {job:design-tool}, and a rehearsed delivery.",
+        "estimatedTime": "A day (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "presentation-maker",
+          "image-generation",
+          "design-tool"
+        ],
+        "steps": [
+          {
+            "title": "Outline and trim",
+            "detail": "Draft with {job:ai-assistant}, then cut the outline by a third.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Set the design",
+            "detail": "Pick one font pair and two colours in {job:design-tool}, and use them on every slide.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Add visuals",
+            "detail": "Create images with {job:image-generation} only where a picture explains something. Label anything generated.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Build and rehearse",
+            "detail": "Assemble in {job:presentation-maker}, then rehearse aloud and prepare for likely questions.",
+            "examplePrompt": "Here is my presentation outline: [outline]. List the five hardest questions the audience might ask and a short honest answer to each."
+          }
+        ],
+        "commonMistakes": [
+          "Using generated images that do not match your topic.",
+          "Cramming charts with tiny text.",
+          "Skipping the question-and-answer preparation."
+        ],
+        "whenToUpgrade": [
+          "You need data and sources to be defended.",
+          "You present often and need a reusable template.",
+          "You want a narrated or video version."
+        ],
+        "checkTheFacts": "Check every figure, name and date on the slides against its original source, and label images that were made with AI.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "outlining",
+                "modelClass": "balanced-everyday",
+                "effort": "medium"
+              },
+              {
+                "task": "preparing for questions",
+                "modelClass": "deep-reasoning",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "image-generation",
+            "steps": [
+              {
+                "task": "illustrating key slides",
+                "modelClass": "image",
+                "effort": null
+              }
+            ]
+          }
+        ]
+      },
+      "advanced": {
+        "summary": "Back your claims: gather sources with {job:research-with-sources}, build a polished deck with {job:presentation-maker} and {job:design-tool}, and add narration if needed.",
+        "estimatedTime": "2 to 3 days (rough estimate)",
+        "jobs": [
+          "ai-assistant",
+          "research-with-sources",
+          "presentation-maker",
+          "design-tool",
+          "image-generation",
+          "voice-and-audio"
+        ],
+        "steps": [
+          {
+            "title": "Gather evidence",
+            "detail": "Use {job:research-with-sources} to find sources for each claim and open every link.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Structure the argument",
+            "detail": "Ask {job:ai-assistant} to challenge your outline and point out weak claims.",
+            "examplePrompt": "Here is my outline and my sources: [text]. Which claims are weakly supported? Which sources disagree?"
+          },
+          {
+            "title": "Design the deck",
+            "detail": "Build the master design in {job:design-tool}, then the slides in {job:presentation-maker}.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Add visuals and audio",
+            "detail": "Make images with {job:image-generation} and record narration with {job:voice-and-audio} if the deck will be shared on its own.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Rehearse with an audience",
+            "detail": "Present to one person who will interrupt, and fix the slides where they got lost.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Citing a source you did not open.",
+          "Adding visuals that decorate rather than explain.",
+          "Using a generated voice without making that clear to the audience."
+        ],
+        "whenToUpgrade": [
+          "You present to large or formal audiences.",
+          "You need accessible versions with captions and alt text.",
+          "You need a team to edit the deck together."
+        ],
+        "checkTheFacts": "Open every source and confirm the number or quote. State clearly which images or voices were generated.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "challenging the argument",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              },
+              {
+                "task": "rewording slide text",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              }
+            ]
+          },
+          {
+            "jobId": "research-with-sources",
+            "steps": [
+              {
+                "task": "finding and reading sources",
+                "modelClass": "long-documents",
+                "effort": "medium"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "pick-an-ai",
+    "title": "Pick the right AI for a task",
+    "headline": "Your AI tool picks",
+    "example": "Which AI should I use to summarise a PDF?",
+    "keywords": [
+      "which ai",
+      "best ai",
+      "right ai",
+      "ai tool",
+      "pick ai",
+      "choose ai",
+      "recommend ai",
+      "ai for"
+    ],
+    "synonyms": [
+      "what ai",
+      "help me choose",
+      "ai to use",
+      "which tool",
+      "tool for"
+    ],
+    "starterBrief": "Task: [what I want to get done].\nWhat I have: [files, text, nothing yet].\nWho it is for: [me, my class, my customers].\nBudget: [your monthly limit].\nRule: tell me honestly when AI is not the right tool, and what to check before I trust the result.\nAsk me anything you need.",
+    "features": [],
+    "levels": {
+      "simple": {
+        "summary": "Start with the tool below for your task. Try it on a small piece of real work before you pay for anything.",
+        "estimatedTime": "Minutes to try (rough estimate)",
+        "jobs": [],
+        "steps": [
+          {
+            "title": "Say the task in one sentence",
+            "detail": "Write what you want done, what you have, and what a good result looks like.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Try the first pick",
+            "detail": "Use the recommended tool on a small sample, not on your whole project.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Check the result",
+            "detail": "Compare the output with the original. Look for anything invented, missing or out of date.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Try an alternative if it fails",
+            "detail": "Open the other options on a card and try one that fits your reason for switching.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Paying before you have tried the free option.",
+          "Trusting the first answer without checking it.",
+          "Sharing private files with a tool you have not read the terms of."
+        ],
+        "whenToUpgrade": [
+          "You hit free limits while doing real work.",
+          "You need the same task done again and again.",
+          "You need a tool that works with your other tools."
+        ],
+        "checkTheFacts": "AI output can be wrong or invented. Check anything that matters against the original or a trusted source.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "quick questions and drafts",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              },
+              {
+                "task": "planning or hard problems",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              }
+            ]
+          },
+          {
+            "jobId": "research-with-sources",
+            "steps": [
+              {
+                "task": "reading long files",
+                "modelClass": "long-documents",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "coding-assistant",
+            "steps": [
+              {
+                "task": "writing and fixing code",
+                "modelClass": "coding",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "image-generation",
+            "steps": [
+              {
+                "task": "making pictures",
+                "modelClass": "image",
+                "effort": null
+              }
+            ]
+          }
+        ]
+      },
+      "polished": {
+        "summary": "Pick a tool for each part of the task, test them on the same sample, and keep the one that gives you results you can verify.",
+        "estimatedTime": "An hour to compare (rough estimate)",
+        "jobs": [],
+        "steps": [
+          {
+            "title": "Split the task",
+            "detail": "Break the task into parts such as research, drafting and finishing. Each part may need a different tool.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Test on one sample",
+            "detail": "Run the same small sample through the top pick and one alternative.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Judge on what matters",
+            "detail": "Score each result on accuracy, effort saved and whether you can verify it.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Keep what works",
+            "detail": "Keep the winner and note why, so you do not repeat the comparison.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Comparing tools on different samples.",
+          "Choosing by how impressive the output looks rather than how correct it is.",
+          "Using several tools where one is enough."
+        ],
+        "whenToUpgrade": [
+          "You need the tools to work together.",
+          "You process many files.",
+          "Free limits slow you down."
+        ],
+        "checkTheFacts": "Check any facts, quotes and numbers in the output against the original or a trusted source.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "quick questions and drafts",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              },
+              {
+                "task": "planning or hard problems",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              }
+            ]
+          },
+          {
+            "jobId": "research-with-sources",
+            "steps": [
+              {
+                "task": "reading long files",
+                "modelClass": "long-documents",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "coding-assistant",
+            "steps": [
+              {
+                "task": "writing and fixing code",
+                "modelClass": "coding",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "image-generation",
+            "steps": [
+              {
+                "task": "making pictures",
+                "modelClass": "image",
+                "effort": null
+              }
+            ]
+          }
+        ]
+      },
+      "advanced": {
+        "summary": "Combine tools into a repeatable workflow, with a check at each step, and prefer options you can run or move yourself.",
+        "estimatedTime": "A few hours to design a workflow (rough estimate)",
+        "jobs": [],
+        "steps": [
+          {
+            "title": "Map the workflow",
+            "detail": "Write the steps from input to finished result, and mark where a human must check.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Choose per step",
+            "detail": "Pick a tool for each step, favouring ones that export your work in open formats.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Add checks",
+            "detail": "Add a verification step after each AI step: a source check, a test or a second pair of eyes.",
+            "examplePrompt": null
+          },
+          {
+            "title": "Review regularly",
+            "detail": "Tools and limits change. Revisit your choices every few months.",
+            "examplePrompt": null
+          }
+        ],
+        "commonMistakes": [
+          "Building a workflow that depends on one tool's free tier.",
+          "Skipping checks because earlier results were good.",
+          "Locking your work into a format you cannot export."
+        ],
+        "whenToUpgrade": [
+          "Your workflow runs often enough to justify automation.",
+          "You handle private or regulated data.",
+          "You need guarantees about uptime or data handling."
+        ],
+        "checkTheFacts": "Treat every AI step as unverified until a check passes. Review each tool's data and privacy terms before you send it anything private.",
+        "modelGuidance": [
+          {
+            "jobId": "ai-assistant",
+            "steps": [
+              {
+                "task": "quick questions and drafts",
+                "modelClass": "fast-and-cheap",
+                "effort": "low"
+              },
+              {
+                "task": "planning or hard problems",
+                "modelClass": "deep-reasoning",
+                "effort": "high"
+              }
+            ]
+          },
+          {
+            "jobId": "research-with-sources",
+            "steps": [
+              {
+                "task": "reading long files",
+                "modelClass": "long-documents",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "coding-assistant",
+            "steps": [
+              {
+                "task": "writing and fixing code",
+                "modelClass": "coding",
+                "effort": "medium"
+              }
+            ]
+          },
+          {
+            "jobId": "image-generation",
+            "steps": [
+              {
+                "task": "making pictures",
+                "modelClass": "image",
+                "effort": null
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+]

@@ -1,8 +1,7 @@
 import { useId } from "react";
+import type { Budget } from "@/lib/schemas/plan";
 import controls from "@/styles/controls.module.css";
 import styles from "./AccuracyCard.module.css";
-
-export type Budget = "zero" | "under-1000" | "1000-3000" | "more";
 
 const BUDGET_OPTIONS: readonly { value: Budget; label: string }[] = [
   { value: "zero", label: "₹0" },
@@ -11,10 +10,15 @@ const BUDGET_OPTIONS: readonly { value: Budget; label: string }[] = [
   { value: "more", label: "More" },
 ];
 
+export interface ToolOption {
+  id: string;
+  name: string;
+}
+
 interface AccuracyCardProps {
-  tools: readonly string[];
+  tools: readonly ToolOption[];
   usedTools: ReadonlySet<string>;
-  onToggleTool: (toolName: string) => void;
+  onToggleTool: (toolId: string) => void;
   budget: Budget | null;
   onBudgetChange: (budget: Budget) => void;
 }
@@ -49,14 +53,14 @@ export function AccuracyCard({
         </p>
         <ul className={styles.options}>
           {tools.map((tool) => (
-            <li key={tool}>
+            <li key={tool.id}>
               <button
                 type="button"
                 className={styles.toggle}
-                aria-pressed={usedTools.has(tool)}
-                onClick={() => onToggleTool(tool)}
+                aria-pressed={usedTools.has(tool.id)}
+                onClick={() => onToggleTool(tool.id)}
               >
-                {tool}
+                {tool.name}
               </button>
             </li>
           ))}
@@ -82,7 +86,7 @@ export function AccuracyCard({
         </div>
         <p role="status" className={styles.note}>
           {budget === "zero"
-            ? "Showing only free alternatives. Free plans have limits, so check them on the official page."
+            ? "Showing only tools with a free option, or one we have not confirmed yet. Free plans have limits, so check them on the official page."
             : null}
         </p>
       </fieldset>

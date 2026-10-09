@@ -1,6 +1,6 @@
 # 0005: The plan schema is the contract
 
-Status: accepted
+Status: accepted. Extended by [0007](0007-catalogue-and-engine.md), which adds fields to the contract and relaxes `isSample` to a boolean.
 
 ## Context
 

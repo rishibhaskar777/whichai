@@ -1,10 +1,18 @@
+import {
+  effortSchema,
+  goalIdSchema,
+  httpsUrl,
+  jobCategorySchema,
+  modelClassIdSchema,
+  toolKindSchema,
+} from "./catalogue";
 import { z } from "./zod";
 
 export const levelSchema = z.enum(["simple", "polished", "advanced"]);
 export type Level = z.infer<typeof levelSchema>;
 export const LEVELS = levelSchema.options;
 
-export const goalTypeSchema = z.enum(["portfolio-website", "study-plan"]);
+export const goalTypeSchema = goalIdSchema;
 export type GoalType = z.infer<typeof goalTypeSchema>;
 
 export const chipKindSchema = z.enum([
@@ -43,32 +51,60 @@ export type SourceLabel = z.infer<typeof sourceLabelSchema>;
 
 const text = (max: number) => z.string().min(1).max(max);
 
-const httpsUrl = z
-  .url()
-  .refine((value) => new URL(value).protocol === "https:", {
-    message: "Use an https URL.",
-  });
+export const budgetSchema = z.enum(["zero", "under-1000", "1000-3000", "more"]);
+export type Budget = z.infer<typeof budgetSchema>;
 
 export const alternativeSchema = z.object({
+  toolId: text(60),
   toolName: text(60),
   chooseIf: text(200),
   paidOnly: z.boolean(),
 });
 export type Alternative = z.infer<typeof alternativeSchema>;
 
+export const modelGuidanceSchema = z.object({
+  steps: z
+    .array(
+      z.object({
+        task: text(60),
+        modelClass: modelClassIdSchema,
+        effort: effortSchema.nullable(),
+        useFor: text(240),
+      }),
+    )
+    .min(1)
+    .max(4),
+});
+export type ModelGuidance = z.infer<typeof modelGuidanceSchema>;
+
 export const jobRecommendationSchema = z.object({
+  jobId: text(60),
   jobName: text(60),
+  toolId: text(60),
   toolName: text(60),
-  why: text(300),
+  kind: toolKindSchema,
+  why: text(400),
   tag: tagSchema,
   pricing: text(200),
   watchOutFor: text(300),
+  fitScore: z.number().int().min(1).max(5),
+  verified: z.boolean(),
   sourceLabel: sourceLabelSchema,
   lastVerified: z.iso.date().nullable(),
   officialUrl: httpsUrl.nullable(),
+  modelGuidance: modelGuidanceSchema.nullable(),
+  compatibilityNote: text(240).nullable(),
   alternatives: z.array(alternativeSchema).max(5),
 });
 export type JobRecommendation = z.infer<typeof jobRecommendationSchema>;
+
+export const toolkitGroupSchema = z.object({
+  category: jobCategorySchema,
+  tools: z
+    .array(z.object({ jobId: text(60), toolId: text(60), toolName: text(60) }))
+    .min(1),
+});
+export type ToolkitGroup = z.infer<typeof toolkitGroupSchema>;
 
 export const tierComparisonSchema = z.object({
   toolName: text(60),
@@ -91,6 +127,7 @@ export const planLevelSchema = z.object({
   estimatedCost: text(120),
   estimatedTime: text(120),
   jobs: z.array(jobRecommendationSchema).min(1).max(12),
+  toolkit: z.array(toolkitGroupSchema).min(1),
   tiers: tierComparisonSchema.nullable(),
   workflow: z.array(workflowStepSchema).min(1).max(12),
   starterBrief: text(1200),
@@ -104,7 +141,8 @@ export const planSchema = z.object({
   id: text(60),
   goalType: goalTypeSchema,
   headline: text(100),
-  isSample: z.literal(true),
+  isSample: z.boolean(),
+  startLevel: levelSchema,
   levels: z.object({
     simple: planLevelSchema,
     polished: planLevelSchema,

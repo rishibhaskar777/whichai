@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { interpretGoal } from "@/lib/plan/interpret-goal";
+import { addableChips, interpretGoal } from "@/lib/plan/interpret-goal";
 import type { Chip } from "@/lib/schemas/plan";
 import { seriousViolations } from "@/test/axe";
 import { UnderstandingCard } from "./UnderstandingCard";
@@ -24,6 +24,7 @@ function Harness({
   return (
     <UnderstandingCard
       chips={chips}
+      options={addableChips("portfolio-website")}
       onRemoveChip={(id) =>
         setChips((current) => current.filter((chip) => chip.id !== id))
       }

@@ -2,10 +2,16 @@
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { CopyButton } from "@/components/copy-button/CopyButton";
-import type { Level, Plan } from "@/lib/schemas/plan";
+import { buildPlan } from "@/lib/engine/build-plan";
+import type {
+  Budget,
+  JobRecommendation,
+  Level,
+  UnderstoodGoal,
+} from "@/lib/schemas/plan";
 import controls from "@/styles/controls.module.css";
-import { AccuracyCard, type Budget } from "./AccuracyCard";
-import { JobCard } from "./JobCard";
+import { AccuracyCard, type ToolOption } from "./AccuracyCard";
+import { JobCard, jobCardId } from "./JobCard";
 import { LEVEL_LABELS, LevelSwitch } from "./LevelSwitch";
 import {
   BulletSection,
@@ -16,50 +22,96 @@ import {
   Workflow,
 } from "./PlanSections";
 import styles from "./PlanView.module.css";
+import { Toolkit } from "./Toolkit";
+
+const NO_TOOLS: ReadonlySet<string> = new Set();
 
 interface PlanViewProps {
-  plan: Plan;
+  goal: UnderstoodGoal;
   initialLevel: Level;
 }
 
-export function PlanView({ plan, initialLevel }: PlanViewProps) {
+/** Every tool the plan names for this level, with its alternatives. */
+function toolOptions(jobs: readonly JobRecommendation[]): ToolOption[] {
+  const options = new Map<string, ToolOption>();
+  for (const job of jobs) {
+    options.set(job.toolId, { id: job.toolId, name: job.toolName });
+    for (const alternative of job.alternatives) {
+      options.set(alternative.toolId, {
+        id: alternative.toolId,
+        name: alternative.toolName,
+      });
+    }
+  }
+  return [...options.values()];
+}
+
+function showCard(jobId: string) {
+  const card = document.getElementById(jobCardId(jobId));
+  if (!card) return;
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  card.scrollIntoView?.({
+    behavior: reduceMotion ? "auto" : "smooth",
+    block: "start",
+  });
+  card.focus({ preventScroll: true });
+}
+
+export function PlanView({ goal, initialLevel }: PlanViewProps) {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const jobsTitleId = useId();
   const laterNoteId = useId();
   const [level, setLevel] = useState<Level>(initialLevel);
   const [levelNotice, setLevelNotice] = useState("");
-  const [usedTools, setUsedTools] = useState<ReadonlySet<string>>(new Set());
+  const [usedTools, setUsedTools] = useState<ReadonlySet<string>>(NO_TOOLS);
   const [budget, setBudget] = useState<Budget | null>(null);
 
   useEffect(() => {
     headlineRef.current?.focus();
   }, []);
 
-  const content = plan.levels[level];
-  const toolNames = useMemo(
-    () => [...new Set(content.jobs.map((job) => job.toolName))],
-    [content],
+  const plan = useMemo(
+    () =>
+      buildPlan(goal, { level: initialLevel, budget, toolsUsed: usedTools }),
+    [goal, initialLevel, budget, usedTools],
   );
+  const choices = useMemo(
+    () =>
+      toolOptions(
+        buildPlan(goal, {
+          level: initialLevel,
+          budget: null,
+          toolsUsed: NO_TOOLS,
+        }).levels[level].jobs,
+      ),
+    [goal, initialLevel, level],
+  );
+  const content = plan.levels[level];
 
   function changeLevel(next: Level) {
     setLevel(next);
     setLevelNotice(`Showing the ${LEVEL_LABELS[next]} level.`);
   }
 
-  function toggleTool(toolName: string) {
+  function toggleTool(toolId: string) {
     setUsedTools((current) => {
       const next = new Set(current);
-      if (!next.delete(toolName)) next.add(toolName);
+      if (!next.delete(toolId)) next.add(toolId);
       return next;
     });
   }
 
   return (
     <article className={styles.plan} aria-labelledby="plan-headline">
-      <p className={styles.notice}>
-        <strong>Sample plan:</strong> tools, prices and dates are examples and
-        not verified.
-      </p>
+      {plan.isSample ? (
+        <p className={styles.notice}>
+          <strong>Sample data, not verified:</strong> tool picks are editorial
+          estimates, and prices, limits and dates are placeholders until each
+          record is checked.
+        </p>
+      ) : null}
 
       <h1
         id="plan-headline"
@@ -77,6 +129,7 @@ export function PlanView({ plan, initialLevel }: PlanViewProps) {
 
       <div key={level} className={styles.body}>
         <Overview level={content} />
+        <Toolkit groups={content.toolkit} onSelect={showCard} />
 
         <section className={styles.section} aria-labelledby={jobsTitleId}>
           <h2 id={jobsTitleId} className={styles.sectionTitle}>
@@ -84,16 +137,8 @@ export function PlanView({ plan, initialLevel }: PlanViewProps) {
           </h2>
           <ul className={styles.jobs}>
             {content.jobs.map((job) => (
-              <li key={job.jobName}>
-                <JobCard
-                  job={job}
-                  tag={usedTools.has(job.toolName) ? "keep" : job.tag}
-                  alternatives={
-                    budget === "zero"
-                      ? job.alternatives.filter((option) => !option.paidOnly)
-                      : job.alternatives
-                  }
-                />
+              <li key={job.jobId}>
+                <JobCard job={job} />
               </li>
             ))}
           </ul>
@@ -149,7 +194,7 @@ export function PlanView({ plan, initialLevel }: PlanViewProps) {
       </p>
 
       <AccuracyCard
-        tools={toolNames}
+        tools={choices}
         usedTools={usedTools}
         onToggleTool={toggleTool}
         budget={budget}
