@@ -5,8 +5,8 @@ import { GoalForm } from "@/components/goal-form/GoalForm";
 import { NoMatchCard } from "@/components/no-match-card/NoMatchCard";
 import { PlanView } from "@/components/plan-view/PlanView";
 import { UnderstandingCard } from "@/components/understanding-card/UnderstandingCard";
-import { getSamplePlan } from "@/data/sample/plans";
 import {
+  addableChips,
   coveredGoals,
   inferLevel,
   interpretGoal,
@@ -124,6 +124,7 @@ export function HomeFlow() {
         {stage.kind === "understanding" ? (
           <UnderstandingCard
             chips={stage.goal.chips}
+            options={addableChips(stage.goal.goalType)}
             onRemoveChip={(id) =>
               updateChips((chips) => chips.filter((chip) => chip.id !== id))
             }
@@ -138,10 +139,7 @@ export function HomeFlow() {
         ) : null}
 
         {stage.kind === "plan" ? (
-          <PlanView
-            plan={getSamplePlan(stage.goal.goalType)}
-            initialLevel={stage.goal.inferredLevel}
-          />
+          <PlanView goal={stage.goal} initialLevel={stage.goal.inferredLevel} />
         ) : null}
       </div>
 

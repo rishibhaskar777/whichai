@@ -2,13 +2,13 @@
 
 import { useId, useRef, useState } from "react";
 import { CloseIcon, PlusIcon } from "@/components/icons";
-import { featureOptions } from "@/lib/plan/interpret-goal";
 import type { Chip } from "@/lib/schemas/plan";
 import controls from "@/styles/controls.module.css";
 import styles from "./UnderstandingCard.module.css";
 
 interface UnderstandingCardProps {
   chips: readonly Chip[];
+  options: readonly Chip[];
   onRemoveChip: (id: string) => void;
   onAddChip: (chip: Chip) => void;
   onEdit: () => void;
@@ -17,6 +17,7 @@ interface UnderstandingCardProps {
 
 export function UnderstandingCard({
   chips,
+  options,
   onRemoveChip,
   onAddChip,
   onEdit,
@@ -27,7 +28,7 @@ export function UnderstandingCard({
   const chipListRef = useRef<HTMLUListElement>(null);
   const [change, setChange] = useState("");
 
-  const addable = featureOptions.filter(
+  const addable = options.filter(
     (option) => !chips.some((chip) => chip.id === option.id),
   );
 

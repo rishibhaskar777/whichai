@@ -2,6 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
+import { catalogue } from "@/data/catalogue";
 import { sampleNews } from "@/data/sample/news";
 import { headingViolations, seriousViolations } from "@/test/axe";
 import { HomeFlow } from "./HomeFlow";
@@ -9,7 +10,7 @@ import { HomeFlow } from "./HomeFlow";
 vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
 
 const PORTFOLIO_GOAL = "Build a portfolio website with a blog";
-const UNKNOWN_GOAL = "Make a short video from my own footage";
+const UNKNOWN_GOAL = "What is the weather in Delhi today";
 
 function renderHome() {
   return render(
@@ -162,7 +163,7 @@ describe("a goal we do not cover", () => {
       within(screen.getByRole("list", { name: "Goals we cover" })).getAllByRole(
         "button",
       ),
-    ).toHaveLength(2);
+    ).toHaveLength(catalogue.goals.length);
     expect(screen.queryByRole("heading", { name: /plan$/ })).toBeNull();
   });
 
@@ -187,7 +188,7 @@ describe("a goal we do not cover", () => {
 });
 
 describe("showing the plan", () => {
-  it("shows the sample plan, announces it and focuses the headline", async () => {
+  it("shows the plan, announces it and focuses the headline", async () => {
     const user = userEvent.setup();
     renderHome();
     await submit(user, PORTFOLIO_GOAL);
@@ -199,7 +200,7 @@ describe("showing the plan", () => {
     });
     expect(headline).toHaveFocus();
     expect(screen.getByText("Plan ready")).toBeInTheDocument();
-    expect(screen.getByText(/Sample plan:/)).toBeInTheDocument();
+    expect(screen.getByText(/Sample data, not verified:/)).toBeInTheDocument();
     expect(screen.queryByText("Here's what we understood")).toBeNull();
   });
 
@@ -314,7 +315,13 @@ describe("privacy", () => {
     await confirm(user);
     await user.click(screen.getByRole("radio", { name: "Advanced" }));
     await user.click(screen.getByRole("radio", { name: "₹0" }));
-    await user.click(screen.getByRole("button", { name: "Vercel" }));
+    await user.click(
+      within(
+        screen.getByRole("group", {
+          name: "Which of these do you already use?",
+        }),
+      ).getAllByRole("button")[0]!,
+    );
     await user.click(screen.getAllByRole("link", { name: "New plan" })[0]!);
     await submit(user, UNKNOWN_GOAL);
 
