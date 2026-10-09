@@ -156,7 +156,7 @@ Sign in button --> /api/auth/sign-in/{provider}   state (+ PKCE for Google) in a
 - `providers.ts` wraps `arctic`: authorization URLs, scopes, code exchange, and reducing the profile to three values.
 - `csrf.ts` makes the sign-out token (an HMAC of the session cookie) and checks the origin. `redirect.ts` is the path allowlist. `rate-limit.ts` is the in-memory limiter.
 - `get-session.ts` exports `getSession()` for server components and route handlers, and `getViewer()` for the layout. The layout passes the viewer and the available providers to `AppShell`, which shows the popup or the account menu.
-- `config.ts` returns `null` when sign-in is not set up, and every caller then shows the "not configured" message.
+- `config.ts` returns `null` when sign-in is not set up, and every caller then shows the "coming soon" message.
 
 ## Principles
 

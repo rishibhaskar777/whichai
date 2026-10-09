@@ -1,6 +1,19 @@
 # Setting up sign-in
 
-Sign-in is optional. Without these steps the site works and the Sign in popup says "Sign-in is not configured on this server".
+Sign-in is optional. Without these steps the site works, and the Google and GitHub buttons in the Sign in popup show "coming in an upcoming update". In development the server prints one warning that names any variables to check.
+
+## What each option needs
+
+| Option       | Status                                                                                                | What it needs later                                                             | Future cost                                                                                                           |
+| ------------ | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Google       | Live when `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and `AUTH_SECRET` are set; otherwise coming soon | Nothing more                                                                    | Free                                                                                                                  |
+| GitHub       | Live when `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` and `AUTH_SECRET` are set; otherwise coming soon | Nothing more                                                                    | Free                                                                                                                  |
+| Microsoft    | Coming soon, no code                                                                                  | An Entra ID app registration and the same stateless flow                        | Free                                                                                                                  |
+| Apple        | Coming soon, no code                                                                                  | An Apple Developer Program membership, a Services ID and a signed client secret | Paid (yearly membership fee)                                                                                          |
+| Email        | Coming soon, no code                                                                                  | Storage for accounts or codes, and a way to send email                          | Needs a database and an email service, so not allowed under [0006](0006-zero-cost.md) until a free option is approved |
+| Phone number | Coming soon, no code                                                                                  | A one-time-code service that sends SMS                                          | Paid per SMS, so not allowed under [0006](0006-zero-cost.md)                                                          |
+
+Only Google and GitHub are built. The rest of this guide covers those two.
 
 Everything here is free. **You do not need a billing account or a credit card** for basic Google or GitHub sign-in. If either site asks for payment details, stop; you are in the wrong place.
 
@@ -67,9 +80,9 @@ Set the same six variables in your host's settings, not in the code. Set `NEXT_P
 
 ## If something goes wrong
 
-| What you see                                             | Likely cause                                                                                                                           |
-| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| "Sign-in is not configured on this server"               | A variable is empty or missing. `AUTH_SECRET` must be at least 43 characters. Restart the server                                       |
-| Google says `redirect_uri_mismatch`                      | The redirect URI in Google differs from the one the site sends. Check the port, `http` or `https`, and `localhost` against `127.0.0.1` |
-| Google says the app is not verified or access is blocked | The app is in Testing and your account is not listed as a test user, or you added scopes beyond the basic three                        |
-| Back on the sign-in page with "We couldn't sign you in"  | The secret was copied wrongly, the callback URL differs, or the sign-in took longer than 10 minutes                                    |
+| What you see                                             | Likely cause                                                                                                                                 |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| A button says "coming in an upcoming update"             | Its variables are empty or missing, or `AUTH_SECRET` is shorter than 43 characters. Check the warning in the terminal and restart the server |
+| Google says `redirect_uri_mismatch`                      | The redirect URI in Google differs from the one the site sends. Check the port, `http` or `https`, and `localhost` against `127.0.0.1`       |
+| Google says the app is not verified or access is blocked | The app is in Testing and your account is not listed as a test user, or you added scopes beyond the basic three                              |
+| Back on the sign-in page with "We couldn't sign you in"  | The secret was copied wrongly, the callback URL differs, or the sign-in took longer than 10 minutes                                          |

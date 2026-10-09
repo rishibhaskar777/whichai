@@ -26,6 +26,21 @@ Use option B. `arctic` builds the authorization URLs and exchanges the code for 
 
 Auth.js v5 has stayed in beta, v4 does not fit the App Router, and we would have replaced most of its behaviour anyway.
 
+## Options in the popup
+
+The popup always lists the full set, in this order: Google, GitHub, Microsoft, Apple, a divider, email, phone number. An option that is not ready shows "<Option> sign-in is coming in an upcoming update." inside the popup, in a polite live region, and replaces any earlier message. The coming-soon buttons make no request and there are no input fields, so nothing is collected.
+
+| Option       | Status                                                                                                | What it needs later                                                             | Future cost                                                                                                           |
+| ------------ | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Google       | Live when `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and `AUTH_SECRET` are set; otherwise coming soon | Nothing more                                                                    | Free                                                                                                                  |
+| GitHub       | Live when `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` and `AUTH_SECRET` are set; otherwise coming soon | Nothing more                                                                    | Free                                                                                                                  |
+| Microsoft    | Coming soon, no code                                                                                  | An Entra ID app registration and the same stateless flow                        | Free                                                                                                                  |
+| Apple        | Coming soon, no code                                                                                  | An Apple Developer Program membership, a Services ID and a signed client secret | Paid (yearly membership fee)                                                                                          |
+| Email        | Coming soon, no code                                                                                  | Storage for accounts or codes, and a way to send email                          | Needs a database and an email service, so not allowed under [0006](0006-zero-cost.md) until a free option is approved |
+| Phone number | Coming soon, no code                                                                                  | A one-time-code service that sends SMS                                          | Paid per SMS, so not allowed under [0006](0006-zero-cost.md)                                                          |
+
+Apple uses a neutral icon because Apple's rules require its own button style for its logo. Microsoft and Google use their official marks. A "Continue without signing in" button closes the popup.
+
 ## How it works
 
 1. `GET /api/auth/sign-in/{google|github}?next=/path` checks the rate limit and the configuration, creates a random `state` (and, for Google, a PKCE code verifier), stores them in a short-lived encrypted cookie and redirects to the provider.
@@ -74,7 +89,7 @@ A shared limiter needs storage and is out of scope under the zero-cost rule.
 
 ### Missing configuration
 
-All five variables are optional and validated with Zod in `src/lib/env.ts`. If `AUTH_SECRET` or a provider's pair is missing or malformed, that part of sign-in is off. The build and the app still work, the popup shows "Sign-in is not configured on this server", and the routes redirect to `/sign-in?error=not-configured`. Warnings name variables, never values.
+All five variables are optional and validated with Zod in `src/lib/env.ts`. If `AUTH_SECRET` or a provider's pair is missing or malformed, that provider is off. The build and the app still work and the provider's button behaves like the other coming-soon options, with no configuration error shown to visitors. In development the server logs one warning that names the variables to check (never their values). If someone calls a sign-in route directly, it redirects to `/sign-in?error=not-configured` and the page ignores that code.
 
 ### Logging
 

@@ -11,7 +11,7 @@ export function isProduction(): boolean {
   return process.env.NODE_ENV === "production";
 }
 
-/* Null when sign-in is not set up; callers show a message instead of failing. */
+/* Null when sign-in is not set up; the popup then shows "coming soon" instead of failing. */
 export function getAuthConfig(): AuthConfig | null {
   const auth = getAuthEnv();
   if (!auth) return null;
