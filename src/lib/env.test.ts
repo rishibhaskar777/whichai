@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { parseAuthEnv, parseEnv } from "./env";
+import { authSetupWarning, parseAuthEnv, parseEnv } from "./env";
 
 describe("parseEnv", () => {
   it("accepts a valid site URL", () => {
@@ -64,5 +64,37 @@ describe("parseAuthEnv", () => {
 
   it("returns null when no provider is complete", () => {
     expect(parseAuthEnv({ AUTH_SECRET: secret })).toBeNull();
+  });
+});
+
+describe("authSetupWarning", () => {
+  const secret = "a".repeat(43);
+
+  it("is null when both providers are ready", () => {
+    expect(
+      authSetupWarning({
+        AUTH_SECRET: secret,
+        GOOGLE_CLIENT_ID: "i",
+        GOOGLE_CLIENT_SECRET: "s",
+        GITHUB_CLIENT_ID: "i",
+        GITHUB_CLIENT_SECRET: "s",
+      }),
+    ).toBeNull();
+  });
+
+  it("names the missing variables and no values", () => {
+    const warning = authSetupWarning({
+      AUTH_SECRET: secret,
+      GOOGLE_CLIENT_ID: "my-id-value",
+      GOOGLE_CLIENT_SECRET: "my-secret-value",
+    });
+    expect(warning).toContain("GitHub");
+    expect(warning).toContain("GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET");
+    expect(warning).not.toContain("AUTH_SECRET");
+    expect(warning).not.toContain("my-");
+  });
+
+  it("asks for AUTH_SECRET when nothing is set", () => {
+    expect(authSetupWarning({})).toContain("AUTH_SECRET");
   });
 });

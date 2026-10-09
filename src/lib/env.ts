@@ -63,6 +63,7 @@ export interface AuthEnv {
  */
 export function parseAuthEnv(
   source: Record<string, string | undefined>,
+  { quiet = false }: { quiet?: boolean } = {},
 ): AuthEnv | null {
   const result = authEnvSchema.safeParse({
     AUTH_SECRET: emptyToUndefined(source.AUTH_SECRET),
@@ -73,7 +74,9 @@ export function parseAuthEnv(
   });
   if (!result.success) {
     const names = result.error.issues.map((issue) => issue.path.join("."));
-    console.warn(`Sign-in disabled, invalid variables: ${names.join(", ")}`);
+    if (!quiet) {
+      console.warn(`Sign-in disabled, invalid variables: ${names.join(", ")}`);
+    }
     return null;
   }
 
@@ -101,16 +104,44 @@ function emptyToUndefined(value: string | undefined): string | undefined {
   return value === undefined || value.trim() === "" ? undefined : value;
 }
 
+const PROVIDER_LABELS = { google: "Google", github: "GitHub" } as const;
+
+/*
+ * One line naming the variables to set (never their values), or null when
+ * both providers are ready.
+ */
+export function authSetupWarning(
+  source: Record<string, string | undefined>,
+): string | null {
+  const auth = parseAuthEnv(source, { quiet: true });
+  const missing = (["google", "github"] as const).filter(
+    (provider) => !auth?.providers[provider],
+  );
+  if (missing.length === 0) return null;
+
+  const names = missing.flatMap((provider) => [
+    `${provider.toUpperCase()}_CLIENT_ID`,
+    `${provider.toUpperCase()}_CLIENT_SECRET`,
+  ]);
+  if (!auth) names.unshift("AUTH_SECRET");
+  const labels = missing.map((provider) => PROVIDER_LABELS[provider]);
+  return `Sign-in with ${labels.join(" and ")} is not configured and shows "coming soon". Check ${names.join(", ")} in .env.local (see docs/AUTH-SETUP.md).`;
+}
+
 let cachedAuth: AuthEnv | null | undefined;
 
 export function getAuthEnv(): AuthEnv | null {
   if (cachedAuth !== undefined) return cachedAuth;
-  cachedAuth = parseAuthEnv({
+  const source = {
     AUTH_SECRET: process.env.AUTH_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-  });
+  };
+  cachedAuth = parseAuthEnv(source);
+  const warning =
+    process.env.NODE_ENV === "development" ? authSetupWarning(source) : null;
+  if (warning) console.warn(warning);
   return cachedAuth;
 }
