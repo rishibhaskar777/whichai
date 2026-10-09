@@ -21,10 +21,15 @@ type Collection = "plans" | "history" | "settings";
 
 const COLLECTIONS: readonly Collection[] = ["plans", "history", "settings"];
 
+export interface LoadedData extends LocalData {
+  /** False on a first visit, so callers can keep cookie-based defaults. */
+  settingsStored: boolean;
+}
+
 export interface Store {
   /** False when the backend is the in-page fallback that nothing survives. */
   readonly persistent: boolean;
-  load(): Promise<LocalData>;
+  load(): Promise<LoadedData>;
   savePlans(plans: readonly SavedPlan[]): Promise<WriteResult>;
   saveHistory(entries: readonly HistoryEntry[]): Promise<WriteResult>;
   saveSettings(settings: Settings): Promise<WriteResult>;
@@ -84,7 +89,8 @@ export function createStore(backend: KvBackend): Store {
       const [plans, history, settings] = await Promise.all(
         COLLECTIONS.map(read),
       );
-      const data: LocalData = {
+      const data: LoadedData = {
+        settingsStored: settings !== null,
         plans: parseItems(savedPlanSchema, plans, MAX_SAVED_PLANS),
         history: parseItems(historyEntrySchema, history, MAX_HISTORY_ENTRIES),
         settings: settingsSchema

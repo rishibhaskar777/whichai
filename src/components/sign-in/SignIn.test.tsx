@@ -6,7 +6,9 @@ import { sampleNews } from "@/data/sample/news";
 import { seriousViolations } from "@/test/axe";
 import { SignInPanel } from "./SignInPanel";
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/projects" }));
+vi.mock("next/navigation", async () =>
+  (await import("@/test/navigation")).navigationMock("/projects"),
+);
 
 const both = { google: true, github: true };
 const none = { google: false, github: false };

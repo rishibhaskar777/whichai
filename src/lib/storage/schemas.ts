@@ -33,6 +33,7 @@ export type HistoryEntry = z.infer<typeof historyEntrySchema>;
 export const themeChoiceSchema = z.enum(["system", "light", "dark"]);
 export const motionChoiceSchema = z.enum(["system", "on", "off"]);
 export const currencySchema = z.enum(["₹", "$"]);
+export type MotionChoice = z.infer<typeof motionChoiceSchema>;
 
 export const DEFAULT_SETTINGS = {
   language: "en",

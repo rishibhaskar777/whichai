@@ -4,7 +4,9 @@ import { describe, expect, it, vi } from "vitest";
 import { sampleNews } from "@/data/sample/news";
 import { AppShell } from "./AppShell";
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
+vi.mock("next/navigation", async () =>
+  (await import("@/test/navigation")).navigationMock("/"),
+);
 
 function renderShell() {
   return render(
@@ -20,7 +22,9 @@ function renderShell() {
 }
 
 function drawer() {
-  return document.querySelector("dialog") as HTMLDialogElement;
+  return document.querySelector(
+    'dialog[aria-label="Main menu"]',
+  ) as HTMLDialogElement;
 }
 
 function primaryNav() {

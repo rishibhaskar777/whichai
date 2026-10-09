@@ -7,7 +7,9 @@ import { sampleNews } from "@/data/sample/news";
 import { headingViolations, seriousViolations } from "@/test/axe";
 import { HomeFlow } from "./HomeFlow";
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
+vi.mock("next/navigation", async () =>
+  (await import("@/test/navigation")).navigationMock("/"),
+);
 
 const PORTFOLIO_GOAL = "Build a portfolio website with a blog";
 const UNKNOWN_GOAL = "What is the weather in Delhi today";
@@ -333,7 +335,7 @@ describe("privacy", () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
-  it("keeps the goal text out of storage, cookies and the URL", async () => {
+  it("keeps the goal text out of cookies, session storage and the URL", async () => {
     const user = userEvent.setup();
     const cookiesBefore = document.cookie;
     const urlBefore = window.location.href;
@@ -342,7 +344,6 @@ describe("privacy", () => {
     await submit(user, PORTFOLIO_GOAL);
     await confirm(user);
 
-    expect(window.localStorage).toHaveLength(0);
     expect(window.sessionStorage).toHaveLength(0);
     expect(document.cookie).toBe(cookiesBefore);
     expect(window.location.href).toBe(urlBefore);

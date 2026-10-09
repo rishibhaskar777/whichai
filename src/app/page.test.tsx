@@ -5,7 +5,9 @@ import { sampleNews } from "@/data/sample/news";
 import { seriousViolations } from "@/test/axe";
 import HomePage from "./page";
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
+vi.mock("next/navigation", async () =>
+  (await import("@/test/navigation")).navigationMock("/"),
+);
 
 describe("home page", () => {
   it("has no serious or critical axe violations", async () => {

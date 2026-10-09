@@ -5,7 +5,12 @@ import { buildPlan } from "@/lib/engine/build-plan";
 import { interpretGoal } from "@/lib/plan/interpret-goal";
 import { LEVELS, type Level, type UnderstoodGoal } from "@/lib/schemas/plan";
 import { seriousViolations } from "@/test/axe";
+import { AppProviders } from "@/test/wrappers";
 import { PlanView } from "./PlanView";
+
+vi.mock("next/navigation", async () =>
+  (await import("@/test/navigation")).navigationMock("/"),
+);
 
 function understand(text: string): UnderstoodGoal {
   const goal = interpretGoal(text);
@@ -17,7 +22,11 @@ const PORTFOLIO = understand("portfolio website with animations");
 const STUDY = understand("60-day study plan for my exams");
 
 function renderPlan(goal = PORTFOLIO, level: Level = "simple") {
-  return render(<PlanView goal={goal} initialLevel={level} />);
+  return render(
+    <AppProviders>
+      <PlanView goal={goal} initialLevel={level} />
+    </AppProviders>,
+  );
 }
 
 function planFor(goal: UnderstoodGoal, level: Level) {
@@ -100,17 +109,12 @@ describe("PlanView basics", () => {
     for (const button of copyButtons) expect(button).toBeEnabled();
   });
 
-  it("keeps Save, Download PDF and Share disabled with an explanation", () => {
+  it("offers Save, Download PDF and Copy share link", () => {
     renderPlan();
 
-    for (const name of ["Save", "Download PDF", "Share"]) {
-      expect(screen.getByRole("button", { name })).toBeDisabled();
+    for (const name of ["Save", "Download PDF", "Copy share link"]) {
+      expect(screen.getByRole("button", { name })).toBeEnabled();
     }
-    expect(
-      screen.getByText(
-        "Save, Download PDF and Share arrive in a later release.",
-      ),
-    ).toBeInTheDocument();
   });
 });
 

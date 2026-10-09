@@ -97,6 +97,7 @@ describe("store", () => {
       plans: [],
       history: [],
       settings: DEFAULT_SETTINGS,
+      settingsStored: false,
     });
   });
 
@@ -165,7 +166,7 @@ describe("store", () => {
 
     const data = await createStore(backend).load();
 
-    expect(data).toEqual({
+    expect(data).toMatchObject({
       plans: [],
       history: [],
       settings: DEFAULT_SETTINGS,

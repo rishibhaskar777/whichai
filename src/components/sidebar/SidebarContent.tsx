@@ -8,15 +8,20 @@ import {
   CloseIcon,
   CompareIcon,
   FolderIcon,
+  HelpIcon,
   HomeIcon,
   LibraryIcon,
   PanelLeftIcon,
   PlusIcon,
   SearchIcon,
+  SettingsIcon,
 } from "@/components/icons";
 import { AccountMenu } from "./AccountMenu";
+import { RecentProjects } from "./RecentProjects";
 import { SignInButton } from "./SignInButton";
 import { ThemeControl } from "@/components/theme-control/ThemeControl";
+import { useI18n } from "@/lib/i18n/provider";
+import type { MessageKey } from "@/lib/i18n/en";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
 import type { Viewer } from "@/lib/auth/get-session";
 import type { ThemeChoice } from "@/lib/theme";
@@ -25,17 +30,17 @@ import styles from "./SidebarContent.module.css";
 
 interface NavItem {
   href: string;
-  label: string;
+  label: MessageKey;
   Icon: ComponentType<SVGProps<SVGSVGElement>>;
 }
 
 const NAV_ITEMS: readonly NavItem[] = [
-  { href: "/", label: "Home", Icon: HomeIcon },
-  { href: "/projects", label: "Projects", Icon: FolderIcon },
-  { href: "/searches", label: "Searches", Icon: SearchIcon },
-  { href: "/tool-library", label: "Tool Library", Icon: LibraryIcon },
-  { href: "/what-changed", label: "What Changed", Icon: ChangesIcon },
-  { href: "/compare-plans", label: "Compare Plans", Icon: CompareIcon },
+  { href: "/", label: "nav.home", Icon: HomeIcon },
+  { href: "/projects", label: "nav.projects", Icon: FolderIcon },
+  { href: "/searches", label: "nav.searches", Icon: SearchIcon },
+  { href: "/tool-library", label: "nav.toolLibrary", Icon: LibraryIcon },
+  { href: "/what-changed", label: "nav.whatChanged", Icon: ChangesIcon },
+  { href: "/compare-plans", label: "nav.comparePlans", Icon: CompareIcon },
 ];
 
 interface SidebarContentProps {
@@ -53,6 +58,7 @@ export function SidebarContent({
   onToggleCollapse,
   onClose,
 }: SidebarContentProps) {
+  const { t } = useI18n();
   const pathname = usePathname();
   const { request: requestNewPlan } = useNewPlanSignal();
   const closeDrawer = () => onClose?.();
@@ -70,7 +76,7 @@ export function SidebarContent({
             type="button"
             className={styles.iconButton}
             onClick={onClose}
-            aria-label="Close menu"
+            aria-label={t("shell.closeMenu")}
           >
             <CloseIcon />
           </button>
@@ -83,7 +89,7 @@ export function SidebarContent({
             type="button"
             className={styles.iconButton}
             onClick={onToggleCollapse}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={collapsed ? t("sidebar.expand") : t("sidebar.collapse")}
             aria-expanded={!collapsed}
           >
             <PanelLeftIcon />
@@ -93,10 +99,10 @@ export function SidebarContent({
 
       <Link href="/" className={styles.newPlan} onClick={startNewPlan}>
         <PlusIcon />
-        <span className={labelClass}>New plan</span>
+        <span className={labelClass}>{t("nav.newPlan")}</span>
       </Link>
 
-      <nav aria-label="Primary" className={styles.nav}>
+      <nav aria-label={t("nav.primary")} className={styles.nav}>
         <ul className={styles.list}>
           {NAV_ITEMS.map(({ href, label, Icon }) => (
             <li key={href}>
@@ -107,14 +113,37 @@ export function SidebarContent({
                 onClick={closeDrawer}
               >
                 <Icon />
-                <span className={labelClass}>{label}</span>
+                <span className={labelClass}>{t(label)}</span>
               </Link>
+              {href === "/projects" && !collapsed ? (
+                <RecentProjects onNavigate={closeDrawer} />
+              ) : null}
             </li>
           ))}
         </ul>
       </nav>
 
-      <div className={styles.bottom}>
+      <div className={styles.bottom} data-print-hide="">
+        <div className={styles.footerLinks}>
+          <Link
+            href="/settings"
+            className={styles.link}
+            aria-current={pathname === "/settings" ? "page" : undefined}
+            onClick={closeDrawer}
+          >
+            <SettingsIcon />
+            <span className={labelClass}>{t("nav.settings")}</span>
+          </Link>
+          <Link
+            href="/help"
+            className={styles.link}
+            aria-current={pathname === "/help" ? "page" : undefined}
+            onClick={closeDrawer}
+          >
+            <HelpIcon />
+            <span className={labelClass}>{t("nav.help")}</span>
+          </Link>
+        </div>
         {viewer ? (
           <AccountMenu viewer={viewer} collapsed={collapsed} />
         ) : (
