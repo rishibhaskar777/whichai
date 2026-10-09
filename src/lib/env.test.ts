@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { parseEnv } from "./env";
+import { describe, expect, it, vi } from "vitest";
+import { parseAuthEnv, parseEnv } from "./env";
 
 describe("parseEnv", () => {
   it("accepts a valid site URL", () => {
@@ -19,5 +19,50 @@ describe("parseEnv", () => {
     expect(() =>
       parseEnv({ NEXT_PUBLIC_SITE_URL: "javascript:alert(1)" }),
     ).toThrow(/NEXT_PUBLIC_SITE_URL/);
+  });
+});
+
+describe("parseAuthEnv", () => {
+  const secret = "a".repeat(43);
+  const google = { GOOGLE_CLIENT_ID: "id", GOOGLE_CLIENT_SECRET: "shh" };
+  const github = { GITHUB_CLIENT_ID: "id", GITHUB_CLIENT_SECRET: "shh" };
+
+  it("returns null when nothing is configured", () => {
+    expect(parseAuthEnv({})).toBeNull();
+  });
+
+  it("returns null when the secret is missing", () => {
+    expect(parseAuthEnv({ ...google })).toBeNull();
+  });
+
+  it("returns null and names the variable when the secret is too short", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    expect(parseAuthEnv({ AUTH_SECRET: "short", ...google })).toBeNull();
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining("AUTH_SECRET"));
+    expect(warn).not.toHaveBeenCalledWith(expect.stringContaining("short"));
+    warn.mockRestore();
+  });
+
+  it("enables only providers that have both an id and a secret", () => {
+    const auth = parseAuthEnv({
+      AUTH_SECRET: secret,
+      ...google,
+      GITHUB_CLIENT_ID: "id",
+    });
+    expect(auth?.providers.google).toEqual({
+      clientId: "id",
+      clientSecret: "shh",
+    });
+    expect(auth?.providers.github).toBeUndefined();
+  });
+
+  it("treats blank values as missing", () => {
+    expect(
+      parseAuthEnv({ AUTH_SECRET: secret, GOOGLE_CLIENT_ID: "  ", ...github }),
+    ).toMatchObject({ providers: { github: expect.any(Object) } });
+  });
+
+  it("returns null when no provider is complete", () => {
+    expect(parseAuthEnv({ AUTH_SECRET: secret })).toBeNull();
   });
 });

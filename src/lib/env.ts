@@ -30,3 +30,87 @@ export function getEnv(): Env {
   });
   return cached;
 }
+
+/*
+ * 32 random bytes are 43 characters in unpadded base64 and 64 in hex, so a
+ * shorter value cannot hold 32 bytes of entropy.
+ */
+const MIN_SECRET_LENGTH = 43;
+
+const authEnvSchema = z.object({
+  AUTH_SECRET: z.string().min(MIN_SECRET_LENGTH).optional(),
+  GOOGLE_CLIENT_ID: z.string().min(1).optional(),
+  GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
+  GITHUB_CLIENT_ID: z.string().min(1).optional(),
+  GITHUB_CLIENT_SECRET: z.string().min(1).optional(),
+});
+
+export type ProviderId = "google" | "github";
+
+interface ProviderCredentials {
+  clientId: string;
+  clientSecret: string;
+}
+
+export interface AuthEnv {
+  secret: string;
+  providers: Partial<Record<ProviderId, ProviderCredentials>>;
+}
+
+/*
+ * Sign-in is optional. Anything missing or malformed turns it off instead of
+ * stopping the app, and only variable names are reported, never values.
+ */
+export function parseAuthEnv(
+  source: Record<string, string | undefined>,
+): AuthEnv | null {
+  const result = authEnvSchema.safeParse({
+    AUTH_SECRET: emptyToUndefined(source.AUTH_SECRET),
+    GOOGLE_CLIENT_ID: emptyToUndefined(source.GOOGLE_CLIENT_ID),
+    GOOGLE_CLIENT_SECRET: emptyToUndefined(source.GOOGLE_CLIENT_SECRET),
+    GITHUB_CLIENT_ID: emptyToUndefined(source.GITHUB_CLIENT_ID),
+    GITHUB_CLIENT_SECRET: emptyToUndefined(source.GITHUB_CLIENT_SECRET),
+  });
+  if (!result.success) {
+    const names = result.error.issues.map((issue) => issue.path.join("."));
+    console.warn(`Sign-in disabled, invalid variables: ${names.join(", ")}`);
+    return null;
+  }
+
+  const env = result.data;
+  if (!env.AUTH_SECRET) return null;
+
+  const providers: AuthEnv["providers"] = {};
+  if (env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) {
+    providers.google = {
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    };
+  }
+  if (env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET) {
+    providers.github = {
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+    };
+  }
+  if (Object.keys(providers).length === 0) return null;
+  return { secret: env.AUTH_SECRET, providers };
+}
+
+function emptyToUndefined(value: string | undefined): string | undefined {
+  return value === undefined || value.trim() === "" ? undefined : value;
+}
+
+let cachedAuth: AuthEnv | null | undefined;
+
+export function getAuthEnv(): AuthEnv | null {
+  if (cachedAuth !== undefined) return cachedAuth;
+  cachedAuth = parseAuthEnv({
+    AUTH_SECRET: process.env.AUTH_SECRET,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+  });
+  return cachedAuth;
+}
