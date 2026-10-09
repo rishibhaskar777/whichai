@@ -92,13 +92,13 @@ describe("every goal template", () => {
 describe("plan contents", () => {
   it("is marked as sample while any chosen record is unverified", () => {
     const plan = buildPlan(goalOf("study-plan"), NO_OPTIONS);
-    expect(plan.isSample).toBe(true);
-    for (const level of LEVELS) {
-      for (const job of plan.levels[level].jobs) {
-        expect(job.verified).toBe(false);
-        expect(job.lastVerified).toBeNull();
-        expect(job.sourceLabel).toBe("sample");
-      }
+    const jobs = LEVELS.flatMap((level) => plan.levels[level].jobs);
+    expect(plan.isSample).toBe(jobs.some((job) => !job.verified));
+    for (const job of jobs) {
+      const tool = catalogue.tools.find((t) => t.id === job.toolId)!;
+      expect(job.verified).toBe(tool.verified);
+      expect(job.lastVerified).toBe(tool.lastVerified);
+      expect(job.sourceLabel).toBe(tool.verified ? "official-docs" : "sample");
     }
   });
 

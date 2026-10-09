@@ -22,6 +22,19 @@ export function hasConcretePrice(text: string): boolean {
   return CONCRETE_PRICE.test(text);
 }
 
+/**
+ * A price may appear only in the pricing text of a verified record, where a
+ * reviewer wrote it from the official page. Everything else stays free of it.
+ */
+export function withoutVerifiedPricing(catalogue: Catalogue): Catalogue {
+  return {
+    ...catalogue,
+    tools: catalogue.tools.map((tool) =>
+      tool.verified ? { ...tool, pricing: "" } : tool,
+    ),
+  };
+}
+
 function duplicates(ids: readonly string[]): string[] {
   return ids.filter((id, index) => ids.indexOf(id) !== index);
 }
@@ -118,7 +131,7 @@ export function findProblems(catalogue: Catalogue): string[] {
     }
   }
 
-  for (const text of collectStrings(catalogue)) {
+  for (const text of collectStrings(withoutVerifiedPricing(catalogue))) {
     if (hasConcretePrice(text)) problems.push(`concrete price in "${text}"`);
   }
 

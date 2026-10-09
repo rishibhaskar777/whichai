@@ -3,6 +3,7 @@ import {
   collectStrings,
   findProblems,
   hasConcretePrice,
+  withoutVerifiedPricing,
 } from "@/lib/catalogue/validate";
 import {
   GOAL_IDS,
@@ -47,17 +48,16 @@ describe("catalogue data files", () => {
     }
   });
 
-  it("mark every record as unverified, with editorial scores only", () => {
+  it("keep the verification fields consistent, with editorial scores only", () => {
     for (const tool of catalogue.tools) {
-      expect(tool.verified).toBe(false);
-      expect(tool.lastVerified).toBeNull();
-      expect(tool.pricing).toBe("[verify]");
+      expect(tool.lastVerified !== null, tool.id).toBe(tool.verified);
+      if (!tool.verified) expect(tool.pricing).toBe("[verify]");
       expect(tool.scoreSource).toBe("editorial-estimate");
     }
   });
 
   it("contain no concrete price anywhere", () => {
-    for (const text of collectStrings(raw)) {
+    for (const text of collectStrings(withoutVerifiedPricing(catalogue))) {
       expect(hasConcretePrice(text), text).toBe(false);
     }
   });
@@ -232,6 +232,24 @@ describe("findProblems", () => {
     expect(findProblems(duplicate).join()).toMatch(/duplicate id/);
     const deep = withTool({ officialUrl: "https://example.com/deep/page" });
     expect(findProblems(deep).join()).toMatch(/root page/);
+  });
+
+  it("allows a price in the pricing text of a verified record", () => {
+    const checked = withTool({
+      verified: true,
+      lastVerified: "2026-10-09",
+      pricing: "Paid plan: $20 per month. Checked on the official page.",
+    });
+    expect(findProblems(checked)).toEqual([]);
+  });
+
+  it("reports a price in a verified record outside its pricing text", () => {
+    const checked = withTool({
+      verified: true,
+      lastVerified: "2026-10-09",
+      summary: "Costs $20 a month.",
+    });
+    expect(findProblems(checked).join()).toMatch(/concrete price/);
   });
 
   it("reports a concrete price", () => {

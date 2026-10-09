@@ -254,10 +254,14 @@ describe("toolkit at a glance", () => {
 describe("job cards", () => {
   it("shows kind, pricing, watch-out, fit, source and verification state", () => {
     renderPlan();
-    const first = planFor(PORTFOLIO, "simple").levels.simple.jobs[0]!;
+    const first = planFor(PORTFOLIO, "simple").levels.simple.jobs.find(
+      (job) => !job.verified,
+    )!;
     const view = within(card(first.toolName));
 
-    expect(view.getByText("AI tool")).toBeInTheDocument();
+    expect(
+      view.getByText(/^(AI tool|Library|Service|App|Template source)$/),
+    ).toBeInTheDocument();
     expect(view.getByText("Pricing")).toBeInTheDocument();
     expect(view.getByText(/\[verify\]/)).toBeInTheDocument();
     expect(view.getByText("Watch out for")).toBeInTheDocument();
