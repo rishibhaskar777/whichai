@@ -303,6 +303,189 @@ export const en = {
   "shortcuts.newPlan": "Start a new plan",
   "shortcuts.help": "Show this list",
   "shortcuts.note": "Shortcuts don't work while you are typing in a field.",
+
+  "common.on": "On",
+  "common.off": "Off",
+  "settings.title": "Settings",
+  "settings.lede":
+    "Changes apply straight away and are saved in this browser only.",
+  "settings.general": "General",
+  "settings.language": "Language",
+  "settings.language.help":
+    "Changes buttons, menus and messages. Tool details stay in English for now.",
+  "settings.theme": "Theme",
+  "settings.theme.help": "System follows your device's light or dark setting.",
+  "settings.motion": "Reduce motion",
+  "settings.motion.help":
+    "On keeps movement to a minimum. Off keeps animation even if your device asks for less. System follows your device.",
+  "settings.level": "Default plan level",
+  "settings.level.help":
+    "The level a plan opens on. Automatic picks one from your goal.",
+  "settings.level.auto": "Automatic",
+  "settings.budget": "Default budget",
+  "settings.budget.help":
+    "Used to filter tools when you start a plan. You can still change it on each plan.",
+  "settings.budget.none": "Not set",
+  "settings.currency": "Currency display",
+  "settings.currency.help":
+    "Changes how budget choices are labelled. Dollar amounts are rounded equivalents, not live exchange rates.",
+  "settings.privacy": "Privacy and data",
+  "settings.history": "Save search history",
+  "settings.history.help":
+    "When on, the goals you search for are listed on the Searches page. They stay in this browser and are never sent anywhere.",
+  "settings.export": "Export my data",
+  "settings.export.help":
+    "Download your saved plans, search history and settings as one file.",
+  "settings.import": "Import data",
+  "settings.import.help":
+    "Choose a backup file you exported from WhichAI. Files up to 1 MB. Nothing is uploaded.",
+  "settings.import.choose": "Choose a backup file",
+  "settings.clear": "Clear all data on this device",
+  "settings.clear.help":
+    "Deletes your saved plans, search history and settings from this browser. This can't be undone.",
+  "settings.clear.button": "Clear all data",
+  "settings.clear.title": "Clear all data on this device?",
+  "settings.clear.text":
+    "This deletes every saved plan, your search history and your settings from this browser. Export a backup first if you might want them back.",
+  "settings.clear.confirm": "Clear everything",
+  "settings.cleared": "All data on this device was cleared.",
+  "import.plans.one": "{count} saved plan",
+  "import.plans.other": "{count} saved plans",
+  "import.history.one": "{count} search",
+  "import.history.other": "{count} searches",
+  "import.settingsIncluded": "your settings",
+  "import.preview": "This file contains: {items}.",
+  "import.skipped.one":
+    "{count} item in the file was not valid and will be left out.",
+  "import.skipped.other":
+    "{count} items in the file were not valid and will be left out.",
+  "import.mode": "How should it be imported?",
+  "import.merge": "Merge with what is here",
+  "import.merge.help":
+    "Keeps everything you have and adds what is new. For a plan in both, the newer copy wins. Your current settings stay.",
+  "import.replace": "Replace what is here",
+  "import.replace.help":
+    "Deletes your current plans and history and uses the file instead.",
+  "import.button": "Import",
+  "import.replaceTitle": "Replace your data with this file?",
+  "import.replaceText":
+    "Your current saved plans and search history will be deleted and replaced by the file's contents. This can't be undone.",
+  "import.replaceConfirm": "Replace my data",
+  "import.done": "Import finished.",
+  "import.dropped.one":
+    "{count} item was left out because a limit was reached.",
+  "import.dropped.other":
+    "{count} items were left out because a limit was reached.",
+  "import.failed": "The import could not be saved.",
+  "import.error.tooLarge": "That file is larger than 1 MB, so it was not read.",
+  "import.error.notJson":
+    "That file is not a valid backup. It could not be read.",
+  "import.error.wrongShape":
+    "That file is not a WhichAI backup, or it is from a newer version.",
+  "import.error.empty": "That backup has nothing in it to import.",
+  "import.error.unreadable": "That file could not be read.",
+  "settings.account": "Account",
+  "settings.account.signedIn": "Signed in as {name} with {provider}.",
+  "settings.account.signedOut":
+    "You are not signed in. You can use everything without an account.",
+  "settings.account.signIn": "Sign in",
+  "settings.about": "About",
+  "settings.about.version": "Version {version}",
+  "settings.about.privacy": "Privacy",
+  "settings.about.security": "Security policy",
+  "settings.about.github": "GitHub repository",
+  "settings.about.feedback": "Send feedback",
+  "settings.about.about": "About WhichAI",
+  "settings.about.help": "Help",
+  "link.newTab": " (opens in a new tab)",
+
+  "content.back": "Back to home",
+  "help.title": "Help",
+  "help.lede": "Short answers to the questions people ask most.",
+  "help.q1": "What does WhichAI do?",
+  "help.a1":
+    "You describe a goal, and WhichAI suggests which AI tools to use and how to use them, at three levels: Simple, Polished and Advanced. It is a guide, not a chatbot, and it never does the task for you.",
+  "help.q2": 'Why do tools say "Not verified"?',
+  "help.a2":
+    "Every tool record is still a sample until someone checks it against the tool's official page. Until then, picks are editorial estimates, and prices, limits and dates are placeholders. Each card says so, and shows a check date once there is one.",
+  "help.q3": "Where is my data stored?",
+  "help.a3":
+    "On your own device, in your browser. Saved plans, search history and settings never leave it, and we have no database. Your theme and language are also kept in a small preference cookie so pages load the way you like them. The Privacy page has the details.",
+  "help.q4": "How do I share a plan?",
+  "help.a4":
+    "Open a plan and choose Copy share link. The link holds your plan choices, not the words you typed, and they sit after the # so they are never sent to our server. Whoever opens the link sees the plan rebuilt with today's tool data.",
+  "help.q5": "How do I delete my data?",
+  "help.a5":
+    "Delete one plan from Projects or one search from Searches, or open Settings and choose Clear all data on this device. Export a backup first if you might want it back.",
+  "help.q6": "Is it free?",
+  "help.a6":
+    "Yes. There are no ads, no trackers and no paid services behind WhichAI. If a tool in a plan has a paid tier, the plan says so.",
+  "help.moreTitle": "More",
+  "help.shortcuts": "Press ? anywhere to see the keyboard shortcuts.",
+  "help.more.about": "How recommendations are made",
+  "help.more.privacy": "Privacy",
+  "help.more.feedback": "Send feedback",
+  "about.title": "About WhichAI",
+  "about.lede":
+    "WhichAI is a neutral guide to which AI tools to use for a goal you have.",
+  "about.what.title": "What it is",
+  "about.what.text":
+    "You say what you want to do, for example build a portfolio website or make a study plan. WhichAI picks tools for each step and shows one plan at three levels, so you can start simple and grow. It is not a chatbot, and it does not do the task for you.",
+  "about.how.title": "How recommendations are made",
+  "about.how.text1":
+    "Recommendations come from reviewed data kept in this project, not from generated text. A set of plain rules reads your goal, then picks tools by how well they fit each job, your level, your budget and the tools you already use. The same input gives the same plan.",
+  "about.how.text2":
+    "Fit scores are editorial estimates, not test results. Nobody pays to be included or ranked higher.",
+  "about.honest.title": "Honesty",
+  "about.honest.item1":
+    "A tool is marked Not verified until its record has been checked against an official page.",
+  "about.honest.item2":
+    "If WhichAI has no plan for your goal, it says so instead of guessing.",
+  "about.honest.item3":
+    "Prices and limits change, so every plan tells you to check the official page before paying.",
+  "about.free.title": "Free, with no tracking",
+  "about.free.text":
+    "WhichAI runs on free tools only. It uses no paid services, no ads and no analytics, and what you save stays on your device.",
+  "about.source": "The code is open on GitHub",
+  "privacy.title": "Privacy",
+  "privacy.lede":
+    "What WhichAI does with your information, in plain language. Last updated {date}.",
+  "privacy.receive.title": "What we receive",
+  "privacy.receive.text1":
+    "When you sign in with Google or GitHub, they tell us your name and an identifier that is unique to your account with them. We use the name to greet you and the identifier to recognise the same account next time.",
+  "privacy.receive.text2":
+    "The permissions we ask for also cover your email address. We do not read it, keep it or use it. We never see your password; you type it on Google's or GitHub's own page.",
+  "privacy.store.title": "What we store",
+  "privacy.store.text1":
+    "One cookie on your device when you sign in. It holds the sign-in provider, your account identifier and your name, encrypted so only this site can read it. It lasts seven days. During sign-in a second cookie lives for ten minutes to check that the response really came from the provider, then it is deleted.",
+  "privacy.store.text2":
+    "We have no database. Nothing about you is stored on our servers.",
+  "privacy.device.title": "What stays on your device",
+  "privacy.device.text1":
+    "Saved plans, search history and settings are kept in your browser, in IndexedDB or, if that is not available, in local storage. They never leave your device, we cannot see them, and nobody backs them up for you. Use Export my data in Settings to keep a copy.",
+  "privacy.device.item1":
+    "Saved plans: the choices that rebuild a plan (goal type, options, level, budget, tools you use) and a title you can change. The plan itself is rebuilt each time.",
+  "privacy.device.item2":
+    "Search history: the goals you searched for, with the date. You can turn this off in Settings, delete single entries, or clear it all.",
+  "privacy.device.item3":
+    "Settings: language, theme, motion, plan defaults and currency display.",
+  "privacy.device.text2":
+    "Your theme and language are also saved in two small preference cookies for a year, so the server can show the right look and language with no flash. They hold one word each and nothing else.",
+  "privacy.device.text3":
+    "Share links keep the plan choices after the # in the address. Browsers never send that part to a server, so we never receive it.",
+  "privacy.device.text4":
+    "To delete all of it, open Settings and choose Clear all data on this device, or clear this site's data in your browser.",
+  "privacy.never.title": "What we don't do",
+  "privacy.never.item1": "We don't sell or share your information.",
+  "privacy.never.item2": "We don't track you or show ads.",
+  "privacy.never.item3": "We don't collect passwords.",
+  "privacy.never.item4": "We don't send you email.",
+  "privacy.signout.title": "Signing out and leaving",
+  "privacy.signout.text":
+    "Choose your name at the bottom of the sidebar, then Sign out. That deletes the cookie. To also remove WhichAI's access, revoke it in your Google account's security settings or in GitHub under Settings, Applications.",
+  "privacy.contact.title": "Contact",
+  "privacy.contact.text":
+    "Questions or concerns: {email}. Security problems can also be reported privately through the Security tab of the project's GitHub repository.",
 } as const satisfies Record<string, string>;
 
 export type MessageKey = keyof typeof en;

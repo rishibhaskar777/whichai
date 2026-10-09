@@ -12,6 +12,7 @@ import { THEME_COOKIE, parseTheme } from "@/lib/theme";
 import { notoDevanagari, onest } from "./fonts";
 import "@/styles/tokens.css";
 import "@/styles/global.css";
+import "@/styles/print.css";
 
 const SITE_NAME = "WhichAI";
 const DESCRIPTION =

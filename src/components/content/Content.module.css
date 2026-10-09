@@ -39,3 +39,35 @@
   align-self: flex-start;
   min-height: var(--control-height);
 }
+
+.faq {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.faq details + details {
+  border-top: 1px solid var(--border);
+}
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: var(--space-3) var(--space-4);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+}
+
+.faq details > p {
+  padding: 0 var(--space-4) var(--space-4);
+  color: var(--text-muted);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+}

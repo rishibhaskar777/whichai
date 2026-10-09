@@ -27,6 +27,7 @@ import type {
 } from "@/lib/schemas/plan";
 import type { PlanRequest } from "@/lib/schemas/plan-request";
 import { buildShareUrl } from "@/lib/share/share-link";
+import { prefersReducedMotion } from "@/lib/use-reduced-motion";
 import controls from "@/styles/controls.module.css";
 import { AccuracyCard, type ToolOption } from "./AccuracyCard";
 import { JobCard, jobCardId } from "./JobCard";
@@ -73,11 +74,8 @@ function toolOptions(jobs: readonly JobRecommendation[]): ToolOption[] {
 function showCard(jobId: string) {
   const card = document.getElementById(jobCardId(jobId));
   if (!card) return;
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
   card.scrollIntoView?.({
-    behavior: reduceMotion ? "auto" : "smooth",
+    behavior: prefersReducedMotion() ? "auto" : "smooth",
     block: "start",
   });
   card.focus({ preventScroll: true });

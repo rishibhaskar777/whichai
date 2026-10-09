@@ -47,7 +47,7 @@ export function CopyButton({
       : `${controls.button} ${styles.small}`;
 
   return (
-    <span className={styles.wrap}>
+    <span className={styles.wrap} data-print-hide="">
       <button
         type="button"
         className={className}

@@ -1,0 +1,78 @@
+/*
+ * Download PDF opens the browser's print dialog, so this sheet is the PDF.
+ * It strips the sidebar, news panel, glow and buttons, and prints black on
+ * white with each link's address after it.
+ */
+@media print {
+  /* Raised specificity beats the dark theme selectors in tokens.css. */
+  :root:root:root:root {
+    color-scheme: light;
+
+    --bg: #fff;
+    --sidebar: #fff;
+    --surface: #fff;
+    --surface-2: #fff;
+    --border: #bbb;
+    --border-strong: #888;
+    --text: #000;
+    --text-muted: #222;
+    --text-subtle: #333;
+    --accent: #000;
+    --accent-soft: transparent;
+    --status-warning: #000;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+  }
+
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  [data-print-reset] {
+    display: block !important;
+  }
+
+  html,
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  body {
+    font-size: 11pt;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  main,
+  main > * {
+    display: block;
+    width: auto;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+  }
+}

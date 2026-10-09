@@ -231,3 +231,18 @@
   margin: 0;
   color: var(--text-muted);
 }
+
+@media print {
+  .card {
+    break-inside: avoid;
+  }
+
+  .panel {
+    grid-template-rows: 1fr;
+    visibility: visible;
+  }
+
+  .toggle {
+    display: none;
+  }
+}

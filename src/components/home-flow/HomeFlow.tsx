@@ -174,7 +174,7 @@ export function HomeFlow() {
         ) : null}
       </div>
 
-      <div className={styles.dock}>
+      <div className={styles.dock} data-print-hide="">
         <GoalForm
           value={draft}
           onValueChange={setDraft}

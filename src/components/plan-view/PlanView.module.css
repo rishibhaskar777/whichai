@@ -326,3 +326,14 @@
   width: 16px;
   height: 16px;
 }
+
+@media print {
+  .printLevel {
+    display: block;
+    font-weight: var(--weight-medium);
+  }
+
+  .plan > * {
+    animation: none;
+  }
+}

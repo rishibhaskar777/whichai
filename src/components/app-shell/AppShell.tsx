@@ -70,6 +70,7 @@ export function AppShell({
             <KeyboardShortcuts />
             <div
               className={styles.shell}
+              data-print-reset=""
               data-sidebar={railMode ? "rail" : "full"}
               data-news={newsChoice}
             >
