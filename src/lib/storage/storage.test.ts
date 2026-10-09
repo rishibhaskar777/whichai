@@ -1,8 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { PlanRequest } from "@/lib/schemas/plan-request";
 import {
   createLocalStorageBackend,
   createMemoryBackend,
+  openBackend,
   type KvBackend,
 } from "./backend";
 import { CATALOGUE_VERSION, hashCatalogue } from "./catalogue-version";
@@ -327,5 +328,38 @@ describe("history limit", () => {
     expect(history).toHaveLength(MAX_HISTORY_ENTRIES);
     expect(history[0]?.goal).toBe(`goal number ${MAX_HISTORY_ENTRIES + 9}`);
     expect(history.some((entry) => entry.goal === "goal number 0")).toBe(false);
+  });
+});
+
+describe("choosing a backend", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+    window.localStorage.clear();
+  });
+
+  it("falls back to localStorage when IndexedDB is missing", async () => {
+    vi.stubGlobal("indexedDB", undefined);
+    expect((await openBackend()).kind).toBe("localstorage");
+  });
+
+  it("falls back to memory when all storage is blocked", async () => {
+    vi.stubGlobal("indexedDB", undefined);
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new DOMException("blocked", "SecurityError");
+    });
+    const backend = await openBackend();
+    expect(backend.kind).toBe("memory");
+    await backend.set("plans", "x");
+    expect(await backend.get("plans")).toBe("x");
+  });
+
+  it("falls back when opening IndexedDB fails", async () => {
+    vi.stubGlobal("indexedDB", {
+      open: () => {
+        throw new DOMException("denied", "SecurityError");
+      },
+    });
+    expect((await openBackend()).kind).toBe("localstorage");
   });
 });

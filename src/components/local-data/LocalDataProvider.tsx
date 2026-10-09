@@ -143,7 +143,7 @@ function currentTheme(): Settings["theme"] {
 
 interface LocalDataProviderProps {
   /** Tests pass a backend; the app opens IndexedDB or localStorage itself. */
-  backend?: KvBackend;
+  backend?: KvBackend | undefined;
   children: ReactNode;
 }
 
