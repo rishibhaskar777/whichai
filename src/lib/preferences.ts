@@ -26,10 +26,12 @@ export function applyLocale(locale: Locale) {
   writeCookie(LOCALE_COOKIE, locale);
 }
 
-/** "off" means: keep animations even when the device asks for fewer. */
+/** "on" reduces motion; "off" keeps it even when the device asks for less. */
 export function applyMotion(choice: MotionChoice) {
   if (choice === "system") delete document.documentElement.dataset.motion;
-  else document.documentElement.dataset.motion = choice;
+  else
+    document.documentElement.dataset.motion =
+      choice === "on" ? "reduce" : "full";
 }
 
 export function clearPreferenceCookies() {

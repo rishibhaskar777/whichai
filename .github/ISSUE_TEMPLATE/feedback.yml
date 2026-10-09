@@ -1,0 +1,42 @@
+name: Feedback
+description: Tell us what works, what does not, or what you would like to see.
+title: "Feedback: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve WhichAI. Issues in this repository are public, so please do not include passwords, personal details or anything private. For security problems, use the repository's private security reporting instead.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of feedback is this?
+      options:
+        - Something is broken or confusing
+        - A tool's details look wrong or out of date
+        - An idea or request
+        - Something I like
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What would you like to tell us?
+      description: A few plain sentences are enough.
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Which page or plan was this about?
+      description: For example "Projects" or "the portfolio website plan".
+    validations:
+      required: false
+  - type: input
+    id: device
+    attributes:
+      label: Browser and device
+      description: Optional, and helpful for bugs. For example "Chrome on Android".
+    validations:
+      required: false

@@ -305,3 +305,20 @@
     }
   }
 }
+
+/* Reduce motion set to Off: keep the glow and layout animation. */
+:global(html[data-motion="full"]) .shell {
+  transition: grid-template-columns var(--duration-base) var(--ease-out);
+}
+
+:global(html[data-motion="full"]) .blobOne {
+  animation: drift-one 16s ease-in-out infinite alternate;
+}
+
+:global(html[data-motion="full"]) .blobTwo {
+  animation: drift-two 22s ease-in-out infinite alternate;
+}
+
+:global(html[data-motion="full"]) .blobThree {
+  animation: drift-three 28s ease-in-out infinite alternate;
+}

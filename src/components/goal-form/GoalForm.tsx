@@ -5,7 +5,7 @@ import { ArrowUpIcon } from "@/components/icons";
 import { placeholderExamples, suggestions } from "@/data/suggestions";
 import { GOAL_MAX_LENGTH, goalSchema } from "@/lib/schemas/goal";
 import { useI18n } from "@/lib/i18n/provider";
-import { useMediaQuery } from "@/lib/use-media-query";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 import styles from "./GoalForm.module.css";
 
 const COUNTER_THRESHOLD = 400;
@@ -30,10 +30,7 @@ export function GoalForm({
   const [focused, setFocused] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [exampleIndex, setExampleIndex] = useState(0);
-  const reducedMotion = useMediaQuery(
-    "(prefers-reduced-motion: reduce)",
-    false,
-  );
+  const reducedMotion = useReducedMotion();
 
   const showExample = !focused && value.length === 0;
   const staticExample = reducedMotion || compact;

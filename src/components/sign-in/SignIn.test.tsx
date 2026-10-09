@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
 import { sampleNews } from "@/data/sample/news";
+import type { Viewer } from "@/lib/auth/get-session";
 import { seriousViolations } from "@/test/axe";
 import { SignInPanel } from "./SignInPanel";
 
@@ -192,7 +193,7 @@ describe("SignInPanel", () => {
   });
 });
 
-function renderShell(viewer: { name: string; signOutToken: string } | null) {
+function renderShell(viewer: Viewer | null) {
   return render(
     <AppShell
       news={sampleNews}
@@ -282,7 +283,11 @@ describe("sign-in popup", () => {
 });
 
 describe("account menu", () => {
-  const viewer = { name: "Ada Lovelace", signOutToken: "token-123" };
+  const viewer: Viewer = {
+    name: "Ada Lovelace",
+    provider: "github",
+    signOutToken: "token-123",
+  };
 
   it("shows initials and the name instead of the Sign in button", () => {
     renderShell(viewer);
