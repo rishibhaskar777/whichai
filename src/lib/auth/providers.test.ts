@@ -122,7 +122,7 @@ describe("profiles", () => {
       vi
         .fn()
         .mockResolvedValueOnce(
-          Response.json({ access_token: "gho_secret", token_type: "bearer" }),
+          Response.json({ access_token: "test-access-token", token_type: "bearer" }),
         )
         .mockResolvedValueOnce(
           Response.json({

@@ -39,14 +39,14 @@ export function SignInProvider({ providers, children }: SignInProviderProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const pathname = usePathname();
-  // A new key remounts the panel, which clears a stuck loading state.
-  const [openCount, setOpenCount] = useState(0);
+  // Remounting the panel while the dialog is closed clears a stuck loading
+  // state. Doing it on open would destroy the element the browser just focused.
+  const [resetCount, setResetCount] = useState(0);
 
   const open = useCallback((opener: HTMLElement) => {
     const dialog = dialogRef.current;
     if (!dialog || dialog.open) return;
     openerRef.current = opener;
-    setOpenCount((count) => count + 1);
     dialog.showModal();
   }, []);
 
@@ -68,13 +68,14 @@ export function SignInProvider({ providers, children }: SignInProviderProps) {
         onClose={() => {
           openerRef.current?.focus();
           openerRef.current = null;
+          setResetCount((count) => count + 1);
         }}
         onClick={(event) => {
           if (event.target === event.currentTarget) close();
         }}
       >
         <SignInPanel
-          key={openCount}
+          key={resetCount}
           providers={providers}
           next={safeRedirectPath(pathname)}
           headingLevel="h2"

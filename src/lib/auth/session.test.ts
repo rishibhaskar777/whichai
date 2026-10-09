@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { jwtDecrypt } from "jose";
 import { describe, expect, it } from "vitest";
+import { getInitials } from "./initials";
 import { createCsrfToken, isSameOrigin, verifyCsrfToken } from "./csrf";
 import {
   SESSION_MAX_AGE_SECONDS,
@@ -8,7 +9,6 @@ import {
   decodeSession,
   deriveKey,
   encodeSession,
-  getInitials,
   sessionCookieName,
   sessionCookieOptions,
 } from "./session";

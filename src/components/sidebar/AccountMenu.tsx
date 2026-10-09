@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import type { Viewer } from "@/lib/auth/get-session";
-import { getInitials } from "@/lib/auth/session";
+import { getInitials } from "@/lib/auth/initials";
 import styles from "./SidebarContent.module.css";
 
 interface AccountMenuProps {
