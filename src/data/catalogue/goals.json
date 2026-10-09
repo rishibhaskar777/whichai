@@ -6,12 +6,10 @@
     "example": "Build a portfolio website to show my work",
     "keywords": [
       "portfolio",
-      "portfolios",
       "personal website",
       "personal site",
       "personal page",
       "website",
-      "websites",
       "site",
       "my work online"
     ],
@@ -27,25 +25,19 @@
       {
         "id": "animation",
         "label": "Animation",
-        "keywords": [
-          "animation",
-          "animations",
-          "animated",
-          "animate",
-          "motion"
-        ],
+        "keywords": ["animation", "animated", "animate", "motion"],
         "jobs": ["animation-library"]
       },
       {
         "id": "blog",
         "label": "Blog",
-        "keywords": ["blog", "blogs", "blogging"],
+        "keywords": ["blog", "blogging"],
         "jobs": ["content-management"]
       },
       {
         "id": "contact-form",
         "label": "Contact form",
-        "keywords": ["contact form", "contact forms"],
+        "keywords": ["contact form"],
         "jobs": ["contact-form"]
       },
       {
@@ -281,13 +273,11 @@
       "studies",
       "studied",
       "exam",
-      "exams",
       "syllabus",
       "syllabuses",
       "syllabi",
       "learn",
       "learning",
-      "learns",
       "revise",
       "revision"
     ],
@@ -313,7 +303,7 @@
       {
         "id": "quiz",
         "label": "Quiz",
-        "keywords": ["quiz", "quizzes", "flashcards", "flashcard"],
+        "keywords": ["quiz", "quizzes", "flashcard"],
         "jobs": ["flashcards-and-quizzes"]
       },
       {
@@ -528,16 +518,12 @@
     "example": "Improve my resume for a job application",
     "keywords": [
       "resume",
-      "resumes",
       "cv",
-      "cvs",
       "cover letter",
       "job application",
-      "job applications",
       "job search",
       "job hunt",
       "interview",
-      "interviews",
       "linkedin"
     ],
     "synonyms": [
@@ -553,13 +539,13 @@
       {
         "id": "cover-letter",
         "label": "Cover letter",
-        "keywords": ["cover letter", "cover letters"],
+        "keywords": ["cover letter"],
         "jobs": ["writing-and-editing"]
       },
       {
         "id": "interview",
         "label": "Interview practice",
-        "keywords": ["interview", "interviews", "interview practice"],
+        "keywords": ["interview", "interview practice"],
         "jobs": ["ai-assistant"]
       },
       {
@@ -765,7 +751,6 @@
       "youtube",
       "youtube video",
       "reel",
-      "reels",
       "vlog",
       "video script",
       "film",
@@ -784,7 +769,7 @@
       {
         "id": "script",
         "label": "Script",
-        "keywords": ["script", "scripts", "scriptwriting"],
+        "keywords": ["script", "scriptwriting"],
         "jobs": ["ai-assistant"]
       },
       {
@@ -796,7 +781,7 @@
       {
         "id": "thumbnail",
         "label": "Thumbnail",
-        "keywords": ["thumbnail", "thumbnails"],
+        "keywords": ["thumbnail"],
         "jobs": ["image-generation", "design-tool"]
       },
       {
@@ -995,7 +980,11 @@
           {
             "jobId": "image-generation",
             "steps": [
-              { "task": "making stills", "modelClass": "image", "effort": null }
+              {
+                "task": "making stills",
+                "modelClass": "image",
+                "effort": null
+              }
             ]
           }
         ]
@@ -1009,7 +998,6 @@
     "example": "Build a simple app without much coding",
     "keywords": [
       "app",
-      "apps",
       "application",
       "mobile app",
       "web app",
@@ -1054,7 +1042,7 @@
       {
         "id": "payments",
         "label": "Payments",
-        "keywords": ["payments", "payment", "upi", "checkout"],
+        "keywords": ["payment", "upi", "checkout"],
         "jobs": ["payments-india"]
       },
       {
@@ -1296,7 +1284,6 @@
       "research",
       "reading",
       "read",
-      "books",
       "book",
       "stories",
       "story",
@@ -1308,8 +1295,7 @@
       "epics",
       "scriptures",
       "literature",
-      "novel",
-      "novels"
+      "novel"
     ],
     "synonyms": [
       "primary sources",
@@ -1571,7 +1557,9 @@
       "restaurant",
       "clinic",
       "salon",
-      "customers"
+      "customers",
+      "website",
+      "site"
     ],
     "synonyms": [
       "website for my business",
@@ -1598,7 +1586,6 @@
         "id": "payments",
         "label": "Payments",
         "keywords": [
-          "payments",
           "payment",
           "upi",
           "sell online",
@@ -1610,7 +1597,7 @@
       {
         "id": "blog",
         "label": "Blog",
-        "keywords": ["blog", "blogs", "news section"],
+        "keywords": ["blog", "news section"],
         "jobs": ["content-management"]
       },
       {
@@ -1832,8 +1819,6 @@
     "example": "Make a presentation for my project",
     "keywords": [
       "presentation",
-      "presentations",
-      "slides",
       "slide",
       "slide deck",
       "deck",
@@ -2085,7 +2070,6 @@
       "best ai",
       "right ai",
       "ai tool",
-      "ai tools",
       "pick ai",
       "choose ai",
       "recommend ai",

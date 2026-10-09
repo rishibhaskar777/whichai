@@ -53,7 +53,6 @@
     "description": "Free libraries of books, manuscripts and original texts you can read yourself.",
     "category": "research",
     "keywords": [
-      "books",
       "book",
       "ebooks",
       "manuscripts",
@@ -70,7 +69,6 @@
     "category": "media",
     "keywords": [
       "image",
-      "images",
       "picture",
       "illustration",
       "artwork",
@@ -107,8 +105,7 @@
       "subtitles",
       "captions",
       "footage",
-      "clip",
-      "clips"
+      "clip"
     ]
   },
   {
@@ -137,7 +134,6 @@
     "category": "productivity",
     "keywords": [
       "presentation",
-      "presentations",
       "slides",
       "slide deck",
       "deck",
@@ -176,13 +172,7 @@
     "name": "Resume builder",
     "description": "Laying out a resume or CV and checking it reads well.",
     "category": "productivity",
-    "keywords": [
-      "resume",
-      "resumes",
-      "cv",
-      "curriculum vitae",
-      "job application"
-    ]
+    "keywords": ["resume", "cv", "curriculum vitae", "job application"]
   },
   {
     "id": "flashcards-and-quizzes",
@@ -190,7 +180,6 @@
     "description": "Practice tools for remembering what you study, including spaced repetition.",
     "category": "learning",
     "keywords": [
-      "flashcards",
       "flashcard",
       "quiz",
       "quizzes",
@@ -206,14 +195,7 @@
     "name": "UI templates",
     "description": "Ready-made page layouts and themes you fill with your own content.",
     "category": "design",
-    "keywords": [
-      "template",
-      "templates",
-      "theme",
-      "themes",
-      "landing page",
-      "website builder"
-    ]
+    "keywords": ["template", "theme", "landing page", "website builder"]
   },
   {
     "id": "design-tool",
@@ -228,7 +210,6 @@
       "banner",
       "brand",
       "graphic",
-      "graphics",
       "figma"
     ]
   },
@@ -250,13 +231,7 @@
     "name": "Animation library",
     "description": "Code libraries that add motion to a web page.",
     "category": "build",
-    "keywords": [
-      "animation",
-      "animations",
-      "motion",
-      "transitions",
-      "scroll effects"
-    ]
+    "keywords": ["animation", "motion", "transitions", "scroll effects"]
   },
   {
     "id": "framework",
@@ -299,14 +274,7 @@
     "name": "Payments (India)",
     "description": "Taking payments from customers in India, including UPI.",
     "category": "build",
-    "keywords": [
-      "payments",
-      "payment",
-      "upi",
-      "checkout",
-      "accept money",
-      "donations"
-    ]
+    "keywords": ["payment", "upi", "checkout", "accept money", "donations"]
   },
   {
     "id": "hosting",

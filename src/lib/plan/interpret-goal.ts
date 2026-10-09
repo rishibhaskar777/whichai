@@ -1,16 +1,12 @@
+import { catalogue } from "@/data/catalogue";
+import {
+  FALLBACK_GOAL_ID,
+  type Catalogue,
+  type GoalTemplate,
+} from "@/lib/schemas/catalogue";
 import type { Chip, GoalType, Level, UnderstoodGoal } from "@/lib/schemas/plan";
-
-interface GoalRule {
-  goalType: GoalType;
-  title: string;
-  example: string;
-  patterns: readonly RegExp[];
-}
-
-interface FeatureRule {
-  chip: Chip;
-  pattern: RegExp;
-}
+import { featureChip, goalChip, taskChip } from "./chips";
+import { phraseKey, scorePhrases, tokenize } from "./text-match";
 
 interface SkillRule {
   chip: Chip;
@@ -18,52 +14,12 @@ interface SkillRule {
   level: Exclude<Level, "simple">;
 }
 
-/*
- * Rules are plain data so later phases can add keywords, synonyms and fuzzy
- * matching here without changing the function that applies them.
- */
-const GOAL_RULES: readonly GoalRule[] = [
-  {
-    goalType: "portfolio-website",
-    title: "Portfolio website",
-    example: "Build a portfolio website to show my work",
-    patterns: [/\bportfolios?\b/, /\bweb\s?sites?\b/, /\bsites?\b/],
-  },
-  {
-    goalType: "study-plan",
-    title: "Study plan",
-    example: "Make a study plan for my upcoming exams",
-    patterns: [
-      /\bstud(?:y|ies|ying|ied)\b/,
-      /\bexams?\b/,
-      /\bsyllab(?:us|uses|i)\b/,
-      /\blearn(?:s|ed|ing)?\b/,
-    ],
-  },
-];
-
-function featureChip(id: string, label: string): Chip {
-  return { id: `feature:${id}`, label, kind: "feature" };
-}
+/** Most tasks a "pick the right AI" request can name before it gets noisy. */
+const MAX_TASKS = 4;
 
 function skillChip(id: string, label: string): Chip {
   return { id: `skill:${id}`, label, kind: "skill" };
 }
-
-const FEATURE_RULES: readonly FeatureRule[] = [
-  { chip: featureChip("animation", "Animation"), pattern: /\banimat\w*/ },
-  { chip: featureChip("blog", "Blog"), pattern: /\bblog(?:s|ging)?\b/ },
-  {
-    chip: featureChip("contact-form", "Contact form"),
-    pattern: /\bcontact[\s-]*(?:me[\s-]*)?forms?\b/,
-  },
-  {
-    chip: featureChip("dark-mode", "Dark mode"),
-    pattern: /\bdark[\s-]*(?:mode|theme)\b/,
-  },
-  { chip: featureChip("notes", "Notes"), pattern: /\bnotes?\b/ },
-  { chip: featureChip("quiz", "Quiz"), pattern: /\bquiz(?:zes)?\b/ },
-];
 
 const SKILL_RULES: readonly SkillRule[] = [
   {
@@ -95,42 +51,85 @@ const LEVEL_RANK: Record<Level, number> = {
   advanced: 2,
 };
 
-export const featureOptions: readonly Chip[] = FEATURE_RULES.map(
-  (rule) => rule.chip,
-);
-
 export const coveredGoals: readonly {
   goalType: GoalType;
   title: string;
   example: string;
-}[] = GOAL_RULES.map(({ goalType, title, example }) => ({
-  goalType,
+}[] = catalogue.goals.map(({ id, title, example }) => ({
+  goalType: id,
   title,
   example,
 }));
 
-function matchGoal(text: string): GoalRule | null {
-  let best: { rule: GoalRule; hits: number; firstIndex: number } | null = null;
+/** The chips a person can add on the understanding card for this goal. */
+export function addableChips(
+  goalType: GoalType,
+  data: Catalogue = catalogue,
+): Chip[] {
+  const template = data.goals.find((goal) => goal.id === goalType);
+  if (!template) return [];
+  if (template.id === FALLBACK_GOAL_ID) {
+    return data.jobs
+      .filter((job) => job.category !== "build")
+      .map((job) => taskChip(job.id, job.name));
+  }
+  return template.features.map((feature) =>
+    featureChip(feature.id, feature.label),
+  );
+}
 
-  for (const rule of GOAL_RULES) {
-    const indexes = rule.patterns
-      .map((pattern) => text.search(pattern))
-      .filter((index) => index >= 0);
-    if (indexes.length === 0) continue;
+/** How many goals list each phrase, so shared words can count for less. */
+function sharedPhrases(data: Catalogue): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const goal of data.goals) {
+    const keys = new Set([...goal.keywords, ...goal.synonyms].map(phraseKey));
+    for (const key of keys) counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  return counts;
+}
 
-    const candidate = {
-      rule,
-      hits: indexes.length,
-      firstIndex: Math.min(...indexes),
-    };
+function matchGoal(
+  tokens: readonly string[],
+  data: Catalogue,
+): GoalTemplate | null {
+  const shared = sharedPhrases(data);
+  let best: { goal: GoalTemplate; score: number; firstIndex: number } | null =
+    null;
+
+  for (const goal of data.goals) {
+    const { score, firstIndex } = scorePhrases(
+      tokens,
+      [...goal.keywords, ...goal.synonyms],
+      shared,
+    );
+    if (score === 0) continue;
     const beatsBest =
       best === null ||
-      candidate.hits > best.hits ||
-      (candidate.hits === best.hits && candidate.firstIndex < best.firstIndex);
-    if (beatsBest) best = candidate;
+      score > best.score ||
+      (score === best.score && firstIndex < best.firstIndex);
+    if (beatsBest) best = { goal, score, firstIndex };
   }
 
-  return best?.rule ?? null;
+  return best?.goal ?? null;
+}
+
+/** Jobs the text asks for, strongest evidence first. */
+function matchTasks(tokens: readonly string[], data: Catalogue): Chip[] {
+  return data.jobs
+    .map((job) => ({ job, ...scorePhrases(tokens, job.keywords) }))
+    .filter((match) => match.score > 0)
+    .sort((a, b) => b.score - a.score || a.firstIndex - b.firstIndex)
+    .slice(0, MAX_TASKS)
+    .map(({ job }) => taskChip(job.id, job.name));
+}
+
+function matchFeatures(
+  tokens: readonly string[],
+  template: GoalTemplate,
+): Chip[] {
+  return template.features
+    .filter((feature) => scorePhrases(tokens, feature.keywords).score > 0)
+    .map((feature) => featureChip(feature.id, feature.label));
 }
 
 export function inferLevel(chips: readonly Chip[]): Level {
@@ -144,24 +143,35 @@ export function inferLevel(chips: readonly Chip[]): Level {
   return level;
 }
 
-export function interpretGoal(goalText: string): UnderstoodGoal | null {
-  const text = goalText.toLowerCase();
-  const goal = matchGoal(text);
-  if (!goal) return null;
+export function interpretGoal(
+  goalText: string,
+  data: Catalogue = catalogue,
+): UnderstoodGoal | null {
+  const tokens = tokenize(goalText);
+  const fallback = data.goals.find((goal) => goal.id === FALLBACK_GOAL_ID);
+  const matched = matchGoal(tokens, data);
 
+  let template = matched;
+  let taskChips: Chip[] = [];
+  if (!template || template.id === FALLBACK_GOAL_ID) {
+    taskChips = matchTasks(tokens, data);
+    if (!template && taskChips.length > 0) template = fallback ?? null;
+  }
+  if (!template) return null;
+
+  const lowered = goalText.toLowerCase();
   const chips: Chip[] = [
-    { id: `goal:${goal.goalType}`, label: goal.title, kind: "goal" },
-    ...FEATURE_RULES.filter((rule) => rule.pattern.test(text)).map(
-      (rule) => rule.chip,
-    ),
-    ...SKILL_RULES.filter((rule) => rule.pattern.test(text)).map(
+    goalChip(template.id, template.title),
+    ...matchFeatures(tokens, template),
+    ...taskChips,
+    ...SKILL_RULES.filter((rule) => rule.pattern.test(lowered)).map(
       (rule) => rule.chip,
     ),
   ];
 
   return {
-    goalType: goal.goalType,
-    title: goal.title,
+    goalType: template.id,
+    title: template.title,
     chips,
     inferredLevel: inferLevel(chips),
   };
