@@ -674,6 +674,163 @@ export const en = {
   "privacy.contact.title": "Contact",
   "privacy.contact.text":
     "Questions or concerns: {email}. Security problems can also be reported privately through the Security tab of the project's GitHub repository.",
+
+  // Plans and pricing
+  "plan.label": "{plan} plan",
+  "plan.guest": "Guest",
+  "plan.upgrade": "Upgrade plan",
+  "plan.subscription": "Subscription",
+  "pricing.title": "Pricing",
+  "pricing.description":
+    "WhichAI plans in Indian rupees. Free covers planning, the Tool Library and Compare; paid plans are not open yet.",
+  "pricing.lede":
+    "Free covers planning, the Tool Library, Compare and live news. Paid plans add alerts, sync and team features, and they open in an upcoming update.",
+  "pricing.billing.label": "Billing period",
+  "pricing.billing.monthly": "Monthly",
+  "pricing.billing.yearly": "Yearly",
+  "pricing.billing.yearlyNote": "Yearly billing: {saving}",
+  "pricing.perMonth": "/month",
+  "pricing.perYear": "/year",
+  "pricing.monthsFree.one": "{count} month free",
+  "pricing.monthsFree.other": "{count} months free",
+  "pricing.saveAmount": "Save {amount} a year",
+  "pricing.smallPrint": "Prices in Indian rupees. Taxes may apply.",
+  "pricing.plannedNote":
+    "Features on paid plans are planned. They are not available yet, and nobody can subscribe yet.",
+  "pricing.plans.label": "Plans",
+  "pricing.included.label": "What {plan} includes",
+  "pricing.everythingIn": "Everything in {plan}, plus:",
+  "pricing.choose": "Choose {plan}",
+  "pricing.currentPlan": "Current plan",
+  "pricing.contactUs": "Contact us",
+  "pricing.institution.audience": "For colleges and coaching centres",
+  "pricing.institution.priceNote": "There is no fixed price. Contact us.",
+  "pricing.institution.subject": "WhichAI for our institution",
+  "pricing.institution.body":
+    "Hello,\n\nWe would like to know more about WhichAI for our institution.\n\nInstitution name:\nNumber of students:\nWhat we need:\n",
+  "pricing.table.title": "Compare plans",
+  "pricing.table.feature": "Feature",
+  "pricing.table.included": "Included",
+  "pricing.table.notIncluded": "Not included",
+  "pricing.table.limits": "Limits",
+  "pricing.faq.title": "Questions",
+  "pricing.faq.q1": "Can I use WhichAI for free?",
+  "pricing.faq.a1":
+    "Yes. The Free plan has everything that works today: plans at three levels, the Tool Library and Compare, live AI news, saved plans in this browser, share links, PDF export, and English and Hindi. It has no time limit.",
+  "pricing.faq.q2": "What happens to my saved plans if I upgrade?",
+  "pricing.faq.a2":
+    "Nothing. Your saved plans stay where they are, in this browser, and keep working. Syncing them across devices is one of the planned Plus features.",
+  "pricing.faq.q3": "Can I cancel anytime?",
+  "pricing.faq.a3":
+    "That is the plan: you will be able to cancel from Settings whenever you like. Paid plans are not open yet, so there is nothing to cancel today. The details are in the draft refund policy.",
+  "pricing.faq.q4": "Is there a student discount?",
+  "pricing.faq.a4":
+    "Not yet. There is no discount today. Colleges and coaching centres can ask about the Institution plan, which is meant for student access.",
+  "pricing.faq.q5": "When can I subscribe?",
+  "pricing.faq.a5":
+    "Paid plans open in an upcoming update. No date has been set. Until then everyone is on the Free plan and nothing is charged.",
+
+  // Checkout preview
+  "checkout.title": "Checkout preview",
+  "checkout.lede":
+    "This is a preview of the checkout. Payments are not open yet, so nothing can be bought.",
+  "checkout.summary": "Order summary",
+  "checkout.plan": "Plan",
+  "checkout.billing": "Billing",
+  "checkout.billing.label": "Billing period",
+  "checkout.price": "Price",
+  "checkout.account": "Account",
+  "checkout.included": "What you get",
+  "checkout.changePlan": "Change plan",
+  "checkout.signedInAs": "Signed in as {name}",
+  "checkout.signInNeeded": "You will be asked to sign in",
+  "checkout.pay": "Pay {amount}",
+  "checkout.noDetails": "This page does not ask for card, UPI or bank details.",
+
+  // Subscription dialog and settings
+  "subscription.dialog.title": "Payments are not open yet",
+  "subscription.dialog.text":
+    "Payments are coming in an upcoming update. No money has been taken and no payment details were collected.",
+  "subscription.dialog.back": "Back to plans",
+  "subscription.dialog.close": "Close",
+  "settings.subscription": "Subscription",
+  "settings.subscription.current": "Current plan",
+  "settings.subscription.price": "{amount} a month",
+  "settings.subscription.includes": "Your plan includes",
+  "settings.subscription.note":
+    "Paid plans open in an upcoming update. Nothing is billed today.",
+  "settings.subscription.viewPlans": "View plans",
+  "settings.subscription.manage": "Manage subscription",
+
+  // Legal pages
+  "legal.draft": "Draft: will be reviewed before paid plans launch.",
+  "legal.updated": "Last updated {date}",
+  "legal.nav.label": "Legal and contact",
+  "legal.terms": "Terms",
+  "legal.refund": "Refund policy",
+  "legal.privacy": "Privacy",
+  "legal.contact": "Contact",
+  "terms.title": "Terms of Service",
+  "terms.lede":
+    "These are the rules for using WhichAI, written to be read. They are short on purpose.",
+  "terms.use.title": "What WhichAI is",
+  "terms.use.text":
+    "WhichAI suggests which AI tools to use for a goal and how to use them. It does not do the task for you, and it is not legal, financial or professional advice.",
+  "terms.free.title": "The free plan",
+  "terms.free.text":
+    "Using WhichAI on the Free plan costs nothing. Paid plans do not exist yet, and nobody is charged for anything today.",
+  "terms.paid.title": "Paid plans, when they open",
+  "terms.paid.text":
+    "Before anyone can pay, the price, the billing period, the tax and what is included will be shown on the checkout page. Prices are in Indian rupees. Renewal and cancellation work as described in the refund policy.",
+  "terms.accuracy.title": "Accuracy of what you see",
+  "terms.accuracy.text":
+    "Tool details come from a catalogue that is still being checked, and most records say Not verified. Prices, limits and features change often. Check the tool's own website before you pay for anything.",
+  "terms.data.title": "Your data",
+  "terms.data.text":
+    "Plans and history you save stay in your browser. How the site handles information is described in the privacy page.",
+  "terms.conduct.title": "Fair use",
+  "terms.conduct.item1": "Do not try to break, overload or probe the service.",
+  "terms.conduct.item2": "Do not use it to do something illegal.",
+  "terms.conduct.item3":
+    "Do not copy the catalogue in bulk and present it as your own.",
+  "terms.changes.title": "Changes",
+  "terms.changes.text":
+    "These terms may change. The date is at the top of the page, and a change that affects paid plans will be announced before it applies.",
+  "terms.contact.title": "Questions",
+  "terms.contact.text": "Write to us through the contact page.",
+  "refund.title": "Refund and Cancellation Policy",
+  "refund.lede":
+    "How cancelling and refunds are meant to work once paid plans open.",
+  "refund.today.title": "Today",
+  "refund.today.text":
+    "Nothing can be bought yet and nobody has been charged, so there is nothing to cancel or refund.",
+  "refund.cancel.title": "Cancelling",
+  "refund.cancel.text":
+    "You will be able to cancel from Settings at any time. Cancelling stops the next renewal. You keep the plan until the end of the period you already paid for.",
+  "refund.refunds.title": "Refunds",
+  "refund.refunds.text":
+    "The refund rules, including any time limit, will be written here and shown on the checkout page before anyone can pay. This draft does not promise a refund window yet.",
+  "refund.how.title": "How to ask",
+  "refund.how.text":
+    "Use the contact page and say which plan and which payment you mean. Do not send card, UPI or bank details by email.",
+  "contact.title": "Contact",
+  "contact.lede":
+    "WhichAI is a small project run by one person. Replies can take a few days.",
+  "contact.email.title": "Email",
+  "contact.email.missing": "The contact email has not been added yet.",
+  "contact.email.text": "For questions about plans, pricing or your data:",
+  "contact.feedback.title": "Feedback on GitHub",
+  "contact.feedback.text":
+    "For a wrong tool record, a bug or an idea, open an issue. It is public, so leave out personal details.",
+  "contact.feedback.link": "Send feedback",
+  "contact.security.title": "Security problems",
+  "contact.security.text":
+    "Report these privately. Do not open a public issue.",
+  "contact.security.link": "Security policy",
+  "contact.institution.title": "Colleges and coaching centres",
+  "contact.institution.text":
+    "Ask about the Institution plan by email. Tell us roughly how many students you have.",
+  "contact.institution.link": "Email about the Institution plan",
 } as const satisfies Record<string, string>;
 
 export type MessageKey = keyof typeof en;

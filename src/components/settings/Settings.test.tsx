@@ -598,3 +598,75 @@ describe("settings: storage unavailable", () => {
     window.localStorage.clear();
   });
 });
+
+describe("settings: subscription", () => {
+  it("shows the current plan, its price and what it includes", async () => {
+    renderSettings();
+    await ready();
+
+    const section = document.getElementById("subscription") as HTMLElement;
+    expect(section).toBeInTheDocument();
+    expect(
+      within(section).getByRole("heading", { level: 2, name: "Subscription" }),
+    ).toBeInTheDocument();
+    expect(within(section).getByText("Free plan")).toBeInTheDocument();
+    expect(within(section).getByText("₹0 a month")).toBeInTheDocument();
+    expect(within(section).getByText("PDF export")).toBeInTheDocument();
+    expect(within(section).getByText("Share links")).toBeInTheDocument();
+    expect(
+      within(section).queryByText("Change alerts"),
+    ).not.toBeInTheDocument();
+  });
+
+  it("links View plans to /pricing", async () => {
+    renderSettings();
+    await ready();
+
+    expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute(
+      "href",
+      "/pricing",
+    );
+  });
+
+  it("opens the coming-soon dialog from Manage subscription", async () => {
+    const user = userEvent.setup();
+    const fetchSpy = vi.fn();
+    vi.stubGlobal("fetch", fetchSpy);
+    renderSettings();
+    await ready();
+
+    const dialog = [...document.querySelectorAll("dialog")].find((element) =>
+      element.textContent?.includes("Payments are coming"),
+    ) as HTMLDialogElement;
+    await user.click(
+      screen.getByRole("button", { name: "Manage subscription" }),
+    );
+
+    expect(dialog).toHaveAttribute("open");
+    expect(
+      within(dialog).getByText(/Payments are coming in an upcoming update/),
+    ).toBeInTheDocument();
+    expect(fetchSpy).not.toHaveBeenCalled();
+
+    await user.click(within(dialog).getByRole("button", { name: "Close" }));
+    expect(dialog).not.toHaveAttribute("open");
+  });
+
+  it("links Terms, Refund policy and Contact from About", async () => {
+    renderSettings();
+    await ready();
+
+    expect(screen.getByRole("link", { name: "Terms" })).toHaveAttribute(
+      "href",
+      "/terms",
+    );
+    expect(screen.getByRole("link", { name: "Refund policy" })).toHaveAttribute(
+      "href",
+      "/refund-policy",
+    );
+    expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
+      "href",
+      "/contact",
+    );
+  });
+});

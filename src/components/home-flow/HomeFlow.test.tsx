@@ -31,17 +31,29 @@ function searchBox() {
   return screen.getByLabelText("What do you want to do with AI?");
 }
 
-/* The interpreter and the plan view load on demand, so wait for each step. */
+/*
+ * The interpreter and the plan view are separate chunks that load on demand.
+ * The first load in a worker also compiles the catalogue, which can take
+ * seconds when many test files run at once, so each step waits for its own
+ * result with a timeout that covers a cold load.
+ */
+const LOAD_TIMEOUT = 15_000;
+
+// A cold chunk load counts towards the test, so the default 5 seconds is short.
+vi.setConfig({ testTimeout: 30_000 });
+
 async function submit(user: ReturnType<typeof userEvent.setup>, text: string) {
   await user.type(searchBox(), text);
   await user.keyboard("{Enter}");
-  await waitFor(() =>
-    expect(
-      screen.queryByRole("heading", {
-        level: 1,
-        name: "What do you want to do with AI?",
-      }),
-    ).toBeNull(),
+  await waitFor(
+    () =>
+      expect(
+        screen.queryByRole("heading", {
+          level: 1,
+          name: "What do you want to do with AI?",
+        }),
+      ).toBeNull(),
+    { timeout: LOAD_TIMEOUT },
   );
 }
 
@@ -49,7 +61,13 @@ async function confirm(user: ReturnType<typeof userEvent.setup>) {
   await user.click(
     await screen.findByRole("button", { name: "Yes, show my plan" }),
   );
-  await screen.findAllByRole("radio");
+  // The theme control in the sidebar is also a radio group, so wait for a
+  // level radio, which only exists once the plan view has loaded.
+  await screen.findByRole(
+    "radio",
+    { name: "Simple" },
+    { timeout: LOAD_TIMEOUT },
+  );
 }
 
 async function expectSingleH1(container: HTMLElement, name: string) {
@@ -214,9 +232,11 @@ describe("showing the plan", () => {
 
     await confirm(user);
 
-    const headline = await screen.findByRole("heading", {
-      name: "Your portfolio website plan",
-    });
+    // The plan is on screen once the level radios are, so look the headline up
+    // by its id instead of computing the name of every heading on the page.
+    const headline = document.getElementById("plan-headline") as HTMLElement;
+    expect(headline.tagName).toBe("H1");
+    expect(headline).toHaveTextContent("Your portfolio website plan");
     expect(headline).toHaveFocus();
     expect(screen.getByText("Plan ready")).toBeInTheDocument();
     expect(screen.getByText(/Sample data, not verified:/)).toBeInTheDocument();

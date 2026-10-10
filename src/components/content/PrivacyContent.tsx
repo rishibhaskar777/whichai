@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/provider";
+import { CONTACT_EMAIL } from "@/lib/links";
 import styles from "./Content.module.css";
 
-const CONTACT_EMAIL = "rishibhaskar254@gmail.com";
 const LAST_UPDATED = "2026-10-10";
 
 export function PrivacyContent() {

@@ -78,6 +78,18 @@ Apply to every release and re-check when a phase adds a new input, route or depe
 - [ ] Draft records are unverified with a price placeholder and an empty `getIt`; `discover:import` validates against the catalogue schema and cross-file checks and asks for confirmation before writing
 - [ ] Every candidate is reviewed by hand with the checklist in [TOOL-DISCOVERY.md](TOOL-DISCOVERY.md) before `approved` is added
 
+## Pricing and checkout
+
+- [ ] No payment gateway, payment SDK, external script or external font is loaded; CSP `connect-src` and `script-src` stay as they are
+- [ ] No page asks for card, UPI or bank details, and `/checkout` has no form field; a test checks the page and the dialog
+- [ ] The Pay button and "Manage subscription" make no network request; a test stubs `fetch` and checks it is not called
+- [ ] `/checkout` query values (`plan`, `billing`) are validated with Zod; anything invalid, including Free, redirects to `/pricing`, and values are only ever rendered as text
+- [ ] `src/data/pricing/plans.json` is validated at start-up and in tests; prices are whole rupees and every visible string has both languages
+- [ ] The Free plan lists only features that work today; paid features are labelled as planned
+- [ ] Nobody can be moved off Free: `getCurrentPlan()` ignores the request and the session until a verified subscription store exists
+- [ ] Legal pages carry the draft note until they have been reviewed
+- [ ] Before real payments: gateway-hosted payment page, signed and idempotent webhooks, no card data stored or logged, secrets only in the host environment (see [0014](decisions/0014-pricing-preview.md))
+
 ## Dependencies
 
 - [ ] `npm audit` shows no high or critical issues, or each is documented

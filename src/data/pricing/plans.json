@@ -1,0 +1,329 @@
+{
+  "currency": "INR",
+  "plans": [
+    {
+      "id": "free",
+      "name": { "en": "Free", "hi": "फ्री" },
+      "tagline": {
+        "en": "Everything you need to find the right tools.",
+        "hi": "सही टूल चुनने के लिए ज़रूरी सब कुछ।"
+      },
+      "monthlyPrice": 0,
+      "yearlyPrice": 0,
+      "highlight": false,
+      "features": [
+        {
+          "id": "plans-three-levels",
+          "name": {
+            "en": "Plans for any goal at three levels",
+            "hi": "किसी भी लक्ष्य के लिए तीन स्तरों पर योजना"
+          },
+          "description": {
+            "en": "Simple, Polished and Advanced versions of one plan.",
+            "hi": "एक ही योजना के सरल, पॉलिश्ड और एडवांस्ड रूप।"
+          }
+        },
+        {
+          "id": "library-compare",
+          "name": {
+            "en": "Full Tool Library and Compare",
+            "hi": "पूरी टूल लाइब्रेरी और तुलना"
+          },
+          "description": {
+            "en": "Browse every tool in the catalogue and compare them side by side.",
+            "hi": "कैटलॉग के हर टूल को देखें और आमने-सामने तुलना करें।"
+          }
+        },
+        {
+          "id": "live-news",
+          "name": { "en": "Live AI news", "hi": "लाइव AI समाचार" },
+          "description": {
+            "en": "Headlines from the official sources of the tools.",
+            "hi": "टूल के आधिकारिक स्रोतों से ताज़ा सुर्खियाँ।"
+          }
+        },
+        {
+          "id": "saved-local",
+          "name": {
+            "en": "Saved plans and search history in this browser",
+            "hi": "इस ब्राउज़र में सहेजी योजनाएँ और खोज इतिहास"
+          },
+          "description": {
+            "en": "Kept on your device, with export and import.",
+            "hi": "आपके डिवाइस पर रखा जाता है, एक्सपोर्ट और इम्पोर्ट के साथ।"
+          }
+        },
+        {
+          "id": "share-links",
+          "name": { "en": "Share links", "hi": "शेयर लिंक" },
+          "description": {
+            "en": "Send a plan to someone without sending your goal text to a server.",
+            "hi": "अपना लक्ष्य किसी सर्वर को भेजे बिना योजना किसी को भेजें।"
+          }
+        },
+        {
+          "id": "pdf-export",
+          "name": { "en": "PDF export", "hi": "PDF एक्सपोर्ट" },
+          "description": {
+            "en": "Print or save any plan as a PDF.",
+            "hi": "किसी भी योजना को PDF के रूप में प्रिंट या सेव करें।"
+          }
+        },
+        {
+          "id": "languages",
+          "name": { "en": "English and Hindi", "hi": "अंग्रेज़ी और हिन्दी" },
+          "description": {
+            "en": "The whole interface in both languages.",
+            "hi": "पूरा इंटरफ़ेस दोनों भाषाओं में।"
+          }
+        }
+      ],
+      "limits": [
+        {
+          "id": "compare-tools",
+          "label": {
+            "en": "Tools in one comparison",
+            "hi": "एक तुलना में टूल"
+          },
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "plus",
+      "name": { "en": "Plus", "hi": "प्लस" },
+      "tagline": {
+        "en": "Stay on top of the tools you use.",
+        "hi": "अपने इस्तेमाल के टूल पर नज़र बनाए रखें।"
+      },
+      "includes": "free",
+      "monthlyPrice": 49,
+      "yearlyPrice": 490,
+      "highlight": false,
+      "features": [
+        {
+          "id": "change-alerts",
+          "name": { "en": "Change alerts", "hi": "बदलाव की सूचना" },
+          "description": {
+            "en": "Know when a tool in your saved plans changes its price or limits.",
+            "hi": "जानें जब आपकी सहेजी योजनाओं का कोई टूल कीमत या सीमा बदले।"
+          }
+        },
+        {
+          "id": "stack-check",
+          "name": { "en": "Stack check", "hi": "स्टैक जाँच" },
+          "description": {
+            "en": "Find AI subscriptions that overlap.",
+            "hi": "एक-दूसरे से मिलते-जुलते AI सब्सक्रिप्शन खोजें।"
+          }
+        },
+        {
+          "id": "sync",
+          "name": {
+            "en": "Sync plans across devices",
+            "hi": "डिवाइसों के बीच योजनाएँ सिंक करें"
+          },
+          "description": {
+            "en": "Open your saved plans on your phone and your laptop.",
+            "hi": "अपनी सहेजी योजनाएँ फ़ोन और लैपटॉप पर खोलें।"
+          }
+        },
+        {
+          "id": "ad-free",
+          "name": { "en": "Ad-free forever", "hi": "हमेशा विज्ञापन-मुक्त" },
+          "description": {
+            "en": "No ads, now or later.",
+            "hi": "कोई विज्ञापन नहीं, अभी या आगे।"
+          }
+        }
+      ],
+      "limits": [
+        {
+          "id": "compare-tools",
+          "label": {
+            "en": "Tools in one comparison",
+            "hi": "एक तुलना में टूल"
+          },
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "pro",
+      "name": { "en": "Pro", "hi": "प्रो" },
+      "tagline": {
+        "en": "Go deeper on every step of a plan.",
+        "hi": "योजना के हर कदम पर और गहराई से जाएँ।"
+      },
+      "label": { "en": "Recommended", "hi": "सुझाया गया" },
+      "includes": "plus",
+      "monthlyPrice": 149,
+      "yearlyPrice": 1490,
+      "highlight": true,
+      "features": [
+        {
+          "id": "prompt-packs",
+          "name": {
+            "en": "Deeper Advanced plans with prompt packs",
+            "hi": "प्रॉम्प्ट पैक के साथ गहरी एडवांस्ड योजनाएँ"
+          },
+          "description": {
+            "en": "A set of prompts for each step of the Advanced plan.",
+            "hi": "एडवांस्ड योजना के हर कदम के लिए प्रॉम्प्ट का सेट।"
+          }
+        },
+        {
+          "id": "weekly-digest",
+          "name": {
+            "en": "Weekly personalised AI digest",
+            "hi": "साप्ताहिक व्यक्तिगत AI डाइजेस्ट"
+          },
+          "description": {
+            "en": "A short weekly summary about the tools you use.",
+            "hi": "आपके टूल के बारे में छोटा साप्ताहिक सार।"
+          }
+        },
+        {
+          "id": "compare-six",
+          "name": { "en": "Compare up to 6 tools", "hi": "6 टूल तक की तुलना" },
+          "description": {
+            "en": "Put six tools side by side instead of three.",
+            "hi": "तीन की जगह छह टूल आमने-सामने रखें।"
+          }
+        },
+        {
+          "id": "early-goals",
+          "name": {
+            "en": "Early access to new goals",
+            "hi": "नए लक्ष्यों की शुरुआती पहुँच"
+          },
+          "description": {
+            "en": "Try new goal templates before everyone else.",
+            "hi": "नए लक्ष्य टेम्पलेट सबसे पहले आज़माएँ।"
+          }
+        }
+      ],
+      "limits": [
+        {
+          "id": "compare-tools",
+          "label": {
+            "en": "Tools in one comparison",
+            "hi": "एक तुलना में टूल"
+          },
+          "value": 6
+        }
+      ]
+    },
+    {
+      "id": "ultra",
+      "name": { "en": "Ultra", "hi": "अल्ट्रा" },
+      "tagline": {
+        "en": "Work on plans together.",
+        "hi": "योजनाओं पर मिलकर काम करें।"
+      },
+      "includes": "pro",
+      "monthlyPrice": 299,
+      "yearlyPrice": 2990,
+      "highlight": false,
+      "features": [
+        {
+          "id": "team-sharing",
+          "name": {
+            "en": "Team sharing for up to 5 people",
+            "hi": "5 लोगों तक के लिए टीम शेयरिंग"
+          },
+          "description": {
+            "en": "Share saved plans with a small team.",
+            "hi": "सहेजी योजनाएँ छोटी टीम के साथ साझा करें।"
+          }
+        },
+        {
+          "id": "goal-templates",
+          "name": {
+            "en": "Custom goal templates",
+            "hi": "कस्टम लक्ष्य टेम्पलेट"
+          },
+          "description": {
+            "en": "Save your own goal as a template and reuse it.",
+            "hi": "अपना लक्ष्य टेम्पलेट के रूप में सहेजें और दोबारा इस्तेमाल करें।"
+          }
+        },
+        {
+          "id": "export-docs",
+          "name": {
+            "en": "Export plans to Notion or Google Docs",
+            "hi": "योजनाएँ Notion या Google Docs में एक्सपोर्ट करें"
+          },
+          "description": {
+            "en": "Send a plan straight to the document tool you already use.",
+            "hi": "योजना सीधे अपने इस्तेमाल के दस्तावेज़ टूल में भेजें।"
+          }
+        },
+        {
+          "id": "priority-support",
+          "name": { "en": "Priority support", "hi": "प्राथमिकता सहायता" },
+          "description": {
+            "en": "Your questions are answered first.",
+            "hi": "आपके सवालों के जवाब पहले दिए जाते हैं।"
+          }
+        }
+      ],
+      "limits": [
+        {
+          "id": "compare-tools",
+          "label": {
+            "en": "Tools in one comparison",
+            "hi": "एक तुलना में टूल"
+          },
+          "value": 6
+        },
+        {
+          "id": "team-members",
+          "label": { "en": "People in a team", "hi": "टीम में लोग" },
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "institution",
+      "name": { "en": "Institution", "hi": "संस्थान" },
+      "tagline": {
+        "en": "For colleges and coaching centres.",
+        "hi": "कॉलेजों और कोचिंग केंद्रों के लिए।"
+      },
+      "monthlyPrice": null,
+      "yearlyPrice": null,
+      "highlight": false,
+      "features": [
+        {
+          "id": "student-access",
+          "name": { "en": "Student access", "hi": "छात्रों के लिए पहुँच" },
+          "description": {
+            "en": "Accounts for your students.",
+            "hi": "आपके छात्रों के लिए खाते।"
+          }
+        },
+        {
+          "id": "department-dashboard",
+          "name": { "en": "Department dashboard", "hi": "विभाग डैशबोर्ड" },
+          "description": {
+            "en": "See how a department uses plans.",
+            "hi": "देखें कि कोई विभाग योजनाओं का कैसे उपयोग करता है।"
+          }
+        },
+        {
+          "id": "faculty-review",
+          "name": {
+            "en": "Faculty review of plans",
+            "hi": "योजनाओं की फैकल्टी समीक्षा"
+          },
+          "description": {
+            "en": "Teachers can review and comment on student plans.",
+            "hi": "शिक्षक छात्रों की योजनाओं की समीक्षा कर सकते हैं।"
+          }
+        }
+      ],
+      "limits": []
+    }
+  ]
+}

@@ -17,7 +17,9 @@ import {
   SettingsIcon,
 } from "@/components/icons";
 import { AccountMenu } from "./AccountMenu";
+import { GuestPlanRow } from "./PlanLabel";
 import { RecentProjects } from "./RecentProjects";
+import { SidebarLegal } from "./SidebarLegal";
 import { SignInButton } from "./SignInButton";
 import { ThemeControl } from "@/components/theme-control/ThemeControl";
 import { useI18n } from "@/lib/i18n/provider";
@@ -145,11 +147,19 @@ export function SidebarContent({
           </Link>
         </div>
         {viewer ? (
-          <AccountMenu viewer={viewer} collapsed={collapsed} />
+          <AccountMenu
+            viewer={viewer}
+            collapsed={collapsed}
+            onNavigate={closeDrawer}
+          />
         ) : (
-          <SignInButton collapsed={collapsed} />
+          <>
+            {collapsed ? null : <GuestPlanRow onNavigate={closeDrawer} />}
+            <SignInButton collapsed={collapsed} />
+          </>
         )}
         <ThemeControl initialChoice={initialTheme} compact={collapsed} />
+        {collapsed ? null : <SidebarLegal onNavigate={closeDrawer} />}
       </div>
     </div>
   );

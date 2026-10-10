@@ -21,7 +21,7 @@ import { useMediaQuery } from "@/lib/use-media-query";
 import styles from "./AppShell.module.css";
 
 /** Pages with grids and tables that need more room than a reading column. */
-const WIDE_PAGES = ["/tools", "/compare"];
+const WIDE_PAGES = ["/tools", "/compare", "/pricing"];
 
 interface AppShellProps {
   news: PanelNews;
