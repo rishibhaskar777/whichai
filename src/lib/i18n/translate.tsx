@@ -45,7 +45,15 @@ export interface I18n {
     timeZone?: string,
   ) => string;
   formatNumber: (value: number) => string;
+  /** "2 hours ago", measured from `now` so server and browser agree. */
+  formatRelative: (value: Date | string | number, now: Date | number) => string;
 }
+
+const RELATIVE_UNITS: readonly [Intl.RelativeTimeFormatUnit, number][] = [
+  ["day", 86_400_000],
+  ["hour", 3_600_000],
+  ["minute", 60_000],
+];
 
 const DATE_OPTIONS: Record<DateStyle, Intl.DateTimeFormatOptions> = {
   short: { day: "numeric", month: "short", year: "numeric" },
@@ -58,6 +66,7 @@ export function createI18n(locale: Locale): I18n {
   const tag = INTL_TAGS[locale];
   const plurals = new Intl.PluralRules(tag);
   const numbers = new Intl.NumberFormat(tag);
+  const relative = new Intl.RelativeTimeFormat(tag, { numeric: "auto" });
 
   const t: I18n["t"] = (key, values) => fill(messages[key], values);
 
@@ -82,5 +91,13 @@ export function createI18n(locale: Locale): I18n {
         value instanceof Date ? value : new Date(value),
       ),
     formatNumber: (value) => numbers.format(value),
+    formatRelative: (value, now) => {
+      const elapsed = new Date(now).getTime() - new Date(value).getTime();
+      if (elapsed < 60_000) return t("news.justNow");
+      const [unit, size] =
+        RELATIVE_UNITS.find(([, ms]) => elapsed >= ms) ??
+        RELATIVE_UNITS[RELATIVE_UNITS.length - 1]!;
+      return relative.format(-Math.floor(elapsed / size), unit);
+    },
   };
 }

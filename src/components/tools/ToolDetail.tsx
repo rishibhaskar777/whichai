@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { ExternalLinkIcon } from "@/components/icons";
+import { NewsEntry } from "@/components/news/NewsEntry";
+import type { NewsItem } from "@/lib/news/types";
 import { compareHref } from "@/lib/library/compare";
 import { libraryHref, DEFAULT_QUERY } from "@/lib/library/query";
 import type { ToolDetails } from "@/lib/library/tool-details";
@@ -14,9 +16,11 @@ import styles from "./ToolDetail.module.css";
 interface ToolDetailProps {
   details: ToolDetails;
   i18n: I18n;
+  /** Recent official news for this tool and the time it is measured from. */
+  news?: { items: readonly NewsItem[]; now: number };
 }
 
-export function ToolDetail({ details, i18n }: ToolDetailProps) {
+export function ToolDetail({ details, i18n, news }: ToolDetailProps) {
   const { t, formatDate } = i18n;
   const { tool, provider, jobs, worksWith, alternatives, goals } = details;
   const freeText =
@@ -199,6 +203,22 @@ export function ToolDetail({ details, i18n }: ToolDetailProps) {
               <li key={goal.id}>{goal.title}</li>
             ))}
           </ul>
+        </section>
+      ) : null}
+
+      {news && news.items.length > 0 ? (
+        <section aria-labelledby="tool-news" className={styles.section}>
+          <h2 id="tool-news">{t("tool.recentNews")}</h2>
+          <ul className={styles.newsList}>
+            {news.items.map((item) => (
+              <li key={item.id}>
+                <NewsEntry item={item} now={news.now} i18n={i18n} />
+              </li>
+            ))}
+          </ul>
+          <p>
+            <Link href="/what-changed">{t("tool.recentNewsAll")}</Link>
+          </p>
         </section>
       ) : null}
 

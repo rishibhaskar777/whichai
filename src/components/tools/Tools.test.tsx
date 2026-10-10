@@ -308,6 +308,44 @@ describe("ToolDetail", () => {
     ).toBeInTheDocument();
   });
 
+  it("shows recent news for the tool when there is some", () => {
+    render(
+      <ToolDetail
+        details={toolDetails("ollama", catalogue)!}
+        i18n={i18n}
+        news={{
+          items: [
+            {
+              id: "n1",
+              title: "Ollama adds a thing",
+              url: "https://ollama.com/blog/a-thing",
+              publishedAt: "2026-10-10T10:00:00.000Z",
+              sourceId: "ollama-blog",
+              sourceName: "Ollama blog",
+              summary: "",
+              tag: "feature-update",
+              toolIds: ["ollama"],
+            },
+          ],
+          now: Date.parse("2026-10-10T12:00:00.000Z"),
+        }}
+      />,
+    );
+    expect(
+      screen.getByRole("heading", { name: "Recent news" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Ollama adds a thing/ }),
+    ).toHaveAttribute("href", "https://ollama.com/blog/a-thing");
+  });
+
+  it("leaves the news section out when there is none", () => {
+    renderDetail("ollama");
+    expect(
+      screen.queryByRole("heading", { name: "Recent news" }),
+    ).not.toBeInTheDocument();
+  });
+
   it("links to a prefilled problem report with the tool id in the title", () => {
     renderDetail("ollama");
     const link = screen.getByRole("link", {

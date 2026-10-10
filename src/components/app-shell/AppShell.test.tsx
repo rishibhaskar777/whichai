@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { sampleNews } from "@/data/sample/news";
+import { panelNewsFixture } from "@/test/news";
 import { AppShell } from "./AppShell";
 
 vi.mock("next/navigation", async () =>
@@ -11,7 +11,7 @@ vi.mock("next/navigation", async () =>
 function renderShell() {
   return render(
     <AppShell
-      news={sampleNews}
+      news={panelNewsFixture}
       initialTheme="system"
       viewer={null}
       providers={{ google: true, github: true }}
@@ -138,12 +138,20 @@ describe("AppShell news panel", () => {
     ).toHaveAttribute("aria-expanded", "true");
   });
 
-  it("marks the panel as sample content and opens links safely", () => {
+  it("shows official headlines, with no sample label, and opens links safely", () => {
     renderShell();
 
-    expect(screen.getByText("Sample content")).toBeInTheDocument();
-    const links = screen.getAllByRole("link", { name: /^Visit / });
-    expect(links).toHaveLength(5);
+    expect(screen.queryByText("Sample content")).not.toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Headlines from official sources, updated about every 30 minutes",
+      ),
+    ).toBeInTheDocument();
+    const news = screen.getByRole("complementary", { name: "AI news" });
+    const links = within(news).getAllByRole("link", {
+      name: /(opens in a new tab)/,
+    });
+    expect(links).toHaveLength(panelNewsFixture.items.length);
     for (const link of links) {
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
       expect(link).toHaveAttribute("target", "_blank");
