@@ -675,4 +675,162 @@ export const hi: Record<MessageKey, string> = {
   "privacy.contact.title": "संपर्क",
   "privacy.contact.text":
     "सवाल या चिंता: {email}। सुरक्षा की समस्याएँ प्रोजेक्ट के GitHub रिपॉज़िटरी के Security टैब से निजी तौर पर भी बताई जा सकती हैं।",
+
+  // Plans and pricing
+  "plan.label": "{plan} प्लान",
+  "plan.guest": "अतिथि",
+  "plan.upgrade": "प्लान अपग्रेड करें",
+  "plan.subscription": "सब्सक्रिप्शन",
+  "pricing.title": "कीमतें",
+  "pricing.description":
+    "भारतीय रुपये में WhichAI के प्लान। फ्री में योजना बनाना, टूल लाइब्रेरी और तुलना शामिल है; सशुल्क प्लान अभी शुरू नहीं हुए हैं।",
+  "pricing.lede":
+    "फ्री में योजना बनाना, टूल लाइब्रेरी, तुलना और लाइव समाचार शामिल हैं। सशुल्क प्लान में अलर्ट, सिंक और टीम सुविधाएँ जुड़ती हैं, और वे आने वाले अपडेट में खुलेंगे।",
+  "pricing.billing.label": "बिलिंग अवधि",
+  "pricing.billing.monthly": "मासिक",
+  "pricing.billing.yearly": "वार्षिक",
+  "pricing.billing.yearlyNote": "वार्षिक बिलिंग: {saving}",
+  "pricing.perMonth": "/माह",
+  "pricing.perYear": "/वर्ष",
+  "pricing.monthsFree.one": "{count} महीना मुफ़्त",
+  "pricing.monthsFree.other": "{count} महीने मुफ़्त",
+  "pricing.saveAmount": "साल में {amount} की बचत",
+  "pricing.smallPrint": "कीमतें भारतीय रुपये में हैं। कर लग सकते हैं।",
+  "pricing.plannedNote":
+    "सशुल्क प्लान की सुविधाएँ योजना में हैं। वे अभी उपलब्ध नहीं हैं, और अभी कोई सब्सक्राइब नहीं कर सकता।",
+  "pricing.plans.label": "प्लान",
+  "pricing.included.label": "{plan} में क्या शामिल है",
+  "pricing.everythingIn": "{plan} की सब सुविधाएँ, और साथ में:",
+  "pricing.choose": "{plan} चुनें",
+  "pricing.currentPlan": "मौजूदा प्लान",
+  "pricing.contactUs": "संपर्क करें",
+  "pricing.institution.audience": "कॉलेजों और कोचिंग केंद्रों के लिए",
+  "pricing.institution.priceNote": "कोई तय कीमत नहीं है। हमसे संपर्क करें।",
+  "pricing.institution.subject": "हमारे संस्थान के लिए WhichAI",
+  "pricing.institution.body":
+    "नमस्ते,\n\nहम अपने संस्थान के लिए WhichAI के बारे में और जानना चाहते हैं।\n\nसंस्थान का नाम:\nछात्रों की संख्या:\nहमें क्या चाहिए:\n",
+  "pricing.table.title": "प्लान की तुलना",
+  "pricing.table.feature": "सुविधा",
+  "pricing.table.included": "शामिल",
+  "pricing.table.notIncluded": "शामिल नहीं",
+  "pricing.table.limits": "सीमाएँ",
+  "pricing.faq.title": "सवाल",
+  "pricing.faq.q1": "क्या मैं WhichAI मुफ़्त में इस्तेमाल कर सकता हूँ?",
+  "pricing.faq.a1":
+    "हाँ। फ्री प्लान में वह सब है जो आज काम करता है: तीन स्तरों पर योजनाएँ, टूल लाइब्रेरी और तुलना, लाइव AI समाचार, इस ब्राउज़र में सहेजी योजनाएँ, शेयर लिंक, PDF एक्सपोर्ट, और अंग्रेज़ी व हिन्दी। इसकी कोई समय-सीमा नहीं है।",
+  "pricing.faq.q2": "अपग्रेड करने पर मेरी सहेजी योजनाओं का क्या होगा?",
+  "pricing.faq.a2":
+    "कुछ नहीं। आपकी सहेजी योजनाएँ इसी ब्राउज़र में वैसी ही रहेंगी और काम करती रहेंगी। उन्हें डिवाइसों के बीच सिंक करना प्लस की योजनाबद्ध सुविधाओं में से एक है।",
+  "pricing.faq.q3": "क्या मैं कभी भी रद्द कर सकता हूँ?",
+  "pricing.faq.a3":
+    "योजना यही है: आप जब चाहें सेटिंग से रद्द कर सकेंगे। सशुल्क प्लान अभी शुरू नहीं हुए हैं, इसलिए आज रद्द करने को कुछ नहीं है। ब्योरा रिफंड नीति के मसौदे में है।",
+  "pricing.faq.q4": "क्या छात्रों के लिए छूट है?",
+  "pricing.faq.a4":
+    "अभी नहीं। आज कोई छूट नहीं है। कॉलेज और कोचिंग केंद्र संस्थान प्लान के बारे में पूछ सकते हैं, जो छात्रों की पहुँच के लिए है।",
+  "pricing.faq.q5": "मैं कब सब्सक्राइब कर सकूँगा?",
+  "pricing.faq.a5":
+    "सशुल्क प्लान आने वाले अपडेट में खुलेंगे। कोई तारीख तय नहीं है। तब तक सब फ्री प्लान पर हैं और कुछ भी नहीं लिया जाता।",
+
+  // Checkout preview
+  "checkout.title": "चेकआउट पूर्वावलोकन",
+  "checkout.lede":
+    "यह चेकआउट का पूर्वावलोकन है। भुगतान अभी शुरू नहीं हुए हैं, इसलिए कुछ खरीदा नहीं जा सकता।",
+  "checkout.summary": "ऑर्डर का सार",
+  "checkout.plan": "प्लान",
+  "checkout.billing": "बिलिंग",
+  "checkout.billing.label": "बिलिंग अवधि",
+  "checkout.price": "कीमत",
+  "checkout.account": "खाता",
+  "checkout.included": "आपको क्या मिलेगा",
+  "checkout.changePlan": "प्लान बदलें",
+  "checkout.signedInAs": "{name} के रूप में साइन इन",
+  "checkout.signInNeeded": "आपसे साइन इन करने को कहा जाएगा",
+  "checkout.pay": "{amount} चुकाएँ",
+  "checkout.noDetails":
+    "इस पेज पर कार्ड, UPI या बैंक की जानकारी नहीं माँगी जाती।",
+
+  // Subscription dialog and settings
+  "subscription.dialog.title": "भुगतान अभी शुरू नहीं हुए",
+  "subscription.dialog.text":
+    "भुगतान आने वाले अपडेट में शुरू होंगे। कोई पैसा नहीं लिया गया है और भुगतान की कोई जानकारी नहीं ली गई।",
+  "subscription.dialog.back": "प्लान पर वापस जाएँ",
+  "subscription.dialog.close": "बंद करें",
+  "settings.subscription": "सब्सक्रिप्शन",
+  "settings.subscription.current": "मौजूदा प्लान",
+  "settings.subscription.price": "{amount} प्रति माह",
+  "settings.subscription.includes": "आपके प्लान में शामिल",
+  "settings.subscription.note":
+    "सशुल्क प्लान आने वाले अपडेट में खुलेंगे। आज कुछ भी नहीं लिया जाता।",
+  "settings.subscription.viewPlans": "प्लान देखें",
+  "settings.subscription.manage": "सब्सक्रिप्शन प्रबंधित करें",
+
+  // Legal pages
+  "legal.draft": "मसौदा: सशुल्क प्लान शुरू होने से पहले इसकी समीक्षा की जाएगी।",
+  "legal.updated": "अंतिम अपडेट: {date}",
+  "legal.nav.label": "कानूनी और संपर्क",
+  "legal.terms": "शर्तें",
+  "legal.refund": "रिफंड नीति",
+  "legal.privacy": "गोपनीयता",
+  "legal.contact": "संपर्क",
+  "terms.title": "सेवा की शर्तें",
+  "terms.lede":
+    "WhichAI इस्तेमाल करने के नियम, पढ़ने लायक भाषा में। ये जान-बूझकर छोटे रखे गए हैं।",
+  "terms.use.title": "WhichAI क्या है",
+  "terms.use.text":
+    "WhichAI बताता है कि किसी लक्ष्य के लिए कौन-से AI टूल इस्तेमाल करें और कैसे। यह आपका काम खुद नहीं करता, और यह कानूनी, वित्तीय या पेशेवर सलाह नहीं है।",
+  "terms.free.title": "फ्री प्लान",
+  "terms.free.text":
+    "फ्री प्लान पर WhichAI इस्तेमाल करने का कोई पैसा नहीं लगता। सशुल्क प्लान अभी हैं ही नहीं, और आज किसी चीज़ का पैसा नहीं लिया जाता।",
+  "terms.paid.title": "सशुल्क प्लान, जब वे शुरू हों",
+  "terms.paid.text":
+    "किसी के भुगतान करने से पहले चेकआउट पेज पर कीमत, बिलिंग अवधि, कर और शामिल सुविधाएँ दिखाई जाएँगी। कीमतें भारतीय रुपये में हैं। नवीनीकरण और रद्द करना रिफंड नीति के अनुसार होगा।",
+  "terms.accuracy.title": "जो आप देखते हैं उसकी सटीकता",
+  "terms.accuracy.text":
+    "टूल का ब्योरा एक कैटलॉग से आता है जिसकी जाँच अभी चल रही है, और ज़्यादातर रिकॉर्ड पर “सत्यापित नहीं” लिखा है। कीमतें, सीमाएँ और सुविधाएँ अक्सर बदलती हैं। कुछ भी खरीदने से पहले टूल की अपनी वेबसाइट देख लें।",
+  "terms.data.title": "आपका डेटा",
+  "terms.data.text":
+    "आप जो योजनाएँ और इतिहास सहेजते हैं वे आपके ब्राउज़र में रहते हैं। साइट जानकारी को कैसे संभालती है, यह गोपनीयता पेज में लिखा है।",
+  "terms.conduct.title": "उचित उपयोग",
+  "terms.conduct.item1":
+    "सेवा को तोड़ने, उस पर बोझ डालने या उसकी जाँच-पड़ताल करने की कोशिश न करें।",
+  "terms.conduct.item2": "इसे किसी गैरकानूनी काम के लिए इस्तेमाल न करें।",
+  "terms.conduct.item3":
+    "कैटलॉग को बड़ी मात्रा में कॉपी करके अपना बताकर न दिखाएँ।",
+  "terms.changes.title": "बदलाव",
+  "terms.changes.text":
+    "ये शर्तें बदल सकती हैं। तारीख पेज के ऊपर है, और सशुल्क प्लान को छूने वाला बदलाव लागू होने से पहले बताया जाएगा।",
+  "terms.contact.title": "सवाल",
+  "terms.contact.text": "संपर्क पेज के ज़रिए हमें लिखें।",
+  "refund.title": "रिफंड और रद्दीकरण नीति",
+  "refund.lede":
+    "सशुल्क प्लान शुरू होने पर रद्द करना और रिफंड कैसे काम करने चाहिए।",
+  "refund.today.title": "आज",
+  "refund.today.text":
+    "अभी कुछ खरीदा नहीं जा सकता और किसी से पैसा नहीं लिया गया है, इसलिए रद्द करने या लौटाने को कुछ नहीं है।",
+  "refund.cancel.title": "रद्द करना",
+  "refund.cancel.text":
+    "आप किसी भी समय सेटिंग से रद्द कर सकेंगे। रद्द करने से अगला नवीनीकरण रुक जाता है। जिस अवधि का आप भुगतान कर चुके हैं, उसके अंत तक प्लान आपके पास रहता है।",
+  "refund.refunds.title": "रिफंड",
+  "refund.refunds.text":
+    "रिफंड के नियम, समय-सीमा सहित, यहाँ लिखे जाएँगे और किसी के भुगतान करने से पहले चेकआउट पेज पर दिखाए जाएँगे। यह मसौदा अभी रिफंड की कोई अवधि नहीं देता।",
+  "refund.how.title": "कैसे माँगें",
+  "refund.how.text":
+    "संपर्क पेज का उपयोग करें और बताएँ कि कौन-सा प्लान और कौन-सा भुगतान। कार्ड, UPI या बैंक की जानकारी ईमेल से न भेजें।",
+  "contact.title": "संपर्क",
+  "contact.lede":
+    "WhichAI एक छोटा प्रोजेक्ट है जिसे एक व्यक्ति चलाता है। जवाब आने में कुछ दिन लग सकते हैं।",
+  "contact.email.title": "ईमेल",
+  "contact.email.missing": "संपर्क ईमेल अभी जोड़ा नहीं गया है।",
+  "contact.email.text": "प्लान, कीमत या आपके डेटा के बारे में सवालों के लिए:",
+  "contact.feedback.title": "GitHub पर फ़ीडबैक",
+  "contact.feedback.text":
+    "टूल के गलत रिकॉर्ड, बग या किसी विचार के लिए इश्यू खोलें। यह सार्वजनिक है, इसलिए निजी जानकारी न लिखें।",
+  "contact.feedback.link": "फ़ीडबैक भेजें",
+  "contact.security.title": "सुरक्षा की समस्याएँ",
+  "contact.security.text": "इन्हें निजी तौर पर बताएँ। सार्वजनिक इश्यू न खोलें।",
+  "contact.security.link": "सुरक्षा नीति",
+  "contact.institution.title": "कॉलेज और कोचिंग केंद्र",
+  "contact.institution.text":
+    "संस्थान प्लान के बारे में ईमेल से पूछें। बताएँ कि आपके लगभग कितने छात्र हैं।",
+  "contact.institution.link": "संस्थान प्लान के बारे में ईमेल करें",
 };
