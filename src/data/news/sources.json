@@ -1,0 +1,263 @@
+[
+  {
+    "id": "openai-news",
+    "name": "OpenAI",
+    "feedUrl": "https://openai.com/news/rss.xml",
+    "homepage": "https://openai.com/news/",
+    "officialDomains": ["openai.com", "chatgpt.com"],
+    "toolIds": ["chatgpt"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "openai-codex",
+    "name": "OpenAI Codex CLI releases",
+    "feedUrl": "https://github.com/openai/codex/releases.atom",
+    "homepage": "https://github.com/openai/codex/releases",
+    "officialDomains": ["github.com/openai"],
+    "toolIds": ["codex-cli"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "anthropic-claude-code",
+    "name": "Claude Code releases",
+    "feedUrl": "https://github.com/anthropics/claude-code/releases.atom",
+    "homepage": "https://github.com/anthropics/claude-code/releases",
+    "officialDomains": ["github.com/anthropics"],
+    "toolIds": ["claude-code", "claude"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "google-ai-blog",
+    "name": "Google AI blog",
+    "feedUrl": "https://blog.google/innovation-and-ai/technology/ai/rss/",
+    "homepage": "https://blog.google/technology/ai/",
+    "officialDomains": ["blog.google"],
+    "toolIds": ["gemini"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "google-gemini-blog",
+    "name": "Google Gemini blog",
+    "feedUrl": "https://blog.google/products-and-platforms/products/gemini/rss/",
+    "homepage": "https://blog.google/products/gemini/",
+    "officialDomains": ["blog.google"],
+    "toolIds": ["gemini", "notebooklm"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "google-deepmind-blog",
+    "name": "Google DeepMind",
+    "feedUrl": "https://deepmind.google/blog/rss.xml",
+    "homepage": "https://deepmind.google/blog/",
+    "officialDomains": ["deepmind.google", "blog.google"],
+    "toolIds": ["gemini", "gemma-models"],
+    "defaultTag": "research"
+  },
+  {
+    "id": "gemini-cli",
+    "name": "Gemini CLI releases",
+    "feedUrl": "https://github.com/google-gemini/gemini-cli/releases.atom",
+    "homepage": "https://github.com/google-gemini/gemini-cli/releases",
+    "officialDomains": ["github.com/google-gemini"],
+    "toolIds": ["gemini-cli"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "microsoft-research",
+    "name": "Microsoft Research",
+    "feedUrl": "https://www.microsoft.com/en-us/research/feed/",
+    "homepage": "https://www.microsoft.com/en-us/research/blog/",
+    "officialDomains": ["microsoft.com"],
+    "toolIds": ["microsoft-copilot"],
+    "defaultTag": "research"
+  },
+  {
+    "id": "github-changelog",
+    "name": "GitHub changelog",
+    "feedUrl": "https://github.blog/changelog/feed/",
+    "homepage": "https://github.blog/changelog/",
+    "officialDomains": ["github.blog"],
+    "toolIds": ["github"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "github-ai-blog",
+    "name": "GitHub blog: AI and ML",
+    "feedUrl": "https://github.blog/ai-and-ml/feed/",
+    "homepage": "https://github.blog/ai-and-ml/",
+    "officialDomains": ["github.blog"],
+    "toolIds": ["github-copilot"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "vscode-releases",
+    "name": "Visual Studio Code releases",
+    "feedUrl": "https://github.com/microsoft/vscode/releases.atom",
+    "homepage": "https://github.com/microsoft/vscode/releases",
+    "officialDomains": ["github.com/microsoft"],
+    "toolIds": ["visual-studio-code"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "meta-ai-newsroom",
+    "name": "Meta Newsroom: AI",
+    "feedUrl": "https://about.fb.com/news/tag/ai/feed/",
+    "homepage": "https://about.fb.com/news/tag/ai/",
+    "officialDomains": ["about.fb.com", "meta.com", "ai.meta.com"],
+    "toolIds": ["meta-ai", "llama-models"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "mistral-news",
+    "name": "Mistral AI",
+    "feedUrl": "https://mistral.ai/news/rss",
+    "homepage": "https://mistral.ai/news/",
+    "officialDomains": ["mistral.ai"],
+    "toolIds": ["mistral-models", "mistral-vibe"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "hugging-face-blog",
+    "name": "Hugging Face blog",
+    "feedUrl": "https://huggingface.co/blog/feed.xml",
+    "homepage": "https://huggingface.co/blog",
+    "officialDomains": ["huggingface.co"],
+    "toolIds": ["hugging-face"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "cursor-changelog",
+    "name": "Cursor changelog",
+    "feedUrl": "https://cursor.com/changelog/rss.xml",
+    "homepage": "https://cursor.com/changelog",
+    "officialDomains": ["cursor.com"],
+    "toolIds": ["cursor"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "replit-blog",
+    "name": "Replit blog",
+    "feedUrl": "https://replit.com/blog/feed.xml",
+    "homepage": "https://replit.com/blog",
+    "officialDomains": ["replit.com"],
+    "toolIds": ["replit"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "lovable-blog",
+    "name": "Lovable blog",
+    "feedUrl": "https://lovable.dev/blog/rss.xml",
+    "homepage": "https://lovable.dev/blog",
+    "officialDomains": ["lovable.dev"],
+    "toolIds": ["lovable"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "vercel-changelog",
+    "name": "Vercel changelog",
+    "feedUrl": "https://vercel.com/atom",
+    "homepage": "https://vercel.com/changelog",
+    "officialDomains": ["vercel.com"],
+    "toolIds": ["vercel", "v0"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "ollama-blog",
+    "name": "Ollama blog",
+    "feedUrl": "https://ollama.com/blog/rss.xml",
+    "homepage": "https://ollama.com/blog",
+    "officialDomains": ["ollama.com"],
+    "toolIds": ["ollama"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "lm-studio-blog",
+    "name": "LM Studio blog",
+    "feedUrl": "https://lmstudio.ai/rss.xml",
+    "homepage": "https://lmstudio.ai/blog",
+    "officialDomains": ["lmstudio.ai"],
+    "toolIds": ["lm-studio"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "jan-releases",
+    "name": "Jan releases",
+    "feedUrl": "https://github.com/janhq/jan/releases.atom",
+    "homepage": "https://github.com/janhq/jan/releases",
+    "officialDomains": ["github.com/janhq"],
+    "toolIds": ["jan"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "open-webui-releases",
+    "name": "Open WebUI releases",
+    "feedUrl": "https://github.com/open-webui/open-webui/releases.atom",
+    "homepage": "https://github.com/open-webui/open-webui/releases",
+    "officialDomains": ["github.com/open-webui"],
+    "toolIds": ["open-webui"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "cline-releases",
+    "name": "Cline releases",
+    "feedUrl": "https://github.com/cline/cline/releases.atom",
+    "homepage": "https://github.com/cline/cline/releases",
+    "officialDomains": ["github.com/cline"],
+    "toolIds": ["cline"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "zed-blog",
+    "name": "Zed blog",
+    "feedUrl": "https://zed.dev/blog.rss",
+    "homepage": "https://zed.dev/blog",
+    "officialDomains": ["zed.dev"],
+    "toolIds": ["zed"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "comfyui-releases",
+    "name": "ComfyUI releases",
+    "feedUrl": "https://github.com/Comfy-Org/ComfyUI/releases.atom",
+    "homepage": "https://github.com/Comfy-Org/ComfyUI/releases",
+    "officialDomains": ["github.com/Comfy-Org", "github.com/comfyanonymous"],
+    "toolIds": ["comfyui"],
+    "defaultTag": "feature-update"
+  },
+  {
+    "id": "stability-news",
+    "name": "Stability AI",
+    "feedUrl": "https://stability.ai/news-updates?format=rss",
+    "homepage": "https://stability.ai/news-updates",
+    "officialDomains": ["stability.ai"],
+    "toolIds": ["stable-diffusion"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "elevenlabs-blog",
+    "name": "ElevenLabs blog",
+    "feedUrl": "https://elevenlabs.io/blog/rss.xml",
+    "homepage": "https://elevenlabs.io/blog",
+    "officialDomains": ["elevenlabs.io"],
+    "toolIds": ["elevenlabs"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "figma-blog",
+    "name": "Figma blog",
+    "feedUrl": "https://www.figma.com/blog/feed/atom.xml",
+    "homepage": "https://www.figma.com/blog/",
+    "officialDomains": ["figma.com"],
+    "toolIds": ["figma"],
+    "defaultTag": "other"
+  },
+  {
+    "id": "notion-releases",
+    "name": "Notion releases",
+    "feedUrl": "https://www.notion.com/releases/rss.xml",
+    "homepage": "https://www.notion.com/releases",
+    "officialDomains": ["notion.com", "notion.so"],
+    "toolIds": ["notion"],
+    "defaultTag": "feature-update"
+  }
+]

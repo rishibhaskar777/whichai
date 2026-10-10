@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US">
+  <id>tag:example.com,2026:/releases</id>
+  <title>Releases from example-org/tool</title>
+  <updated>2026-10-10T11:00:00Z</updated>
+  <link rel="self" href="https://example.com/org/tool/releases.atom"/>
+  <entry>
+    <id>tag:example.com,2026:Repository/1/v2.0.0</id>
+    <updated>2026-10-10T11:00:00Z</updated>
+    <link rel="alternate" type="text/html" href="https://example.com/org/tool/releases/tag/v2.0.0"/>
+    <title>v2.0.0</title>
+    <content type="html">&lt;h2&gt;What&amp;#39;s changed&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;Added a new export option&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:example.com,2026:Repository/1/v2.1.0-rc.1</id>
+    <updated>2026-10-10T11:30:00Z</updated>
+    <link rel="alternate" type="text/html" href="https://example.com/org/tool/releases/tag/v2.1.0-rc.1"/>
+    <title>v2.1.0-rc.1</title>
+    <content type="html">Release candidate.</content>
+  </entry>
+  <entry>
+    <id>tag:example.com,2026:Repository/1/v1.9.0</id>
+    <published>2026-09-20T08:00:00+02:00</published>
+    <updated>2026-09-21T08:00:00Z</updated>
+    <link rel="self" href="https://example.com/api/v1.9.0.json"/>
+    <link href="https://example.com/org/tool/releases/tag/v1.9.0"/>
+    <title type="html">Version &lt;b&gt;1.9.0&lt;/b&gt;</title>
+    <summary>Plain summary text.</summary>
+  </entry>
+</feed>

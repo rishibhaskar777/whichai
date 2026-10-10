@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE rss [
+  <!ENTITY lol "lol">
+  <!ENTITY lol2 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
+  <!ENTITY secret SYSTEM "file:///etc/passwd">
+]>
+<rss version="2.0"><channel>
+  <title>Hostile fixture</title>
+  <item>
+    <title><![CDATA[Safe <script>alert("x")</script>headline <img src=x onerror=alert(1)>]]></title>
+    <link>https://example.com/news/safe</link>
+    <pubDate>Sat, 10 Oct 2026 08:00:00 GMT</pubDate>
+    <description>&lt;script&gt;steal()&lt;/script&gt;&lt;style&gt;body{display:none}&lt;/style&gt;Visible text &amp;secret; &amp;lol2;</description>
+  </item>
+  <item>
+    <title>Script scheme link</title>
+    <link>javascript:alert(1)</link>
+    <pubDate>Sat, 10 Oct 2026 08:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>Plain http link</title>
+    <link>http://example.com/news/insecure</link>
+    <pubDate>Sat, 10 Oct 2026 08:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>Another domain</title>
+    <link>https://example.org/news/elsewhere</link>
+    <pubDate>Sat, 10 Oct 2026 08:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>Look-alike host</title>
+    <link>https://example.com.evil.net/news/x</link>
+    <pubDate>Sat, 10 Oct 2026 08:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>Credentials in the link</title>
+    <link>https://user:pass@example.com/news/x</link>
+    <pubDate>Sat, 10 Oct 2026 08:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>No date at all</title>
+    <link>https://example.com/news/undated</link>
+  </item>
+  <item>
+    <title>Dated in the future</title>
+    <link>https://example.com/news/future</link>
+    <pubDate>Mon, 12 Oct 2026 08:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>Epoch default date</title>
+    <link>https://example.com/news/epoch</link>
+    <pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>   </title>
+    <link>https://example.com/news/untitled</link>
+    <pubDate>Sat, 10 Oct 2026 08:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>Survivor with &#128512; emoji and &#xFFFFFFF; bad reference</title>
+    <link>https://www.example.com/news/survivor</link>
+    <pubDate>Sat, 10 Oct 2026 07:00:00 GMT</pubDate>
+  </item>
+</channel></rss>
