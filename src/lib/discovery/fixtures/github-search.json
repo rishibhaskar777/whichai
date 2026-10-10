@@ -1,0 +1,84 @@
+{
+  "total_count": 7,
+  "incomplete_results": false,
+  "items": [
+    {
+      "id": 1,
+      "name": "magpie",
+      "full_name": "yetone/magpie",
+      "private": false,
+      "owner": { "login": "yetone", "type": "User" },
+      "html_url": "https://github.com/yetone/magpie",
+      "description": "A fast terminal client for chatting with local models",
+      "fork": false,
+      "homepage": "https://magpie.example.dev",
+      "stargazers_count": 1450,
+      "archived": false,
+      "disabled": false,
+      "topics": ["llm", "cli", "terminal"],
+      "created_at": "2026-08-12T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "forked-thing",
+      "full_name": "someone/forked-thing",
+      "owner": { "login": "someone" },
+      "html_url": "https://github.com/someone/forked-thing",
+      "description": "A fork",
+      "fork": true,
+      "homepage": null,
+      "stargazers_count": 900,
+      "topics": ["ai"]
+    },
+    {
+      "id": 3,
+      "name": "old-project",
+      "full_name": "team/old-project",
+      "owner": { "login": "team" },
+      "html_url": "https://github.com/team/old-project",
+      "description": "Archived",
+      "fork": false,
+      "archived": true,
+      "homepage": null,
+      "stargazers_count": 500,
+      "topics": ["ai"]
+    },
+    {
+      "id": 4,
+      "name": "awesome-llm-apps",
+      "full_name": "curator/awesome-llm-apps",
+      "owner": { "login": "curator" },
+      "html_url": "https://github.com/curator/awesome-llm-apps",
+      "description": "A list of things",
+      "fork": false,
+      "homepage": null,
+      "stargazers_count": 9000,
+      "topics": ["awesome", "llm"]
+    },
+    {
+      "id": 5,
+      "name": "plain-tool",
+      "full_name": "maker/plain-tool",
+      "owner": { "login": "maker" },
+      "html_url": "https://github.com/maker/plain-tool",
+      "description": null,
+      "fork": false,
+      "homepage": "",
+      "stargazers_count": 320,
+      "topics": []
+    },
+    {
+      "id": 6,
+      "name": "hostile",
+      "full_name": "evil/hostile",
+      "owner": { "login": "evil" },
+      "html_url": "https://github.com/evil/hostile",
+      "description": "Click [here](https://evil.example/x) <script>alert(1)</script> @octocat see #1 `` ```\nnext line‮",
+      "fork": false,
+      "homepage": "javascript:alert(1)",
+      "stargazers_count": 150,
+      "topics": ["ai"]
+    },
+    { "id": 7, "name": 42, "owner": null }
+  ]
+}

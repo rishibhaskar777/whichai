@@ -1,0 +1,37 @@
+{
+  "hits": [
+    {
+      "objectID": "50018817",
+      "title": "Show HN: Let your AI agents paint big arrows, boxes and text on your screen",
+      "url": "https://github.com/franzenzenhofer/big-arrow-on-the-screen",
+      "points": 404,
+      "author": "franze",
+      "created_at": "2026-10-09T11:03:48Z"
+    },
+    {
+      "objectID": "50030001",
+      "title": "Show HN: Notefox – turn meeting notes into slides",
+      "url": "https://notefox.app/",
+      "points": 120,
+      "author": "maker1",
+      "created_at": "2026-10-01T11:03:48Z"
+    },
+    {
+      "objectID": "50030002",
+      "title": "Show HN: A study of agent loops",
+      "url": "https://arxiv.org/abs/2609.15369",
+      "points": 90,
+      "author": "researcher",
+      "created_at": "2026-10-01T11:03:48Z"
+    },
+    {
+      "objectID": "50030003",
+      "title": "Show HN: Ask me anything",
+      "url": null,
+      "points": 60,
+      "author": "someone",
+      "created_at": "2026-10-01T11:03:48Z"
+    },
+    { "objectID": "not-a-number", "title": "Show HN: Broken", "points": 99 }
+  ]
+}

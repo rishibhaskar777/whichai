@@ -1,0 +1,57 @@
+[
+  {
+    "_id": "6aa80a7682023d2e774f1c9a",
+    "id": "google/embeddinggemma-2",
+    "likes": 1459,
+    "trendingScore": 1390,
+    "private": false,
+    "downloads": 45605,
+    "tags": [
+      "transformers",
+      "safetensors",
+      "feature-extraction",
+      "license:apache-2.0"
+    ],
+    "pipeline_tag": "feature-extraction",
+    "library_name": "transformers",
+    "createdAt": "2026-09-14T14:53:42.000Z",
+    "modelId": "google/embeddinggemma-2"
+  },
+  {
+    "id": "fan/qwen-finetune-gguf",
+    "likes": 900,
+    "downloads": 1000,
+    "private": false,
+    "tags": [
+      "gguf",
+      "base_model:Qwen/Qwen3.8-27B",
+      "base_model:quantized:Qwen/Qwen3.8-27B"
+    ],
+    "pipeline_tag": "text-generation",
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  },
+  {
+    "id": "org/low-likes",
+    "likes": 3,
+    "downloads": 10,
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  },
+  {
+    "id": "org/too-old",
+    "likes": 5000,
+    "downloads": 10,
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "gpt2",
+    "likes": 5000,
+    "downloads": 10,
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  },
+  {
+    "id": "org/secret",
+    "likes": 500,
+    "private": true,
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  }
+]
