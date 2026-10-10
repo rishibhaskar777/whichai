@@ -15,7 +15,7 @@ Early development. See [docs/ROADMAP.md](docs/ROADMAP.md) for the phases.
 | 3     | Tool data in JSON, rules engine             | In progress |
 | 4     | Sign-in, saved plans and feedback           | Done        |
 | 5a    | Tool catalogue, Get it links, library       | Done        |
-| 5b    | News and update pipeline                    | Planned     |
+| 5b    | News from official feeds, What Changed      | Done        |
 
 The project follows a [zero-cost rule](docs/decisions/0006-zero-cost.md): no paid APIs, no AI APIs, no hosted databases, no trackers.
 
@@ -53,11 +53,11 @@ The site runs at http://localhost:3000. Sign-in is optional and needs free Googl
 
 ## Project layout
 
-Next.js App Router with a `src/` directory: `app/` for routes, `components/` for UI, `lib/` for validation and security helpers, `styles/` for design tokens, `data/catalogue/` for the tool catalogue (JSON), `lib/engine/` for the rules engine, `lib/plan/` for the goal interpreter, `data/sample/` for sample news. `src/proxy.ts` sets the CSP nonce and security headers on every request. Details are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Next.js App Router with a `src/` directory: `app/` for routes, `components/` for UI, `lib/` for validation and security helpers, `styles/` for design tokens, `data/catalogue/` for the tool catalogue (JSON), `lib/engine/` for the rules engine, `lib/plan/` for the goal interpreter, `lib/news/` and `data/news/` for the news feeds. `src/proxy.ts` sets the CSP nonce and security headers on every request. Details are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## What works now
 
-- Home page with a goal input, suggestion chips and a sample news panel.
+- Home page with a goal input, suggestion chips and an AI news panel.
 - Describe a goal and a local, rule-based interpreter (no AI service) shows what it understood as chips you can remove or add. It tolerates typos, understands synonyms, and turns a task such as "make a logo" into tool picks. Only text it recognises nothing in gets an honest "no plan yet" message.
 - Confirm to see a plan at Simple, Polished and Advanced levels. It lists the right mix of AI tools, models, libraries and services for the goal: a toolkit at a glance, a card per job with the kind of tool, which model class to use for which step, compatibility, other options, a workflow with copyable prompts and a starter brief. Nine goals are covered.
 - A "Make this more accurate" card feeds your monthly budget and the tools you already use back into the engine. At ₹0 only tools with a free option, or one not yet confirmed, remain. A tool you already use is marked Keep when it scores close to the best.
@@ -72,8 +72,7 @@ Next.js App Router with a `src/` directory: `app/` for routes, `components/` for
 - Collapsible sidebar, mobile drawer, light, dark and system themes (the explicit choice is stored in a cookie).
 - Sign in with Google or GitHub from the sidebar, in a glass popup (or at `/sign-in` without JavaScript). The session is an encrypted cookie that holds only your provider, provider id and name; there is no database, and your plans still stay in this browser. The popup lists Google, GitHub, Microsoft, Apple, email and phone; Google and GitHub work once configured and the rest say they are coming in an upcoming update. See [0008](docs/decisions/0008-sign-in.md).
 - A plain-language privacy page at `/privacy` that says what stays on your device and how to delete it.
-- What Changed shows a coming-soon notice.
-- The news panel is marked as sample content and contains no real announcements.
+- **AI news** from official sources. The server reads about 30 public RSS and Atom feeds (company blogs, changelogs, GitHub releases of official repositories), at most every 30 minutes, and keeps the last good result if a feed fails. The panel shows the six newest headlines with source, age, tag and a New badge. **What Changed** at `/what-changed` lists everything from the last 60 days with search, tag and source filters and pages, all in the URL, and each tool page shows its recent news. A headline gets an "Affects your plans" badge when a plan saved on your device uses that tool; that check never leaves your device. Headlines stay in their original language and link to the source. See [0012](docs/decisions/0012-news-from-official-feeds.md) and [docs/NEWS-SOURCES.md](docs/NEWS-SOURCES.md).
 
 ## Security
 

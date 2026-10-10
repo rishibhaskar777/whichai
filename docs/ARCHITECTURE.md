@@ -17,7 +17,8 @@ app/                 routes, layouts, server components
   +--> lib/plan/     goal interpreter (keywords, typos, tasks)
   +--> lib/engine/   rules engine that chooses tools and builds the plan
   +--> lib/schemas/  Zod schemas: goal input, plan contract, catalogue
-  +--> data/         JSON catalogue; sample news in data/sample/
+  +--> lib/news/     feed reader, cache, tags, "Affects your plans"
+  +--> data/         JSON catalogue; news sources in data/news/
 ```
 
 ## Directory layout
@@ -34,13 +35,14 @@ src/
     projects/, searches/, settings/, help/, about/, not-found
     tools/, tools/[id]/ Tool Library and one page per tool (server-rendered)
     compare/           side-by-side comparison, selection in the URL
-    what-changed/      coming-soon page
+    what-changed/      news list with filters, server-rendered
     tool-library/, compare-plans/   redirect to /tools and /compare
   components/          UI components, one folder per component
     app-shell/         three-region layout, drawer, panel state
     sidebar/           navigation, sign-in button, account menu
     sign-in/           glass sign-in popup (native dialog), shared panel, provider marks
-    news-panel/        sample news panel
+    news-panel/        AI news panel in the shell
+    news/              news entry, What Changed page, tag label, plan-tool provider and badge
     home-flow/         home page state: empty, understanding, no match, plan
     goal-form/         search input (full and compact), suggestions
     understanding-card/ editable chips, confirm and edit
@@ -52,7 +54,7 @@ src/
     projects/, searches/, settings/, plan-route/   the pages' interface
     tools/             library, tool card and page, Get it block, compare view
     toast/, dialog/, shortcuts/, state-page/, content/   shared interface pieces
-    theme-control/, wordmark/, coming-soon/, icons/
+    theme-control/, wordmark/, icons/
   lib/
     env.ts             validated environment variables (sign-in variables are optional)
     auth/              sessions, OAuth flow, CSRF, redirect allowlist, rate limiter
@@ -65,6 +67,7 @@ src/
     platform.ts        visitor system and browser from client hints or user agent
     library/           library query, filter and sort, compare selection, tool details
     plan/              goal interpreter, text matching, chip helpers
+    news/              feed fetch, parse, cache, tagging, tool matching, query (server) and plan matching (browser)
     engine/            tool selection, plan assembly, text for cards
     catalogue/         cross-file data checks and the data report
     schemas/           goal input, plan contract and catalogue schemas
@@ -76,7 +79,7 @@ src/
   data/
     catalogue/         providers, jobs, model classes, goal templates, and
                        tools/ with one file per job category
-    sample/            sample news only
+    news/              sources.json: the official feeds
     suggestions.ts     suggestion chips and placeholder examples
 scripts/
   data-report.ts       prints verification status of the catalogue
@@ -85,6 +88,7 @@ scripts/
 docs/
   decisions/           architecture decision records
   VERIFYING-DATA.md    how to check a tool record
+  NEWS-SOURCES.md      how to add or remove a news source
 
 public/                static assets
 ```
@@ -170,6 +174,27 @@ All three are server components over the catalogue; only the Get it block is a c
 - A plan's job cards carry the same `getIt` data (`JobRecommendation.getIt`), so a plan shows the compact block.
 
 Link rules are in `src/lib/catalogue/links.ts`, the checker's pure helpers in `link-check.ts` and the network part in `scripts/check-links.ts` ([0011](decisions/0011-get-it-links.md)).
+
+## News
+
+Headlines come from official public feeds, read by the server ([0012](decisions/0012-news-from-official-feeds.md)). The browser never contacts a news site.
+
+```
+sources.json --> service.get() --(every 30 min, parallel)--> fetchFeedText --> parseFeed --> last good items per feed
+                       |                                                                           |
+                       +--- mergeItems (dedupe by link, 60 day window, newest first) <--------------+
+                       v
+        layout: panelItems (6, max 2 per source) --> NewsPanel
+        /what-changed: parseNewsQuery + queryNews (20 per page) --> WhatChanged
+        /tools/[id]: newsForTool (5) --> "Recent news"
+```
+
+- `src/data/news/sources.json` is validated by `src/lib/news/sources.ts`, and a test checks its tool ids against the catalogue.
+- `fetch-feed.ts`: https only, 5 second timeout, no redirect, at most 1 MB read. `parse-feed.ts`: a small RSS 2.0, RSS 1.0 and Atom reader that keeps title, link, date and a 160 character plain-text summary, and drops links that are not https on the source's `officialDomains`. `text.ts` strips markup and decodes entities.
+- `service.ts`: the in-memory cache. The first call waits for a refresh, later calls return at once and refresh in the background when the data is 30 minutes old. A failing feed keeps its last good items and logs one warning. `getNews()` in `index.ts` never throws and returns an empty list during the production build.
+- `tagging.ts` and `tool-match.ts`: keyword rules for the tag, and whole-word catalogue names in the title for `toolIds`.
+- `affects-plans.ts` and `PlanToolsProvider`: in the browser, saved plans are rebuilt with `buildPlan`, and an item is flagged when its `toolIds` overlap the tools of a plan or the tools the person uses. The engine loads only when a saved plan exists and the browser is idle.
+- Relative times are formatted from the time the server made the list (`I18n.formatRelative`), so server and browser text match.
 
 ## Sign-in
 

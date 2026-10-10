@@ -66,11 +66,13 @@ Every phase follows the [zero-cost rule](decisions/0006-zero-cost.md): local cod
 - The catalogue and the rules engine load on demand instead of in the home page bundle
 - Every record is still unverified. Plan tier names are supported by the schema but none has been confirmed
 
-### 5b: News and updates (next)
+### 5b: News from official feeds (done, [0012](decisions/0012-news-from-official-feeds.md))
 
-- A scheduled GitHub Actions script checks official sources and opens a pull request that changes the JSON data, so every change is reviewed before it ships
-- The news panel and the What Changed page read from JSON in the repository
-- Alerts for saved plans are computed in the browser by comparing a saved plan with the latest data
+- About 30 official RSS and Atom feeds listed in `src/data/news/sources.json` and read by the server, refreshed at most every 30 minutes with an in-memory cache. This replaces the earlier idea of a scheduled script that opens pull requests: every headline is shown with its source and age, and the reviewed list of sources is the point of review
+- The news panel shows the six newest headlines; `/what-changed` lists the last 60 days with search, tag and source filters and pages; each tool page shows its recent news
+- "Affects your plans" is computed in the browser from the plans saved on the device
+- Adding or removing a source: [NEWS-SOURCES.md](NEWS-SOURCES.md)
+- Not done: alerts when a saved plan's tools change in the catalogue (as opposed to news), and a scheduled check that every source still answers
 
 ## Later
 

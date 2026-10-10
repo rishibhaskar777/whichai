@@ -48,6 +48,20 @@ Apply to every release and re-check when a phase adds a new input, route or depe
 - [ ] The link checker is run by hand or by the weekly workflow (`contents: read`, `issues: write`, actions pinned to SHAs), and its findings are reviewed
 - [ ] Library and compare query parameters are validated and fall back to defaults; nothing from them is rendered as HTML
 
+## News feeds
+
+- [ ] The server requests only the addresses in `src/data/news/sources.json`; no visitor input reaches a request, so there is no server-side request forgery surface
+- [ ] Every feed address is https, on the source's `officialDomains`, and is validated by a schema at start-up and in tests
+- [ ] Feed requests have a 5 second timeout, follow no redirect and read at most 1 MB
+- [ ] The browser makes no request to a news site; CSP `connect-src` stays `'self'`
+- [ ] Feed text is untrusted: HTML is stripped, `<script>` and `<style>` content is removed, nothing is rendered with `dangerouslySetInnerHTML`, and entities declared in a DTD are never expanded
+- [ ] An item link must be https, carry no credentials and be on the source's `officialDomains`; anything else drops the item
+- [ ] Only title, link, date, source id and a summary of at most 160 characters are kept; full articles are never copied
+- [ ] A failing feed never fails a page, and its warning in the log holds the feed id and a short reason only
+- [ ] "Affects your plans" runs in the browser against local data; saved plans and tool ids are not sent anywhere
+- [ ] `/what-changed` query values (`q`, `tag`, `source`, `page`) are validated, fall back to defaults and are only ever rendered as text
+- [ ] New sources follow [NEWS-SOURCES.md](NEWS-SOURCES.md): official, fetched and read, dated items, links on the source's own domains
+
 ## Dependencies
 
 - [ ] `npm audit` shows no high or critical issues, or each is documented
