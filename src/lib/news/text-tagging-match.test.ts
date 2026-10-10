@@ -81,6 +81,22 @@ describe("toPlainText: nested and malformed markup", () => {
     }
   });
 
+  it("keeps the words around a lone less-than or greater-than sign", () => {
+    expect(toPlainText("Model scores < 5% error and > baseline")).toBe(
+      "Model scores 5% error and baseline",
+    );
+    expect(toPlainText("a < b")).toBe("a b");
+    expect(toPlainText("<3 AI")).toBe("3 AI");
+    expect(toPlainText("5 <6 and 7> 2")).toBe("5 6 and 7 2");
+  });
+
+  it("still treats a letter, slash, bang or question mark as a tag", () => {
+    expect(toPlainText("x <b>y</b> z")).toBe("x y z");
+    expect(toPlainText("x <?php echo 1 ?> y")).toBe("x y");
+    expect(toPlainText("x <!DOCTYPE html> y")).toBe("x y");
+    expect(toPlainText("x </p> y")).toBe("x y");
+  });
+
   it("never outputs an angle bracket for 500 random strings", () => {
     const pieces = ["<", ">", "script", "!--", "&lt;", "&gt;", "a", "b", "x y"];
     // A small seeded generator keeps a failure reproducible.

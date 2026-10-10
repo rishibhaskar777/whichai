@@ -97,6 +97,17 @@ function isNameCharacter(character: string | undefined): boolean {
   );
 }
 
+function startsTag(character: string | undefined): boolean {
+  return (
+    character !== undefined &&
+    ((character >= "a" && character <= "z") ||
+      (character >= "A" && character <= "Z") ||
+      character === "/" ||
+      character === "!" ||
+      character === "?")
+  );
+}
+
 /** The lower-case element name after `<` or `</`, or "" if there is none. */
 function elementNameAt(text: string, from: number): string {
   let start = from;
@@ -123,8 +134,8 @@ function endOfClosingTag(text: string, name: string, from: number): number {
 
 /**
  * Removes markup by scanning the text once, with no pattern matching. A `<`
- * starts a tag that runs to the next `>`, or to the end of the text if there
- * is none. A `<` met inside a tag is not part of it: the earlier `<` is
+ * before a letter, `/`, `!` or `?` starts a tag that runs to the next `>`, or
+ * to the end of the text if there is none; any other `<` is just dropped. A `<` met inside a tag is not part of it: the earlier `<` is
  * dropped and the scan restarts there, so `<scr<script>ipt>` cannot join
  * into a tag. Comments and the content of script and style elements are
  * dropped with their delimiters. Neither `<` nor `>` is ever output, because
@@ -146,6 +157,13 @@ export function stripMarkup(text: string): string {
       const end = text.indexOf("-->", open + 4);
       output += " ";
       position = end === -1 ? length : end + 3;
+      continue;
+    }
+
+    // As in browsers, `<` begins a tag only before a letter, `/`, `!` or `?`.
+    // Anywhere else it is a lone character: dropped, and the text goes on.
+    if (!startsTag(text[open + 1])) {
+      position = open + 1;
       continue;
     }
 
