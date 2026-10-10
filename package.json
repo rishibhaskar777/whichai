@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "arctic": "^3.7.0",
+    "fast-xml-parser": "^5.11.2",
     "jose": "^6.2.12",
     "next": "^16.4.0",
     "react": "^19.3.0",

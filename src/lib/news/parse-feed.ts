@@ -1,27 +1,50 @@
-import { isOnToolDomain } from "../catalogue/links";
-import { tagItem } from "./tagging";
-import { toPlainText, truncate } from "./text";
-import type { ToolMatcher } from "./tool-match";
-import type { NewsItem, NewsSource } from "./types";
+import { XMLParser } from "fast-xml-parser";
+import { isOnToolDomain } from "../catalogue/links.ts";
+import { tagItem } from "./tagging.ts";
+import { toPlainText, truncate } from "./text.ts";
+import type { ToolMatcher } from "./tool-match.ts";
+import type { NewsItem, NewsSource } from "./types.ts";
 
 /*
- * A deliberately small RSS 2.0, RSS 1.0 and Atom reader. It looks for the few
- * elements the site needs with plain string search, so it never expands
- * entities from a DTD, never builds a document tree and takes time linear in
- * the size of its input. See docs/decisions/0012-news-from-official-feeds.md.
+ * Reads RSS 2.0, RSS 1.0 and Atom with fast-xml-parser, configured so that
+ * nothing in the document can cause work or reach outside it. See
+ * docs/decisions/0012-news-from-official-feeds.md.
  */
 
 export const SUMMARY_LENGTH = 160;
 export const TITLE_LENGTH = 200;
 export const MAX_AGE_MS = 60 * 24 * 60 * 60 * 1000;
-/** Raw entries read from one feed; the response size limit is the real bound. */
-const MAX_ENTRIES_SCANNED = 2000;
+/** The fetcher stops at 1 MB; the parser enforces the same limit again. */
+export const MAX_FEED_CHARS = 1_000_000;
 const MAX_ITEMS_PER_FEED = 30;
 const MAX_ITEMS_PER_RELEASES_FEED = 5;
 const MAX_LINK_LENGTH = 600;
+const MAX_ENTRIES_SCANNED = 2000;
 
 const PRERELEASE =
   /\b(alpha|beta|rc\d*|canary|nightly|pre-?release|preview|dev)\b/i;
+
+/*
+ * Entities are left alone by the parser (`processEntities: false`) and
+ * decoded afterwards by `toPlainText`, which knows only the five XML
+ * entities, numeric references and a short list of HTML names, and never
+ * reads a declaration. DOCTYPE blocks are removed before parsing, so no
+ * internal or external entity can be declared. Values stay strings, and
+ * CDATA is kept apart so that escaped and raw markup can be told apart.
+ */
+const parser = new XMLParser({
+  processEntities: false,
+  htmlEntities: false,
+  ignoreAttributes: false,
+  attributeNamePrefix: "@_",
+  cdataPropName: "#cdata",
+  parseTagValue: false,
+  parseAttributeValue: false,
+  ignoreDeclaration: true,
+  ignorePiTags: true,
+  maxNestedTags: 40,
+  isArray: (name) => name === "item" || name === "entry" || name === "link",
+});
 
 export interface ParseOptions {
   /** Milliseconds since the epoch; items dated after it are dropped. */
@@ -33,98 +56,131 @@ export function isReleasesFeed(feedUrl: string): boolean {
   return feedUrl.endsWith("/releases.atom");
 }
 
-function isNameBoundary(char: string | undefined): boolean {
-  return char === ">" || char === "/" || /\s/.test(char ?? "");
+type Node = unknown;
+type Element = Record<string, Node>;
+
+function isElement(node: Node): node is Element {
+  return typeof node === "object" && node !== null && !Array.isArray(node);
 }
 
-function indexOfOpenTag(xml: string, name: string, from: number): number {
-  const needle = `<${name}`;
-  let at = xml.indexOf(needle, from);
-  while (at !== -1 && !isNameBoundary(xml[at + needle.length])) {
-    at = xml.indexOf(needle, at + needle.length);
-  }
-  return at;
+function rank(key: string): number {
+  return key === "#text" ? 0 : key === "#cdata" ? 1 : 2;
 }
 
-interface OpenTag {
-  attributes: string;
-  selfClosing: boolean;
-  /** Index just after the `>`. */
-  contentStart: number;
-}
-
-function readOpenTag(xml: string, at: number, name: string): OpenTag | null {
-  const end = xml.indexOf(">", at);
-  if (end === -1) return null;
-  const inside = xml.slice(at + name.length + 1, end);
-  return {
-    attributes: inside,
-    selfClosing: inside.endsWith("/"),
-    contentStart: end + 1,
-  };
-}
-
-/** The raw content of each `<name>` element, in document order. */
-function elementBlocks(xml: string, name: string, limit: number): string[] {
-  const blocks: string[] = [];
-  const close = `</${name}>`;
-  let position = 0;
-  while (blocks.length < limit) {
-    const at = indexOfOpenTag(xml, name, position);
-    if (at === -1) break;
-    const open = readOpenTag(xml, at, name);
-    if (!open) break;
-    if (open.selfClosing) {
-      position = open.contentStart;
+/**
+ * The element's text as it would appear between its tags: escaped text, with
+ * CDATA put back in its wrapper, ready for `toPlainText`. Elements nested
+ * inside (an unescaped <b> in a description) contribute their text too.
+ */
+function rawText(node: Node, depth = 0): string | null {
+  const value = Array.isArray(node) ? node[0] : node;
+  if (typeof value === "string") return value;
+  if (!isElement(value) || depth > 4) return null;
+  const parts: string[] = [];
+  // Own text first, then CDATA, then nested elements.
+  const ordered = Object.entries(value).sort(([a], [b]) => rank(a) - rank(b));
+  for (const [key, child] of ordered) {
+    if (key.startsWith("@_")) continue;
+    if (key === "#cdata") {
+      for (const piece of Array.isArray(child) ? child : [child]) {
+        if (typeof piece === "string") parts.push(`<![CDATA[${piece}]]>`);
+      }
       continue;
     }
-    const end = xml.indexOf(close, open.contentStart);
-    // An element that never closes is the cut-off end of a large feed.
-    if (end === -1) break;
-    blocks.push(xml.slice(open.contentStart, end));
-    position = end + close.length;
+    const text = rawText(child, depth + 1);
+    if (text !== null) parts.push(text);
   }
-  return blocks;
+  return parts.length > 0 ? parts.join(" ") : null;
 }
 
-function firstElement(block: string, name: string): string | null {
-  return elementBlocks(block, name, 1)[0] ?? null;
+function field(entry: Element, name: string): string | null {
+  return rawText(entry[name]);
 }
 
-function attribute(attributes: string, name: string): string | null {
-  const match = new RegExp(
-    `(?:^|\\s)${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)')`,
-    "i",
-  ).exec(attributes);
-  return match ? (match[1] ?? match[2] ?? "") : null;
+/** Removes the document type declaration, with its internal subset. */
+function stripDoctype(xml: string): string {
+  const start = xml.indexOf("<!DOCTYPE");
+  if (start === -1) return xml;
+  const close = xml.indexOf(">", start);
+  if (close === -1) return xml.slice(0, start);
+  const bracket = xml.indexOf("[", start);
+  const subsetEnd = xml.indexOf("]>", start);
+  const end =
+    bracket !== -1 && bracket < close && subsetEnd !== -1
+      ? subsetEnd + 2
+      : close + 1;
+  return xml.slice(0, start) + xml.slice(end);
 }
 
-function candidateLinks(block: string): string[] {
+function rootOf(parsed: Element): Element | null {
+  for (const name of ["rss", "feed", "rdf:RDF"]) {
+    const root = parsed[name];
+    if (isElement(root)) return root;
+    // An empty root element parses to an empty string.
+    if (root === "") return {};
+  }
+  return null;
+}
+
+function entriesOf(root: Element): Element[] {
+  const channel = root["channel"];
+  const container = isElement(channel) ? channel : root;
+  const list = container["item"] ?? container["entry"] ?? root["item"];
+  return (Array.isArray(list) ? list : []).filter(isElement);
+}
+
+function parseXml(xml: string): Element | null {
+  try {
+    const parsed: unknown = parser.parse(xml);
+    return isElement(parsed) && rootOf(parsed) !== null ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * A feed cut off by the size limit, or damaged near its end, is repaired by
+ * dropping everything after the last complete entry and closing the
+ * document. The entries before it are intact.
+ */
+function parseWithRepair(xml: string): Element | null {
+  const parsed = parseXml(xml);
+  if (parsed !== null) return parsed;
+  const lastItem = xml.lastIndexOf("</item>");
+  const lastEntry = xml.lastIndexOf("</entry>");
+  if (lastItem === -1 && lastEntry === -1) return null;
+  const atom = lastEntry > lastItem;
+  const end = atom
+    ? lastEntry + "</entry>".length
+    : lastItem + "</item>".length;
+  return parseXml(xml.slice(0, end) + (atom ? "</feed>" : "</channel></rss>"));
+}
+
+function candidateLinks(entry: Element): string[] {
   const links: string[] = [];
-  let position = 0;
-  while (links.length < 8) {
-    const at = indexOfOpenTag(block, "link", position);
-    if (at === -1) break;
-    const open = readOpenTag(block, at, "link");
-    if (!open) break;
-    position = open.contentStart;
-    const href = attribute(open.attributes, "href");
-    if (href !== null) {
-      const rel = attribute(open.attributes, "rel");
-      if (rel === null || rel === "alternate") links.push(href);
-    } else if (!open.selfClosing) {
-      const end = block.indexOf("</link>", open.contentStart);
-      if (end !== -1) links.push(block.slice(open.contentStart, end));
+  const declared = entry["link"];
+  for (const link of Array.isArray(declared) ? declared : []) {
+    if (typeof link === "string") {
+      links.push(link);
+    } else if (isElement(link)) {
+      const href = link["@_href"];
+      const rel = link["@_rel"];
+      if (typeof href === "string") {
+        if (rel === undefined || rel === "alternate") links.push(href);
+      } else {
+        const text = rawText(link);
+        if (text !== null) links.push(text);
+      }
     }
   }
-  const guid = firstElement(block, "guid");
+  const guid = field(entry, "guid");
   if (guid !== null) links.push(guid);
   return links;
 }
 
-function parseDate(block: string): number | null {
+function parseDate(entry: Element): number | null {
   for (const name of ["pubDate", "published", "dc:date", "updated", "date"]) {
-    const raw = firstElement(block, name);
+    const raw = field(entry, name);
     if (raw === null) continue;
     const time = Date.parse(toPlainText(raw));
     // Years before 2000 are an epoch default, not a publication date.
@@ -168,33 +224,33 @@ function summaryFrom(raw: string): string {
 }
 
 function readEntry(
-  block: string,
+  entry: Element,
   source: NewsSource,
   options: ParseOptions,
 ): NewsItem | null {
-  const rawTitle = firstElement(block, "title");
+  const rawTitle = field(entry, "title");
   const title =
     rawTitle === null ? "" : truncate(toPlainText(rawTitle), TITLE_LENGTH);
   if (title.length === 0) return null;
 
-  const published = parseDate(block);
+  const published = parseDate(entry);
   if (published === null || published > options.now) return null;
   if (options.now - published > MAX_AGE_MS) return null;
 
   let url: string | null = null;
-  for (const candidate of candidateLinks(block)) {
+  for (const candidate of candidateLinks(entry)) {
     url = safeLink(candidate, source.officialDomains);
     if (url !== null) break;
   }
   if (url === null) return null;
 
-  const rawSummary =
-    firstElement(block, "description") ??
-    firstElement(block, "summary") ??
-    firstElement(block, "content:encoded") ??
-    firstElement(block, "content") ??
-    "";
-  const summary = summaryFrom(rawSummary);
+  const summary = summaryFrom(
+    field(entry, "description") ??
+      field(entry, "summary") ??
+      field(entry, "content:encoded") ??
+      field(entry, "content") ??
+      "",
+  );
 
   return {
     id: itemId(url),
@@ -218,13 +274,17 @@ export function parseFeed(
   source: NewsSource,
   options: ParseOptions,
 ): NewsItem[] | null {
-  if (!/<(rss|feed|rdf:RDF)[\s>]/i.test(xml.slice(0, 20_000))) return null;
+  const text = stripDoctype(xml.slice(0, MAX_FEED_CHARS));
+  if (!/<(rss|feed|rdf:RDF)[\s>]/i.test(text.slice(0, 20_000))) return null;
+
+  const parsed = parseWithRepair(text);
+  const root = parsed === null ? null : rootOf(parsed);
+  if (root === null) return null;
 
   const releases = isReleasesFeed(source.feedUrl);
-  const tag = /<entry[\s>]/.test(xml) ? "entry" : "item";
   const items: NewsItem[] = [];
-  for (const block of elementBlocks(xml, tag, MAX_ENTRIES_SCANNED)) {
-    const item = readEntry(block, source, options);
+  for (const entry of entriesOf(root).slice(0, MAX_ENTRIES_SCANNED)) {
+    const item = readEntry(entry, source, options);
     if (item === null) continue;
     if (releases && PRERELEASE.test(item.title)) continue;
     items.push(item);
