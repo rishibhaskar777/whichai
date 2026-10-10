@@ -16,7 +16,10 @@
     "data:report": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/data-report.ts",
     "data:version": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/catalogue-version.ts",
     "links:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-links.ts",
-    "news:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-news.ts"
+    "news:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-news.ts",
+    "discover": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/discover.ts",
+    "discover:dry-run": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/discover.ts --dry-run",
+    "discover:import": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/discover-import.ts"
   },
   "dependencies": {
     "arctic": "^3.7.0",

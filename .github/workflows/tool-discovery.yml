@@ -1,0 +1,36 @@
+name: Tool discovery
+
+# Weekly search for new AI tools. It opens or edits issues labelled
+# "tool-candidate" and nothing else: it never changes the catalogue, pushes a
+# commit or opens a pull request. See docs/TOOL-DISCOVERY.md.
+on:
+  schedule:
+    - cron: "41 5 * * 3"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: tool-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Find and update candidates
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/discover.ts
