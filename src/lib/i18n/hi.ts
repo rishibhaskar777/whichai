@@ -29,10 +29,55 @@ export const hi: Record<MessageKey, string> = {
 
   // News panel
   "news.title": "AI समाचार",
-  "news.sample": "नमूना सामग्री",
   "news.collapse": "AI समाचार छोटा करें",
   "news.expand": "AI समाचार बड़ा करें",
-  "news.visit": "{source} देखें (नए टैब में खुलेगा)",
+  "news.sourceNote": "आधिकारिक स्रोतों की सुर्खियाँ, लगभग हर 30 मिनट में अपडेट",
+  "news.updated": "आखिरी अपडेट: {time}",
+  "news.unavailable": "समाचार अभी उपलब्ध नहीं हैं",
+  "news.lastSuccess": "आखिरी सफल अपडेट: {time}",
+  "news.neverUpdated": "अभी तक कोई अपडेट सफल नहीं हुआ है।",
+  "news.empty": "आधिकारिक स्रोतों से अभी कोई ताज़ा सुर्खी नहीं है।",
+  "news.new": "नया",
+  "news.affects": "आपके प्लान पर असर",
+  "news.opensInNewTab": "(नए टैब में खुलेगा)",
+  "news.seeAll": "सभी अपडेट देखें",
+  "news.tag.new-model": "नया मॉडल",
+  "news.tag.new-tool": "नया टूल",
+  "news.tag.feature-update": "फ़ीचर अपडेट",
+  "news.tag.pricing": "कीमत या प्लान",
+  "news.tag.policy": "नीति",
+  "news.tag.research": "शोध",
+  "news.tag.other": "अन्य",
+  "news.justNow": "अभी-अभी",
+
+  // What Changed
+  "whatChanged.lede":
+    "कैटलॉग के टूल की आधिकारिक साइटों से घोषणाएँ, रिलीज़ नोट और चेंजलॉग। सुर्खियाँ अपनी मूल भाषा में ही रहती हैं और हर एक स्रोत से जुड़ी है।",
+  "whatChanged.filters.label": "अपडेट फ़िल्टर करें",
+  "whatChanged.filters.search": "सुर्खियाँ खोजें",
+  "whatChanged.filters.searchPlaceholder": "कोई टूल, कंपनी या शब्द",
+  "whatChanged.filters.tag": "प्रकार",
+  "whatChanged.filters.source": "स्रोत",
+  "whatChanged.filters.any": "कोई भी",
+  "whatChanged.filters.apply": "फ़िल्टर लगाएँ",
+  "whatChanged.filters.clear": "फ़िल्टर हटाएँ",
+  "whatChanged.count.one": "{count} अपडेट",
+  "whatChanged.count.other": "{count} अपडेट",
+  "whatChanged.countFiltered.one": "{total} में से {count} अपडेट मेल खाता है",
+  "whatChanged.countFiltered.other":
+    "{total} में से {count} अपडेट मेल खाते हैं",
+  "whatChanged.empty.title": "कोई अपडेट नहीं मिला",
+  "whatChanged.empty.text":
+    "कम फ़िल्टर या छोटी खोज आज़माएँ। केवल पिछले 60 दिन के अपडेट रखे जाते हैं।",
+  "whatChanged.pagination": "पेज",
+  "whatChanged.previous": "पिछला",
+  "whatChanged.next": "अगला",
+  "whatChanged.page": "पेज {page} / {pages}",
+  "whatChanged.sources":
+    "{count} आधिकारिक स्रोत। 60 दिन से पुराने अपडेट शामिल नहीं हैं।",
+  "whatChanged.relatedTools": "संबंधित टूल",
+  "tool.recentNews": "हाल की खबरें",
+  "tool.recentNewsAll": "सभी अपडेट",
 
   // Home
   "home.greeting": "आप AI से क्या करना चाहते हैं?",
@@ -187,16 +232,6 @@ export const hi: Record<MessageKey, string> = {
     "साइन इन रद्द कर दिया गया। आप जब चाहें फिर कोशिश कर सकते हैं।",
   "auth.error.rate-limited":
     "बहुत ज़्यादा कोशिशें हो गईं। कृपया एक मिनट रुककर फिर कोशिश कीजिए।",
-
-  // Coming soon pages
-  "comingSoon.status": "जल्द आ रहा है",
-  "comingSoon.back": "होम पर वापस जाएँ",
-  "comingSoon.toolLibrary":
-    "जाँची हुई जानकारी के साथ AI टूल की एक लाइब्रेरी आगे के किसी संस्करण में आएगी।",
-  "comingSoon.whatChanged":
-    "AI टूल और प्लान में हुए जाँचे हुए बदलावों की सूची आगे के किसी संस्करण में आएगी।",
-  "comingSoon.comparePlans":
-    "अलग-अलग टूल के प्लान की आमने-सामने तुलना आगे के किसी संस्करण में आएगी।",
 
   // Tool Library, tool pages, Get it and Compare
   "nav.compare": "टूल की तुलना",
@@ -625,6 +660,8 @@ export const hi: Record<MessageKey, string> = {
     "आपकी थीम और भाषा दो छोटी पसंद वाली कुकी में भी एक साल के लिए रखी जाती हैं, ताकि सर्वर बिना झपकी के सही रूप और भाषा दिखा सके। हर कुकी में एक शब्द होता है, और कुछ नहीं।",
   "privacy.device.text3":
     "शेयर लिंक में योजना के चुनाव पते में # के बाद रहते हैं। ब्राउज़र वह हिस्सा किसी सर्वर को नहीं भेजते, इसलिए हमें वह कभी नहीं मिलता।",
+  "privacy.device.news":
+    "AI समाचार हमारा सर्वर आधिकारिक साइटों की सार्वजनिक फ़ीड से पढ़ता है, और जब तक आप कोई सुर्खी नहीं खोलते आपका ब्राउज़र उन साइटों से संपर्क नहीं करता। कौन-सी सुर्खी आपके सहेजे प्लान पर असर डालती है, यह आपके डिवाइस पर आपके सहेजे प्लान से तय होता है, और इसमें से कुछ भी कहीं नहीं भेजा जाता।",
   "privacy.device.text4":
     "यह सब मिटाने के लिए सेटिंग खोलकर “इस डिवाइस का सारा डेटा मिटाएँ” चुनिए, या अपने ब्राउज़र में इस साइट का डेटा साफ़ कर दीजिए।",
   "privacy.never.title": "जो हम नहीं करते",

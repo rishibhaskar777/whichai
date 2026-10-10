@@ -1,0 +1,247 @@
+import { describe, expect, it } from "vitest";
+import { tagItem } from "./tagging";
+import { decodeEntities, toPlainText, truncate } from "./text";
+import { createToolMatcher } from "./tool-match";
+import type { NewsTag } from "./types";
+
+describe("toPlainText", () => {
+  it("removes tags, scripts and styles and keeps the words", () => {
+    expect(
+      toPlainText(
+        "<p>One <b>two</b></p><script>x()</script><style>a{}</style>three",
+      ),
+    ).toBe("One two three");
+  });
+
+  it("drops an unclosed script block and everything after it", () => {
+    expect(toPlainText("Before <script>alert(1) and then more")).toBe("Before");
+  });
+
+  it("treats CDATA as raw and other text as escaped", () => {
+    expect(toPlainText("<![CDATA[a &amp; b]]> &lt;i&gt;c&lt;/i&gt;")).toBe(
+      "a & b c",
+    );
+  });
+
+  it("collapses whitespace and control characters", () => {
+    expect(toPlainText("  a \n\t b\u0000c  ")).toBe("a b c");
+  });
+
+  it("only reads the start of a huge input", () => {
+    const started = performance.now();
+    expect(toPlainText("<p>x</p>".repeat(100_000)).length).toBeLessThan(10_000);
+    expect(performance.now() - started).toBeLessThan(500);
+  });
+});
+
+describe("toPlainText: nested and malformed markup", () => {
+  const dangerous = [
+    "<scr<script>ipt>alert(1)</script>",
+    "<<script>script>alert(1)<</script>/script>",
+    "<img src=x onerror=alert(1)>",
+    "<script",
+    "<scr<scr<script>ipt>ipt>alert(1)",
+    '<a href="javascript:alert(1)">click</a',
+    "&lt;script&gt;alert(1)&lt;/script&gt;",
+    "&lt;scr&lt;script&gt;ipt&gt;alert(1)",
+    "&amp;lt;script&amp;gt;alert(1)",
+    "<![CDATA[<scr<script>ipt>alert(1)]]>",
+    "<!-- <script> --><scr<!-- x -->ipt>",
+  ];
+
+  it.each(dangerous)("leaves no angle brackets from %s", (input) => {
+    expect(toPlainText(input)).not.toMatch(/[<>]/);
+  });
+
+  it("removes the nested cases completely", () => {
+    expect(toPlainText("<scr<script>ipt>alert(1)</script>")).toBe("scr");
+    expect(toPlainText("<<script>script>")).toBe("");
+    expect(toPlainText("<img src=x onerror=alert(1)>")).toBe("");
+    expect(toPlainText("<script")).toBe("");
+    expect(toPlainText("Before <script")).toBe("Before");
+  });
+
+  it("decodes encoded markup and then strips it", () => {
+    expect(toPlainText("&lt;script&gt;alert(1)&lt;/script&gt;Hello")).toBe(
+      "Hello",
+    );
+    expect(toPlainText("&lt;b&gt;Bold&lt;/b&gt; text")).toBe("Bold text");
+  });
+
+  it("keeps ordinary headlines unchanged", () => {
+    for (const headline of [
+      "Introducing GPT-5.1: faster, cheaper and smarter",
+      "Claude Code v2.1.296",
+      'Tom & Jerry\'s "live" show — it’s here…',
+      "How we cut costs by 40% (and what we learned)",
+      "Next.js 16: what's new?",
+      "नई भाषा मॉडल",
+    ]) {
+      expect(toPlainText(headline)).toBe(headline);
+    }
+  });
+
+  it("keeps the words around a lone less-than or greater-than sign", () => {
+    expect(toPlainText("Model scores < 5% error and > baseline")).toBe(
+      "Model scores 5% error and baseline",
+    );
+    expect(toPlainText("a < b")).toBe("a b");
+    expect(toPlainText("<3 AI")).toBe("3 AI");
+    expect(toPlainText("5 <6 and 7> 2")).toBe("5 6 and 7 2");
+  });
+
+  it("still treats a letter, slash, bang or question mark as a tag", () => {
+    expect(toPlainText("x <b>y</b> z")).toBe("x y z");
+    expect(toPlainText("x <?php echo 1 ?> y")).toBe("x y");
+    expect(toPlainText("x <!DOCTYPE html> y")).toBe("x y");
+    expect(toPlainText("x </p> y")).toBe("x y");
+  });
+
+  it("never outputs an angle bracket for 500 random strings", () => {
+    const pieces = ["<", ">", "script", "!--", "&lt;", "&gt;", "a", "b", "x y"];
+    // A small seeded generator keeps a failure reproducible.
+    let state = 20261010;
+    const next = () => {
+      state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+      return state / 2 ** 32;
+    };
+    for (let run = 0; run < 500; run += 1) {
+      const length = 1 + Math.floor(next() * 40);
+      let input = "";
+      for (let index = 0; index < length; index += 1) {
+        input += pieces[Math.floor(next() * pieces.length)];
+      }
+      const output = toPlainText(input);
+      expect(output, `input: ${input}`).not.toMatch(/[<>]/);
+    }
+  });
+
+  it("stays quick on long runs of unmatched brackets", () => {
+    const started = performance.now();
+    toPlainText("<".repeat(50_000) + "<script" + ">".repeat(50_000));
+    expect(performance.now() - started).toBeLessThan(1000);
+  });
+});
+
+describe("decodeEntities", () => {
+  it("decodes named, decimal and hex references", () => {
+    expect(decodeEntities("&amp; &lt; &#65; &#x42; &hellip;")).toBe(
+      "& < A B …",
+    );
+  });
+
+  it("leaves unknown names and out-of-range numbers alone or empty", () => {
+    expect(decodeEntities("&nope; &#0; &#55296;")).toBe("&nope;  ");
+  });
+});
+
+describe("truncate", () => {
+  it("returns short text unchanged", () => {
+    expect(truncate("short", 160)).toBe("short");
+  });
+
+  it("cuts at a word and adds an ellipsis within the limit", () => {
+    const result = truncate("alpha beta gamma delta epsilon", 20);
+    expect(result).toBe("alpha beta gamma…");
+    expect(Array.from(result).length).toBeLessThanOrEqual(20);
+  });
+
+  it("does not split an emoji", () => {
+    const result = truncate("\u{1F600}".repeat(30), 10);
+    expect(Array.from(result)).toHaveLength(10);
+  });
+});
+
+describe("tagItem", () => {
+  const tag = (title: string, defaultTag: NewsTag = "other", summary = "") =>
+    tagItem({ title, summary, defaultTag });
+
+  it("finds pricing and plan changes", () => {
+    expect(tag("New pricing for the Pro plan")).toBe("pricing");
+    expect(tag("Usage limits are changing")).toBe("pricing");
+  });
+
+  it("finds policy changes", () => {
+    expect(tag("Updating our privacy policy")).toBe("policy");
+  });
+
+  it("finds new models", () => {
+    expect(tag("Introducing GPT-5.1")).toBe("new-model");
+    expect(tag("Gemini 4 Argon is here")).toBe("new-model");
+    expect(tag("Mistral Large 4 is out")).toBe("new-model");
+  });
+
+  it("finds research", () => {
+    expect(tag("A new paper on interpretability")).toBe("research");
+  });
+
+  it("finds new tools", () => {
+    expect(tag("Introducing Brand Kit")).toBe("new-tool");
+    expect(tag("Meet the new agent builder")).toBe("new-tool");
+  });
+
+  it("finds feature updates", () => {
+    expect(tag("Voice mode now supports 12 languages")).toBe("feature-update");
+    expect(tag("v2.1.296")).toBe("feature-update");
+  });
+
+  it("falls back to the source default", () => {
+    expect(tag("Quarterly thoughts", "research")).toBe("research");
+    expect(tag("Quarterly thoughts", "feature-update")).toBe("feature-update");
+    expect(tag("Quarterly thoughts")).toBe("other");
+  });
+
+  it("reads a summary only for strong tags and not for research feeds", () => {
+    expect(tag("Our news", "other", "Details on the new pricing")).toBe(
+      "pricing",
+    );
+    expect(tag("Our news", "other", "We are launching a thing")).toBe("other");
+    expect(tag("Our news", "research", "Details on the new pricing")).toBe(
+      "research",
+    );
+  });
+
+  it("lets a title keyword beat a release feed's default", () => {
+    expect(tag("Pricing update", "feature-update")).toBe("pricing");
+  });
+});
+
+describe("createToolMatcher", () => {
+  const match = createToolMatcher([
+    { id: "cursor", name: "Cursor" },
+    { id: "claude", name: "Claude" },
+    { id: "claude-code", name: "Claude Code" },
+    { id: "make-com", name: "Make" },
+    { id: "nextjs", name: "Next.js" },
+    { id: "gpt", name: "GPT4All" },
+    { id: "hindi", name: "भाषा" },
+  ]);
+
+  it("matches whole words with the catalogue's spelling", () => {
+    expect(match("Cursor adds remote agents")).toEqual(["cursor"]);
+    expect(match("Using Next.js with Claude Code")).toEqual([
+      "claude",
+      "claude-code",
+      "nextjs",
+    ]);
+  });
+
+  it("does not match inside other words or in another case", () => {
+    expect(match("Cursors and cursor position")).toEqual([]);
+    expect(match("Claudeville")).toEqual([]);
+  });
+
+  it("never matches names that are common words", () => {
+    expect(match("Make it faster")).toEqual([]);
+  });
+
+  it("handles names in other scripts", () => {
+    expect(match("नई भाषा मॉडल")).toEqual(["hindi"]);
+  });
+
+  it("treats regex characters in names as text", () => {
+    const odd = createToolMatcher([{ id: "odd", name: "C++ (beta)" }]);
+    expect(odd("Using C++ (beta) today")).toEqual(["odd"]);
+    expect(odd("C beta")).toEqual([]);
+  });
+});

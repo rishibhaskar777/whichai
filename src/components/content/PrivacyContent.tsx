@@ -38,6 +38,7 @@ export function PrivacyContent() {
         </ul>
         <p>{t("privacy.device.text2")}</p>
         <p>{t("privacy.device.text3")}</p>
+        <p>{t("privacy.device.news")}</p>
         <p>{t("privacy.device.text4")}</p>
       </section>
 

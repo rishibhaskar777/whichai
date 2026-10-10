@@ -1,28 +1,30 @@
-import {
-  ChevronDownIcon,
-  ExternalLinkIcon,
-  NewsIcon,
-} from "@/components/icons";
-import type { NewsItem } from "@/data/sample/news";
+import Link from "next/link";
+import { ChevronDownIcon, NewsIcon } from "@/components/icons";
+import { NewsEntry } from "@/components/news/NewsEntry";
 import { useI18n } from "@/lib/i18n/provider";
+import type { PanelNews } from "@/lib/news/types";
 import styles from "./NewsPanel.module.css";
 
 export type NewsChoice = "auto" | "open" | "collapsed";
 
 interface NewsPanelProps {
-  items: readonly NewsItem[];
+  news: PanelNews;
   choice: NewsChoice;
   expanded: boolean;
   onToggle: () => void;
 }
 
 export function NewsPanel({
-  items,
+  news,
   choice,
   expanded,
   onToggle,
 }: NewsPanelProps) {
-  const { t, formatDate } = useI18n();
+  const i18n = useI18n();
+  const { t, formatRelative } = i18n;
+  const now = Date.parse(news.now);
+  const unavailable = news.allFailed || news.items.length === 0;
+
   return (
     <aside
       className={styles.panel}
@@ -35,7 +37,6 @@ export function NewsPanel({
         <h2 id="news-heading" className={styles.title}>
           {t("news.title")}
         </h2>
-        <span className={styles.badge}>{t("news.sample")}</span>
         <button
           type="button"
           className={styles.toggle}
@@ -48,40 +49,48 @@ export function NewsPanel({
         </button>
       </div>
 
-      <ul id="news-list" className={styles.list}>
-        {items.map((item) => (
-          <li key={item.id} className={styles.item}>
-            <article className={styles.article}>
-              <div className={styles.meta}>
-                <span className={styles.source}>{item.source}</span>
-                <time dateTime={item.date} className={styles.date}>
-                  {formatDate(item.date, "short", "UTC")}
-                </time>
-              </div>
-              <p className={styles.summary}>{item.summary}</p>
-              <div className={styles.footer}>
-                <span className={styles.tag}>
-                  <span
-                    className={styles.dot}
-                    data-tag={item.tag}
-                    aria-hidden="true"
-                  />
-                  {item.tag}
-                </span>
-                <a
-                  href={item.url}
-                  className={styles.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={t("news.visit", { source: item.source })}
-                >
-                  <ExternalLinkIcon width="16" height="16" />
-                </a>
-              </div>
-            </article>
-          </li>
-        ))}
-      </ul>
+      <div id="news-list" className={styles.body}>
+        <p className={styles.note}>{t("news.sourceNote")}</p>
+        {news.lastUpdated ? (
+          <p className={styles.note}>
+            {t("news.updated", {
+              time: formatRelative(news.lastUpdated, now),
+            })}
+          </p>
+        ) : null}
+
+        {unavailable ? (
+          <div className={styles.state} role="status">
+            <p className={styles.stateTitle}>{t("news.unavailable")}</p>
+            <p>
+              {news.lastUpdated
+                ? t("news.lastSuccess", {
+                    time: formatRelative(news.lastUpdated, now),
+                  })
+                : t("news.neverUpdated")}
+            </p>
+          </div>
+        ) : null}
+
+        {news.items.length > 0 ? (
+          <ul className={styles.list}>
+            {news.items.map((item) => (
+              <li key={item.id} className={styles.item}>
+                <NewsEntry
+                  item={item}
+                  now={now}
+                  i18n={i18n}
+                  showSummary={false}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        <Link href="/what-changed" className={styles.seeAll}>
+          {t("news.seeAll")}
+        </Link>
+      </div>
     </aside>
   );
 }

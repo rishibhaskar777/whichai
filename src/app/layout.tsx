@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import type { ReactNode } from "react";
 import { AppShell } from "@/components/app-shell/AppShell";
-import { sampleNews } from "@/data/sample/news";
 import { getProviderAvailability } from "@/lib/auth/config";
 import { getViewer } from "@/lib/auth/get-session";
 import { getEnv } from "@/lib/env";
 import { I18nProvider } from "@/lib/i18n/provider";
 import { getLocale } from "@/lib/i18n/server";
+import { getNews } from "@/lib/news";
+import { panelItems } from "@/lib/news/select";
 import { THEME_COOKIE, parseTheme } from "@/lib/theme";
 import { notoDevanagari, onest } from "./fonts";
 import "@/styles/tokens.css";
@@ -47,6 +48,7 @@ export default async function RootLayout({
   await headers();
   const theme = parseTheme((await cookies()).get(THEME_COOKIE)?.value);
   const locale = await getLocale();
+  const snapshot = await getNews();
 
   return (
     <html
@@ -57,7 +59,12 @@ export default async function RootLayout({
       <body>
         <I18nProvider locale={locale}>
           <AppShell
-            news={sampleNews}
+            news={{
+              items: panelItems(snapshot.items),
+              now: snapshot.generatedAt,
+              lastUpdated: snapshot.lastUpdated,
+              allFailed: snapshot.allFailed,
+            }}
             initialTheme={theme ?? "system"}
             viewer={await getViewer()}
             providers={getProviderAvailability()}

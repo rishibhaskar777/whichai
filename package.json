@@ -15,10 +15,12 @@
     "format": "prettier --write .",
     "data:report": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/data-report.ts",
     "data:version": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/catalogue-version.ts",
-    "links:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-links.ts"
+    "links:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-links.ts",
+    "news:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-news.ts"
   },
   "dependencies": {
     "arctic": "^3.7.0",
+    "fast-xml-parser": "^5.11.2",
     "jose": "^6.2.12",
     "next": "^16.4.0",
     "react": "^19.3.0",

@@ -27,10 +27,55 @@ export const en = {
 
   // News panel
   "news.title": "AI news",
-  "news.sample": "Sample content",
   "news.collapse": "Collapse AI news",
   "news.expand": "Expand AI news",
-  "news.visit": "Visit {source} (opens in a new tab)",
+  "news.sourceNote":
+    "Headlines from official sources, updated about every 30 minutes",
+  "news.updated": "Last updated {time}",
+  "news.unavailable": "News is temporarily unavailable",
+  "news.lastSuccess": "Last successful update: {time}",
+  "news.neverUpdated": "No update has succeeded yet.",
+  "news.empty": "No recent headlines from official sources yet.",
+  "news.new": "New",
+  "news.affects": "Affects your plans",
+  "news.opensInNewTab": "(opens in a new tab)",
+  "news.seeAll": "See all updates",
+  "news.tag.new-model": "New model",
+  "news.tag.new-tool": "New tool",
+  "news.tag.feature-update": "Feature update",
+  "news.tag.pricing": "Pricing or plan",
+  "news.tag.policy": "Policy",
+  "news.tag.research": "Research",
+  "news.tag.other": "Other",
+  "news.justNow": "just now",
+
+  // What Changed
+  "whatChanged.lede":
+    "Announcements, release notes and changelogs from the official sites of the tools in the catalogue. Headlines stay in their original language and each one links to the source.",
+  "whatChanged.filters.label": "Filter updates",
+  "whatChanged.filters.search": "Search headlines",
+  "whatChanged.filters.searchPlaceholder": "A tool, a company or a word",
+  "whatChanged.filters.tag": "Type",
+  "whatChanged.filters.source": "Source",
+  "whatChanged.filters.any": "Any",
+  "whatChanged.filters.apply": "Apply filters",
+  "whatChanged.filters.clear": "Clear filters",
+  "whatChanged.count.one": "{count} update",
+  "whatChanged.count.other": "{count} updates",
+  "whatChanged.countFiltered.one": "{count} update matches, of {total}",
+  "whatChanged.countFiltered.other": "{count} updates match, of {total}",
+  "whatChanged.empty.title": "No updates match",
+  "whatChanged.empty.text":
+    "Try fewer filters or a shorter search. Only the last 60 days are kept.",
+  "whatChanged.pagination": "Pages",
+  "whatChanged.previous": "Previous",
+  "whatChanged.next": "Next",
+  "whatChanged.page": "Page {page} of {pages}",
+  "whatChanged.sources":
+    "{count} official sources. Items older than 60 days are left out.",
+  "whatChanged.relatedTools": "Related tools",
+  "tool.recentNews": "Recent news",
+  "tool.recentNewsAll": "All updates",
 
   // Home
   "home.greeting": "What do you want to do with AI?",
@@ -184,16 +229,6 @@ export const en = {
     "Sign-in was cancelled. You can try again whenever you like.",
   "auth.error.rate-limited":
     "Too many attempts. Please wait a minute and try again.",
-
-  // Coming soon pages
-  "comingSoon.status": "Coming soon",
-  "comingSoon.back": "Back to home",
-  "comingSoon.toolLibrary":
-    "A browsable library of AI tools, with verified details, is planned for a later release.",
-  "comingSoon.whatChanged":
-    "A log of verified changes to AI tools and plans is planned for a later release.",
-  "comingSoon.comparePlans":
-    "Side-by-side comparison of plans from different tools is planned for a later release.",
 
   // Tool Library, tool pages, Get it and Compare
   "nav.compare": "Compare tools",
@@ -624,6 +659,8 @@ export const en = {
     "Your theme and language are also saved in two small preference cookies for a year, so the server can show the right look and language with no flash. They hold one word each and nothing else.",
   "privacy.device.text3":
     "Share links keep the plan choices after the # in the address. Browsers never send that part to a server, so we never receive it.",
+  "privacy.device.news":
+    "The AI news is read by our server from the public feeds of official sites, and your browser never contacts those sites until you open a headline. Which headlines affect your saved plans is worked out on your device from your saved plans, and nothing about it is sent anywhere.",
   "privacy.device.text4":
     "To delete all of it, open Settings and choose Clear all data on this device, or clear this site's data in your browser.",
   "privacy.never.title": "What we don't do",

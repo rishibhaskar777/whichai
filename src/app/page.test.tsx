@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
-import { sampleNews } from "@/data/sample/news";
+import { panelNewsFixture } from "@/test/news";
 import { seriousViolations } from "@/test/axe";
 import HomePage from "./page";
 
@@ -13,7 +13,7 @@ describe("home page", () => {
   it("has no serious or critical axe violations", async () => {
     const { container } = render(
       <AppShell
-        news={sampleNews}
+        news={panelNewsFixture}
         initialTheme="system"
         viewer={null}
         providers={{ google: true, github: true }}

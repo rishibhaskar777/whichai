@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
 import { catalogue } from "@/data/catalogue";
-import { sampleNews } from "@/data/sample/news";
+import { panelNewsFixture } from "@/test/news";
 import { headingViolations, seriousViolations } from "@/test/axe";
 import { HomeFlow } from "./HomeFlow";
 
@@ -17,7 +17,7 @@ const UNKNOWN_GOAL = "What is the weather in Delhi today";
 function renderHome() {
   return render(
     <AppShell
-      news={sampleNews}
+      news={panelNewsFixture}
       initialTheme="system"
       viewer={null}
       providers={{ google: true, github: true }}

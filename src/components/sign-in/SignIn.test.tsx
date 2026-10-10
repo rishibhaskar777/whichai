@@ -2,7 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
-import { sampleNews } from "@/data/sample/news";
+import { panelNewsFixture } from "@/test/news";
 import type { Viewer } from "@/lib/auth/get-session";
 import { seriousViolations } from "@/test/axe";
 import { SignInPanel } from "./SignInPanel";
@@ -196,7 +196,7 @@ describe("SignInPanel", () => {
 function renderShell(viewer: Viewer | null) {
   return render(
     <AppShell
-      news={sampleNews}
+      news={panelNewsFixture}
       initialTheme="system"
       viewer={viewer}
       providers={both}

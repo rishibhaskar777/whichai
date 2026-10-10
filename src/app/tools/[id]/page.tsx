@@ -4,6 +4,8 @@ import { ToolDetail } from "@/components/tools/ToolDetail";
 import { catalogue } from "@/data/catalogue";
 import { getI18n } from "@/lib/i18n/server";
 import { toolDetails } from "@/lib/library/tool-details";
+import { getNews } from "@/lib/news";
+import { newsForTool } from "@/lib/news/select";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -35,5 +37,15 @@ export default async function Page({ params }: PageProps) {
   const { id } = await params;
   const details = toolDetails(id, catalogue);
   if (!details) notFound();
-  return <ToolDetail details={details} i18n={await getI18n()} />;
+  const snapshot = await getNews();
+  return (
+    <ToolDetail
+      details={details}
+      i18n={await getI18n()}
+      news={{
+        items: newsForTool(snapshot.items, id),
+        now: Date.parse(snapshot.generatedAt),
+      }}
+    />
+  );
 }
