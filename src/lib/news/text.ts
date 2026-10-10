@@ -46,44 +46,132 @@ export function decodeEntities(text: string): string {
  * is raw, so the two are decoded differently.
  */
 function unwrapCdata(raw: string): string {
+  const OPEN = "<![CDATA[";
+  const CLOSE = "]]>";
   let result = "";
   let position = 0;
-  for (const match of raw.matchAll(/<!\[CDATA\[([\s\S]*?)\]\]>/g)) {
-    result += decodeEntities(raw.slice(position, match.index));
-    result += match[1] ?? "";
-    position = match.index + match[0].length;
+  for (;;) {
+    const start = raw.indexOf(OPEN, position);
+    const end = start === -1 ? -1 : raw.indexOf(CLOSE, start + OPEN.length);
+    if (end === -1) break;
+    result += decodeEntities(raw.slice(position, start));
+    result += raw.slice(start + OPEN.length, end);
+    position = end + CLOSE.length;
   }
   return result + decodeEntities(raw.slice(position));
 }
 
-const MAX_STRIP_PASSES = 10;
+/** Elements that separate words, so their removal leaves a space. */
+const SPACING_TAGS = new Set([
+  "p",
+  "br",
+  "div",
+  "li",
+  "ul",
+  "ol",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "tr",
+  "td",
+  "th",
+  "pre",
+  "blockquote",
+  "hr",
+  "section",
+  "article",
+]);
 
-/**
- * Removes markup until nothing changes, because one pass can leave a tag
- * behind when removing the inner part joins the outer parts together
- * (`<scr<script>ipt>`). The result is plain text, which never needs angle
- * brackets, so any that remain are removed too.
- */
-function stripMarkup(text: string): string {
-  let current = text;
-  for (let pass = 0; pass < MAX_STRIP_PASSES; pass += 1) {
-    const next = removeMarkupOnce(current);
-    if (next === current) break;
-    current = next;
-  }
-  return current.replace(/[<>]/g, "");
+/** Elements whose content is code, not text, and is dropped with the tags. */
+const CODE_TAGS = new Set(["script", "style"]);
+
+function isNameCharacter(character: string | undefined): boolean {
+  return (
+    character !== undefined &&
+    ((character >= "a" && character <= "z") ||
+      (character >= "A" && character <= "Z") ||
+      (character >= "0" && character <= "9"))
+  );
 }
 
-function removeMarkupOnce(html: string): string {
-  return html
-    .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, " ")
-    .replace(/<(script|style)\b[\s\S]*$/gi, " ")
-    .replace(/<!--[\s\S]*?-->/g, " ")
-    .replace(
-      /<\/?(?:p|br|div|li|ul|ol|h[1-6]|tr|td|th|pre|blockquote|hr|section|article)\b[^>]*>/gi,
-      " ",
-    )
-    .replace(/<\/?[a-zA-Z!?][^>]*>/g, "");
+/** The lower-case element name after `<` or `</`, or "" if there is none. */
+function elementNameAt(text: string, from: number): string {
+  let start = from;
+  if (text[start] === "/") start += 1;
+  let end = start;
+  while (isNameCharacter(text[end])) end += 1;
+  return text.slice(start, end).toLowerCase();
+}
+
+/** Index just past the `>` of the next `</name ...>`, or -1 if there is none. */
+function endOfClosingTag(text: string, name: string, from: number): number {
+  let at = text.indexOf("</", from);
+  while (at !== -1) {
+    const next = at + 2;
+    const candidate = text.slice(next, next + name.length).toLowerCase();
+    if (candidate === name && !isNameCharacter(text[next + name.length])) {
+      const close = text.indexOf(">", next + name.length);
+      return close === -1 ? text.length : close + 1;
+    }
+    at = text.indexOf("</", next);
+  }
+  return -1;
+}
+
+/**
+ * Removes markup by scanning the text once, with no pattern matching. A `<`
+ * starts a tag that runs to the next `>`, or to the end of the text if there
+ * is none. A `<` met inside a tag is not part of it: the earlier `<` is
+ * dropped and the scan restarts there, so `<scr<script>ipt>` cannot join
+ * into a tag. Comments and the content of script and style elements are
+ * dropped with their delimiters. Neither `<` nor `>` is ever output, because
+ * the result is plain text.
+ */
+export function stripMarkup(text: string): string {
+  const length = text.length;
+  let output = "";
+  let position = 0;
+
+  while (position < length) {
+    const open = text.indexOf("<", position);
+    const plain =
+      open === -1 ? text.slice(position) : text.slice(position, open);
+    output += plain.split(">").join("");
+    if (open === -1) break;
+
+    if (text.startsWith("<!--", open)) {
+      const end = text.indexOf("-->", open + 4);
+      output += " ";
+      position = end === -1 ? length : end + 3;
+      continue;
+    }
+
+    let close = open + 1;
+    while (close < length && text[close] !== ">" && text[close] !== "<") {
+      close += 1;
+    }
+    if (close >= length) break;
+    if (text[close] === "<") {
+      // The first `<` is only a character; what follows it is read again.
+      position = open + 1;
+      continue;
+    }
+
+    const name = elementNameAt(text, open + 1);
+    const isClosing = text[open + 1] === "/";
+    if (!isClosing && CODE_TAGS.has(name)) {
+      const end = endOfClosingTag(text, name, close + 1);
+      output += " ";
+      position = end === -1 ? length : end;
+      continue;
+    }
+    if (SPACING_TAGS.has(name)) output += " ";
+    position = close + 1;
+  }
+  return output;
 }
 
 function collapse(text: string): string {

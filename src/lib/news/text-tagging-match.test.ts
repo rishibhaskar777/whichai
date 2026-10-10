@@ -81,6 +81,25 @@ describe("toPlainText: nested and malformed markup", () => {
     }
   });
 
+  it("never outputs an angle bracket for 500 random strings", () => {
+    const pieces = ["<", ">", "script", "!--", "&lt;", "&gt;", "a", "b", "x y"];
+    // A small seeded generator keeps a failure reproducible.
+    let state = 20261010;
+    const next = () => {
+      state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+      return state / 2 ** 32;
+    };
+    for (let run = 0; run < 500; run += 1) {
+      const length = 1 + Math.floor(next() * 40);
+      let input = "";
+      for (let index = 0; index < length; index += 1) {
+        input += pieces[Math.floor(next() * pieces.length)];
+      }
+      const output = toPlainText(input);
+      expect(output, `input: ${input}`).not.toMatch(/[<>]/);
+    }
+  });
+
   it("stays quick on long runs of unmatched brackets", () => {
     const started = performance.now();
     toPlainText("<".repeat(50_000) + "<script" + ">".repeat(50_000));
