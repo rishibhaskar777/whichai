@@ -1,0 +1,1906 @@
+[
+  {
+    "id": "adobe-express",
+    "name": "Adobe Express",
+    "providerId": "adobe",
+    "jobs": ["image-editing", "design-tool", "social-media"],
+    "summary": "Adobe's simple online design app for social posts, flyers and quick edits, with templates and Firefly features.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "templates for posts, flyers and short videos",
+      "connects to Adobe's other apps and AI tools"
+    ],
+    "watchOutFor": [
+      "Some templates and features are paid.",
+      "Check the licence for stock content."
+    ],
+    "fitScores": {
+      "image-editing": 3,
+      "design-tool": 4,
+      "social-media": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.adobe.com",
+    "officialDomains": ["adobe.com"],
+    "getIt": {
+      "web": {
+        "url": "https://new.express.adobe.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "adobe-firefly",
+    "name": "Adobe Firefly",
+    "providerId": "adobe",
+    "jobs": ["image-generation"],
+    "summary": "Adobe's AI image generator, also built into Adobe apps such as Photoshop and Express.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": ["adobe-photoshop", "adobe-premiere-pro"],
+    "strengths": ["a simple web interface", "close links with Adobe apps"],
+    "watchOutFor": [
+      "Generation credits are limited on free use.",
+      "Check the licence terms for your kind of use."
+    ],
+    "fitScores": {
+      "image-generation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.adobe.com",
+    "officialDomains": ["adobe.com"],
+    "getIt": {
+      "web": {
+        "url": "https://firefly.adobe.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "adobe-podcast",
+    "name": "Adobe Podcast",
+    "providerId": "adobe",
+    "jobs": ["voice-and-audio"],
+    "summary": "Adobe's web tool for cleaning up speech recordings, removing noise and echo, and editing audio like text.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "Enhance Speech cleans up voice recordings",
+      "a simple web editor"
+    ],
+    "watchOutFor": [
+      "Free use has limits on length and number of files. Check the current rules.",
+      "Over-processing can make voices sound artificial."
+    ],
+    "fitScores": {
+      "voice-and-audio": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://podcast.adobe.com",
+    "officialDomains": ["podcast.adobe.com", "adobe.com"],
+    "getIt": {
+      "web": {
+        "url": "https://podcast.adobe.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "adobe-premiere-pro",
+    "name": "Adobe Premiere Pro",
+    "providerId": "adobe",
+    "jobs": ["video-editing"],
+    "summary": "A professional timeline-based video editor from Adobe.",
+    "kind": "app",
+    "skillLevel": "advanced",
+    "hasFreeOption": false,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos"],
+    "worksWith": ["adobe-firefly", "adobe-photoshop"],
+    "strengths": [
+      "a professional editor used widely in the industry",
+      "close links with other Adobe apps"
+    ],
+    "watchOutFor": [
+      "It is a subscription product, with a trial rather than a free plan.",
+      "Powerful but takes time to learn."
+    ],
+    "fitScores": {
+      "video-editing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.adobe.com",
+    "officialDomains": ["adobe.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.adobe.com/products/premiere.html",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.adobe.com/products/premiere.html",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "aiva",
+    "name": "AIVA",
+    "providerId": "aiva",
+    "jobs": ["music-generation"],
+    "summary": "An AI composer that creates instrumental music in many styles, aimed at film, games and background tracks.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos"],
+    "worksWith": [],
+    "strengths": [
+      "instrumental and orchestral styles",
+      "editable compositions"
+    ],
+    "watchOutFor": [
+      "Check what each plan allows for commercial use.",
+      "Instrumental only. No vocals."
+    ],
+    "fitScores": {
+      "music-generation": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.aiva.ai",
+    "officialDomains": ["aiva.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://www.aiva.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "audacity",
+    "name": "Audacity",
+    "providerId": "audacity-team",
+    "jobs": ["voice-and-audio"],
+    "summary": "A free, open-source program for recording and editing audio.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "free recording and clean-up of audio",
+      "full control over each track"
+    ],
+    "watchOutFor": [
+      "It is not an AI voice tool. It records and edits sound only.",
+      "The interface takes time to learn."
+    ],
+    "fitScores": {
+      "voice-and-audio": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.audacityteam.org",
+    "officialDomains": ["audacityteam.org"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.audacityteam.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.audacityteam.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://www.audacityteam.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "bandlab",
+    "name": "BandLab",
+    "providerId": "bandlab",
+    "jobs": ["voice-and-audio", "music-generation"],
+    "summary": "A free online and mobile music studio for recording, mixing and sharing songs, with loops and AI helpers.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "a full recording studio in the browser and phone",
+      "a library of loops and sounds"
+    ],
+    "watchOutFor": [
+      "Browser and phone performance varies with your device.",
+      "Check the licence terms for loops you publish."
+    ],
+    "fitScores": {
+      "voice-and-audio": 3,
+      "music-generation": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.bandlab.com",
+    "officialDomains": ["bandlab.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.bandlab.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "beatoven-ai",
+    "name": "Beatoven.ai",
+    "providerId": "beatoven",
+    "jobs": ["music-generation"],
+    "summary": "An AI music tool, founded in India, that makes background music for videos and podcasts from mood and genre.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "background music matched to a mood",
+      "royalty-free tracks for creators"
+    ],
+    "watchOutFor": [
+      "Check the licence on your plan for commercial use.",
+      "Instrumental tracks only."
+    ],
+    "fitScores": {
+      "music-generation": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.beatoven.ai",
+    "officialDomains": ["beatoven.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://www.beatoven.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "buffer",
+    "name": "Buffer",
+    "providerId": "buffer",
+    "jobs": ["social-media"],
+    "summary": "A simple tool for planning and scheduling posts across social networks, with basic analytics.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "a clean, simple scheduler",
+      "works across the main networks"
+    ],
+    "watchOutFor": [
+      "Free use limits channels and scheduled posts. Check the current rules.",
+      "Each network has its own rules for scheduling tools."
+    ],
+    "fitScores": {
+      "social-media": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://buffer.com",
+    "officialDomains": ["buffer.com"],
+    "getIt": {
+      "web": {
+        "url": "https://buffer.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "camtasia",
+    "name": "Camtasia",
+    "providerId": "techsmith",
+    "jobs": ["screen-recording", "video-editing"],
+    "summary": "A screen recorder with a built-in editor for polished tutorials and training videos.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos"],
+    "worksWith": [],
+    "strengths": [
+      "record and edit in one program",
+      "callouts, zoom and cursor effects"
+    ],
+    "watchOutFor": [
+      "A paid product, with a trial listed on the official page.",
+      "Aimed at tutorial makers more than quick captures."
+    ],
+    "fitScores": {
+      "screen-recording": 4,
+      "video-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.techsmith.com",
+    "officialDomains": ["techsmith.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.techsmith.com/download/camtasia/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.techsmith.com/download/camtasia/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "capcut",
+    "name": "CapCut",
+    "providerId": "bytedance",
+    "jobs": ["video-editing"],
+    "summary": "A video editor for phones and computers with templates, captions and effects.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "quick edits with templates and automatic captions",
+      "short vertical videos"
+    ],
+    "watchOutFor": [
+      "Check that it is available where you live. Some countries restrict it.",
+      "Some effects and exports may need a paid plan."
+    ],
+    "fitScores": {
+      "video-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.capcut.com",
+    "officialDomains": ["capcut.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.capcut.com",
+        "linkCheckedOn": null
+      },
+      "windows": {
+        "url": "https://www.capcut.com/download",
+        "linkCheckedOn": null
+      },
+      "macos": {
+        "url": "https://www.capcut.com/download",
+        "linkCheckedOn": null
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1500855883",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "clipchamp",
+    "name": "Clipchamp",
+    "providerId": "microsoft",
+    "jobs": ["video-editing"],
+    "summary": "A simple video editor from Microsoft that runs in the browser and on Windows.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows"],
+    "worksWith": ["microsoft-copilot"],
+    "strengths": [
+      "a plain timeline that is easy to learn",
+      "nothing to install when used in the browser"
+    ],
+    "watchOutFor": [
+      "It has fewer advanced features than professional editors.",
+      "Export quality options may depend on your plan."
+    ],
+    "fitScores": {
+      "video-editing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://clipchamp.com",
+    "officialDomains": ["clipchamp.com", "microsoft.com"],
+    "getIt": {
+      "web": {
+        "url": "https://clipchamp.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "comfyui",
+    "name": "ComfyUI",
+    "providerId": "comfy-org",
+    "jobs": ["image-generation", "video-generation"],
+    "summary": "An open-source node-based program for running image and video models on your own computer, with full control over each step.",
+    "kind": "app",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": ["flux-models", "stable-diffusion"],
+    "strengths": [
+      "total control over how an image is made",
+      "runs locally with open models"
+    ],
+    "watchOutFor": [
+      "It has a steep learning curve and needs a strong graphics card.",
+      "Check the licence of each model you load."
+    ],
+    "fitScores": {
+      "image-generation": 4,
+      "video-generation": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.comfy.org",
+    "officialDomains": [
+      "comfy.org",
+      "github.com/comfyanonymous",
+      "github.com/Comfy-Org"
+    ],
+    "getIt": {
+      "windows": {
+        "url": "https://www.comfy.org/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.comfy.org/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://www.comfy.org/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "davinci-resolve",
+    "name": "DaVinci Resolve",
+    "providerId": "blackmagic-design",
+    "jobs": ["video-editing"],
+    "summary": "A professional video editing and colour-grading program with a free version.",
+    "kind": "app",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "professional editing and colour tools",
+      "a free version for desktop computers"
+    ],
+    "watchOutFor": [
+      "It needs a fairly powerful computer.",
+      "The learning curve is steep for a first video."
+    ],
+    "fitScores": {
+      "video-editing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.blackmagicdesign.com",
+    "officialDomains": ["blackmagicdesign.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "descript",
+    "name": "Descript",
+    "providerId": "descript",
+    "jobs": [
+      "video-editing",
+      "voice-and-audio",
+      "meeting-notes-and-transcription"
+    ],
+    "summary": "An editor that turns speech into text so you can edit audio and video by editing the transcript.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos"],
+    "worksWith": [],
+    "strengths": [
+      "editing talk-based video by editing the transcript",
+      "removing filler words quickly"
+    ],
+    "watchOutFor": [
+      "Check the transcript for errors before you rely on it.",
+      "Free plans limit transcription and exports."
+    ],
+    "fitScores": {
+      "video-editing": 4,
+      "voice-and-audio": 3,
+      "meeting-notes-and-transcription": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.descript.com",
+    "officialDomains": ["descript.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.descript.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "windows": {
+        "url": "https://www.descript.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.descript.com/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "elevenlabs",
+    "name": "ElevenLabs",
+    "providerId": "elevenlabs",
+    "jobs": ["voice-and-audio"],
+    "summary": "An AI voice tool that turns text into natural-sounding speech in many voices and languages.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "ios", "android"],
+    "worksWith": ["heygen"],
+    "strengths": ["natural-sounding voiceovers", "many languages and accents"],
+    "watchOutFor": [
+      "Clone only voices you have permission to use.",
+      "Check the licence if you publish the audio commercially."
+    ],
+    "fitScores": {
+      "voice-and-audio": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://elevenlabs.io",
+    "officialDomains": ["elevenlabs.io"],
+    "getIt": {
+      "web": {
+        "url": "https://elevenlabs.io",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id6743162587",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "ffmpeg",
+    "name": "FFmpeg",
+    "providerId": "ffmpeg",
+    "jobs": ["video-editing"],
+    "summary": "A free command-line toolkit for converting, trimming and processing video and audio files.",
+    "kind": "cli",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["command-line", "windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "converts almost any media format",
+      "scriptable for many files at once"
+    ],
+    "watchOutFor": [
+      "It is a command-line tool with no window.",
+      "Copy commands only from sources you trust."
+    ],
+    "fitScores": {
+      "video-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://ffmpeg.org",
+    "officialDomains": ["ffmpeg.org"],
+    "getIt": {
+      "web": {
+        "url": "https://ffmpeg.org/download.html",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "final-cut-pro",
+    "name": "Final Cut Pro",
+    "providerId": "apple",
+    "jobs": ["video-editing"],
+    "summary": "Apple's professional video editor for Mac, known for fast editing on Apple hardware.",
+    "kind": "app",
+    "skillLevel": "advanced",
+    "hasFreeOption": false,
+    "pricing": "[verify]",
+    "platforms": ["macos"],
+    "worksWith": [],
+    "strengths": ["fast on Macs", "a professional editing workflow"],
+    "watchOutFor": [
+      "Mac only.",
+      "A paid app, with a trial period listed on the official page."
+    ],
+    "fitScores": {
+      "video-editing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.apple.com",
+    "officialDomains": ["apple.com"],
+    "getIt": {
+      "macos": {
+        "url": "https://www.apple.com/final-cut-pro/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "flux-models",
+    "name": "FLUX models",
+    "providerId": "black-forest-labs",
+    "jobs": ["image-generation", "run-ai-locally"],
+    "summary": "Image models from Black Forest Labs, with some versions open for you to run yourself and others used through its service.",
+    "kind": "model",
+    "skillLevel": "advanced",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["comfyui"],
+    "strengths": [
+      "high-quality images from text prompts",
+      "some open-weight versions run on your own computer"
+    ],
+    "watchOutFor": [
+      "Running them yourself needs a strong graphics card.",
+      "Licences differ by version. Check before commercial use."
+    ],
+    "fitScores": {
+      "image-generation": 4,
+      "run-ai-locally": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://bfl.ai",
+    "officialDomains": [
+      "bfl.ai",
+      "blackforestlabs.ai",
+      "huggingface.co/black-forest-labs",
+      "github.com/black-forest-labs"
+    ],
+    "getIt": {
+      "modelPage": {
+        "url": "https://huggingface.co/black-forest-labs",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "garageband",
+    "name": "GarageBand",
+    "providerId": "apple",
+    "jobs": ["voice-and-audio", "music-generation"],
+    "summary": "Apple's free music and podcast studio for Mac, iPhone and iPad.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["macos", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "free on Apple devices",
+      "instruments, loops and simple recording"
+    ],
+    "watchOutFor": [
+      "Apple devices only.",
+      "Fewer controls than professional audio programs."
+    ],
+    "fitScores": {
+      "voice-and-audio": 3,
+      "music-generation": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.apple.com",
+    "officialDomains": ["apple.com"],
+    "getIt": {
+      "macos": {
+        "url": "https://www.apple.com/mac/garageband/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gimp",
+    "name": "GIMP",
+    "providerId": "gimp",
+    "jobs": ["image-editing", "design-tool"],
+    "summary": "A free, open-source photo and image editor for retouching, cut-outs and compositing.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "a free alternative to paid photo editors",
+      "layers, masks and many filters"
+    ],
+    "watchOutFor": [
+      "The interface takes time to learn.",
+      "It does not open every Photoshop feature one-to-one."
+    ],
+    "fitScores": {
+      "image-editing": 4,
+      "design-tool": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.gimp.org",
+    "officialDomains": ["gimp.org"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.gimp.org/downloads/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.gimp.org/downloads/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://www.gimp.org/downloads/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "heygen",
+    "name": "HeyGen",
+    "providerId": "heygen",
+    "jobs": ["video-generation"],
+    "summary": "An AI video tool that makes presenter-style videos from a script, with a digital avatar and voice.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": ["elevenlabs"],
+    "strengths": [
+      "a presenter video from a written script",
+      "many languages and voices"
+    ],
+    "watchOutFor": [
+      "Use only faces and voices you have permission to use.",
+      "Viewers may find avatar videos less personal."
+    ],
+    "fitScores": {
+      "video-generation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.heygen.com",
+    "officialDomains": ["heygen.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.heygen.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "hootsuite",
+    "name": "Hootsuite",
+    "providerId": "hootsuite",
+    "jobs": ["social-media"],
+    "summary": "A long-running social media management platform for scheduling, monitoring and reporting, aimed at teams.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": ["team workflows and approvals", "monitoring and reports"],
+    "watchOutFor": [
+      "More than a single creator needs.",
+      "Check the plan options on the official page."
+    ],
+    "fitScores": {
+      "social-media": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.hootsuite.com",
+    "officialDomains": ["hootsuite.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.hootsuite.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "ideogram",
+    "name": "Ideogram",
+    "providerId": "ideogram",
+    "jobs": ["image-generation"],
+    "summary": "An AI image generator that is known for putting readable text inside images, such as posters and logos.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "handles text inside images better than many tools",
+      "simple prompt box with style options"
+    ],
+    "watchOutFor": [
+      "Check the licence before using images commercially.",
+      "Free limits and features change often. Check the official page."
+    ],
+    "fitScores": {
+      "image-generation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://ideogram.ai",
+    "officialDomains": ["ideogram.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://ideogram.ai",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "imovie",
+    "name": "iMovie",
+    "providerId": "apple",
+    "jobs": ["video-editing"],
+    "summary": "Apple's free, simple video editor for Mac, iPhone and iPad.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["macos", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "simple and free on Apple devices",
+      "good for quick edits and trailers"
+    ],
+    "watchOutFor": [
+      "Apple devices only.",
+      "Fewer controls than professional editors."
+    ],
+    "fitScores": {
+      "video-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.apple.com",
+    "officialDomains": ["apple.com"],
+    "getIt": {
+      "macos": {
+        "url": "https://www.apple.com/imovie/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "inshot",
+    "name": "InShot",
+    "providerId": "inshot",
+    "jobs": ["video-editing"],
+    "summary": "A phone video and photo editor that is widely used for quick social media edits.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "easy trimming, music and captions on a phone",
+      "ready sizes for social platforms"
+    ],
+    "watchOutFor": [
+      "Free use includes ads and may add a watermark.",
+      "Some features are paid."
+    ],
+    "fitScores": {
+      "video-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://inshot.com",
+    "officialDomains": ["inshot.com"],
+    "getIt": {
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.camerasideas.instashot",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id997362197",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "invideo-ai",
+    "name": "InVideo AI",
+    "providerId": "invideo",
+    "jobs": ["video-generation", "video-editing"],
+    "summary": "A video maker that builds a draft video with stock clips, voice-over and captions from a text brief.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a first draft from a text prompt",
+      "edit the result with text commands"
+    ],
+    "watchOutFor": [
+      "Drafts still need your editing for accuracy and tone.",
+      "Free exports may carry a watermark. Check the current rules."
+    ],
+    "fitScores": {
+      "video-generation": 3,
+      "video-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://invideo.io",
+    "officialDomains": ["invideo.io"],
+    "getIt": {
+      "web": {
+        "url": "https://invideo.io",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "kapwing",
+    "name": "Kapwing",
+    "providerId": "kapwing",
+    "jobs": ["video-editing", "social-media"],
+    "summary": "An online editor for videos, subtitles and memes that works well for team and social content.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "browser-based, with shared projects",
+      "subtitles and resizing for social formats"
+    ],
+    "watchOutFor": [
+      "Free exports may carry a watermark. Check the current rules.",
+      "Long videos can be slow in a browser."
+    ],
+    "fitScores": {
+      "video-editing": 3,
+      "social-media": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.kapwing.com",
+    "officialDomains": ["kapwing.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.kapwing.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "kdenlive",
+    "name": "Kdenlive",
+    "providerId": "kdenlive",
+    "jobs": ["video-editing"],
+    "summary": "A free, open-source video editor with multiple tracks, effects and titles for Windows, macOS and Linux.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "free with no watermark",
+      "multi-track editing with many effects"
+    ],
+    "watchOutFor": [
+      "Less polished than paid editors.",
+      "Large projects need a reasonably powerful computer."
+    ],
+    "fitScores": {
+      "video-editing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://kdenlive.org",
+    "officialDomains": ["kdenlive.org"],
+    "getIt": {
+      "windows": {
+        "url": "https://kdenlive.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://kdenlive.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://kdenlive.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "kling",
+    "name": "Kling AI",
+    "providerId": "kuaishou",
+    "jobs": ["video-generation"],
+    "summary": "An AI video generator from Kuaishou that makes clips from text and images.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "strong motion in short clips",
+      "text-to-video and image-to-video"
+    ],
+    "watchOutFor": [
+      "Free limits and features change often. Check the official page.",
+      "The company is based in China. Check the privacy policy before uploading private images."
+    ],
+    "fitScores": {
+      "video-generation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://kling.ai",
+    "officialDomains": ["kling.ai", "klingai.com"],
+    "getIt": {
+      "web": {
+        "url": "https://kling.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "krisp",
+    "name": "Krisp",
+    "providerId": "krisp",
+    "jobs": ["voice-and-audio", "meeting-notes-and-transcription"],
+    "summary": "An app that removes background noise from calls and can also record, transcribe and summarise meetings.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos"],
+    "worksWith": [],
+    "strengths": [
+      "removes background noise on calls",
+      "meeting notes without a bot joining"
+    ],
+    "watchOutFor": [
+      "Free use is limited. Check what the plans allow.",
+      "Tell people when you record a call."
+    ],
+    "fitScores": {
+      "voice-and-audio": 3,
+      "meeting-notes-and-transcription": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://krisp.ai",
+    "officialDomains": ["krisp.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://krisp.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "later",
+    "name": "Later",
+    "providerId": "later",
+    "jobs": ["social-media"],
+    "summary": "A visual planner for scheduling Instagram, TikTok and other social posts, with a drag-and-drop calendar.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "visual content calendar",
+      "built for image- and video-led platforms"
+    ],
+    "watchOutFor": [
+      "Free use limits posts. Check the current rules.",
+      "Each network has its own rules for scheduling tools."
+    ],
+    "fitScores": {
+      "social-media": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://later.com",
+    "officialDomains": ["later.com"],
+    "getIt": {
+      "web": {
+        "url": "https://later.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "leonardo-ai",
+    "name": "Leonardo.Ai",
+    "providerId": "leonardo-ai",
+    "jobs": ["image-generation"],
+    "summary": "An AI image generator with style presets and editing tools for game art, product shots and illustrations.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "many style presets and fine-tuned models",
+      "editing tools beside the generator"
+    ],
+    "watchOutFor": [
+      "Free use is limited by daily credits. Check the current rules.",
+      "Check the licence before using images commercially."
+    ],
+    "fitScores": {
+      "image-generation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://leonardo.ai",
+    "officialDomains": ["leonardo.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://leonardo.ai",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "loom",
+    "name": "Loom",
+    "providerId": "loom",
+    "jobs": ["screen-recording"],
+    "summary": "A quick screen and camera recorder that gives you a link to share straight after recording.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "record and share a link in seconds",
+      "viewer comments and reactions"
+    ],
+    "watchOutFor": [
+      "Free recording length and video count are limited. Check the current rules.",
+      "Videos are stored in Loom's cloud."
+    ],
+    "fitScores": {
+      "screen-recording": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.loom.com",
+    "officialDomains": ["loom.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.loom.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "windows": {
+        "url": "https://www.loom.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.loom.com/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "luma-dream-machine",
+    "name": "Luma",
+    "providerId": "luma-ai",
+    "jobs": ["video-generation"],
+    "summary": "An AI video and image creation platform from Luma AI, which began with the Dream Machine video generator.",
+    "kind": "ai-tool",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "turning a still image into a moving clip",
+      "a simple prompt-based interface"
+    ],
+    "watchOutFor": [
+      "Clips are short and credits are limited.",
+      "Faces and hands can look wrong."
+    ],
+    "fitScores": {
+      "video-generation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://lumalabs.ai",
+    "officialDomains": ["lumalabs.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://lumalabs.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "midjourney",
+    "name": "Midjourney",
+    "providerId": "midjourney",
+    "jobs": ["image-generation"],
+    "summary": "An AI image generator known for artistic, stylised pictures made from text prompts.",
+    "kind": "ai-tool",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "striking, artistic images",
+      "a large community sharing prompts"
+    ],
+    "watchOutFor": [
+      "Check the terms before using images commercially.",
+      "Text inside images is often wrong."
+    ],
+    "fitScores": {
+      "image-generation": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.midjourney.com",
+    "officialDomains": ["midjourney.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.midjourney.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "murf",
+    "name": "Murf AI",
+    "providerId": "murf",
+    "jobs": ["voice-and-audio"],
+    "summary": "A text-to-speech studio for voice-overs, with many voices and a simple timeline for syncing to slides or video.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "many voices and languages",
+      "a simple editor for timing voice-overs"
+    ],
+    "watchOutFor": [
+      "Free use is limited. Check what the plans allow.",
+      "Check pronunciation of names and technical terms."
+    ],
+    "fitScores": {
+      "voice-and-audio": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://murf.ai",
+    "officialDomains": ["murf.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://murf.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "obs-studio",
+    "name": "OBS Studio",
+    "providerId": "obs-project",
+    "jobs": ["screen-recording"],
+    "summary": "Free, open-source software for recording your screen and live streaming, with scenes and sources.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "free with no watermark",
+      "records and streams with many sources"
+    ],
+    "watchOutFor": [
+      "More controls than a beginner needs.",
+      "Download it only from the official site."
+    ],
+    "fitScores": {
+      "screen-recording": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://obsproject.com",
+    "officialDomains": ["obsproject.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://obsproject.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://obsproject.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://obsproject.com/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "opus-clip",
+    "name": "OpusClip",
+    "providerId": "opus-clip",
+    "jobs": ["social-media", "video-editing"],
+    "summary": "A tool that cuts long videos into short clips for social platforms, with captions added automatically.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "turns a long video into several short clips",
+      "automatic captions and reframing"
+    ],
+    "watchOutFor": [
+      "Check each clip. The cut points can miss the point.",
+      "Free use is limited. Check the current rules."
+    ],
+    "fitScores": {
+      "social-media": 4,
+      "video-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.opus.pro",
+    "officialDomains": ["opus.pro"],
+    "getIt": {
+      "web": {
+        "url": "https://www.opus.pro",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "photopea",
+    "name": "Photopea",
+    "providerId": "photopea",
+    "jobs": ["image-editing", "design-tool"],
+    "summary": "A Photoshop-like image editor that runs in the browser and opens PSD, XCF and other layered files.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "no install, runs in the browser",
+      "opens many file types, including PSD"
+    ],
+    "watchOutFor": [
+      "Free use shows ads. Check what the paid plan changes.",
+      "Large files can be slow in a browser."
+    ],
+    "fitScores": {
+      "image-editing": 4,
+      "design-tool": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.photopea.com",
+    "officialDomains": ["photopea.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.photopea.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "photoroom",
+    "name": "Photoroom",
+    "providerId": "photoroom",
+    "jobs": ["image-editing"],
+    "summary": "An app for removing backgrounds and making clean product photos, in the browser and on phones.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "quick background removal and product shots",
+      "phone app and web app"
+    ],
+    "watchOutFor": [
+      "Free exports may carry a watermark. Check the current rules.",
+      "Free limits and features change often. Check the official page."
+    ],
+    "fitScores": {
+      "image-editing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.photoroom.com",
+    "officialDomains": ["photoroom.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.photoroom.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "runway",
+    "name": "Runway",
+    "providerId": "runway",
+    "jobs": ["video-generation"],
+    "summary": "An AI video tool that creates and edits short clips from text, images or existing video.",
+    "kind": "ai-tool",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "generating short clips from a description",
+      "AI tools for changing existing footage"
+    ],
+    "watchOutFor": [
+      "Clip length and credits are limited. Check before planning a long video.",
+      "Results vary a lot between tries."
+    ],
+    "fitScores": {
+      "video-generation": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://runway.com",
+    "officialDomains": ["runway.com", "runwayml.com"],
+    "getIt": {
+      "web": {
+        "url": "https://runway.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "sora",
+    "name": "Sora",
+    "providerId": "openai",
+    "jobs": ["video-generation"],
+    "summary": "OpenAI's video generator, which makes short clips from text prompts and images.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "short clips from a text description",
+      "works from images as well as text"
+    ],
+    "watchOutFor": [
+      "Access, limits and regions change. Check the official page.",
+      "Check the rules on likeness and commercial use."
+    ],
+    "fitScores": {
+      "video-generation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://sora.com",
+    "officialDomains": ["sora.com", "openai.com"],
+    "getIt": {
+      "web": {
+        "url": "https://sora.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "soundraw",
+    "name": "Soundraw",
+    "providerId": "soundraw",
+    "jobs": ["music-generation"],
+    "summary": "A music generator for background tracks where you choose mood, length and genre and then adjust parts.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "choose mood, genre and length",
+      "adjust a track to fit your video"
+    ],
+    "watchOutFor": [
+      "Check the licence on your plan for commercial use.",
+      "Instrumental tracks only."
+    ],
+    "fitScores": {
+      "music-generation": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://soundraw.io",
+    "officialDomains": ["soundraw.io"],
+    "getIt": {
+      "web": {
+        "url": "https://soundraw.io",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "speechify",
+    "name": "Speechify",
+    "providerId": "speechify",
+    "jobs": ["voice-and-audio", "study-help-and-math"],
+    "summary": "A text-to-speech app that reads articles, PDFs and documents aloud, popular for studying and accessibility.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios", "macos"],
+    "worksWith": [],
+    "strengths": [
+      "reads PDFs and web pages aloud",
+      "adjustable speed and natural voices"
+    ],
+    "watchOutFor": [
+      "Many voices and features are paid.",
+      "Check the current free limits."
+    ],
+    "fitScores": {
+      "voice-and-audio": 3,
+      "study-help-and-math": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://speechify.com",
+    "officialDomains": ["speechify.com"],
+    "getIt": {
+      "web": {
+        "url": "https://speechify.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1209815023",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "stable-diffusion",
+    "name": "Stable Diffusion",
+    "providerId": "stability-ai",
+    "jobs": ["image-generation"],
+    "summary": "A family of open image-generation models you can run on your own computer or through other apps.",
+    "kind": "ai-tool",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "linux", "code"],
+    "worksWith": [],
+    "strengths": [
+      "running on your own computer",
+      "many community-made models and add-ons"
+    ],
+    "watchOutFor": [
+      "You need a capable computer and some setup.",
+      "Each model has its own licence. Read it before commercial use."
+    ],
+    "fitScores": {
+      "image-generation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://stability.ai",
+    "officialDomains": [
+      "stability.ai",
+      "huggingface.co/stabilityai",
+      "github.com/Stability-AI"
+    ],
+    "getIt": {
+      "modelPage": {
+        "url": "https://huggingface.co/stabilityai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "suno",
+    "name": "Suno",
+    "providerId": "suno",
+    "jobs": ["music-generation"],
+    "summary": "An AI music generator that makes full songs with vocals from a text description or your own lyrics.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "complete songs from a short prompt",
+      "you can write your own lyrics"
+    ],
+    "watchOutFor": [
+      "Check the licence terms for what you may do with songs on each plan.",
+      "Results vary. Plan for several tries."
+    ],
+    "fitScores": {
+      "music-generation": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://suno.com",
+    "officialDomains": ["suno.com"],
+    "getIt": {
+      "web": {
+        "url": "https://suno.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "synthesia",
+    "name": "Synthesia",
+    "providerId": "synthesia",
+    "jobs": ["video-generation"],
+    "summary": "A tool that makes presenter-style videos from a script using AI avatars and voices.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "talking-presenter videos from a script",
+      "many languages and avatar choices"
+    ],
+    "watchOutFor": [
+      "Free use is limited. Check what the plans allow.",
+      "Make clear to viewers when an avatar is used."
+    ],
+    "fitScores": {
+      "video-generation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.synthesia.io",
+    "officialDomains": ["synthesia.io"],
+    "getIt": {
+      "web": {
+        "url": "https://www.synthesia.io",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "udio",
+    "name": "Udio",
+    "providerId": "udio",
+    "jobs": ["music-generation"],
+    "summary": "An AI music generator that creates songs from text prompts, with tools to extend and remix them.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": ["songs from a text prompt", "extend and remix tracks"],
+    "watchOutFor": [
+      "Rules on downloads and licensing have changed. Check the current terms.",
+      "Results vary. Plan for several tries."
+    ],
+    "fitScores": {
+      "music-generation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.udio.com",
+    "officialDomains": ["udio.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.udio.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "veed",
+    "name": "VEED",
+    "providerId": "veed",
+    "jobs": ["video-editing", "meeting-notes-and-transcription"],
+    "summary": "An online video editor with automatic subtitles, screen recording and simple AI helpers.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "captions added automatically",
+      "editing and recording in the browser"
+    ],
+    "watchOutFor": [
+      "Free exports may carry a watermark. Check the current rules.",
+      "Check subtitle accuracy, especially names."
+    ],
+    "fitScores": {
+      "video-editing": 4,
+      "meeting-notes-and-transcription": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.veed.io",
+    "officialDomains": ["veed.io"],
+    "getIt": {
+      "web": {
+        "url": "https://www.veed.io",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "vn-video-editor",
+    "name": "VN Video Editor",
+    "providerId": "vn-editor",
+    "jobs": ["video-editing"],
+    "summary": "A free-to-start video editor for phones and computers that is popular for short social videos.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["android", "ios", "windows", "macos"],
+    "worksWith": [],
+    "strengths": [
+      "no-fuss editing on a phone",
+      "templates and effects for short videos"
+    ],
+    "watchOutFor": [
+      "Check what is limited on the free version.",
+      "Some features are paid."
+    ],
+    "fitScores": {
+      "video-editing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.vlognow.me",
+    "officialDomains": ["vlognow.me"],
+    "getIt": {
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.frontrow.vlog",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1343581380",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  }
+]

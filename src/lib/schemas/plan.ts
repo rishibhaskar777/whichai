@@ -1,5 +1,6 @@
 import {
   effortSchema,
+  getItSchema,
   goalIdSchema,
   httpsUrl,
   jobCategorySchema,
@@ -92,6 +93,7 @@ export const jobRecommendationSchema = z.object({
   sourceLabel: sourceLabelSchema,
   lastVerified: z.iso.date().nullable(),
   officialUrl: httpsUrl.nullable(),
+  getIt: getItSchema.nullable(),
   modelGuidance: modelGuidanceSchema.nullable(),
   compatibilityNote: text(240).nullable(),
   alternatives: z.array(alternativeSchema).max(5),

@@ -1,0 +1,94 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-3);
+}
+
+.buttons li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.button {
+  justify-content: flex-start;
+}
+
+.button svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.button .external {
+  width: 12px;
+  height: 12px;
+  color: var(--text-muted);
+}
+
+.button[data-current="true"] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.status {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.command {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.commandLabel {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.commandRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.code {
+  flex: 1 1 16rem;
+  min-width: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+.hint,
+.safety {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.more {
+  align-self: flex-start;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.block[data-variant="compact"] .buttons li {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}

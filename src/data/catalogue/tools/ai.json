@@ -1,0 +1,1519 @@
+[
+  {
+    "id": "aider",
+    "name": "Aider",
+    "providerId": "aider",
+    "jobs": ["coding-assistant"],
+    "summary": "An open-source terminal tool that pairs with a language model to edit code in your Git repository.",
+    "kind": "cli",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["command-line", "windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "works with many models, hosted or local",
+      "commits each change to Git so you can undo it"
+    ],
+    "watchOutFor": [
+      "You need Git and a terminal.",
+      "You pay the model provider for usage."
+    ],
+    "fitScores": {
+      "coding-assistant": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://aider.chat",
+    "officialDomains": ["aider.chat", "github.com/Aider-AI"],
+    "getIt": {
+      "cliInstall": "python -m pip install aider-install && aider-install"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "anythingllm",
+    "name": "AnythingLLM",
+    "providerId": "mintplex-labs",
+    "jobs": ["run-ai-locally", "pdf-and-document-chat"],
+    "summary": "A desktop app that chats with your own documents using local or hosted models, with the files kept on your computer.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": ["ollama", "lm-studio"],
+    "strengths": [
+      "chat with your PDFs and notes on your own machine",
+      "works with local runners or hosted models"
+    ],
+    "watchOutFor": [
+      "Answers depend on the model you connect. Small local models can miss details.",
+      "Check what is sent out if you connect a hosted model."
+    ],
+    "fitScores": {
+      "run-ai-locally": 4,
+      "pdf-and-document-chat": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://anythingllm.com",
+    "officialDomains": ["anythingllm.com", "github.com/Mintplex-Labs"],
+    "getIt": {
+      "windows": {
+        "url": "https://anythingllm.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://anythingllm.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://anythingllm.com/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "bolt-new",
+    "name": "Bolt",
+    "providerId": "stackblitz",
+    "jobs": ["coding-assistant"],
+    "summary": "A browser-based tool from StackBlitz that builds and runs a web app from a text description.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a working app in the browser from a prompt",
+      "no set-up on your computer"
+    ],
+    "watchOutFor": [
+      "Read and test the generated code before you ship it.",
+      "Usage limits apply and can run out quickly on big projects."
+    ],
+    "fitScores": {
+      "coding-assistant": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://bolt.new",
+    "officialDomains": ["bolt.new", "stackblitz.com"],
+    "getIt": {
+      "web": {
+        "url": "https://bolt.new",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "brave-browser",
+    "name": "Brave",
+    "providerId": "brave",
+    "jobs": ["browser-extension"],
+    "summary": "A web browser with a built-in ad blocker and an optional AI assistant called Leo.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "blocks ads and trackers by default",
+      "built-in AI assistant without a separate extension"
+    ],
+    "watchOutFor": [
+      "AI features are optional. Check what is sent when you turn them on.",
+      "Features and availability can differ by country and account type."
+    ],
+    "fitScores": {
+      "browser-extension": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://brave.com",
+    "officialDomains": ["brave.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://brave.com/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://brave.com/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://brave.com/linux/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/brave-browser-search-engine/id1052879175",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "chatgpt",
+    "name": "ChatGPT",
+    "providerId": "openai",
+    "jobs": [
+      "ai-assistant",
+      "writing-and-editing",
+      "coding-assistant",
+      "image-generation",
+      "research-with-sources",
+      "flashcards-and-quizzes",
+      "translation",
+      "pdf-and-document-chat",
+      "data-analysis"
+    ],
+    "summary": "A general-purpose AI chat assistant for writing, explaining, planning and simple code and image tasks.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "a familiar chat interface",
+      "one place for text, images and code help"
+    ],
+    "watchOutFor": [
+      "It can state wrong facts with confidence. Check anything important.",
+      "Free limits and features change often."
+    ],
+    "fitScores": {
+      "ai-assistant": 5,
+      "writing-and-editing": 4,
+      "coding-assistant": 4,
+      "image-generation": 4,
+      "research-with-sources": 3,
+      "flashcards-and-quizzes": 3,
+      "translation": 3,
+      "pdf-and-document-chat": 3,
+      "data-analysis": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://chatgpt.com",
+    "officialDomains": ["chatgpt.com", "openai.com"],
+    "getIt": {
+      "web": {
+        "url": "https://chatgpt.com",
+        "linkCheckedOn": null
+      },
+      "windows": {
+        "url": "https://openai.com/chatgpt/download/",
+        "linkCheckedOn": null
+      },
+      "macos": {
+        "url": "https://openai.com/chatgpt/download/",
+        "linkCheckedOn": null
+      },
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.openai.chatgpt",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id6448311069",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "claude",
+    "name": "Claude",
+    "providerId": "anthropic",
+    "jobs": [
+      "ai-assistant",
+      "writing-and-editing",
+      "coding-assistant",
+      "pdf-and-document-chat"
+    ],
+    "summary": "An AI chat assistant for writing, analysing long documents, explaining ideas and helping with code.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "readable long-form writing",
+      "working with long pasted documents"
+    ],
+    "watchOutFor": [
+      "It can state wrong facts with confidence. Check anything important.",
+      "Free usage limits can run out mid-task."
+    ],
+    "fitScores": {
+      "ai-assistant": 5,
+      "writing-and-editing": 4,
+      "coding-assistant": 4,
+      "pdf-and-document-chat": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://claude.ai",
+    "officialDomains": ["claude.ai", "claude.com", "anthropic.com"],
+    "getIt": {
+      "web": {
+        "url": "https://claude.ai",
+        "linkCheckedOn": null
+      },
+      "windows": {
+        "url": "https://claude.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://claude.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.anthropic.claude",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id6473753684",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "claude-code",
+    "name": "Claude Code",
+    "providerId": "anthropic",
+    "jobs": ["coding-assistant"],
+    "summary": "A command-line AI coding assistant that reads your project and makes changes you approve.",
+    "kind": "ai-tool",
+    "skillLevel": "advanced",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["command-line", "macos", "linux", "windows"],
+    "worksWith": ["github-copilot"],
+    "strengths": [
+      "working through a whole project from the terminal",
+      "step-by-step changes you can review"
+    ],
+    "watchOutFor": [
+      "You need to be comfortable with the command line and Git.",
+      "Review every change before you keep it."
+    ],
+    "fitScores": {
+      "coding-assistant": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.anthropic.com",
+    "officialDomains": ["anthropic.com", "claude.com", "claude.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://claude.com/product/claude-code",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm install -g @anthropic-ai/claude-code"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "cline",
+    "name": "Cline",
+    "providerId": "cline",
+    "jobs": ["coding-assistant"],
+    "summary": "An open-source coding assistant inside VS Code that plans, edits files and runs commands with your approval.",
+    "kind": "extension",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["visual-studio-code"],
+    "strengths": [
+      "works inside the editor you already use",
+      "choose your own model provider",
+      "asks before each action"
+    ],
+    "watchOutFor": [
+      "You pay the model provider directly, so usage can add up.",
+      "Approve actions with care. It can run commands."
+    ],
+    "fitScores": {
+      "coding-assistant": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://cline.bot",
+    "officialDomains": ["cline.bot", "github.com/cline"],
+    "getIt": {
+      "vscodeExtension": {
+        "url": "https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "codex-cli",
+    "name": "Codex CLI",
+    "providerId": "openai",
+    "jobs": ["coding-assistant"],
+    "summary": "OpenAI's open-source coding agent for the terminal, which reads your project and makes changes you approve.",
+    "kind": "cli",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["command-line", "macos", "linux", "windows"],
+    "worksWith": [],
+    "strengths": [
+      "runs in your terminal, in your own project",
+      "asks before it changes files or runs commands"
+    ],
+    "watchOutFor": [
+      "You need a terminal and an OpenAI account or key.",
+      "Review every change before you keep it."
+    ],
+    "fitScores": {
+      "coding-assistant": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://github.com/openai/codex",
+    "officialDomains": ["github.com/openai", "openai.com"],
+    "getIt": {
+      "cliInstall": "npm install -g @openai/codex"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "cursor",
+    "name": "Cursor",
+    "providerId": "anysphere",
+    "jobs": ["coding-assistant"],
+    "summary": "A code editor built around AI, which can answer questions about your project and edit several files at once.",
+    "kind": "ai-tool",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "an editor designed around AI help",
+      "edits that span several files"
+    ],
+    "watchOutFor": [
+      "It is easy to accept changes you have not read.",
+      "Usage limits on free plans can end a session early."
+    ],
+    "fitScores": {
+      "coding-assistant": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://cursor.com",
+    "officialDomains": ["cursor.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://cursor.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://cursor.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://cursor.com/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "deepseek",
+    "name": "DeepSeek",
+    "providerId": "deepseek",
+    "jobs": ["ai-assistant", "coding-assistant"],
+    "summary": "An AI chat assistant from the Chinese company DeepSeek, which also publishes open-weight models.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "a capable chat assistant with a free web app",
+      "open-weight models you can run yourself"
+    ],
+    "watchOutFor": [
+      "It can state wrong facts with confidence. Check anything important.",
+      "The hosted app is run from China. Read its privacy policy before sharing private data."
+    ],
+    "fitScores": {
+      "ai-assistant": 4,
+      "coding-assistant": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.deepseek.com",
+    "officialDomains": ["deepseek.com"],
+    "getIt": {
+      "web": {
+        "url": "https://chat.deepseek.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/deepseek-ai-assistant/id6737597349",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "deepseek-models",
+    "name": "DeepSeek open models",
+    "providerId": "deepseek",
+    "jobs": ["run-ai-locally", "coding-assistant"],
+    "summary": "Open-weight models from DeepSeek, including reasoning-focused ones. The largest need server-class hardware.",
+    "kind": "model",
+    "skillLevel": "advanced",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["ollama", "lm-studio", "llama-cpp"],
+    "strengths": [
+      "strong reasoning and code models with open weights",
+      "smaller distilled versions for ordinary computers"
+    ],
+    "watchOutFor": [
+      "The full-size models are far too big for most computers.",
+      "Check the licence terms for each release."
+    ],
+    "fitScores": {
+      "run-ai-locally": 3,
+      "coding-assistant": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.deepseek.com",
+    "officialDomains": [
+      "deepseek.com",
+      "huggingface.co/deepseek-ai",
+      "github.com/deepseek-ai"
+    ],
+    "getIt": {
+      "modelPage": {
+        "url": "https://huggingface.co/deepseek-ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gemini",
+    "name": "Gemini",
+    "providerId": "google",
+    "jobs": [
+      "ai-assistant",
+      "writing-and-editing",
+      "coding-assistant",
+      "image-generation",
+      "research-with-sources",
+      "translation",
+      "pdf-and-document-chat"
+    ],
+    "summary": "Google's AI assistant, connected to Google accounts and apps such as Gmail, Docs and Drive.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": ["google-slides", "google-forms", "notebooklm"],
+    "strengths": [
+      "tight links with your Google account and apps",
+      "an assistant you may already have access to"
+    ],
+    "watchOutFor": [
+      "It can state wrong facts with confidence. Check anything important.",
+      "Features differ between personal and work accounts."
+    ],
+    "fitScores": {
+      "ai-assistant": 4,
+      "writing-and-editing": 3,
+      "coding-assistant": 3,
+      "image-generation": 3,
+      "research-with-sources": 3,
+      "translation": 3,
+      "pdf-and-document-chat": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://gemini.google.com",
+    "officialDomains": ["gemini.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://gemini.google.com",
+        "linkCheckedOn": null
+      },
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.google.android.apps.bard",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id6477489729",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gemini-cli",
+    "name": "Gemini CLI",
+    "providerId": "google",
+    "jobs": ["coding-assistant"],
+    "summary": "Google's open-source terminal agent that uses Gemini models to explain, write and fix code in your project.",
+    "kind": "cli",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["command-line", "macos", "linux", "windows"],
+    "worksWith": [],
+    "strengths": [
+      "an open-source agent for the terminal",
+      "works with a Google account sign-in"
+    ],
+    "watchOutFor": [
+      "You need a terminal and Node.js.",
+      "Review every change before you keep it."
+    ],
+    "fitScores": {
+      "coding-assistant": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://github.com/google-gemini/gemini-cli",
+    "officialDomains": ["github.com/google-gemini", "google.com"],
+    "getIt": {
+      "cliInstall": "npm install -g @google/gemini-cli"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gemma-models",
+    "name": "Gemma models",
+    "providerId": "google",
+    "jobs": ["run-ai-locally"],
+    "summary": "Google's family of small open-weight models, built to run on a laptop or similar hardware.",
+    "kind": "model",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["ollama", "lm-studio", "llama-cpp", "jan"],
+    "strengths": [
+      "small sizes that suit ordinary computers",
+      "supported by common local runners"
+    ],
+    "watchOutFor": [
+      "Read the licence terms before using it in a product.",
+      "Small models are less capable than hosted assistants."
+    ],
+    "fitScores": {
+      "run-ai-locally": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://deepmind.google",
+    "officialDomains": [
+      "deepmind.google",
+      "ai.google.dev",
+      "google.com",
+      "huggingface.co/google"
+    ],
+    "getIt": {
+      "modelPage": {
+        "url": "https://deepmind.google/models/gemma/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "github-copilot",
+    "name": "GitHub Copilot",
+    "providerId": "github",
+    "jobs": ["coding-assistant"],
+    "summary": "An AI coding helper that suggests code and answers questions inside your code editor.",
+    "kind": "ai-tool",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux", "web"],
+    "worksWith": [],
+    "strengths": [
+      "suggestions as you type in your editor",
+      "support for many editors and languages"
+    ],
+    "watchOutFor": [
+      "Review every suggestion. It can write insecure or wrong code.",
+      "Students and teachers may have separate access terms."
+    ],
+    "fitScores": {
+      "coding-assistant": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://github.com",
+    "officialDomains": ["github.com", "githubcopilot.com"],
+    "getIt": {
+      "web": {
+        "url": "https://github.com/features/copilot",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "vscodeExtension": {
+        "url": "https://marketplace.visualstudio.com/items?itemName=GitHub.copilot",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "jetbrainsPlugin": {
+        "url": "https://plugins.jetbrains.com/plugin/17718-github-copilot--your-ai-pair-programmer",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "glasp",
+    "name": "Glasp",
+    "providerId": "glasp",
+    "jobs": ["browser-extension", "note-taking"],
+    "summary": "A browser extension for highlighting web pages and YouTube videos and collecting the highlights as notes.",
+    "kind": "extension",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "highlights from web pages and videos in one place",
+      "AI summaries of what you saved"
+    ],
+    "watchOutFor": [
+      "Highlights may be shared publicly unless you change the setting. Check it.",
+      "Free limits and features change often. Check the official page."
+    ],
+    "fitScores": {
+      "browser-extension": 3,
+      "note-taking": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://glasp.co",
+    "officialDomains": ["glasp.co"],
+    "getIt": {
+      "web": {
+        "url": "https://glasp.co",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gpt4all",
+    "name": "GPT4All",
+    "providerId": "nomic-ai",
+    "jobs": ["run-ai-locally", "pdf-and-document-chat"],
+    "summary": "A free desktop app from Nomic that runs open-weight models on your computer and can chat with your local documents.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "runs on ordinary laptops, with or without a graphics card",
+      "chat with your own files on your computer"
+    ],
+    "watchOutFor": [
+      "Smaller models are less accurate than hosted assistants.",
+      "Check the licence of each model you download."
+    ],
+    "fitScores": {
+      "run-ai-locally": 4,
+      "pdf-and-document-chat": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://gpt4all.io",
+    "officialDomains": ["gpt4all.io", "nomic.ai", "github.com/nomic-ai"],
+    "getIt": {
+      "web": {
+        "url": "https://www.nomic.ai/gpt4all",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "grok",
+    "name": "Grok",
+    "providerId": "xai",
+    "jobs": ["ai-assistant", "writing-and-editing"],
+    "summary": "An AI chat assistant from xAI that can also draw on posts and content from the X platform.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "a chat assistant that also reads current posts on X",
+      "a way to try it with an X account"
+    ],
+    "watchOutFor": [
+      "It can state wrong facts with confidence. Check anything important.",
+      "Answers that lean on social posts can repeat rumours. Check the source."
+    ],
+    "fitScores": {
+      "ai-assistant": 4,
+      "writing-and-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://grok.com",
+    "officialDomains": ["grok.com", "x.ai", "x.com"],
+    "getIt": {
+      "web": {
+        "url": "https://grok.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/grok-ai/id6670324846",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "harpa-ai",
+    "name": "HARPA AI",
+    "providerId": "harpa-ai",
+    "jobs": ["browser-extension", "automation-and-workflows"],
+    "summary": "A browser extension that chats with web pages and runs repeat tasks, such as page summaries and price checks.",
+    "kind": "extension",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "chat with the page you are on",
+      "ready-made commands for repeat web tasks"
+    ],
+    "watchOutFor": [
+      "It can read and act on pages, so review permissions before installing.",
+      "Free limits and features change often. Check the official page."
+    ],
+    "fitScores": {
+      "browser-extension": 4,
+      "automation-and-workflows": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://harpa.ai",
+    "officialDomains": ["harpa.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://harpa.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "hugging-face",
+    "name": "Hugging Face",
+    "providerId": "hugging-face",
+    "jobs": ["run-ai-locally", "hosting"],
+    "summary": "The main public hub for open AI models, datasets and demos, where model files are published.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a huge library of open models",
+      "each model page lists its licence and files"
+    ],
+    "watchOutFor": [
+      "Anyone can upload. Prefer models from known authors and read the licence.",
+      "Large downloads need space and a good connection."
+    ],
+    "fitScores": {
+      "run-ai-locally": 3,
+      "hosting": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://huggingface.co",
+    "officialDomains": ["huggingface.co"],
+    "getIt": {
+      "web": {
+        "url": "https://huggingface.co/models",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "jan",
+    "name": "Jan",
+    "providerId": "jan",
+    "jobs": ["run-ai-locally"],
+    "summary": "An open-source desktop app that runs AI models on your own computer and can also connect to hosted models.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "open source with an app-style chat window",
+      "local models and online models in one place"
+    ],
+    "watchOutFor": [
+      "Bigger models need a powerful computer with plenty of memory.",
+      "A young project. Features change quickly."
+    ],
+    "fitScores": {
+      "run-ai-locally": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://jan.ai",
+    "officialDomains": ["jan.ai", "github.com/janhq"],
+    "getIt": {
+      "windows": {
+        "url": "https://jan.ai/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://jan.ai/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://jan.ai/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "llama-cpp",
+    "name": "llama.cpp",
+    "providerId": "ggml",
+    "jobs": ["run-ai-locally"],
+    "summary": "An open-source program that runs open-weight language models efficiently on ordinary computers. Many other tools build on it.",
+    "kind": "cli",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux", "command-line"],
+    "worksWith": [],
+    "strengths": [
+      "runs models on CPUs and many kinds of graphics cards",
+      "the engine behind several friendlier apps"
+    ],
+    "watchOutFor": [
+      "It is a command-line tool and expects comfort with a terminal.",
+      "Models must be in its own file format."
+    ],
+    "fitScores": {
+      "run-ai-locally": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://github.com/ggml-org/llama.cpp",
+    "officialDomains": ["github.com/ggml-org", "ggml.ai"],
+    "getIt": {
+      "cliInstall": "brew install llama.cpp"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "llama-models",
+    "name": "Llama models",
+    "providerId": "meta",
+    "jobs": ["run-ai-locally"],
+    "summary": "Meta's family of open-weight language models, available in several sizes you can run locally or on a server.",
+    "kind": "model",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["ollama", "lm-studio", "llama-cpp", "jan"],
+    "strengths": [
+      "a wide range of sizes, small to large",
+      "supported by nearly every local runner"
+    ],
+    "watchOutFor": [
+      "Open weights are not the same as open source. Read the licence terms.",
+      "Pick a size that fits your computer's memory."
+    ],
+    "fitScores": {
+      "run-ai-locally": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.llama.com",
+    "officialDomains": [
+      "llama.com",
+      "meta.com",
+      "meta.ai",
+      "huggingface.co/meta-llama"
+    ],
+    "getIt": {
+      "modelPage": {
+        "url": "https://huggingface.co/meta-llama",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "lm-studio",
+    "name": "LM Studio",
+    "providerId": "lm-studio",
+    "jobs": ["run-ai-locally"],
+    "summary": "A desktop app with a chat window and a model browser for running open-weight AI models on your own computer.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "a friendly app, no command line needed",
+      "browse and download models inside the app"
+    ],
+    "watchOutFor": [
+      "Bigger models need a powerful computer with plenty of memory.",
+      "Check its terms of use for work or commercial use."
+    ],
+    "fitScores": {
+      "run-ai-locally": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://lmstudio.ai",
+    "officialDomains": ["lmstudio.ai"],
+    "getIt": {
+      "windows": {
+        "url": "https://lmstudio.ai/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://lmstudio.ai/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://lmstudio.ai/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "lovable",
+    "name": "Lovable",
+    "providerId": "lovable",
+    "jobs": ["coding-assistant"],
+    "summary": "An AI app builder that turns a plain-language description into a working web app draft.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": ["supabase"],
+    "includes": ["hosting"],
+    "strengths": [
+      "a working app draft from a description",
+      "no setup on your computer"
+    ],
+    "watchOutFor": [
+      "The draft can hide bugs. Test every feature before sharing.",
+      "Check login and data rules carefully before real users arrive."
+    ],
+    "fitScores": {
+      "coding-assistant": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://lovable.dev",
+    "officialDomains": ["lovable.dev"],
+    "getIt": {
+      "web": {
+        "url": "https://lovable.dev",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "meta-ai",
+    "name": "Meta AI",
+    "providerId": "meta",
+    "jobs": ["ai-assistant", "image-generation"],
+    "summary": "Meta's AI assistant, available in its own app and inside WhatsApp, Instagram and Facebook.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "lives inside apps many people already use",
+      "answers questions and makes simple images in a chat"
+    ],
+    "watchOutFor": [
+      "It can state wrong facts with confidence. Check anything important.",
+      "Check Meta's privacy settings to see how your chats are used."
+    ],
+    "fitScores": {
+      "ai-assistant": 4,
+      "image-generation": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.meta.ai",
+    "officialDomains": ["meta.ai", "meta.com", "facebook.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.meta.ai",
+        "linkCheckedOn": null
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/meta-ai/id1558240027",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "microsoft-copilot",
+    "name": "Microsoft Copilot",
+    "providerId": "microsoft",
+    "jobs": ["ai-assistant", "writing-and-editing", "image-generation"],
+    "summary": "Microsoft's AI assistant, available in the browser, in Windows and inside Microsoft 365 apps.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "android", "ios"],
+    "worksWith": ["microsoft-powerpoint", "clipchamp"],
+    "strengths": [
+      "sign-in with a Microsoft account",
+      "help inside Word, PowerPoint and Windows"
+    ],
+    "watchOutFor": [
+      "Some features need a paid Microsoft 365 plan.",
+      "It can state wrong facts with confidence."
+    ],
+    "fitScores": {
+      "ai-assistant": 4,
+      "writing-and-editing": 3,
+      "image-generation": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://copilot.microsoft.com",
+    "officialDomains": ["copilot.microsoft.com", "microsoft.com"],
+    "getIt": {
+      "web": {
+        "url": "https://copilot.microsoft.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "mistral-models",
+    "name": "Mistral open models",
+    "providerId": "mistral-ai",
+    "jobs": ["run-ai-locally"],
+    "summary": "Open-weight language models from Mistral AI, in sizes that range from laptop-friendly to server-class.",
+    "kind": "model",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["ollama", "lm-studio", "llama-cpp", "jan"],
+    "strengths": [
+      "efficient models that run well locally",
+      "supported by most local runners"
+    ],
+    "watchOutFor": [
+      "Not every Mistral model is open-weight. Check the licence on each one.",
+      "Pick a size that fits your computer's memory."
+    ],
+    "fitScores": {
+      "run-ai-locally": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://mistral.ai",
+    "officialDomains": ["mistral.ai", "huggingface.co/mistralai"],
+    "getIt": {
+      "modelPage": {
+        "url": "https://huggingface.co/mistralai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "mistral-vibe",
+    "name": "Mistral Vibe (formerly Le Chat)",
+    "providerId": "mistral-ai",
+    "jobs": ["ai-assistant", "writing-and-editing", "coding-assistant"],
+    "summary": "The AI chat and coding assistant from the French company Mistral AI, which was called Le Chat until recently.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "a European company's assistant",
+      "chat and coding help in one product"
+    ],
+    "watchOutFor": [
+      "It can state wrong facts with confidence. Check anything important.",
+      "Free limits and features change often. Check the official page."
+    ],
+    "fitScores": {
+      "ai-assistant": 4,
+      "writing-and-editing": 3,
+      "coding-assistant": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://mistral.ai",
+    "officialDomains": ["mistral.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://mistral.ai/products/vibe",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "monica",
+    "name": "Monica",
+    "providerId": "monica",
+    "jobs": ["browser-extension", "writing-and-editing"],
+    "summary": "A browser extension and web app that puts several AI models in a sidebar for chat, writing and summaries.",
+    "kind": "extension",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "one sidebar with several models",
+      "writing and reply helpers on any page"
+    ],
+    "watchOutFor": [
+      "It reads page content, so check what it can see before using it on private pages.",
+      "Free limits and features change often. Check the official page."
+    ],
+    "fitScores": {
+      "browser-extension": 4,
+      "writing-and-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://monica.im",
+    "officialDomains": ["monica.im"],
+    "getIt": {
+      "web": {
+        "url": "https://monica.im",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "ollama",
+    "name": "Ollama",
+    "providerId": "ollama",
+    "jobs": ["run-ai-locally"],
+    "summary": "A free app that downloads and runs open-weight AI models on your own computer, from a command line or a local API.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": ["open-webui", "anythingllm"],
+    "strengths": [
+      "one command to download and run a model",
+      "works offline once a model is downloaded",
+      "a local API other tools can use"
+    ],
+    "watchOutFor": [
+      "Bigger models need a powerful computer with plenty of memory.",
+      "Local models are usually less capable than the big hosted assistants."
+    ],
+    "fitScores": {
+      "run-ai-locally": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://ollama.com",
+    "officialDomains": ["ollama.com", "github.com/ollama"],
+    "getIt": {
+      "windows": {
+        "url": "https://ollama.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://ollama.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://ollama.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "curl -fsSL https://ollama.com/install.sh | sh"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "open-webui",
+    "name": "Open WebUI",
+    "providerId": "open-webui",
+    "jobs": ["run-ai-locally", "chatbot-builder"],
+    "summary": "A self-hosted web interface for chatting with local and hosted models, usually used together with Ollama.",
+    "kind": "app",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "command-line"],
+    "worksWith": ["ollama"],
+    "strengths": [
+      "a familiar chat page for models you run yourself",
+      "can chat over your own documents"
+    ],
+    "watchOutFor": [
+      "You install and update it yourself, usually with Docker or Python.",
+      "Keep it private. Do not expose it to the internet without sign-in."
+    ],
+    "fitScores": {
+      "run-ai-locally": 3,
+      "chatbot-builder": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://openwebui.com",
+    "officialDomains": ["openwebui.com", "github.com/open-webui"],
+    "getIt": {
+      "web": {
+        "url": "https://openwebui.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "pip install open-webui"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "poe",
+    "name": "Poe",
+    "providerId": "quora",
+    "jobs": ["ai-assistant"],
+    "summary": "One app from Quora where you can chat with several AI models and community-made bots.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "try several different models in one place",
+      "bots made by other people for specific tasks"
+    ],
+    "watchOutFor": [
+      "It can state wrong facts with confidence. Check anything important.",
+      "Which models you can use, and how often, depends on your plan."
+    ],
+    "fitScores": {
+      "ai-assistant": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://poe.com",
+    "officialDomains": ["poe.com"],
+    "getIt": {
+      "web": {
+        "url": "https://poe.com",
+        "linkCheckedOn": null
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/poe-fast-ai-chat/id1640745955",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "qwen-models",
+    "name": "Qwen models",
+    "providerId": "qwen",
+    "jobs": ["run-ai-locally", "coding-assistant"],
+    "summary": "Alibaba's family of open-weight models in many sizes, including versions tuned for code and for several languages.",
+    "kind": "model",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["ollama", "lm-studio", "llama-cpp", "jan"],
+    "strengths": [
+      "many sizes, including small ones for laptops",
+      "good support for multiple languages and code"
+    ],
+    "watchOutFor": [
+      "Licence terms differ by model. Check each one.",
+      "Pick a size that fits your computer's memory."
+    ],
+    "fitScores": {
+      "run-ai-locally": 4,
+      "coding-assistant": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://qwen.ai",
+    "officialDomains": ["qwen.ai", "huggingface.co/Qwen", "github.com/QwenLM"],
+    "getIt": {
+      "modelPage": {
+        "url": "https://huggingface.co/Qwen",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "replit",
+    "name": "Replit",
+    "providerId": "replit",
+    "jobs": ["coding-assistant"],
+    "summary": "An online workspace where you can write, run and share code in the browser with AI help.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "includes": ["hosting"],
+    "strengths": [
+      "coding and running a project with nothing to install",
+      "sharing a working project by link"
+    ],
+    "watchOutFor": [
+      "Free plan limits on AI help and hosting can change.",
+      "Projects can be tied to the platform."
+    ],
+    "fitScores": {
+      "coding-assistant": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://replit.com",
+    "officialDomains": ["replit.com"],
+    "getIt": {
+      "web": {
+        "url": "https://replit.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1614022293",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "sider",
+    "name": "Sider",
+    "providerId": "sider",
+    "jobs": ["browser-extension", "translation"],
+    "summary": "A browser sidebar that chats about the page you are on, summarises it and translates text.",
+    "kind": "extension",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a chat sidebar next to the page you read",
+      "summaries and translation in the same place"
+    ],
+    "watchOutFor": [
+      "It reads page content, so check what it can see before using it on private pages.",
+      "Free limits and features change often. Check the official page."
+    ],
+    "fitScores": {
+      "browser-extension": 4,
+      "translation": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://sider.ai",
+    "officialDomains": ["sider.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://sider.ai",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "v0",
+    "name": "v0",
+    "providerId": "vercel",
+    "jobs": ["coding-assistant", "ui-templates"],
+    "summary": "An AI tool from Vercel that generates web interface code from a text description.",
+    "kind": "ai-tool",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": ["nextjs", "shadcn-ui", "vercel", "react"],
+    "strengths": [
+      "interface code from a text description",
+      "output that fits React projects"
+    ],
+    "watchOutFor": [
+      "Read the generated code before you ship it.",
+      "It is aimed at React, so it suits React projects best."
+    ],
+    "fitScores": {
+      "coding-assistant": 3,
+      "ui-templates": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://vercel.com",
+    "officialDomains": ["v0.app", "v0.dev", "vercel.com"],
+    "getIt": {
+      "web": {
+        "url": "https://v0.app",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  }
+]

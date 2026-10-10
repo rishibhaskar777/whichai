@@ -212,3 +212,61 @@ export const CopyPlusIcon = createIcon(
 export const RefreshIcon = createIcon(
   <path d="M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4" />,
 );
+
+export const GlobeIcon = createIcon(
+  <>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3c2.6 2.6 3.9 5.6 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3Z" />
+  </>,
+);
+
+export const WindowsIcon = createIcon(
+  <>
+    <path d="M4 5.5 11 4.5v6.5H4V5.5ZM13 4.2l7-1.2v8H13V4.2ZM4 13h7v6.5l-7-1V13ZM13 13h7v8l-7-1.2V13Z" />
+  </>,
+);
+
+export const LaptopIcon = createIcon(
+  <>
+    <rect x="5" y="5" width="14" height="10" rx="1.5" />
+    <path d="M3 19h18" />
+  </>,
+);
+
+export const TerminalIcon = createIcon(
+  <>
+    <rect x="3.5" y="4.5" width="17" height="15" rx="2" />
+    <path d="m7.5 9.5 3 2.5-3 2.5M13 15h3.5" />
+  </>,
+);
+
+export const SmartphoneIcon = createIcon(
+  <>
+    <rect x="7" y="3.5" width="10" height="17" rx="2" />
+    <path d="M11 17.5h2" />
+  </>,
+);
+
+export const TabletIcon = createIcon(
+  <>
+    <rect x="4.5" y="3.5" width="15" height="17" rx="2" />
+    <path d="M10.5 17.5h3" />
+  </>,
+);
+
+export const PuzzleIcon = createIcon(
+  <path d="M10 4.5a2 2 0 1 1 4 0V6h3.5a1 1 0 0 1 1 1v3.5H20a2 2 0 1 1 0 4h-1.5V18a1 1 0 0 1-1 1H14v-1.5a2 2 0 1 0-4 0V19H6.5a1 1 0 0 1-1-1v-3.5H4a2 2 0 1 1 0-4h1.5V7a1 1 0 0 1 1-1H10V4.5Z" />,
+);
+
+export const CodeIcon = createIcon(
+  <path d="m8.5 7-5 5 5 5M15.5 7l5 5-5 5M13.5 5l-3 14" />,
+);
+
+export const BoxIcon = createIcon(
+  <>
+    <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+    <path d="m4 7.5 8 4.5 8-4.5M12 12v9" />
+  </>,
+);
+
+export const ArrowRightIcon = createIcon(<path d="M5 12h14M13 6l6 6-6 6" />);

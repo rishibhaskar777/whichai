@@ -1,0 +1,644 @@
+[
+  {
+    "id": "anki",
+    "name": "Anki",
+    "providerId": "anki",
+    "jobs": ["flashcards-and-quizzes", "language-learning"],
+    "summary": "A flashcard program that schedules reviews using spaced repetition.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "spaced repetition that schedules reviews for you",
+      "a very large library of shared decks"
+    ],
+    "watchOutFor": [
+      "The interface takes a little time to learn.",
+      "The iPhone app may be paid."
+    ],
+    "fitScores": {
+      "flashcards-and-quizzes": 5,
+      "language-learning": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://apps.ankiweb.net",
+    "officialDomains": ["ankiweb.net", "apps.ankiweb.net"],
+    "getIt": {
+      "windows": {
+        "url": "https://apps.ankiweb.net/#download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://apps.ankiweb.net/#download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://apps.ankiweb.net/#download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.ichi2.anki",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id373493387",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "babbel",
+    "name": "Babbel",
+    "providerId": "babbel",
+    "jobs": ["language-learning"],
+    "summary": "A language-learning app with lessons that focus on practical conversation.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "lessons built around everyday conversation",
+      "clear explanations of grammar"
+    ],
+    "watchOutFor": [
+      "Paid subscription. Check the trial on the official page.",
+      "Fewer languages than the biggest apps."
+    ],
+    "fitScores": {
+      "language-learning": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.babbel.com",
+    "officialDomains": ["babbel.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.babbel.com",
+        "linkCheckedOn": null
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id829587759",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "coursera",
+    "name": "Coursera",
+    "providerId": "coursera",
+    "jobs": ["online-courses"],
+    "summary": "An online course platform that hosts courses and certificates from universities and companies.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "courses from universities and companies",
+      "structured paths with certificates"
+    ],
+    "watchOutFor": [
+      "Many certificates and graded work are paid. Check before you start.",
+      "Course quality varies. Read reviews and the syllabus."
+    ],
+    "fitScores": {
+      "online-courses": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.coursera.org",
+    "officialDomains": ["coursera.org"],
+    "getIt": {
+      "web": {
+        "url": "https://www.coursera.org",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id736535961",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "desmos",
+    "name": "Desmos",
+    "providerId": "desmos",
+    "jobs": ["study-help-and-math"],
+    "summary": "A free online graphing calculator that plots equations and sliders as you type.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": ["instant graphs as you type", "free and simple to share"],
+    "watchOutFor": [
+      "It graphs and calculates. It does not explain steps.",
+      "Some exams restrict it. Check the rules."
+    ],
+    "fitScores": {
+      "study-help-and-math": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.desmos.com",
+    "officialDomains": ["desmos.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.desmos.com/calculator",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id653517540",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "duolingo",
+    "name": "Duolingo",
+    "providerId": "duolingo",
+    "jobs": ["language-learning"],
+    "summary": "A game-like app for learning languages in short daily lessons, with some AI practice features.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "short, game-like daily lessons",
+      "many languages, including Hindi and English"
+    ],
+    "watchOutFor": [
+      "Good for habits and basics. Add real conversation to speak well.",
+      "Some features need a paid plan."
+    ],
+    "fitScores": {
+      "language-learning": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.duolingo.com",
+    "officialDomains": ["duolingo.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.duolingo.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id570060128",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "freecodecamp",
+    "name": "freeCodeCamp",
+    "providerId": "freecodecamp",
+    "jobs": ["online-courses"],
+    "summary": "A non-profit with free, hands-on courses and certifications for web development, data and more.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "free and hands-on in the browser",
+      "projects you can put in a portfolio"
+    ],
+    "watchOutFor": [
+      "You need to be self-motivated.",
+      "Certificates show effort, not a formal qualification."
+    ],
+    "fitScores": {
+      "online-courses": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.freecodecamp.org",
+    "officialDomains": ["freecodecamp.org"],
+    "getIt": {
+      "web": {
+        "url": "https://www.freecodecamp.org",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "geogebra",
+    "name": "GeoGebra",
+    "providerId": "geogebra",
+    "jobs": ["study-help-and-math"],
+    "summary": "Free maths software for geometry, algebra, graphs and 3D, popular in classrooms.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "linux", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "geometry, algebra and graphs in one place",
+      "a large library of ready activities"
+    ],
+    "watchOutFor": [
+      "It has a lot of features. Start with one tool.",
+      "Check licence terms for commercial use."
+    ],
+    "fitScores": {
+      "study-help-and-math": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.geogebra.org",
+    "officialDomains": ["geogebra.org"],
+    "getIt": {
+      "web": {
+        "url": "https://www.geogebra.org/calculator",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1504416652",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "kahoot",
+    "name": "Kahoot!",
+    "providerId": "kahoot",
+    "jobs": ["flashcards-and-quizzes"],
+    "summary": "A game-based quiz app where a teacher or host runs live quizzes and players answer on their phones.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": ["live quiz games for groups", "ready-made quizzes to reuse"],
+    "watchOutFor": [
+      "Best for groups, less for solo revision.",
+      "Some features need a paid plan."
+    ],
+    "fitScores": {
+      "flashcards-and-quizzes": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://kahoot.com",
+    "officialDomains": ["kahoot.com", "kahoot.it"],
+    "getIt": {
+      "web": {
+        "url": "https://kahoot.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1131203560",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "khan-academy",
+    "name": "Khan Academy",
+    "providerId": "khan-academy",
+    "jobs": ["online-courses", "study-help-and-math"],
+    "summary": "A non-profit with free lessons and practice for maths, science and many school subjects, plus an AI tutor called Khanmigo.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "free lessons and practice by topic",
+      "a non-profit with no ads"
+    ],
+    "watchOutFor": [
+      "Khanmigo may need a paid plan or a school. Check the official page.",
+      "Syllabus may not match your board exactly."
+    ],
+    "fitScores": {
+      "online-courses": 4,
+      "study-help-and-math": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.khanacademy.org",
+    "officialDomains": ["khanacademy.org"],
+    "getIt": {
+      "web": {
+        "url": "https://www.khanacademy.org",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id469863705",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "knowt",
+    "name": "Knowt",
+    "providerId": "knowt",
+    "jobs": ["flashcards-and-quizzes"],
+    "summary": "A study app that turns notes and PDFs into flashcards and practice tests.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "flashcards and tests from your notes",
+      "works in the browser and on phones"
+    ],
+    "watchOutFor": [
+      "Generated cards need checking.",
+      "Some features are paid. Check the current rules."
+    ],
+    "fitScores": {
+      "flashcards-and-quizzes": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://knowt.com",
+    "officialDomains": ["knowt.com"],
+    "getIt": {
+      "web": {
+        "url": "https://knowt.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "mit-ocw",
+    "name": "MIT OpenCourseWare",
+    "providerId": "mit",
+    "jobs": ["online-courses"],
+    "summary": "Free course materials from MIT, including lecture notes, problem sets and many videos.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "real university course materials, free",
+      "problem sets and exams to practise"
+    ],
+    "watchOutFor": [
+      "Materials only. There is no teacher or certificate.",
+      "Level is university-level."
+    ],
+    "fitScores": {
+      "online-courses": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://ocw.mit.edu",
+    "officialDomains": ["ocw.mit.edu", "mit.edu"],
+    "getIt": {
+      "web": {
+        "url": "https://ocw.mit.edu",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "nptel",
+    "name": "NPTEL",
+    "providerId": "nptel",
+    "jobs": ["online-courses"],
+    "summary": "Free video and web courses in engineering, science and humanities from the IITs and IISc.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "lectures from India's top technical institutes",
+      "free to watch with a large archive"
+    ],
+    "watchOutFor": [
+      "Certificates need registration and an exam fee.",
+      "Content depth suits college-level learners."
+    ],
+    "fitScores": {
+      "online-courses": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://nptel.ac.in",
+    "officialDomains": ["nptel.ac.in"],
+    "getIt": {
+      "web": {
+        "url": "https://nptel.ac.in",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "photomath",
+    "name": "Photomath",
+    "providerId": "google",
+    "jobs": ["study-help-and-math"],
+    "summary": "A phone app that reads a maths problem from your camera and shows the steps to solve it.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["android", "ios"],
+    "worksWith": [],
+    "strengths": ["scan a problem and see the steps", "covers school maths"],
+    "watchOutFor": [
+      "Copying answers does not help you learn. Try first.",
+      "Some explanations are paid. Check the current rules."
+    ],
+    "fitScores": {
+      "study-help-and-math": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://photomath.com",
+    "officialDomains": ["photomath.com"],
+    "getIt": {
+      "ios": {
+        "url": "https://apps.apple.com/app/id919087726",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "quizlet",
+    "name": "Quizlet",
+    "providerId": "quizlet",
+    "jobs": ["flashcards-and-quizzes"],
+    "summary": "A study app for making flashcards and practising with quizzes and games.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "quick flashcard sets and practice modes",
+      "shared sets from other students"
+    ],
+    "watchOutFor": [
+      "Some study modes may need a paid plan.",
+      "Shared sets can contain mistakes."
+    ],
+    "fitScores": {
+      "flashcards-and-quizzes": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://quizlet.com",
+    "officialDomains": ["quizlet.com"],
+    "getIt": {
+      "web": {
+        "url": "https://quizlet.com",
+        "linkCheckedOn": null
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id546473125",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "remnote",
+    "name": "RemNote",
+    "providerId": "remnote",
+    "jobs": ["flashcards-and-quizzes", "note-taking"],
+    "summary": "A note-taking app that turns your notes into spaced-repetition flashcards.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "linux", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "notes and flashcards in one place",
+      "spaced repetition built in"
+    ],
+    "watchOutFor": [
+      "More to learn than a simple flashcard app.",
+      "Some features are paid. Check the current rules."
+    ],
+    "fitScores": {
+      "flashcards-and-quizzes": 4,
+      "note-taking": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.remnote.com",
+    "officialDomains": ["remnote.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.remnote.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "swayam",
+    "name": "SWAYAM",
+    "providerId": "swayam",
+    "jobs": ["online-courses"],
+    "summary": "India's government platform for free online courses from Indian institutions, from school to university level.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "free courses from Indian institutions",
+      "certificates through proctored exams, for a fee"
+    ],
+    "watchOutFor": [
+      "Course availability and exam dates follow a schedule.",
+      "Certificate exams have their own fees. Check the course page."
+    ],
+    "fitScores": {
+      "online-courses": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://swayam.gov.in",
+    "officialDomains": ["swayam.gov.in", "swayam2.ac.in"],
+    "getIt": {
+      "web": {
+        "url": "https://swayam.gov.in",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "wolfram-alpha",
+    "name": "WolframAlpha",
+    "providerId": "wolfram",
+    "jobs": ["study-help-and-math", "data-analysis"],
+    "summary": "A computational knowledge engine that solves equations, makes plots and answers factual questions with working.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "exact answers to maths and science problems",
+      "shows steps on some problems"
+    ],
+    "watchOutFor": [
+      "Step-by-step answers may need a paid plan.",
+      "It wants well-formed questions."
+    ],
+    "fitScores": {
+      "study-help-and-math": 4,
+      "data-analysis": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.wolframalpha.com",
+    "officialDomains": ["wolframalpha.com", "wolfram.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.wolframalpha.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id548861535",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  }
+]

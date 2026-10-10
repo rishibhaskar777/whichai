@@ -11,7 +11,7 @@ import {
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { StorageNotice } from "@/components/local-data/StorageNotice";
 import { usePlanActions } from "@/components/local-data/use-plan-actions";
-import { catalogue } from "@/data/catalogue";
+import { GOAL_TITLES } from "@/data/catalogue/goal-titles";
 import { useI18n } from "@/lib/i18n/provider";
 import { downloadTextFile } from "@/lib/storage/download";
 import { backupFileName, isStale, sortPlans } from "@/lib/storage/operations";
@@ -22,9 +22,7 @@ import styles from "./Projects.module.css";
 const LEAVE_MS = 200;
 
 function goalTitle(goalType: string): string {
-  return (
-    catalogue.goals.find((goal) => goal.id === goalType)?.title ?? goalType
-  );
+  return GOAL_TITLES[goalType as keyof typeof GOAL_TITLES] ?? goalType;
 }
 
 interface RowProps {

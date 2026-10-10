@@ -156,6 +156,10 @@
   margin-inline: auto;
 }
 
+.content[data-wide="true"] {
+  max-width: 72rem;
+}
+
 .drawer {
   position: fixed;
   inset: 0 auto 0 0;

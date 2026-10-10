@@ -1,7 +1,16 @@
 import {
+  PLATFORM_OF_LINK,
+  hostsInCommand,
+  isOfficialLink,
+  isOnToolDomain,
+  isShortener,
+  toolLinks,
+} from "./links";
+import {
   GOAL_IDS,
   MODEL_CLASS_IDS,
   type Catalogue,
+  type Tool,
 } from "@/lib/schemas/catalogue";
 
 const CONCRETE_PRICE =
@@ -37,6 +46,62 @@ export function withoutVerifiedPricing(catalogue: Catalogue): Catalogue {
 
 function duplicates(ids: readonly string[]): string[] {
   return ids.filter((id, index) => ids.indexOf(id) !== index);
+}
+
+/**
+ * An official link is a root page, so it cannot go stale when a path moves.
+ * A few hosts have no root page that shows a tool: GitHub and GitHub Pages
+ * hold many projects, and Google's search tools live under one host. Those may
+ * use a path.
+ */
+const SHARED_HOSTS = ["github.com", "github.io", "search.google.com"];
+
+function isRootPageOrProjectPage(url: string): boolean {
+  const { hostname, pathname } = new URL(url);
+  const shared = SHARED_HOSTS.some(
+    (host) => hostname === host || hostname.endsWith(`.${host}`),
+  );
+  return pathname === "/" || shared;
+}
+
+function findLinkProblems(tool: Tool): string[] {
+  const problems: string[] = [];
+  const label = `tool ${tool.id}`;
+
+  for (const domain of tool.officialDomains) {
+    if (isShortener(`https://${domain.split("/")[0]}/`)) {
+      problems.push(`${label}: ${domain} is a URL shortener`);
+    }
+  }
+  if (!isOnToolDomain(tool.officialUrl, tool.officialDomains)) {
+    problems.push(`${label}: officialUrl is not on its officialDomains`);
+  }
+
+  for (const link of toolLinks(tool)) {
+    if (link.key === "officialUrl") continue;
+    if (!isOfficialLink(link.url, tool.officialDomains)) {
+      problems.push(`${label}: getIt.${link.key} is not an official address`);
+    }
+    const platform = PLATFORM_OF_LINK[link.key];
+    if (platform && !tool.platforms.includes(platform)) {
+      problems.push(
+        `${label}: getIt.${link.key} but platforms lacks ${platform}`,
+      );
+    }
+  }
+
+  const command = tool.getIt?.cliInstall;
+  if (command !== undefined) {
+    if (/[\r\n]/.test(command)) {
+      problems.push(`${label}: cliInstall must be a single line`);
+    }
+    for (const host of hostsInCommand(command)) {
+      if (!isOnToolDomain(`https://${host}/`, tool.officialDomains)) {
+        problems.push(`${label}: cliInstall fetches from ${host}`);
+      }
+    }
+  }
+  return problems;
 }
 
 /**
@@ -101,9 +166,10 @@ export function findProblems(catalogue: Catalogue): string[] {
         problems.push(`tool ${tool.id}: works with itself`);
       }
     }
-    if (new URL(tool.officialUrl).pathname !== "/") {
+    if (!isRootPageOrProjectPage(tool.officialUrl)) {
       problems.push(`tool ${tool.id}: officialUrl must be a root page`);
     }
+    problems.push(...findLinkProblems(tool));
   }
   for (const provider of catalogue.providers) {
     if (!usedProviders.has(provider.id)) {

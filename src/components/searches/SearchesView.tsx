@@ -7,7 +7,7 @@ import { RefreshIcon, TrashIcon } from "@/components/icons";
 import { ConfirmDialog } from "@/components/dialog/ConfirmDialog";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { StorageNotice } from "@/components/local-data/StorageNotice";
-import { catalogue } from "@/data/catalogue";
+import { GOAL_TITLES } from "@/data/catalogue/goal-titles";
 import { useI18n } from "@/lib/i18n/provider";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
 import { groupHistory, type HistoryGroupId } from "@/lib/storage/operations";
@@ -16,9 +16,7 @@ import controls from "@/styles/controls.module.css";
 import styles from "./Searches.module.css";
 
 function goalTitle(goalType: string): string {
-  return (
-    catalogue.goals.find((goal) => goal.id === goalType)?.title ?? goalType
-  );
+  return GOAL_TITLES[goalType as keyof typeof GOAL_TITLES] ?? goalType;
 }
 
 const GROUP_KEYS = {

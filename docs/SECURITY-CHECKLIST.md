@@ -37,6 +37,17 @@ Apply to every release and re-check when a phase adds a new input, route or depe
 - [ ] "Clear all data" needs the word CLEAR typed and also removes the theme and language cookies
 - [ ] Only theme and language are stored in cookies, as one word each, with `SameSite=Lax` and no personal data
 
+## Download links
+
+- [ ] Every address in the catalogue is https and on the tool's `officialDomains` or on the official store allowlist; no URL shorteners and no third-party download sites (enforced by `src/lib/catalogue/links.ts` and its tests)
+- [ ] A shared host (GitHub, an app store) is allowed only for the owner named in `officialDomains` or for a listing a person has checked
+- [ ] An unknown link is left out, so the interface falls back to the official homepage
+- [ ] `linkCheckedOn` never sets `verified`, and only a person sets `verified`
+- [ ] Install commands are one line of text with no `sudo`, shown with a copy button and never executed; addresses inside them are on the tool's domains
+- [ ] External links open in a new tab with `rel="noopener noreferrer"`, and the Get it block tells people to check the address bar
+- [ ] The link checker is run by hand or by the weekly workflow (`contents: read`, `issues: write`, actions pinned to SHAs), and its findings are reviewed
+- [ ] Library and compare query parameters are validated and fall back to defaults; nothing from them is rendered as HTML
+
 ## Dependencies
 
 - [ ] `npm audit` shows no high or critical issues, or each is documented

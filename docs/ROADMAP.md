@@ -55,7 +55,18 @@ Every phase follows the [zero-cost rule](decisions/0006-zero-cost.md): local cod
 - Feedback through a GitHub issue form. Saving per account on a server and aggregated feedback wait for a free option that has been approved
 - Follow-ups: native review of the Hindi text, translated catalogue content, goal understanding in Hindi, syncing between devices
 
-## Phase 5: News and updates
+## Phase 5: Catalogue growth, library and updates
+
+### 5a: Tool catalogue, Get it links, library and comparison (done, [0011](decisions/0011-get-it-links.md))
+
+- About 300 tools, 50 jobs, split into one file per category, with models (`model`), extensions (`extension`) and command-line tools (`cli`) as new kinds
+- `officialDomains` and optional `getIt` links per tool, restricted to the tool's own domains and official stores, with `linkCheckedOn` kept apart from `verified`
+- Tool Library at `/tools`, a page per tool, and `/compare`, all server-rendered with the state in the URL
+- `npm run links:check` and a weekly issue for broken links
+- The catalogue and the rules engine load on demand instead of in the home page bundle
+- Every record is still unverified. Plan tier names are supported by the schema but none has been confirmed
+
+### 5b: News and updates (next)
 
 - A scheduled GitHub Actions script checks official sources and opens a pull request that changes the JSON data, so every change is reviewed before it ships
 - The news panel and the What Changed page read from JSON in the repository
@@ -63,4 +74,4 @@ Every phase follows the [zero-cost rule](decisions/0006-zero-cost.md): local cod
 
 ## Later
 
-Tool library, plan comparison pages, test results pages, pricing, institution features.
+Test results pages, pricing, institution features, a way to flag records older than a set age.

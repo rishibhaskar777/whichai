@@ -1,6 +1,6 @@
 # Verifying tool data
 
-Every record in `src/data/catalogue/tools.json` starts as `"verified": false` with `"pricing": "[verify]"`. The site shows these as sample data. This page is the checklist for turning one record into a checked one.
+Every record in `src/data/catalogue/tools/*.json` (one file per category) starts as `"verified": false` with `"pricing": "[verify]"`. The site shows these as sample data. This page is the checklist for turning one record into a checked one.
 
 Fit scores (`fitScores`) are editorial estimates. Verifying a record does not turn them into test results, and they stay marked `"scoreSource": "editorial-estimate"`.
 
@@ -30,7 +30,7 @@ If you cannot confirm something, leave the record unverified. A record that is h
 
 ## Edit the record
 
-Change these fields in `tools.json` for that tool:
+Change these fields in that tool's file under `tools/`:
 
 ```json
 "hasFreeOption": true,
@@ -46,6 +46,7 @@ Change these fields in `tools.json` for that tool:
 ## Run the checks
 
 ```bash
+npm run data:version   # after any change to a catalogue file
 npm test
 npm run data:report
 ```
@@ -67,3 +68,23 @@ Put the page you checked and the date in the pull request description so a revie
 - The card for that tool shows the date and the official-docs source instead of "Not verified".
 - A plan stops showing the sample notice only when every tool it names is verified.
 - Prices and limits change. Re-check records on a schedule and always before a release. The oldest verified records in the report are the next ones to check.
+
+## Verify a download link safely
+
+Download links are the most dangerous data on the site, because a wrong one can send someone to a fake installer. A link is checked separately from the record: `linkCheckedOn` records the day an address was opened and ended on an official page. It never sets `verified`.
+
+Do this for each `getIt` link you add or review:
+
+1. **Start from the tool's own site**, using `officialUrl`, typed or from a bookmark. Do not use a search result, an ad, a comparison blog, a "download" site or a link someone sent you.
+2. **Find the download or install page from there.** Read the address bar. The host must be the tool's own domain (or a subdomain). Look for look-alikes: an extra letter, `-download`, a different top-level domain.
+3. **Compare with the stored address.** If the official page moved, update the record to the new address, on a domain that is already in `officialDomains`. Add a domain only if the company says it is theirs on its own site.
+4. **App stores.** Open the store link and check that the publisher is the company (or the project), and that the listing links back to the official site. Names are easy to copy. The store allowlist proves nothing about the publisher.
+5. **Browser and editor extensions.** Same: check the publisher name and that the listing links to the official site. Be careful with extensions that share a name.
+6. **Install commands.** Copy the command from the tool's own documentation, not from a forum. Keep it to one line. Do not add `sudo`. Any address inside it must be on the tool's domains.
+7. **Models.** Open the organisation page and check it is the company's verified organisation, not a copy.
+8. **Record it.** Run `npm run links:check -- --only=<tool-id>`. If it passes, `npm run links:check -- --only=<tool-id> --stamp` writes `linkCheckedOn`. For a site that refuses scripts, open it by hand, and set the date yourself only after following the steps above.
+9. If you cannot confirm a link, **delete it**. The interface then shows "Find downloads on the official site". Missing is better than wrong.
+
+The checker reports broken addresses, redirects that leave the official domains, store pages whose title does not name the tool, and moves. A weekly workflow runs it and keeps one issue titled "Broken catalogue links" up to date.
+
+Products are renamed and domains move. When a tool's own site shows a new name, change `name` and `summary`, keep the `id` so saved plans keep working, and mention it in the commit.

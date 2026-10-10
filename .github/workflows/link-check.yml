@@ -1,0 +1,56 @@
+name: Catalogue links
+
+# Weekly check of every address in the tool catalogue. When something is broken
+# it opens one issue, or updates the open one. It never changes the data.
+on:
+  schedule:
+    - cron: "23 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Check links
+        id: check
+        run: |
+          set +e
+          node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-links.ts > report.txt
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Open, update or close the issue
+        env:
+          TITLE: Broken catalogue links
+          STATUS: ${{ steps.check.outputs.status }}
+        run: |
+          number=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number // empty')
+          if [ "$STATUS" != "0" ]; then
+            {
+              echo "The weekly link check found problems. Fix the address in \`src/data/catalogue/tools/\`, or remove the link if you cannot confirm the official one. Do not set \`verified\`; see docs/VERIFYING-DATA.md."
+              echo
+              echo '```text'
+              head -c 60000 report.txt
+              echo '```'
+              echo
+              echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            } > issue.md
+            if [ -n "$number" ]; then
+              gh issue edit "$number" --body-file issue.md
+            else
+              gh issue create --title "$TITLE" --body-file issue.md
+            fi
+          elif [ -n "$number" ]; then
+            gh issue close "$number" --comment "The weekly link check found no broken links."
+          fi

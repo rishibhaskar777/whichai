@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
@@ -31,13 +31,25 @@ function searchBox() {
   return screen.getByLabelText("What do you want to do with AI?");
 }
 
+/* The interpreter and the plan view load on demand, so wait for each step. */
 async function submit(user: ReturnType<typeof userEvent.setup>, text: string) {
   await user.type(searchBox(), text);
   await user.keyboard("{Enter}");
+  await waitFor(() =>
+    expect(
+      screen.queryByRole("heading", {
+        level: 1,
+        name: "What do you want to do with AI?",
+      }),
+    ).toBeNull(),
+  );
 }
 
 async function confirm(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole("button", { name: "Yes, show my plan" }));
+  await user.click(
+    await screen.findByRole("button", { name: "Yes, show my plan" }),
+  );
+  await screen.findAllByRole("radio");
 }
 
 async function expectSingleH1(container: HTMLElement, name: string) {
@@ -202,7 +214,7 @@ describe("showing the plan", () => {
 
     await confirm(user);
 
-    const headline = screen.getByRole("heading", {
+    const headline = await screen.findByRole("heading", {
       name: "Your portfolio website plan",
     });
     expect(headline).toHaveFocus();

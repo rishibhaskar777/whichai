@@ -148,6 +148,7 @@ function recommend(
     sourceLabel: pick.verified ? "official-docs" : "sample",
     lastVerified: pick.lastVerified,
     officialUrl: pick.officialUrl,
+    getIt: pick.getIt ?? null,
     modelGuidance: modelGuidanceFor(goalLevel, job, pick, data),
     compatibilityNote:
       job.category === "build"

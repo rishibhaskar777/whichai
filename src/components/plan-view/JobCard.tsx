@@ -7,6 +7,7 @@ import type { JobRecommendation } from "@/lib/schemas/plan";
 import { useMediaQuery } from "@/lib/use-media-query";
 import controls from "@/styles/controls.module.css";
 import styles from "./JobCard.module.css";
+import { GetIt } from "@/components/tools/GetIt";
 import { ModelGuidance } from "./ModelGuidance";
 
 export function jobCardId(jobId: string): string {
@@ -87,6 +88,16 @@ export function JobCard({ job }: { job: JobRecommendation }) {
           </a>
         ) : null}
       </p>
+
+      {job.officialUrl ? (
+        <GetIt
+          toolName={job.toolName}
+          getIt={job.getIt ?? undefined}
+          officialUrl={job.officialUrl}
+          variant="compact"
+          detailHref={`/tools/${job.toolId}`}
+        />
+      ) : null}
 
       {job.alternatives.length > 0 ? (
         <div className={styles.more}>

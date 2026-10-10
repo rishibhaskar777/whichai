@@ -1,0 +1,805 @@
+[
+  {
+    "id": "adobe-acrobat",
+    "name": "Adobe Acrobat",
+    "providerId": "adobe",
+    "jobs": ["pdf-and-document-chat"],
+    "summary": "Adobe's PDF app for reading, editing and signing PDFs, with an AI assistant for summaries and questions.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "the standard PDF reader and editor",
+      "an AI assistant for questions about a PDF"
+    ],
+    "watchOutFor": [
+      "The AI assistant may be a paid add-on. Check the current rules.",
+      "Check what leaves your device when you use it."
+    ],
+    "fitScores": {
+      "pdf-and-document-chat": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.adobe.com",
+    "officialDomains": ["adobe.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.adobe.com/acrobat.html",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "chatpdf",
+    "name": "ChatPDF",
+    "providerId": "chatpdf",
+    "jobs": ["pdf-and-document-chat"],
+    "summary": "A simple website where you upload a PDF and ask questions about it.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "very simple: upload and ask",
+      "answers point back to the page"
+    ],
+    "watchOutFor": [
+      "Free use limits file size and questions. Check the current rules.",
+      "Do not upload private documents without reading its privacy terms."
+    ],
+    "fitScores": {
+      "pdf-and-document-chat": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.chatpdf.com",
+    "officialDomains": ["chatpdf.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.chatpdf.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "consensus",
+    "name": "Consensus",
+    "providerId": "consensus",
+    "jobs": ["research-with-sources"],
+    "summary": "An AI search engine that answers questions by pulling findings from published research papers.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "answers drawn from research papers",
+      "links each claim to its source"
+    ],
+    "watchOutFor": [
+      "Read the paper itself before you rely on a claim.",
+      "Free use is limited. Check the current rules."
+    ],
+    "fitScores": {
+      "research-with-sources": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://consensus.app",
+    "officialDomains": ["consensus.app"],
+    "getIt": {
+      "web": {
+        "url": "https://consensus.app",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "elicit",
+    "name": "Elicit",
+    "providerId": "elicit-org",
+    "jobs": ["research-with-sources"],
+    "summary": "An AI research assistant that finds academic papers and pulls key details out of them.",
+    "kind": "ai-tool",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "finding and comparing academic papers",
+      "a table of what each paper says"
+    ],
+    "watchOutFor": [
+      "It focuses on academic papers, so it is weaker for general web questions.",
+      "Read the paper before you rely on an extracted detail."
+    ],
+    "fitScores": {
+      "research-with-sources": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://elicit.com",
+    "officialDomains": ["elicit.com"],
+    "getIt": {
+      "web": {
+        "url": "https://elicit.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-colab",
+    "name": "Google Colab",
+    "providerId": "google",
+    "jobs": ["data-analysis"],
+    "summary": "A free-to-start notebook in the browser for running Python, with a built-in AI helper.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": ["no set-up, runs in the browser", "easy to share notebooks"],
+    "watchOutFor": [
+      "Free compute is limited and sessions time out.",
+      "You need to know a little Python."
+    ],
+    "fitScores": {
+      "data-analysis": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://colab.research.google.com",
+    "officialDomains": ["colab.research.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://colab.research.google.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-scholar",
+    "name": "Google Scholar",
+    "providerId": "google",
+    "jobs": ["research-with-sources"],
+    "summary": "A search engine for scholarly papers, books and citations.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a free search across scholarly papers",
+      "a quick way to see who cited a paper"
+    ],
+    "watchOutFor": [
+      "Not every paper it finds is free to read.",
+      "It lists papers but does not judge their quality."
+    ],
+    "fitScores": {
+      "research-with-sources": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://scholar.google.com",
+    "officialDomains": ["scholar.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://scholar.google.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "internet-archive",
+    "name": "Internet Archive",
+    "providerId": "internet-archive",
+    "jobs": ["source-library"],
+    "summary": "A digital library of scanned books, old publications, recordings and archived web pages.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "scanned books and older publications",
+      "texts that are hard to find elsewhere"
+    ],
+    "watchOutFor": [
+      "Scans can be hard to search or read.",
+      "Borrowing rules apply to some books."
+    ],
+    "fitScores": {
+      "source-library": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://archive.org",
+    "officialDomains": ["archive.org"],
+    "getIt": {
+      "web": {
+        "url": "https://archive.org",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "julius-ai",
+    "name": "Julius AI",
+    "providerId": "julius",
+    "jobs": ["data-analysis"],
+    "summary": "A tool where you upload a spreadsheet and ask questions in plain language to get charts and analysis.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "ask questions about your data in plain words",
+      "charts and summaries from a file"
+    ],
+    "watchOutFor": [
+      "Check the numbers and the code it shows.",
+      "Free use is limited. Check the current rules."
+    ],
+    "fitScores": {
+      "data-analysis": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://julius.ai",
+    "officialDomains": ["julius.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://julius.ai",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "jupyter",
+    "name": "Jupyter",
+    "providerId": "jupyter",
+    "jobs": ["data-analysis"],
+    "summary": "The free, open-source notebook environment for running code, text and charts together, mostly with Python.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "command-line"],
+    "worksWith": [],
+    "strengths": [
+      "code, charts and notes in one document",
+      "a standard tool for data science"
+    ],
+    "watchOutFor": [
+      "You need to know some Python.",
+      "You install and manage it yourself."
+    ],
+    "fitScores": {
+      "data-analysis": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://jupyter.org",
+    "officialDomains": ["jupyter.org"],
+    "getIt": {
+      "web": {
+        "url": "https://jupyter.org/try",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "pip install jupyterlab"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "looker-studio",
+    "name": "Data Studio (Looker Studio)",
+    "providerId": "google",
+    "jobs": ["data-analysis"],
+    "summary": "Google's tool for turning data from sheets, analytics and databases into shareable reports and dashboards.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "connects to Google data sources",
+      "free to start and easy to share"
+    ],
+    "watchOutFor": ["Slow on very large data.", "Some connectors are paid."],
+    "fitScores": {
+      "data-analysis": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://datastudio.google.com",
+    "officialDomains": [
+      "datastudio.google.com",
+      "lookerstudio.google.com",
+      "google.com"
+    ],
+    "getIt": {
+      "web": {
+        "url": "https://datastudio.google.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "metabase",
+    "name": "Metabase",
+    "providerId": "metabase",
+    "jobs": ["data-analysis"],
+    "summary": "An open-source tool that lets people ask questions of a database and build dashboards without code.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "questions and dashboards without SQL",
+      "open source with a hosted option"
+    ],
+    "watchOutFor": [
+      "Needs a database to connect to.",
+      "Self-hosting means you secure and update it."
+    ],
+    "fitScores": {
+      "data-analysis": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.metabase.com",
+    "officialDomains": ["metabase.com", "github.com/metabase"],
+    "getIt": {
+      "web": {
+        "url": "https://www.metabase.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "ndli",
+    "name": "National Digital Library of India",
+    "providerId": "ndli",
+    "jobs": ["source-library", "online-courses"],
+    "summary": "A government-supported digital library with books, papers and learning material for students across India.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "a large collection for Indian students",
+      "content in many Indian languages"
+    ],
+    "watchOutFor": [
+      "Some features need registration.",
+      "Availability and interface can vary."
+    ],
+    "fitScores": {
+      "source-library": 3,
+      "online-courses": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://ndl.iitkgp.ac.in",
+    "officialDomains": ["ndl.iitkgp.ac.in", "ndl.gov.in"],
+    "getIt": {
+      "web": {
+        "url": "https://ndl.iitkgp.ac.in",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "notebooklm",
+    "name": "Gemini Notebook (NotebookLM)",
+    "providerId": "google",
+    "jobs": [
+      "research-with-sources",
+      "note-taking",
+      "flashcards-and-quizzes",
+      "pdf-and-document-chat"
+    ],
+    "summary": "A Google notebook that answers questions from the documents you add, with citations. It was called NotebookLM.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": ["gemini"],
+    "strengths": [
+      "answers grounded in your own files",
+      "summaries and study aids made from your material"
+    ],
+    "watchOutFor": [
+      "It is only as good as the files you give it.",
+      "Check its quotes against the original pages."
+    ],
+    "fitScores": {
+      "research-with-sources": 4,
+      "note-taking": 3,
+      "flashcards-and-quizzes": 3,
+      "pdf-and-document-chat": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://notebook.google.com",
+    "officialDomains": [
+      "notebook.google.com",
+      "notebooklm.google.com",
+      "google.com"
+    ],
+    "getIt": {
+      "web": {
+        "url": "https://notebook.google.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id6737527615",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "perplexity",
+    "name": "Perplexity",
+    "providerId": "perplexity-ai",
+    "jobs": ["research-with-sources", "ai-assistant"],
+    "summary": "An AI answer engine that searches the web and shows the pages it used for each answer.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "answers that link to the pages they used",
+      "quick background reading on a topic"
+    ],
+    "watchOutFor": [
+      "A link does not prove the summary is right. Open the source.",
+      "Web pages it cites can be wrong or biased."
+    ],
+    "fitScores": {
+      "research-with-sources": 5,
+      "ai-assistant": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.perplexity.ai",
+    "officialDomains": ["perplexity.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://www.perplexity.ai",
+        "linkCheckedOn": null
+      },
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=ai.perplexity.app.android",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1668000334",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "power-bi",
+    "name": "Power BI",
+    "providerId": "microsoft",
+    "jobs": ["data-analysis"],
+    "summary": "Microsoft's business intelligence tool for building dashboards and reports from many data sources.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "web"],
+    "worksWith": [],
+    "strengths": ["interactive dashboards", "many data connectors"],
+    "watchOutFor": [
+      "The desktop app is for Windows.",
+      "Sharing reports may need a paid licence."
+    ],
+    "fitScores": {
+      "data-analysis": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://powerbi.microsoft.com",
+    "officialDomains": ["powerbi.microsoft.com", "microsoft.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.microsoft.com/power-platform/products/power-bi/desktop",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "project-gutenberg",
+    "name": "Project Gutenberg",
+    "providerId": "project-gutenberg",
+    "jobs": ["source-library"],
+    "summary": "A library of free ebooks whose copyright has expired, including many classic and translated works.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "free ebooks you can read or download",
+      "well-known translations of older works"
+    ],
+    "watchOutFor": [
+      "Translations can be old and dated in language.",
+      "Note which edition and translator you read."
+    ],
+    "fitScores": {
+      "source-library": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.gutenberg.org",
+    "officialDomains": ["gutenberg.org"],
+    "getIt": {
+      "web": {
+        "url": "https://www.gutenberg.org",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "pubmed",
+    "name": "PubMed",
+    "providerId": "nih",
+    "jobs": ["research-with-sources"],
+    "summary": "A free search engine for biomedical and life-science research papers from the US National Library of Medicine.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "the standard index for medical literature",
+      "links to full text where available"
+    ],
+    "watchOutFor": [
+      "Many full texts sit behind publisher paywalls.",
+      "Do not use it as medical advice. Ask a professional."
+    ],
+    "fitScores": {
+      "research-with-sources": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://pubmed.ncbi.nlm.nih.gov",
+    "officialDomains": [
+      "pubmed.ncbi.nlm.nih.gov",
+      "ncbi.nlm.nih.gov",
+      "nih.gov"
+    ],
+    "getIt": {
+      "web": {
+        "url": "https://pubmed.ncbi.nlm.nih.gov",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "sacred-texts",
+    "name": "Sacred Texts Archive",
+    "providerId": "sacred-texts",
+    "jobs": ["source-library"],
+    "summary": "A website with translations of religious, mythological and folklore texts from many traditions, including Indian ones.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "translations of epics, scriptures and folklore",
+      "texts from many cultures in one place"
+    ],
+    "watchOutFor": [
+      "Most translations are older public-domain ones. Name the translator when you quote.",
+      "It is not a scholarly edition. Cross-check key claims."
+    ],
+    "fitScores": {
+      "source-library": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://sacred-texts.com",
+    "officialDomains": ["sacred-texts.com"],
+    "getIt": {
+      "web": {
+        "url": "https://sacred-texts.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "scispace",
+    "name": "SciSpace",
+    "providerId": "scispace",
+    "jobs": ["research-with-sources", "pdf-and-document-chat"],
+    "summary": "A research tool for finding papers and chatting with PDFs, with explanations of hard passages.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "chat with a paper and ask what a passage means",
+      "search across a large paper database"
+    ],
+    "watchOutFor": [
+      "AI explanations can be wrong. Check them in the paper.",
+      "Free use is limited. Check the current rules."
+    ],
+    "fitScores": {
+      "research-with-sources": 4,
+      "pdf-and-document-chat": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://scispace.com",
+    "officialDomains": ["scispace.com", "typeset.io"],
+    "getIt": {
+      "web": {
+        "url": "https://scispace.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "semantic-scholar",
+    "name": "Semantic Scholar",
+    "providerId": "semantic-scholar",
+    "jobs": ["research-with-sources"],
+    "summary": "A free academic search engine from the Allen Institute for AI with summaries and citation graphs.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "free paper search with short summaries",
+      "shows influential citations"
+    ],
+    "watchOutFor": [
+      "Coverage differs by field.",
+      "Summaries are automatic. Read the abstract."
+    ],
+    "fitScores": {
+      "research-with-sources": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.semanticscholar.org",
+    "officialDomains": ["semanticscholar.org"],
+    "getIt": {
+      "web": {
+        "url": "https://www.semanticscholar.org",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "tableau",
+    "name": "Tableau",
+    "providerId": "tableau",
+    "jobs": ["data-analysis"],
+    "summary": "A data visualisation tool for building dashboards by dragging fields, used in many companies.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "web"],
+    "worksWith": [],
+    "strengths": ["drag-and-drop dashboards", "strong visual options"],
+    "watchOutFor": [
+      "Full versions are paid. Check what the free options include.",
+      "Takes time to learn."
+    ],
+    "fitScores": {
+      "data-analysis": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.tableau.com",
+    "officialDomains": ["tableau.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.tableau.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "zotero",
+    "name": "Zotero",
+    "providerId": "zotero",
+    "jobs": ["research-with-sources", "writing-and-editing"],
+    "summary": "A free, open-source reference manager that collects sources and builds citations and bibliographies.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "saves sources from the browser with one click",
+      "citations for Word and Google Docs"
+    ],
+    "watchOutFor": [
+      "Free storage for files is limited. Check the official page.",
+      "Learn the basics before a big project."
+    ],
+    "fitScores": {
+      "research-with-sources": 4,
+      "writing-and-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.zotero.org",
+    "officialDomains": ["zotero.org"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.zotero.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.zotero.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://www.zotero.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  }
+]

@@ -1,0 +1,2127 @@
+[
+  {
+    "id": "ahrefs",
+    "name": "Ahrefs",
+    "providerId": "ahrefs",
+    "jobs": ["seo"],
+    "summary": "An SEO toolkit for backlinks, keyword research and site audits, used by professionals.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a large link and keyword database",
+      "site audits and rank tracking"
+    ],
+    "watchOutFor": [
+      "A paid product, with some free tools for your own site.",
+      "More than a casual site owner needs."
+    ],
+    "fitScores": {
+      "seo": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://ahrefs.com",
+    "officialDomains": ["ahrefs.com"],
+    "getIt": {
+      "web": {
+        "url": "https://ahrefs.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "airtable",
+    "name": "Airtable",
+    "providerId": "airtable",
+    "jobs": ["spreadsheet-ai", "database"],
+    "summary": "A spreadsheet-style database for tracking projects, content and records, with views and automations.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "spreadsheet ease with database features",
+      "forms, views and automations"
+    ],
+    "watchOutFor": [
+      "Free use limits records and features. Check the current rules.",
+      "Can be pricey for larger teams."
+    ],
+    "fitScores": {
+      "spreadsheet-ai": 3,
+      "database": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.airtable.com",
+    "officialDomains": ["airtable.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.airtable.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "apple-notes",
+    "name": "Apple Notes",
+    "providerId": "apple",
+    "jobs": ["note-taking"],
+    "summary": "The notes app built into iPhone, iPad and Mac, which syncs through iCloud.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["macos", "ios", "web"],
+    "worksWith": [],
+    "strengths": [
+      "built in and free on Apple devices",
+      "scanning, sketches and shared notes"
+    ],
+    "watchOutFor": [
+      "Works best only inside the Apple ecosystem.",
+      "Few options for exporting."
+    ],
+    "fitScores": {
+      "note-taking": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.apple.com",
+    "officialDomains": ["apple.com", "icloud.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.icloud.com/notes",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "asana",
+    "name": "Asana",
+    "providerId": "asana",
+    "jobs": ["task-and-project-management"],
+    "summary": "A work management tool for teams, with projects, timelines and task dependencies.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "lists, boards and timelines for one project",
+      "clear ownership of tasks"
+    ],
+    "watchOutFor": [
+      "More than one person usually needs.",
+      "Free use limits some features. Check the current rules."
+    ],
+    "fitScores": {
+      "task-and-project-management": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://asana.com",
+    "officialDomains": ["asana.com"],
+    "getIt": {
+      "web": {
+        "url": "https://asana.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id489969512",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "beautiful-ai",
+    "name": "Beautiful.ai",
+    "providerId": "beautiful-ai",
+    "jobs": ["presentation-maker"],
+    "summary": "A presentation tool that arranges slide content automatically, with templates and AI help.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "slides that keep their layout as you add content",
+      "smart templates"
+    ],
+    "watchOutFor": [
+      "Mostly paid. Check the trial on the official page.",
+      "Less freedom to move things around."
+    ],
+    "fitScores": {
+      "presentation-maker": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.beautiful.ai",
+    "officialDomains": ["beautiful.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://www.beautiful.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "bhashini",
+    "name": "Bhashini",
+    "providerId": "bhashini",
+    "jobs": ["translation"],
+    "summary": "India's government language platform for translation and speech tools across Indian languages.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "built for Indian languages",
+      "a public initiative with open tools"
+    ],
+    "watchOutFor": [
+      "Features differ between the website, apps and APIs. Check the official page.",
+      "Check important translations."
+    ],
+    "fitScores": {
+      "translation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://bhashini.gov.in",
+    "officialDomains": ["bhashini.gov.in"],
+    "getIt": {
+      "web": {
+        "url": "https://bhashini.gov.in",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "bing-webmaster-tools",
+    "name": "Bing Webmaster Tools",
+    "providerId": "microsoft",
+    "jobs": ["seo"],
+    "summary": "Microsoft's free tool for seeing and improving how your site appears in Bing.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "free data from Bing",
+      "can import your sites from Search Console"
+    ],
+    "watchOutFor": [
+      "Bing is a smaller share of search in many countries.",
+      "You need to verify that you own the site."
+    ],
+    "fitScores": {
+      "seo": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.bing.com",
+    "officialDomains": ["bing.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.bing.com/webmasters",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "deepl",
+    "name": "DeepL",
+    "providerId": "deepl",
+    "jobs": ["translation", "writing-and-editing"],
+    "summary": "A translation service known for natural-sounding results, with a writing assistant and document translation.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "natural-sounding translations",
+      "translates whole documents"
+    ],
+    "watchOutFor": [
+      "Check Indian-language support on the official page.",
+      "Free use limits text length. Check the current rules."
+    ],
+    "fitScores": {
+      "translation": 5,
+      "writing-and-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.deepl.com",
+    "officialDomains": ["deepl.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.deepl.com/translator",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1552407475",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "enhancv",
+    "name": "Enhancv",
+    "providerId": "enhancv",
+    "jobs": ["resume-builder"],
+    "summary": "An online resume builder with designed templates and writing suggestions.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "polished, designed templates",
+      "prompts that suggest what to write"
+    ],
+    "watchOutFor": [
+      "Downloads may need a paid plan.",
+      "Heavy design can be hard for applicant systems to read."
+    ],
+    "fitScores": {
+      "resume-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://enhancv.com",
+    "officialDomains": ["enhancv.com"],
+    "getIt": {
+      "web": {
+        "url": "https://enhancv.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "fathom",
+    "name": "Fathom",
+    "providerId": "fathom-video",
+    "jobs": ["meeting-notes-and-transcription"],
+    "summary": "An AI meeting recorder that transcribes and summarises video calls and highlights key moments.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos"],
+    "worksWith": [],
+    "strengths": [
+      "summaries soon after a call ends",
+      "highlights you can share"
+    ],
+    "watchOutFor": [
+      "Check what the free plan allows.",
+      "Tell people when you record a meeting."
+    ],
+    "fitScores": {
+      "meeting-notes-and-transcription": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://fathom.ai",
+    "officialDomains": ["fathom.ai", "fathom.video"],
+    "getIt": {
+      "web": {
+        "url": "https://fathom.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "fireflies",
+    "name": "Fireflies.ai",
+    "providerId": "fireflies",
+    "jobs": ["meeting-notes-and-transcription"],
+    "summary": "A meeting assistant that records, transcribes and summarises calls, and makes them searchable.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "searchable transcripts across meetings",
+      "integrations with common work tools"
+    ],
+    "watchOutFor": [
+      "Free use is limited. Check the current rules.",
+      "Tell people when you record a meeting."
+    ],
+    "fitScores": {
+      "meeting-notes-and-transcription": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://fireflies.ai",
+    "officialDomains": ["fireflies.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://fireflies.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "flowcv",
+    "name": "FlowCV",
+    "providerId": "flowcv",
+    "jobs": ["resume-builder"],
+    "summary": "A simple online resume builder with clean templates and PDF export.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": ["clean templates and easy editing", "a useful free plan"],
+    "watchOutFor": [
+      "Check what the free plan includes.",
+      "Keep the layout simple so tracking systems can read it."
+    ],
+    "fitScores": {
+      "resume-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://flowcv.com",
+    "officialDomains": ["flowcv.com"],
+    "getIt": {
+      "web": {
+        "url": "https://flowcv.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gamma",
+    "name": "Gamma",
+    "providerId": "gamma",
+    "jobs": ["presentation-maker"],
+    "summary": "An AI presentation tool that builds a slide deck, document or page from a short prompt.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a full draft deck from a short prompt",
+      "quick restyling of the whole deck"
+    ],
+    "watchOutFor": [
+      "Generated slides still need your facts checked and your own words.",
+      "Exporting may be limited on free plans."
+    ],
+    "fitScores": {
+      "presentation-maker": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://gamma.app",
+    "officialDomains": ["gamma.app"],
+    "getIt": {
+      "web": {
+        "url": "https://gamma.app",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gmail",
+    "name": "Gmail",
+    "providerId": "google",
+    "jobs": ["email-writing"],
+    "summary": "Google's email service, with Gemini features that help draft and summarise on some accounts.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "a familiar inbox with strong search",
+      "AI drafting help on supported accounts"
+    ],
+    "watchOutFor": [
+      "AI features depend on your account and plan.",
+      "Check what an AI feature reads from your mail."
+    ],
+    "fitScores": {
+      "email-writing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://mail.google.com",
+    "officialDomains": ["mail.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://mail.google.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-docs",
+    "name": "Google Docs",
+    "providerId": "google",
+    "jobs": ["writing-and-editing"],
+    "summary": "Google's online word processor, with sharing, comments and optional Gemini writing help.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "real-time sharing and comments",
+      "free with a Google account"
+    ],
+    "watchOutFor": [
+      "AI features depend on your account type and plan.",
+      "Layout can change when exporting to Word."
+    ],
+    "fitScores": {
+      "writing-and-editing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://workspace.google.com",
+    "officialDomains": ["docs.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://docs.google.com/document/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-keep",
+    "name": "Google Keep",
+    "providerId": "google",
+    "jobs": ["note-taking"],
+    "summary": "Google's simple app for quick notes, checklists and reminders.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "very quick for short notes and lists",
+      "syncs with your Google account"
+    ],
+    "watchOutFor": [
+      "Not built for long or structured notes.",
+      "Check the storage rules for your Google account."
+    ],
+    "fitScores": {
+      "note-taking": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://keep.google.com",
+    "officialDomains": ["keep.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://keep.google.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1029207872",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-search-console",
+    "name": "Google Search Console",
+    "providerId": "google",
+    "jobs": ["seo"],
+    "summary": "Google's free tool that shows how your site appears in Google Search and what to fix.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "free data straight from Google",
+      "shows search queries and indexing problems"
+    ],
+    "watchOutFor": [
+      "You need to verify that you own the site.",
+      "Data is delayed by a few days."
+    ],
+    "fitScores": {
+      "seo": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://search.google.com/search-console/about",
+    "officialDomains": ["search.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://search.google.com/search-console",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-sheets",
+    "name": "Google Sheets",
+    "providerId": "google",
+    "jobs": ["spreadsheet-ai", "data-analysis"],
+    "summary": "Google's online spreadsheet, with real-time sharing and Gemini help on some accounts.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": ["real-time sharing", "free with a Google account"],
+    "watchOutFor": [
+      "AI features depend on your account and plan.",
+      "Check AI-written formulas on a few rows."
+    ],
+    "fitScores": {
+      "spreadsheet-ai": 4,
+      "data-analysis": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://workspace.google.com",
+    "officialDomains": ["docs.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://docs.google.com/spreadsheets/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-slides",
+    "name": "Google Slides",
+    "providerId": "google",
+    "jobs": ["presentation-maker"],
+    "summary": "A browser-based slide editor in Google's office suite, with real-time sharing.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": ["gemini", "google-forms"],
+    "strengths": [
+      "free sharing and joint editing with a Google account",
+      "nothing to install"
+    ],
+    "watchOutFor": [
+      "It has fewer design extras than dedicated tools.",
+      "Complex animation is limited."
+    ],
+    "fitScores": {
+      "presentation-maker": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://workspace.google.com",
+    "officialDomains": ["slides.google.com", "docs.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://docs.google.com/presentation/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-translate",
+    "name": "Google Translate",
+    "providerId": "google",
+    "jobs": ["translation"],
+    "summary": "Google's free translator for text, speech, images and web pages, covering many Indian languages.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "many languages, including Indian ones",
+      "camera and conversation modes"
+    ],
+    "watchOutFor": [
+      "Check important translations, especially legal or medical.",
+      "Idioms and context can be wrong."
+    ],
+    "fitScores": {
+      "translation": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://translate.google.com",
+    "officialDomains": ["translate.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://translate.google.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id414706506",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "grammarly",
+    "name": "Grammarly",
+    "providerId": "grammarly",
+    "jobs": ["writing-and-editing", "email-writing", "browser-extension"],
+    "summary": "A writing assistant that checks grammar, spelling, clarity and tone as you type.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "fixing grammar and tone as you type",
+      "a browser extension for email and documents"
+    ],
+    "watchOutFor": [
+      "It suggests. You decide. Do not accept every change.",
+      "Your text is sent to its servers. Read its privacy terms."
+    ],
+    "fitScores": {
+      "writing-and-editing": 4,
+      "email-writing": 3,
+      "browser-extension": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.grammarly.com",
+    "officialDomains": ["grammarly.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.grammarly.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "windows": {
+        "url": "https://www.grammarly.com/desktop",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.grammarly.com/desktop",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "chromeExtension": {
+        "url": "https://chromewebstore.google.com/detail/grammarly-ai-writing-assi/kbfnbcaeplbcioakkpcpgfkobkghlhen",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "hemingway",
+    "name": "Hemingway Editor",
+    "providerId": "hemingway",
+    "jobs": ["writing-and-editing"],
+    "summary": "A simple editor that highlights long sentences and hard-to-read passages to make writing clearer.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos"],
+    "worksWith": [],
+    "strengths": ["marks hard-to-read sentences", "simple and fast"],
+    "watchOutFor": [
+      "It judges readability, not facts or tone.",
+      "Some features are in a paid version."
+    ],
+    "fitScores": {
+      "writing-and-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://hemingwayapp.com",
+    "officialDomains": ["hemingwayapp.com"],
+    "getIt": {
+      "web": {
+        "url": "https://hemingwayapp.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "ifttt",
+    "name": "IFTTT",
+    "providerId": "ifttt",
+    "jobs": ["automation-and-workflows"],
+    "summary": "A simple service for connecting apps and smart devices with if-this-then-that rules.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": ["very simple rules", "works with many smart-home devices"],
+    "watchOutFor": [
+      "Simpler than other tools, so less flexible.",
+      "Free use limits applets. Check the current rules."
+    ],
+    "fitScores": {
+      "automation-and-workflows": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://ifttt.com",
+    "officialDomains": ["ifttt.com"],
+    "getIt": {
+      "web": {
+        "url": "https://ifttt.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "jobscan",
+    "name": "Jobscan",
+    "providerId": "jobscan",
+    "jobs": ["resume-builder"],
+    "summary": "A tool that compares your resume with a job post and shows missing keywords and formatting issues.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "compares a resume against a job post",
+      "flags formatting problems"
+    ],
+    "watchOutFor": [
+      "Free use is limited. Check the current rules.",
+      "Do not copy keywords you cannot back up."
+    ],
+    "fitScores": {
+      "resume-builder": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.jobscan.co",
+    "officialDomains": ["jobscan.co"],
+    "getIt": {
+      "web": {
+        "url": "https://www.jobscan.co",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "keynote",
+    "name": "Keynote",
+    "providerId": "apple",
+    "jobs": ["presentation-maker"],
+    "summary": "Apple's presentation app for Mac, iPhone and iPad, with polished templates and animations.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["macos", "ios", "web"],
+    "worksWith": [],
+    "strengths": [
+      "free on Apple devices",
+      "clean templates and smooth animations"
+    ],
+    "watchOutFor": [
+      "Apple devices only for editing, with web access via iCloud.",
+      "Exporting to PowerPoint can change the layout."
+    ],
+    "fitScores": {
+      "presentation-maker": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.apple.com",
+    "officialDomains": ["apple.com", "icloud.com"],
+    "getIt": {
+      "macos": {
+        "url": "https://www.apple.com/keynote/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "kickresume",
+    "name": "Kickresume",
+    "providerId": "kickresume",
+    "jobs": ["resume-builder"],
+    "summary": "An online resume and cover letter builder with templates and AI writing help.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "resume and cover letter in one place",
+      "AI writing suggestions"
+    ],
+    "watchOutFor": [
+      "Many features are paid. Check the current rules.",
+      "Review AI-written text for accuracy."
+    ],
+    "fitScores": {
+      "resume-builder": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.kickresume.com",
+    "officialDomains": ["kickresume.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.kickresume.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "languagetool",
+    "name": "LanguageTool",
+    "providerId": "languagetool",
+    "jobs": ["writing-and-editing", "translation"],
+    "summary": "A grammar and style checker with an open-source core that supports many languages.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "linux", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "checking text in many languages",
+      "an open-source core you can run yourself"
+    ],
+    "watchOutFor": [
+      "Its free version has limits.",
+      "It catches errors but does not improve your argument."
+    ],
+    "fitScores": {
+      "writing-and-editing": 3,
+      "translation": 2
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://languagetool.org",
+    "officialDomains": ["languagetool.org"],
+    "getIt": {
+      "web": {
+        "url": "https://languagetool.org",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "chromeExtension": {
+        "url": "https://chromewebstore.google.com/detail/ai-grammar-checker-paraph/oldceeleldhonbafppcapldpdifcinji",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "firefoxAddon": {
+        "url": "https://addons.mozilla.org/firefox/addon/languagetool/",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "libreoffice",
+    "name": "LibreOffice",
+    "providerId": "document-foundation",
+    "jobs": ["presentation-maker", "writing-and-editing", "spreadsheet-ai"],
+    "summary": "A free, open-source office suite with a word processor, spreadsheet and presentation program.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "free with no subscription",
+      "opens and saves common Office files"
+    ],
+    "watchOutFor": [
+      "No built-in AI assistant.",
+      "Complex Office files may look different."
+    ],
+    "fitScores": {
+      "presentation-maker": 3,
+      "writing-and-editing": 3,
+      "spreadsheet-ai": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.libreoffice.org",
+    "officialDomains": ["libreoffice.org"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.libreoffice.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.libreoffice.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://www.libreoffice.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "logseq",
+    "name": "Logseq",
+    "providerId": "logseq",
+    "jobs": ["note-taking"],
+    "summary": "A free, open-source note-taking app built around linked notes and daily journals, stored as local files.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "linked notes and outlines",
+      "notes stay on your computer as plain files"
+    ],
+    "watchOutFor": [
+      "The outline style takes getting used to.",
+      "Syncing between devices needs set-up."
+    ],
+    "fitScores": {
+      "note-taking": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://logseq.com",
+    "officialDomains": ["logseq.com", "github.com/logseq"],
+    "getIt": {
+      "windows": {
+        "url": "https://logseq.com/downloads",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://logseq.com/downloads",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://logseq.com/downloads",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "make-com",
+    "name": "Make",
+    "providerId": "make",
+    "jobs": ["automation-and-workflows"],
+    "summary": "A visual automation builder for connecting apps with branching flows and data handling.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a visual canvas for detailed flows",
+      "fine control over data between steps"
+    ],
+    "watchOutFor": [
+      "More to learn than simpler tools.",
+      "Free use limits operations. Check the current rules."
+    ],
+    "fitScores": {
+      "automation-and-workflows": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.make.com",
+    "officialDomains": ["make.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.make.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "microsoft-excel",
+    "name": "Microsoft Excel",
+    "providerId": "microsoft",
+    "jobs": ["spreadsheet-ai", "data-analysis"],
+    "summary": "Microsoft's spreadsheet app, with Copilot help for formulas and analysis on some plans.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "the standard for spreadsheets at work",
+      "powerful formulas, tables and charts"
+    ],
+    "watchOutFor": [
+      "Copilot features depend on the plan.",
+      "Check AI-written formulas on a few rows."
+    ],
+    "fitScores": {
+      "spreadsheet-ai": 4,
+      "data-analysis": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.microsoft.com",
+    "officialDomains": ["microsoft.com", "office.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.microsoft.com/microsoft-365/excel",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "microsoft-onenote",
+    "name": "Microsoft OneNote",
+    "providerId": "microsoft",
+    "jobs": ["note-taking"],
+    "summary": "Microsoft's note-taking app with notebooks, sections and pages, and support for handwriting.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "a free-form page layout and handwriting",
+      "syncs across devices with a Microsoft account"
+    ],
+    "watchOutFor": [
+      "Search and sync depend on your Microsoft account setup.",
+      "Structure is notebook-based, not linked notes."
+    ],
+    "fitScores": {
+      "note-taking": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.onenote.com",
+    "officialDomains": ["onenote.com", "cloud.microsoft", "microsoft.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.onenote.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id410395246",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "microsoft-powerpoint",
+    "name": "Microsoft PowerPoint",
+    "providerId": "microsoft",
+    "jobs": ["presentation-maker"],
+    "summary": "Microsoft's slide presentation program, available on desktop, mobile and the web.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "web", "android", "ios"],
+    "worksWith": ["microsoft-copilot"],
+    "strengths": [
+      "familiar to schools and offices",
+      "works offline on a computer"
+    ],
+    "watchOutFor": [
+      "Some features need a paid Microsoft 365 plan.",
+      "Files may look different on another computer if fonts are missing."
+    ],
+    "fitScores": {
+      "presentation-maker": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.microsoft.com",
+    "officialDomains": ["microsoft.com", "office.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.microsoft.com/microsoft-365/powerpoint",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "microsoft-translator",
+    "name": "Microsoft Translator",
+    "providerId": "microsoft",
+    "jobs": ["translation"],
+    "summary": "Microsoft's translator for text, speech and conversations, in apps and Microsoft products.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "multi-person conversation translation",
+      "built into several Microsoft products"
+    ],
+    "watchOutFor": [
+      "Check important translations.",
+      "Language coverage differs between features."
+    ],
+    "fitScores": {
+      "translation": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://translator.microsoft.com",
+    "officialDomains": ["translator.microsoft.com", "microsoft.com"],
+    "getIt": {
+      "web": {
+        "url": "https://translator.microsoft.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1018949559",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "microsoft-word",
+    "name": "Microsoft Word",
+    "providerId": "microsoft",
+    "jobs": ["writing-and-editing"],
+    "summary": "Microsoft's word processor for documents, with Copilot writing help on some plans.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "the standard format for documents",
+      "strong layout and review tools"
+    ],
+    "watchOutFor": [
+      "Copilot features depend on the plan. Check the official page.",
+      "Full desktop use needs a Microsoft 365 plan."
+    ],
+    "fitScores": {
+      "writing-and-editing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.microsoft.com",
+    "officialDomains": ["microsoft.com", "office.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.microsoft.com/microsoft-365/word",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "n8n",
+    "name": "n8n",
+    "providerId": "n8n",
+    "jobs": ["automation-and-workflows"],
+    "summary": "A workflow automation tool you can self-host or use hosted, with a visual editor and AI nodes.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "command-line"],
+    "worksWith": [],
+    "strengths": [
+      "self-host it or use the cloud version",
+      "visual editor with code when needed"
+    ],
+    "watchOutFor": [
+      "Self-hosting means you secure and update it.",
+      "Check its licence terms for commercial use."
+    ],
+    "fitScores": {
+      "automation-and-workflows": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://n8n.io",
+    "officialDomains": ["n8n.io", "github.com/n8n-io"],
+    "getIt": {
+      "web": {
+        "url": "https://n8n.io",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npx n8n"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "notion",
+    "name": "Notion",
+    "providerId": "notion-labs",
+    "jobs": ["note-taking", "task-and-project-management"],
+    "summary": "A workspace for notes, tables, task lists and planning pages, with optional AI features.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "notes, tables and plans in one place",
+      "templates for study and planning"
+    ],
+    "watchOutFor": [
+      "It can get complicated. Start with one page.",
+      "AI features may need a paid plan."
+    ],
+    "fitScores": {
+      "note-taking": 4,
+      "task-and-project-management": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.notion.com",
+    "officialDomains": ["notion.com", "notion.so"],
+    "getIt": {
+      "web": {
+        "url": "https://www.notion.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "windows": {
+        "url": "https://www.notion.com/desktop",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.notion.com/desktop",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1232780281",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "obsidian",
+    "name": "Obsidian",
+    "providerId": "obsidian",
+    "jobs": ["note-taking"],
+    "summary": "A note-taking app that stores notes as plain files on your device and links them together.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "notes kept as plain files on your own device",
+      "links between notes that build a map of ideas"
+    ],
+    "watchOutFor": [
+      "Syncing across devices may cost extra.",
+      "It takes time to set up a system that suits you."
+    ],
+    "fitScores": {
+      "note-taking": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://obsidian.md",
+    "officialDomains": ["obsidian.md"],
+    "getIt": {
+      "windows": {
+        "url": "https://obsidian.md/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://obsidian.md/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://obsidian.md/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1557175442",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "otter",
+    "name": "Otter.ai",
+    "providerId": "otter",
+    "jobs": ["meeting-notes-and-transcription"],
+    "summary": "A meeting assistant that records, transcribes and summarises calls, with notes you can search.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "live transcripts and summaries",
+      "joins common meeting tools"
+    ],
+    "watchOutFor": [
+      "Free use limits minutes. Check the current rules.",
+      "Tell people when you record a meeting."
+    ],
+    "fitScores": {
+      "meeting-notes-and-transcription": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://otter.ai",
+    "officialDomains": ["otter.ai"],
+    "getIt": {
+      "web": {
+        "url": "https://otter.ai",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id1276437113",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "outlook",
+    "name": "Microsoft Outlook",
+    "providerId": "microsoft",
+    "jobs": ["email-writing"],
+    "summary": "Microsoft's email and calendar app, with Copilot features on some plans.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "email, calendar and tasks in one app",
+      "Copilot drafting help on supported plans"
+    ],
+    "watchOutFor": [
+      "Copilot features depend on the plan.",
+      "Check what an AI feature reads from your mail."
+    ],
+    "fitScores": {
+      "email-writing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://outlook.live.com",
+    "officialDomains": ["outlook.com", "outlook.live.com", "microsoft.com"],
+    "getIt": {
+      "web": {
+        "url": "https://outlook.live.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "overleaf",
+    "name": "Overleaf",
+    "providerId": "overleaf",
+    "jobs": ["resume-builder", "writing-and-editing"],
+    "summary": "An online LaTeX editor for papers, theses and resumes with ready templates.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "no LaTeX install needed",
+      "many templates for papers and CVs"
+    ],
+    "watchOutFor": [
+      "You need to learn LaTeX basics.",
+      "Some features, such as longer history, are paid."
+    ],
+    "fitScores": {
+      "resume-builder": 3,
+      "writing-and-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.overleaf.com",
+    "officialDomains": ["overleaf.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.overleaf.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "pitch",
+    "name": "Pitch",
+    "providerId": "pitch",
+    "jobs": ["presentation-maker"],
+    "summary": "A collaborative presentation app with modern templates, aimed at teams and start-ups.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "ios"],
+    "worksWith": [],
+    "strengths": ["team editing and comments", "modern templates"],
+    "watchOutFor": [
+      "Check what the free plan limits.",
+      "Aimed at teams more than a single student."
+    ],
+    "fitScores": {
+      "presentation-maker": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://pitch.com",
+    "officialDomains": ["pitch.com"],
+    "getIt": {
+      "web": {
+        "url": "https://pitch.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "power-automate",
+    "name": "Microsoft Power Automate",
+    "providerId": "microsoft",
+    "jobs": ["automation-and-workflows"],
+    "summary": "Microsoft's tool for automating work across Microsoft 365 and other services, including desktop actions.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows"],
+    "worksWith": [],
+    "strengths": ["works well with Microsoft 365", "desktop and cloud flows"],
+    "watchOutFor": [
+      "Premium connectors are paid.",
+      "Mostly aimed at Microsoft account users."
+    ],
+    "fitScores": {
+      "automation-and-workflows": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.microsoft.com",
+    "officialDomains": ["microsoft.com", "powerautomate.com"],
+    "getIt": {
+      "web": {
+        "url": "https://make.powerautomate.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "quillbot",
+    "name": "QuillBot",
+    "providerId": "quillbot",
+    "jobs": ["writing-and-editing"],
+    "summary": "A writing helper that paraphrases text, checks grammar and summarises passages.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "paraphrasing in several modes",
+      "grammar check and summaries"
+    ],
+    "watchOutFor": [
+      "Do not paraphrase to hide copying. Cite your sources.",
+      "Many features need a paid plan."
+    ],
+    "fitScores": {
+      "writing-and-editing": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://quillbot.com",
+    "officialDomains": ["quillbot.com"],
+    "getIt": {
+      "web": {
+        "url": "https://quillbot.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "reactive-resume",
+    "name": "Reactive Resume",
+    "providerId": "reactive-resume",
+    "jobs": ["resume-builder"],
+    "summary": "A free, open-source resume builder that works in the browser and exports to PDF.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a free, open-source resume builder",
+      "several clean templates"
+    ],
+    "watchOutFor": [
+      "Check that the exported file opens and copies cleanly.",
+      "Keep your own copy of the content."
+    ],
+    "fitScores": {
+      "resume-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://rxresu.me",
+    "officialDomains": ["rxresu.me", "github.com/AmruthPillai"],
+    "getIt": {
+      "web": {
+        "url": "https://rxresu.me",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "reverso",
+    "name": "Reverso",
+    "providerId": "reverso",
+    "jobs": ["translation", "language-learning"],
+    "summary": "A translator with example sentences from real texts, plus grammar checking and a dictionary.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "example sentences that show context",
+      "helpful for language learners"
+    ],
+    "watchOutFor": [
+      "Check important translations.",
+      "Some features need a paid plan."
+    ],
+    "fitScores": {
+      "translation": 3,
+      "language-learning": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.reverso.net",
+    "officialDomains": ["reverso.net"],
+    "getIt": {
+      "web": {
+        "url": "https://www.reverso.net",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "screaming-frog",
+    "name": "Screaming Frog SEO Spider",
+    "providerId": "screaming-frog",
+    "jobs": ["seo"],
+    "summary": "A desktop crawler that scans a website like a search engine to find broken links and SEO issues.",
+    "kind": "app",
+    "skillLevel": "advanced",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "finds broken links and missing tags",
+      "a free version for small sites"
+    ],
+    "watchOutFor": [
+      "Technical output. It takes time to read.",
+      "The free version limits the pages it crawls."
+    ],
+    "fitScores": {
+      "seo": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.screamingfrog.co.uk",
+    "officialDomains": ["screamingfrog.co.uk"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.screamingfrog.co.uk/seo-spider/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.screamingfrog.co.uk/seo-spider/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://www.screamingfrog.co.uk/seo-spider/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "scrivener",
+    "name": "Scrivener",
+    "providerId": "literature-and-latte",
+    "jobs": ["writing-and-editing"],
+    "summary": "A writing app for long projects such as books and theses, with a binder to organise chapters and notes.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "organises long documents into parts",
+      "research and notes kept next to the draft"
+    ],
+    "watchOutFor": [
+      "A paid app with a trial listed on the official page.",
+      "More features than a short document needs."
+    ],
+    "fitScores": {
+      "writing-and-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.literatureandlatte.com",
+    "officialDomains": ["literatureandlatte.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.literatureandlatte.com/scrivener/overview",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.literatureandlatte.com/scrivener/overview",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "semrush",
+    "name": "Semrush",
+    "providerId": "semrush",
+    "jobs": ["seo"],
+    "summary": "An all-in-one marketing toolkit for SEO, ads and content research.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "keyword, competitor and audit tools in one place",
+      "content writing helpers"
+    ],
+    "watchOutFor": [
+      "A paid product with limited free use.",
+      "A lot of features. Learn one area at a time."
+    ],
+    "fitScores": {
+      "seo": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.semrush.com",
+    "officialDomains": ["semrush.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.semrush.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "superhuman",
+    "name": "Superhuman",
+    "providerId": "superhuman",
+    "jobs": ["email-writing"],
+    "summary": "A fast email client built around keyboard shortcuts, with AI drafting and sorting.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "macos", "windows", "ios", "android"],
+    "worksWith": [],
+    "strengths": [
+      "very fast and keyboard-driven",
+      "AI drafting in your own style"
+    ],
+    "watchOutFor": [
+      "A paid product. Check the trial on the official page.",
+      "Works on top of Gmail and Outlook accounts."
+    ],
+    "fitScores": {
+      "email-writing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://superhuman.com",
+    "officialDomains": ["superhuman.com"],
+    "getIt": {
+      "web": {
+        "url": "https://superhuman.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "teal",
+    "name": "Teal",
+    "providerId": "teal",
+    "jobs": ["resume-builder"],
+    "summary": "A job-search tool that combines a resume builder with an application tracker and a browser extension.",
+    "kind": "ai-tool",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "track applications in one place",
+      "tailor a resume to a job post"
+    ],
+    "watchOutFor": [
+      "Some features are paid. Check the current rules.",
+      "Review AI-written text for accuracy."
+    ],
+    "fitScores": {
+      "resume-builder": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.tealhq.com",
+    "officialDomains": ["tealhq.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.tealhq.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "todoist",
+    "name": "Todoist",
+    "providerId": "todoist",
+    "jobs": ["task-and-project-management"],
+    "summary": "A to-do list and task manager with projects, due dates and recurring tasks.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "quick to add tasks in plain language",
+      "works on many devices"
+    ],
+    "watchOutFor": [
+      "Free use limits projects and features. Check the current rules.",
+      "Simple compared with full project tools."
+    ],
+    "fitScores": {
+      "task-and-project-management": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.todoist.com",
+    "officialDomains": ["todoist.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.todoist.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id572688855",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "trello",
+    "name": "Trello",
+    "providerId": "atlassian",
+    "jobs": ["task-and-project-management"],
+    "summary": "A card-and-board tool for organising tasks as columns, popular for simple team and personal projects.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": ["simple visual boards", "easy to learn"],
+    "watchOutFor": [
+      "Free use limits some features. Check the current rules.",
+      "Boards get messy without a routine."
+    ],
+    "fitScores": {
+      "task-and-project-management": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://trello.com",
+    "officialDomains": ["trello.com", "atlassian.com"],
+    "getIt": {
+      "web": {
+        "url": "https://trello.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id461504587",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "ubersuggest",
+    "name": "Ubersuggest",
+    "providerId": "neil-patel",
+    "jobs": ["seo"],
+    "summary": "A simpler SEO tool for keyword ideas, site audits and competitor checks.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": ["simple keyword ideas", "easier than the largest suites"],
+    "watchOutFor": [
+      "Free use is limited. Check the current rules.",
+      "Data depth is lower than the largest suites."
+    ],
+    "fitScores": {
+      "seo": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://neilpatel.com",
+    "officialDomains": ["neilpatel.com", "ubersuggest.com"],
+    "getIt": {
+      "web": {
+        "url": "https://neilpatel.com/ubersuggest/",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "whisper",
+    "name": "Whisper",
+    "providerId": "openai",
+    "jobs": ["meeting-notes-and-transcription", "voice-and-audio"],
+    "summary": "OpenAI's open-source speech-to-text model that turns audio into text in many languages, on your own computer.",
+    "kind": "model",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code", "command-line"],
+    "worksWith": [],
+    "strengths": [
+      "accurate transcription in many languages",
+      "runs offline, so recordings stay on your computer"
+    ],
+    "watchOutFor": [
+      "It needs some technical set-up, or an app that wraps it.",
+      "Check names and numbers in the transcript."
+    ],
+    "fitScores": {
+      "meeting-notes-and-transcription": 4,
+      "voice-and-audio": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://github.com/openai/whisper",
+    "officialDomains": ["github.com/openai", "openai.com"],
+    "getIt": {
+      "cliInstall": "pip install -U openai-whisper"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "yoast-seo",
+    "name": "Yoast SEO",
+    "providerId": "yoast",
+    "jobs": ["seo"],
+    "summary": "A WordPress plug-in that helps you set titles, descriptions and readability for each page.",
+    "kind": "extension",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": ["wordpress"],
+    "strengths": [
+      "guidance as you edit a WordPress page",
+      "technical SEO settings handled for you"
+    ],
+    "watchOutFor": [
+      "WordPress only.",
+      "Some features are paid. Check the official page."
+    ],
+    "fitScores": {
+      "seo": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://yoast.com",
+    "officialDomains": ["yoast.com", "wordpress.org"],
+    "getIt": {
+      "web": {
+        "url": "https://wordpress.org/plugins/wordpress-seo/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "zapier",
+    "name": "Zapier",
+    "providerId": "zapier",
+    "jobs": ["automation-and-workflows"],
+    "summary": "A service that connects thousands of apps so an event in one starts an action in another, without code.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "connects a very large number of apps",
+      "no code needed for most workflows"
+    ],
+    "watchOutFor": [
+      "Free use limits tasks. Check the current rules.",
+      "Costs rise as workflows grow."
+    ],
+    "fitScores": {
+      "automation-and-workflows": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://zapier.com",
+    "officialDomains": ["zapier.com"],
+    "getIt": {
+      "web": {
+        "url": "https://zapier.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "zoom-ai-companion",
+    "name": "Zoom AI Companion",
+    "providerId": "zoom",
+    "jobs": ["meeting-notes-and-transcription"],
+    "summary": "Zoom's built-in AI assistant that summarises meetings and drafts follow-ups for supported accounts.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "built into Zoom, no extra tool",
+      "summaries and action items"
+    ],
+    "watchOutFor": [
+      "Availability depends on your Zoom plan.",
+      "Tell people when you record or summarise a meeting."
+    ],
+    "fitScores": {
+      "meeting-notes-and-transcription": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.zoom.com",
+    "officialDomains": ["zoom.com", "zoom.us"],
+    "getIt": {
+      "web": {
+        "url": "https://www.zoom.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  }
+]

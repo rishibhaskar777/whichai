@@ -1,22 +1,23 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { GoalForm } from "@/components/goal-form/GoalForm";
 import { NoMatchCard } from "@/components/no-match-card/NoMatchCard";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
-import { PlanView } from "@/components/plan-view/PlanView";
 import { UnderstandingCard } from "@/components/understanding-card/UnderstandingCard";
-import {
-  addableChips,
-  coveredGoals,
-  inferLevel,
-  interpretGoal,
-} from "@/lib/plan/interpret-goal";
+import { loadInterpreter, type Interpreter } from "@/lib/plan/load-interpreter";
 import { useI18n } from "@/lib/i18n/provider";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
 import type { Chip, UnderstoodGoal } from "@/lib/schemas/plan";
 import controls from "@/styles/controls.module.css";
 import styles from "./HomeFlow.module.css";
+
+/* The plan view carries the rules engine and the catalogue, so it loads on demand. */
+const PlanView = dynamic(
+  () => import("@/components/plan-view/PlanView").then((m) => m.PlanView),
+  { loading: () => <p role="status">…</p> },
+);
 
 type Stage =
   | { kind: "empty" }
@@ -40,7 +41,8 @@ export function HomeFlow() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { count: newPlanCount, pendingGoal, consumeGoal } = useNewPlanSignal();
   const [handledNewPlan, setHandledNewPlan] = useState(newPlanCount);
-  const [handledGoalToken, setHandledGoalToken] = useState(0);
+  const handledGoalToken = useRef(0);
+  const [interpreter, setInterpreter] = useState<Interpreter | null>(null);
 
   if (handledNewPlan !== newPlanCount) {
     setHandledNewPlan(newPlanCount);
@@ -60,8 +62,10 @@ export function HomeFlow() {
     textarea.setSelectionRange(textarea.value.length, textarea.value.length);
   }, [stage.kind]);
 
-  function showGoal(goalText: string) {
-    const goal = interpretGoal(goalText);
+  async function showGoal(goalText: string) {
+    const loaded = await loadInterpreter();
+    const goal = loaded.interpretGoal(goalText);
+    setInterpreter(loaded);
     setSubmittedGoal(goalText);
     setDraft("");
     setStage(goal ? { kind: "understanding", goal } : { kind: "no-match" });
@@ -69,22 +73,19 @@ export function HomeFlow() {
   }
 
   function submitGoal(goalText: string) {
-    const goal = showGoal(goalText);
-    void recordGoal(goalText, goal?.goalType ?? null);
+    void showGoal(goalText).then((goal) =>
+      recordGoal(goalText, goal?.goalType ?? null),
+    );
   }
 
   // A goal re-run from the Searches page arrives through the signal, not the URL.
-  if (pendingGoal && pendingGoal.token !== handledGoalToken) {
-    setHandledGoalToken(pendingGoal.token);
-    showGoal(pendingGoal.text);
-  }
   useEffect(() => {
-    if (!pendingGoal) return;
-    void recordGoal(
-      pendingGoal.text,
-      interpretGoal(pendingGoal.text)?.goalType ?? null,
-    );
+    if (!pendingGoal || pendingGoal.token === handledGoalToken.current) return;
+    handledGoalToken.current = pendingGoal.token;
     consumeGoal();
+    void showGoal(pendingGoal.text).then((goal) =>
+      recordGoal(pendingGoal.text, goal?.goalType ?? null),
+    );
   }, [pendingGoal, consumeGoal, recordGoal]);
 
   function updateChips(update: (chips: readonly Chip[]) => Chip[]) {
@@ -99,11 +100,11 @@ export function HomeFlow() {
   }
 
   function confirm() {
-    if (stage.kind !== "understanding") return;
+    if (stage.kind !== "understanding" || !interpreter) return;
     const { goal } = stage;
     setStage({
       kind: "plan",
-      goal: { ...goal, inferredLevel: inferLevel(goal.chips) },
+      goal: { ...goal, inferredLevel: interpreter.inferLevel(goal.chips) },
     });
   }
 
@@ -144,10 +145,10 @@ export function HomeFlow() {
           </p>
         ) : null}
 
-        {stage.kind === "understanding" ? (
+        {stage.kind === "understanding" && interpreter ? (
           <UnderstandingCard
             chips={stage.goal.chips}
-            options={addableChips(stage.goal.goalType)}
+            options={interpreter.addableChips(stage.goal.goalType)}
             onRemoveChip={(id) =>
               updateChips((chips) => chips.filter((chip) => chip.id !== id))
             }
@@ -157,8 +158,8 @@ export function HomeFlow() {
           />
         ) : null}
 
-        {stage.kind === "no-match" ? (
-          <NoMatchCard goals={coveredGoals} onChoose={submitGoal} />
+        {stage.kind === "no-match" && interpreter ? (
+          <NoMatchCard goals={interpreter.coveredGoals} onChoose={submitGoal} />
         ) : null}
 
         {stage.kind === "plan" ? (
@@ -174,7 +175,11 @@ export function HomeFlow() {
         ) : null}
       </div>
 
-      <div className={styles.dock} data-print-hide="">
+      <div
+        className={styles.dock}
+        data-print-hide=""
+        onFocusCapture={() => void loadInterpreter()}
+      >
         <GoalForm
           value={draft}
           onValueChange={setDraft}

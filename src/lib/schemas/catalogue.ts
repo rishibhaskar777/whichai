@@ -54,6 +54,11 @@ export const toolKindSchema = z.enum([
   "service",
   "app",
   "template-source",
+  /** Open-weight model families: where to get them, not a place to chat. */
+  "model",
+  /** Browser and editor extensions. */
+  "extension",
+  "cli",
 ]);
 export type ToolKind = z.infer<typeof toolKindSchema>;
 
@@ -76,6 +81,64 @@ export const platformSchema = z.enum([
 ]);
 export type Platform = z.infer<typeof platformSchema>;
 
+/**
+ * A domain that belongs to a tool: a host ("ollama.com", which also covers its
+ * subdomains) or a host with one path segment ("github.com/ollama") for
+ * projects that live on a shared host.
+ */
+export const officialDomainSchema = z
+  .string()
+  .regex(
+    /^[a-z0-9-]+(?:\.[a-z0-9-]+)+(?:\/[A-Za-z0-9._-]+)?$/,
+    "Use a lowercase host, optionally followed by one path segment.",
+  );
+
+export const linkEntrySchema = z
+  .object({
+    url: httpsUrl,
+    /** The day the address was opened and seen to resolve. Not a verification. */
+    linkCheckedOn: z.iso.date().nullable(),
+  })
+  .strict();
+export type LinkEntry = z.infer<typeof linkEntrySchema>;
+
+export const GET_IT_LINK_KEYS = [
+  "web",
+  "windows",
+  "macos",
+  "linux",
+  "android",
+  "ios",
+  "chromeExtension",
+  "firefoxAddon",
+  "edgeAddon",
+  "vscodeExtension",
+  "jetbrainsPlugin",
+  "modelPage",
+] as const;
+export type GetItLinkKey = (typeof GET_IT_LINK_KEYS)[number];
+
+export const getItSchema = z
+  .object({
+    web: linkEntrySchema,
+    windows: linkEntrySchema,
+    macos: linkEntrySchema,
+    linux: linkEntrySchema,
+    android: linkEntrySchema,
+    ios: linkEntrySchema,
+    chromeExtension: linkEntrySchema,
+    firefoxAddon: linkEntrySchema,
+    edgeAddon: linkEntrySchema,
+    vscodeExtension: linkEntrySchema,
+    jetbrainsPlugin: linkEntrySchema,
+    modelPage: linkEntrySchema,
+    /** The official install command, shown as text and never run. */
+    cliInstall: z.string().min(1).max(160),
+  })
+  .partial()
+  .strict();
+export type GetIt = z.infer<typeof getItSchema>;
+
 export const toolSchema = z
   .object({
     id: slug,
@@ -96,6 +159,13 @@ export const toolSchema = z
     fitScores: z.record(slug, z.number().int().min(1).max(5)),
     scoreSource: z.literal("editorial-estimate"),
     officialUrl: httpsUrl,
+    officialDomains: z.array(officialDomainSchema).min(1).max(6),
+    getIt: getItSchema.optional(),
+    /** Plan names, only when confident. Features stay "[verify]" until checked. */
+    planTiers: z
+      .array(z.object({ name: text(40), features: z.literal(VERIFY) }))
+      .max(6)
+      .optional(),
     verified: z.boolean(),
     lastVerified: z.iso.date().nullable(),
   })

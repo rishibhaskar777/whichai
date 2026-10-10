@@ -540,3 +540,21 @@ describe("errors", () => {
     );
   });
 });
+
+describe("get it links in a plan", () => {
+  it.each(GOAL_IDS)(
+    "carry the chosen tool's own links, nothing else: %s",
+    (goalType) => {
+      const plan = buildPlan(goalOf(goalType), NO_OPTIONS);
+      let checked = 0;
+      for (const level of LEVELS) {
+        for (const job of plan.levels[level].jobs) {
+          const tool = catalogue.tools.find((t) => t.id === job.toolId)!;
+          expect(job.getIt).toEqual(tool.getIt ?? null);
+          checked += 1;
+        }
+      }
+      expect(checked).toBeGreaterThan(0);
+    },
+  );
+});
