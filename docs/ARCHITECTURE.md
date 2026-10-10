@@ -19,6 +19,8 @@ app/                 routes, layouts, server components
   +--> lib/schemas/  Zod schemas: goal input, plan contract, catalogue
   +--> lib/news/     feed reader, cache, tags, "Affects your plans"
   +--> data/         JSON catalogue; news sources in data/news/
+
+scripts/discover*.ts   weekly tool discovery (GitHub Actions), not part of the site
 ```
 
 ## Directory layout
@@ -69,6 +71,7 @@ src/
     plan/              goal interpreter, text matching, chip helpers
     news/              feed fetch, parse, cache, tagging, tool matching, query (server) and plan matching (browser)
     engine/            tool selection, plan assembly, text for cards
+    discovery/         finding new tools: sources, admission rules, issue state, draft records (used by scripts only)
     catalogue/         cross-file data checks and the data report
     schemas/           goal input, plan contract and catalogue schemas
     security/          CSP builder and static security headers
@@ -80,15 +83,21 @@ src/
     catalogue/         providers, jobs, model classes, goal templates, and
                        tools/ with one file per job category
     news/              sources.json: the official feeds
+    discovery/         config.json (thresholds) and rejected.json (names and domains turned down for good)
     suggestions.ts     suggestion chips and placeholder examples
 scripts/
   data-report.ts       prints verification status of the catalogue
   catalogue-version.ts writes src/data/catalogue/version.ts
   check-links.ts       requests every catalogue address (npm run links:check)
+  check-news.ts        fetches every news source (npm run news:check)
+  discover.ts          weekly discovery run, or --dry-run (npm run discover:dry-run)
+  discover-draft.ts    posts the draft record when a candidate is approved (workflow)
+  discover-import.ts   adds an approved candidate locally (npm run discover:import)
 docs/
   decisions/           architecture decision records
   VERIFYING-DATA.md    how to check a tool record
   NEWS-SOURCES.md      how to add or remove a news source
+  TOOL-DISCOVERY.md    how discovery works, admission rules, review checklist
 
 public/                static assets
 ```
@@ -195,6 +204,25 @@ sources.json --> service.get() --(every 30 min, parallel)--> fetchFeedText --> p
 - `tagging.ts` and `tool-match.ts`: keyword rules for the tag, and whole-word catalogue names in the title for `toolIds`.
 - `affects-plans.ts` and `PlanToolsProvider`: in the browser, saved plans are rebuilt with `buildPlan`, and an item is flagged when its `toolIds` overlap the tools of a plan or the tools the person uses. The engine loads only when a saved plan exists and the browser is idle.
 - Relative times are formatted from the time the server made the list (`I18n.formatRelative`), so server and browser text match.
+
+## Tool discovery
+
+A weekly job finds candidates for the catalogue and keeps its state in GitHub issues ([0013](decisions/0013-tool-discovery.md), [TOOL-DISCOVERY.md](TOOL-DISCOVERY.md)). It is not part of the site and the site imports nothing from it.
+
+```
+sources (GitHub, Hugging Face, Hacker News, news feeds)
+   --> clean (sanitize.ts, clean.ts) --> drop known (match.ts) and rejected --> merge by repository, site, name
+   --> run.ts: plan creates and edits against the existing issues (state.ts decodes the hidden block)
+   --> github-api.ts: create or edit issues; label approved --> workflow --> draft.ts comment
+   --> import.ts + scripts/discover-import.ts: validate, confirm, write locally
+```
+
+- `sources/` has one module per source: a pure parser over the response, and a fetch with a timeout that returns a result instead of throwing, so a failing source is skipped.
+- `admission.ts` holds the five rules and the signal thresholds (read from `src/data/discovery/config.json`); it never compares a candidate with a listed tool. `jobs.ts` suggests jobs and lists the closest listed tools.
+- `run.ts` is a planner: it takes the found items and the existing issues and returns what to create and edit. The scripts execute the plan, so the whole decision logic is testable without a network.
+- `state.ts` writes and reads the issue body. Candidate text appears only in code spans and blocks, and the hidden JSON block is escaped and validated on read.
+- Everything under `src/lib/discovery/` runs under Node without a build, like the link and news checkers. It reuses `plan/text-match.ts` (edit distance), `news/fetch-feed.ts` and `news/parse-feed.ts`, and the catalogue schema and checks.
+- The weekly job writes issues only. `discover:import` is the one piece that writes catalogue files, and it runs locally.
 
 ## Sign-in
 

@@ -16,6 +16,7 @@ Early development. See [docs/ROADMAP.md](docs/ROADMAP.md) for the phases.
 | 4     | Sign-in, saved plans and feedback           | Done        |
 | 5a    | Tool catalogue, Get it links, library       | Done        |
 | 5b    | News from official feeds, What Changed      | Done        |
+| 5c    | Weekly discovery of new tools, reviewed     | Done        |
 
 The project follows a [zero-cost rule](docs/decisions/0006-zero-cost.md): no paid APIs, no AI APIs, no hosted databases, no trackers.
 
@@ -39,21 +40,24 @@ The site runs at http://localhost:3000. Sign-in is optional and needs free Googl
 
 ## Scripts
 
-| Command                | What it does                                       |
-| ---------------------- | -------------------------------------------------- |
-| `npm run dev`          | Start the development server                       |
-| `npm run build`        | Production build                                   |
-| `npm run start`        | Serve the production build                         |
-| `npm run lint`         | Run ESLint                                         |
-| `npm run typecheck`    | Run the TypeScript compiler without emitting files |
-| `npm test`             | Run unit tests                                     |
-| `npm run data:report`  | Print how much of the tool catalogue is verified   |
-| `npm run data:version` | Write the catalogue version after a data change    |
-| `npm run links:check`  | Check every catalogue address (run by hand)        |
+| Command                          | What it does                                       |
+| -------------------------------- | -------------------------------------------------- |
+| `npm run dev`                    | Start the development server                       |
+| `npm run build`                  | Production build                                   |
+| `npm run start`                  | Serve the production build                         |
+| `npm run lint`                   | Run ESLint                                         |
+| `npm run typecheck`              | Run the TypeScript compiler without emitting files |
+| `npm test`                       | Run unit tests                                     |
+| `npm run data:report`            | Print how much of the tool catalogue is verified   |
+| `npm run data:version`           | Write the catalogue version after a data change    |
+| `npm run links:check`            | Check every catalogue address (run by hand)        |
+| `npm run news:check`             | Fetch every news source and report broken ones     |
+| `npm run discover:dry-run`       | Show what the weekly tool discovery would find     |
+| `npm run discover:import -- <n>` | Add an approved candidate to the catalogue         |
 
 ## Project layout
 
-Next.js App Router with a `src/` directory: `app/` for routes, `components/` for UI, `lib/` for validation and security helpers, `styles/` for design tokens, `data/catalogue/` for the tool catalogue (JSON), `lib/engine/` for the rules engine, `lib/plan/` for the goal interpreter, `lib/news/` and `data/news/` for the news feeds. `src/proxy.ts` sets the CSP nonce and security headers on every request. Details are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Next.js App Router with a `src/` directory: `app/` for routes, `components/` for UI, `lib/` for validation and security helpers, `styles/` for design tokens, `data/catalogue/` for the tool catalogue (JSON), `lib/engine/` for the rules engine, `lib/plan/` for the goal interpreter, `lib/news/` and `data/news/` for the news feeds, `lib/discovery/` and `data/discovery/` for tool discovery. `src/proxy.ts` sets the CSP nonce and security headers on every request. Details are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## What works now
 
@@ -73,6 +77,7 @@ Next.js App Router with a `src/` directory: `app/` for routes, `components/` for
 - Sign in with Google or GitHub from the sidebar, in a glass popup (or at `/sign-in` without JavaScript). The session is an encrypted cookie that holds only your provider, provider id and name; there is no database, and your plans still stay in this browser. The popup lists Google, GitHub, Microsoft, Apple, email and phone; Google and GitHub work once configured and the rest say they are coming in an upcoming update. See [0008](docs/decisions/0008-sign-in.md).
 - A plain-language privacy page at `/privacy` that says what stays on your device and how to delete it.
 - **AI news** from official sources. The server reads about 30 public RSS and Atom feeds (company blogs, changelogs, GitHub releases of official repositories), at most every 30 minutes, and keeps the last good result if a feed fails. The panel shows the six newest headlines with source, age, tag and a New badge. **What Changed** at `/what-changed` lists everything from the last 60 days with search, tag and source filters and pages, all in the URL, and each tool page shows its recent news. A headline gets an "Affects your plans" badge when a plan saved on your device uses that tool; that check never leaves your device. Headlines stay in their original language and link to the source. See [0012](docs/decisions/0012-news-from-official-feeds.md) and [docs/NEWS-SOURCES.md](docs/NEWS-SOURCES.md).
+- **Tool discovery.** A weekly GitHub Actions job looks for new AI tools on GitHub, Hugging Face, Hacker News and our own news feeds, and opens one issue per candidate with the evidence and the closest listed tools. Nothing enters the catalogue without a person approving it: the `approved` label posts a draft record, and `npm run discover:import` adds it locally for you to verify and commit. See [docs/TOOL-DISCOVERY.md](docs/TOOL-DISCOVERY.md) and [0013](docs/decisions/0013-tool-discovery.md).
 
 ## Security
 
