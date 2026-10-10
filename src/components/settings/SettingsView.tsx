@@ -3,9 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
 import { ConfirmDialog } from "@/components/dialog/ConfirmDialog";
-import { DownloadIcon } from "@/components/icons";
+import { CheckIcon, DownloadIcon } from "@/components/icons";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { StorageNotice } from "@/components/local-data/StorageNotice";
+import { SubscriptionDialog } from "@/components/pricing/SubscriptionDialog";
 import { useSignIn } from "@/components/sign-in/SignInProvider";
 import { useToast } from "@/components/toast/ToastProvider";
 import type { Viewer } from "@/lib/auth/get-session";
@@ -13,6 +14,9 @@ import { useI18n } from "@/lib/i18n/provider";
 import type { Locale } from "@/lib/i18n/locales";
 import { BUDGET_VALUES, budgetLabel } from "@/lib/plan/budget-labels";
 import { FEEDBACK_URL, REPOSITORY_URL, SECURITY_POLICY_URL } from "@/lib/links";
+import { getCurrentPlan } from "@/lib/pricing/current-plan";
+import { formatPrice } from "@/lib/pricing/format";
+import { getPlan, localize, planFeatures } from "@/lib/pricing/plans";
 import { LEVELS } from "@/lib/schemas/plan";
 import { downloadTextFile } from "@/lib/storage/download";
 import { backupFileName } from "@/lib/storage/operations";
@@ -35,15 +39,17 @@ interface SettingsViewProps {
 }
 
 function Panel({
+  id,
   title,
   children,
 }: {
+  id?: string;
   title: string;
   children: React.ReactNode;
 }) {
   const titleId = useId();
   return (
-    <section className={styles.panel} aria-labelledby={titleId}>
+    <section id={id} className={styles.panel} aria-labelledby={titleId}>
       <h2 id={titleId} className={styles.panelTitle}>
         {title}
       </h2>
@@ -70,6 +76,8 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
   const { open: openSignIn } = useSignIn();
   const { settings, updateSettings, exportBackup, clearAll } = useLocalData();
   const [confirmingClear, setConfirmingClear] = useState(false);
+  const [managingSubscription, setManagingSubscription] = useState(false);
+  const plan = getPlan(getCurrentPlan());
   const titleId = useId();
 
   async function clearEverything() {
@@ -214,6 +222,54 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
         </SettingRow>
       </Panel>
 
+      <Panel id="subscription" title={t("settings.subscription")}>
+        <div className={styles.row}>
+          <div className={styles.rowText}>
+            <p className={styles.rowLabel}>
+              {t("plan.label", { plan: localize(plan.name, i18n.locale) })}
+            </p>
+            <p className={styles.rowHelp}>
+              {t("settings.subscription.price", {
+                amount: formatPrice(plan.monthlyPrice ?? 0, i18n.locale),
+              })}
+            </p>
+          </div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.rowText}>
+            <p className={styles.rowLabel}>
+              {t("settings.subscription.includes")}
+            </p>
+            <ul className={styles.planFeatures}>
+              {planFeatures(plan).map((feature) => (
+                <li key={feature.id}>
+                  <CheckIcon width="16" height="16" />
+                  <span>{localize(feature.name, i18n.locale)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.rowText}>
+            <p className={styles.rowHelp}>{t("settings.subscription.note")}</p>
+          </div>
+          <div className={styles.rowControl}>
+            <Link href="/pricing" className={controls.button}>
+              {t("settings.subscription.viewPlans")}
+            </Link>
+            <button
+              type="button"
+              className={controls.button}
+              aria-haspopup="dialog"
+              onClick={() => setManagingSubscription(true)}
+            >
+              {t("settings.subscription.manage")}
+            </button>
+          </div>
+        </div>
+      </Panel>
+
       <Panel title={t("settings.account")}>
         <div className={styles.row}>
           <div className={styles.rowText}>
@@ -267,6 +323,15 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
               <Link href="/privacy">{t("settings.about.privacy")}</Link>
             </li>
             <li>
+              <Link href="/terms">{t("legal.terms")}</Link>
+            </li>
+            <li>
+              <Link href="/refund-policy">{t("legal.refund")}</Link>
+            </li>
+            <li>
+              <Link href="/contact">{t("legal.contact")}</Link>
+            </li>
+            <li>
               <ExternalLink
                 href={SECURITY_POLICY_URL}
                 label={t("settings.about.security")}
@@ -287,6 +352,11 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
           </ul>
         </div>
       </Panel>
+
+      <SubscriptionDialog
+        open={managingSubscription}
+        onClose={() => setManagingSubscription(false)}
+      />
 
       <ConfirmDialog
         open={confirmingClear}
