@@ -34,6 +34,60 @@ describe("toPlainText", () => {
   });
 });
 
+describe("toPlainText: nested and malformed markup", () => {
+  const dangerous = [
+    "<scr<script>ipt>alert(1)</script>",
+    "<<script>script>alert(1)<</script>/script>",
+    "<img src=x onerror=alert(1)>",
+    "<script",
+    "<scr<scr<script>ipt>ipt>alert(1)",
+    '<a href="javascript:alert(1)">click</a',
+    "&lt;script&gt;alert(1)&lt;/script&gt;",
+    "&lt;scr&lt;script&gt;ipt&gt;alert(1)",
+    "&amp;lt;script&amp;gt;alert(1)",
+    "<![CDATA[<scr<script>ipt>alert(1)]]>",
+    "<!-- <script> --><scr<!-- x -->ipt>",
+  ];
+
+  it.each(dangerous)("leaves no angle brackets from %s", (input) => {
+    expect(toPlainText(input)).not.toMatch(/[<>]/);
+  });
+
+  it("removes the nested cases completely", () => {
+    expect(toPlainText("<scr<script>ipt>alert(1)</script>")).toBe("scr");
+    expect(toPlainText("<<script>script>")).toBe("");
+    expect(toPlainText("<img src=x onerror=alert(1)>")).toBe("");
+    expect(toPlainText("<script")).toBe("");
+    expect(toPlainText("Before <script")).toBe("Before");
+  });
+
+  it("decodes encoded markup and then strips it", () => {
+    expect(toPlainText("&lt;script&gt;alert(1)&lt;/script&gt;Hello")).toBe(
+      "Hello",
+    );
+    expect(toPlainText("&lt;b&gt;Bold&lt;/b&gt; text")).toBe("Bold text");
+  });
+
+  it("keeps ordinary headlines unchanged", () => {
+    for (const headline of [
+      "Introducing GPT-5.1: faster, cheaper and smarter",
+      "Claude Code v2.1.296",
+      'Tom & Jerry\'s "live" show — it’s here…',
+      "How we cut costs by 40% (and what we learned)",
+      "Next.js 16: what's new?",
+      "नई भाषा मॉडल",
+    ]) {
+      expect(toPlainText(headline)).toBe(headline);
+    }
+  });
+
+  it("stays quick on long runs of unmatched brackets", () => {
+    const started = performance.now();
+    toPlainText("<".repeat(50_000) + "<script" + ">".repeat(50_000));
+    expect(performance.now() - started).toBeLessThan(1000);
+  });
+});
+
 describe("decodeEntities", () => {
   it("decodes named, decimal and hex references", () => {
     expect(decodeEntities("&amp; &lt; &#65; &#x42; &hellip;")).toBe(

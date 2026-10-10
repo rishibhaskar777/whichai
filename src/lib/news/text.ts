@@ -56,7 +56,25 @@ function unwrapCdata(raw: string): string {
   return result + decodeEntities(raw.slice(position));
 }
 
-function removeMarkup(html: string): string {
+const MAX_STRIP_PASSES = 10;
+
+/**
+ * Removes markup until nothing changes, because one pass can leave a tag
+ * behind when removing the inner part joins the outer parts together
+ * (`<scr<script>ipt>`). The result is plain text, which never needs angle
+ * brackets, so any that remain are removed too.
+ */
+function stripMarkup(text: string): string {
+  let current = text;
+  for (let pass = 0; pass < MAX_STRIP_PASSES; pass += 1) {
+    const next = removeMarkupOnce(current);
+    if (next === current) break;
+    current = next;
+  }
+  return current.replace(/[<>]/g, "");
+}
+
+function removeMarkupOnce(html: string): string {
   return html
     .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, " ")
     .replace(/<(script|style)\b[\s\S]*$/gi, " ")
@@ -75,9 +93,10 @@ function collapse(text: string): string {
 /** The text of a feed element's raw content: no tags, no entities, one line. */
 export function toPlainText(raw: string): string {
   const html = unwrapCdata(raw.slice(0, MAX_INPUT_CHARS));
-  const stripped = removeMarkup(html);
+  // Entities can decode to markup, so stripping runs again after decoding.
+  const stripped = stripMarkup(decodeEntities(stripMarkup(html)));
   // Control characters have no place in a headline.
-  return collapse(decodeEntities(stripped).replace(/[\u0000-\u001f]/g, " "));
+  return collapse(stripped.replace(/[\u0000-\u001f]/g, " "));
 }
 
 /** Cuts at a word boundary where one is near, and marks the cut. */
