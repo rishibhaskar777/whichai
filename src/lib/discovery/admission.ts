@@ -3,7 +3,7 @@ import type { Duplicate } from "./match.ts";
 import type { CandidateState, Signals, Snapshot } from "./types.ts";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
-const MAX_HISTORY = 16;
+const MAX_HISTORY = 6;
 /** A growth figure needs a baseline at least this old. */
 const MIN_GROWTH_SPAN_DAYS = 14;
 const GROWTH_WINDOW_DAYS = 30;
@@ -32,7 +32,7 @@ export function mergeSignals(a: Signals, b: Signals): Signals {
   return merged;
 }
 
-/** One snapshot per day, oldest first, at most 16. */
+/** One snapshot per day, oldest first, at most 6. */
 export function appendSnapshot(
   history: readonly Snapshot[],
   snapshot: Snapshot,

@@ -1,11 +1,17 @@
 [
   {
-    "_id": "67e454cdd4f34388bcd19c38",
     "id": "enzostvs/deepsite",
     "likes": 616,
     "private": false,
     "sdk": "docker",
     "tags": ["docker", "region:us"],
+    "createdAt": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "acme/studio",
+    "likes": 250,
+    "sdk": "gradio",
+    "tags": ["gradio"],
     "createdAt": "2026-09-01T00:00:00.000Z"
   }
 ]

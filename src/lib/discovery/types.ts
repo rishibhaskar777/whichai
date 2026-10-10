@@ -97,6 +97,28 @@ export interface CandidateState {
   homepageCheck: HomepageCheck | null;
 }
 
+/** A candidate on the watchlist: its state, a score and when it last grew. */
+export interface WatchEntry extends CandidateState {
+  score: number;
+  /** The last day any usage number went up. Starts as the day it was added. */
+  lastGrowth: string;
+}
+
+/** A candidate dropped for lack of growth, kept so it is not re-added. */
+export interface ExpiredEntry {
+  id: string;
+  keys: string[];
+  /** The first day it may be added again. */
+  until: string;
+}
+
+export interface Watchlist {
+  version: 1;
+  updated: string;
+  tracked: WatchEntry[];
+  expired: ExpiredEntry[];
+}
+
 export interface ExistingIssue {
   number: number;
   state: "open" | "closed";
@@ -111,6 +133,7 @@ export const LABELS = {
   ready: "ready-for-review",
   approved: "approved",
   rejected: "rejected",
+  watchlist: "discovery-watchlist",
 } as const;
 
 /** The only account whose issues and comments are trusted as machine state. */

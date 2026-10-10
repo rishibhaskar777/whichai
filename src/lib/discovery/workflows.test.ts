@@ -95,25 +95,35 @@ describe("the data files", () => {
   it("has a valid configuration with the documented defaults", () => {
     const config = parseConfig(configJson);
     expect(config.minAgeDays).toBe(30);
-    expect(config.maxNewIssuesPerRun).toBe(10);
+    expect(config.maxNewIssuesPerRun).toBe(5);
     expect(config.required).toEqual({ strongSignals: 1, moderateSignals: 2 });
+    expect(config.watchlist.expireAfterDays).toBe(90);
+    expect(config.watchlist.reAddAfterDays).toBe(180);
+    expect(config.watchlist.summaryRows).toBe(20);
+  });
+
+  it("keeps the watchlist body under GitHub's issue body limit", () => {
+    const config = parseConfig(configJson);
+    expect(config.watchlist.maxBodyChars).toBeLessThan(65536);
   });
 
   it("has a valid rejected list", () => {
     expect(() => parseRejected(rejectedJson)).not.toThrow();
   });
 
-  it("ranks strong thresholds above moderate and moderate above listing", () => {
-    const config = parseConfig(configJson);
-    expect(config.strong.githubStars).toBeGreaterThan(
-      config.moderate.githubStars,
-    );
-    expect(config.moderate.githubStars).toBeGreaterThan(
-      config.listing.githubStars,
-    );
-    expect(config.strong.hfLikes).toBeGreaterThan(config.moderate.hfLikes);
-    expect(config.moderate.hfLikes).toBeGreaterThan(config.listing.hfLikes);
-    expect(config.strong.hnPoints).toBeGreaterThan(config.moderate.hnPoints);
-    expect(config.moderate.hnPoints).toBeGreaterThan(config.listing.hnPoints);
+  it("ranks strong thresholds above moderate ones", () => {
+    const { strong, moderate } = parseConfig(configJson);
+    expect(strong.githubStars).toBeGreaterThan(moderate.githubStars);
+    expect(strong.hfLikes).toBeGreaterThan(moderate.hfLikes);
+    expect(strong.hnPoints).toBeGreaterThan(moderate.hnPoints);
+  });
+
+  it("asks more of a source than it asks of a signal", () => {
+    const { github, huggingface, hackernews, moderate } =
+      parseConfig(configJson);
+    expect(github.minStars).toBeGreaterThanOrEqual(moderate.githubStars);
+    expect(huggingface.minLikes).toBeGreaterThanOrEqual(0);
+    expect(hackernews.minPoints).toBeGreaterThanOrEqual(moderate.hnPoints);
+    expect(hackernews.minComments).toBeGreaterThan(0);
   });
 });

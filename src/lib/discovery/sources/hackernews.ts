@@ -3,6 +3,7 @@ import type { DiscoveryConfig } from "../config.ts";
 import { reason, type JsonClient, type SourceResult } from "../http.ts";
 import { hostOf, isContentHost } from "../identity.ts";
 import { fromShowHn } from "../names.ts";
+import { safeHttpsUrl } from "../sanitize.ts";
 import type { RawCandidate } from "../types.ts";
 
 const hitSchema = z.object({
@@ -10,20 +11,37 @@ const hitSchema = z.object({
   title: z.string().nullable().optional(),
   url: z.string().nullable().optional(),
   points: z.number().nullable().optional(),
+  num_comments: z.number().nullable().optional(),
   author: z.string().nullable().optional(),
 });
 export type HackerNewsHit = z.infer<typeof hitSchema>;
 
 const responseSchema = z.object({ hits: z.array(z.unknown()) });
 
-export function toCandidate(hit: HackerNewsHit): RawCandidate | null {
-  if (!hit.title) return null;
-  const url = hit.url ?? null;
+/**
+ * A "Show HN" post as a candidate, or null when it fails the filters: too few
+ * points or comments, an "Ask HN" post, no external https link, a link to a
+ * discussion or paper instead of a tool, or no name.
+ */
+export function toCandidate(
+  hit: HackerNewsHit,
+  config: DiscoveryConfig,
+): RawCandidate | null {
+  const rules = config.hackernews;
+  if (!hit.title || /^\s*ask hn\b/i.test(hit.title)) return null;
+  if ((hit.points ?? 0) < rules.minPoints) return null;
+  if ((hit.num_comments ?? 0) < rules.minComments) return null;
+
+  const url = safeHttpsUrl(hit.url ?? "");
+  if (url === null) return null;
+  const host = hostOf(url);
+  if (host === null || host === "news.ycombinator.com" || isContentHost(host)) {
+    return null;
+  }
+
   const named = fromShowHn(hit.title, url);
   if (named === null) return null;
-  const host = url === null ? null : hostOf(url);
-  if (host !== null && isContentHost(host)) return null;
-  const onRepository = url !== null && /^https:\/\/github\.com\//.test(url);
+  const onRepository = host === "github.com";
   return {
     source: "hackernews",
     name: named.name,
@@ -40,17 +58,22 @@ export function toCandidate(hit: HackerNewsHit): RawCandidate | null {
   };
 }
 
-export function parseHits(json: unknown): RawCandidate[] {
+export interface Parsed {
+  seen: number;
+  kept: RawCandidate[];
+}
+
+export function parseHits(json: unknown, config: DiscoveryConfig): Parsed {
   const parsed = responseSchema.safeParse(json);
-  if (!parsed.success) return [];
-  const found: RawCandidate[] = [];
+  if (!parsed.success) return { seen: 0, kept: [] };
+  const kept: RawCandidate[] = [];
   for (const entry of parsed.data.hits) {
     const hit = hitSchema.safeParse(entry);
     if (!hit.success) continue;
-    const candidate = toCandidate(hit.data);
-    if (candidate !== null) found.push(candidate);
+    const candidate = toCandidate(hit.data, config);
+    if (candidate !== null) kept.push(candidate);
   }
-  return found;
+  return { seen: parsed.data.hits.length, kept };
 }
 
 export function searchUrl(
@@ -64,13 +87,13 @@ export function searchUrl(
   const params = new URLSearchParams({
     query,
     tags: "show_hn",
-    numericFilters: `points>=${config.listing.hnPoints},created_at_i>=${since}`,
+    numericFilters: `points>=${config.hackernews.minPoints},num_comments>=${config.hackernews.minComments},created_at_i>=${since}`,
     hitsPerPage: String(config.hackernews.perQuery),
   });
   return `https://hn.algolia.com/api/v1/search?${params}`;
 }
 
-/** "Show HN" posts about AI above the listing threshold, via Algolia's free API. */
+/** "Show HN" posts about AI above the points and comments thresholds. */
 export async function fetchHackerNews(
   client: JsonClient,
   config: DiscoveryConfig,
@@ -78,19 +101,31 @@ export async function fetchHackerNews(
 ): Promise<SourceResult<RawCandidate>> {
   const items: RawCandidate[] = [];
   let requests = 0;
+  let seen = 0;
   try {
     for (const query of config.hackernews.queries) {
       requests += 1;
-      items.push(
-        ...parseHits(await client.getJson(searchUrl(query, now, config))),
+      const parsed = parseHits(
+        await client.getJson(searchUrl(query, now, config)),
+        config,
       );
+      seen += parsed.seen;
+      items.push(...parsed.kept);
     }
-    return { source: "hackernews", ok: true, items, error: null, requests };
+    return {
+      source: "hackernews",
+      ok: true,
+      items,
+      seen,
+      error: null,
+      requests,
+    };
   } catch (error) {
     return {
       source: "hackernews",
       ok: items.length > 0,
       items,
+      seen,
       error: reason(error),
       requests,
     };

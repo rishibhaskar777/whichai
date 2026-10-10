@@ -1,6 +1,8 @@
 import { z } from "zod";
 import type { DiscoveryConfig } from "../config.ts";
+import { hostOf } from "../identity.ts";
 import { reason, type JsonClient, type SourceResult } from "../http.ts";
+import { safeHttpsUrl } from "../sanitize.ts";
 import type { CandidateKind, RawCandidate } from "../types.ts";
 
 const repositorySchema = z.object({
@@ -10,6 +12,7 @@ const repositorySchema = z.object({
   html_url: z.string(),
   homepage: z.string().nullable().optional(),
   stargazers_count: z.number(),
+  created_at: z.string().optional(),
   topics: z.array(z.string()).optional(),
   fork: z.boolean().optional(),
   archived: z.boolean().optional(),
@@ -19,10 +22,7 @@ const repositorySchema = z.object({
 export type GithubRepository = z.infer<typeof repositorySchema>;
 
 const searchSchema = z.object({ items: z.array(z.unknown()) });
-
-/** Lists, courses and papers are about AI but are not tools. */
-const NOT_A_TOOL =
-  /\b(awesome|tutorials?|courses?|books?|handbook|cookbook|guides?|learning|resources|roadmap|cheat-?sheets?|interview|leetcode|papers?|survey|datasets?|benchmarks?|prompts?|examples?|workshop|notes|list|collection)\b/i;
+const DAY_MS = 86_400_000;
 
 function kindOf(topics: readonly string[]): CandidateKind | null {
   const has = (...names: string[]) => names.some((n) => topics.includes(n));
@@ -34,17 +34,67 @@ function kindOf(topics: readonly string[]): CandidateKind | null {
   return null;
 }
 
-export function toCandidate(repo: GithubRepository): RawCandidate | null {
+function wordsOf(text: string): Set<string> {
+  return new Set(
+    text
+      .toLowerCase()
+      .split(/[^a-z0-9-]+/)
+      .filter(Boolean),
+  );
+}
+
+/** A homepage of its own: https, and not just the repository again. */
+function ownHomepage(homepage: string | null | undefined): string | null {
+  const safe = safeHttpsUrl(homepage ?? "");
+  if (safe === null) return null;
+  return hostOf(safe) === "github.com" ? null : safe;
+}
+
+/**
+ * The repository as a candidate, or null when it fails the filters: a fork,
+ * an archived or disabled repository, a list, course or paper by name or
+ * topic, too few stars or too slow a rise, or nothing that says it is a tool
+ * a person can use (a homepage of its own, or a user-facing word in the
+ * description).
+ */
+export function toCandidate(
+  repo: GithubRepository,
+  config: DiscoveryConfig,
+  now: Date,
+): RawCandidate | null {
+  const rules = config.github;
   if (repo.fork === true || repo.archived === true || repo.disabled === true) {
     return null;
   }
+  if (repo.stargazers_count < rules.minStars) return null;
+
+  const created = Date.parse(repo.created_at ?? "");
+  if (Number.isNaN(created)) return null;
+  const ageDays = Math.max(1, (now.getTime() - created) / DAY_MS);
+  if (repo.stargazers_count / ageDays < rules.minStarsPerDay) return null;
+
   const topics = repo.topics ?? [];
-  if (NOT_A_TOOL.test(`${repo.name} ${topics.join(" ")}`)) return null;
+  const excluded = new Set(rules.excludeWords);
+  const named = [
+    ...wordsOf(repo.name),
+    ...repo.name.toLowerCase().split(/[^a-z0-9]+/),
+    ...topics.flatMap((topic) => [topic, ...topic.split("-")]),
+  ];
+  if (named.some((word) => excluded.has(word))) return null;
+  if (/\bawesome\b.*\blist\b|\bcurated list\b/i.test(repo.description ?? "")) {
+    return null;
+  }
+
+  const homepage = ownHomepage(repo.homepage);
+  const described = wordsOf(repo.description ?? "");
+  const namesATool = rules.toolWords.some((word) => described.has(word));
+  if (homepage === null && !namesATool) return null;
+
   return {
     source: "github",
     name: repo.name,
     description: repo.description ?? "",
-    homepage: repo.homepage ?? null,
+    homepage,
     repository: repo.html_url,
     announcement: null,
     maintainer: repo.owner.login,
@@ -55,18 +105,28 @@ export function toCandidate(repo: GithubRepository): RawCandidate | null {
   };
 }
 
-/** Repositories in a search response. Malformed items are skipped. */
-export function parseSearch(json: unknown): RawCandidate[] {
+export interface Parsed {
+  /** Items in the response before any filter. */
+  seen: number;
+  kept: RawCandidate[];
+}
+
+/** Repositories in a search response that pass the filters. */
+export function parseSearch(
+  json: unknown,
+  config: DiscoveryConfig,
+  now: Date,
+): Parsed {
   const parsed = searchSchema.safeParse(json);
-  if (!parsed.success) return [];
-  const found: RawCandidate[] = [];
+  if (!parsed.success) return { seen: 0, kept: [] };
+  const kept: RawCandidate[] = [];
   for (const item of parsed.data.items) {
     const repo = repositorySchema.safeParse(item);
     if (!repo.success) continue;
-    const candidate = toCandidate(repo.data);
-    if (candidate !== null) found.push(candidate);
+    const candidate = toCandidate(repo.data, config, now);
+    if (candidate !== null) kept.push(candidate);
   }
-  return found;
+  return { seen: parsed.data.items.length, kept };
 }
 
 const API = "https://api.github.com";
@@ -84,7 +144,7 @@ export function searchUrl(
   since: string,
   config: DiscoveryConfig,
 ): string {
-  const query = `topic:${topic} created:>${since} stars:>=${config.listing.githubStars}`;
+  const query = `topic:${topic} created:>${since} stars:>=${config.github.minStars}`;
   const params = new URLSearchParams({
     q: query,
     sort: "stars",
@@ -106,12 +166,13 @@ export async function fetchGithub(
   token?: string,
 ): Promise<SourceResult<RawCandidate>> {
   const since = new Date(
-    now.getTime() - config.github.createdWithinDays * 86_400_000,
+    now.getTime() - config.github.createdWithinDays * DAY_MS,
   )
     .toISOString()
     .slice(0, 10);
   const items: RawCandidate[] = [];
   let requests = 0;
+  let seen = 0;
   try {
     for (const topic of config.github.topics) {
       requests += 1;
@@ -119,22 +180,25 @@ export async function fetchGithub(
         searchUrl(topic, since, config),
         authHeaders(token),
       );
-      items.push(...parseSearch(json));
+      const parsed = parseSearch(json, config, now);
+      seen += parsed.seen;
+      items.push(...parsed.kept);
     }
-    return { source: "github", ok: true, items, error: null, requests };
+    return { source: "github", ok: true, items, seen, error: null, requests };
   } catch (error) {
     // Keep what earlier queries returned; the rest wait for the next run.
     return {
       source: "github",
       ok: items.length > 0,
       items,
+      seen,
       error: reason(error),
       requests,
     };
   }
 }
 
-/** Current stars for one repository, or null. Used to refresh open candidates. */
+/** Current stars for one repository, or null. Used to refresh tracked candidates. */
 export async function lookupRepository(
   client: JsonClient,
   fullName: string,

@@ -103,7 +103,10 @@ function absorb(target: Candidate, other: Candidate): void {
  * repository or its own site, in which case they are different things that
  * happen to be called alike.
  */
-function sameThing(a: Candidate, b: Candidate): boolean {
+export function sameThing(
+  a: { keys: readonly string[] },
+  b: { keys: readonly string[] },
+): boolean {
   for (const prefix of ["repo:", "site:"]) {
     const left = a.keys.filter((key) => key.startsWith(prefix));
     const right = b.keys.filter((key) => key.startsWith(prefix));

@@ -32,10 +32,15 @@ export interface Duplicate {
 
 interface Entry {
   toolId: string;
+  name: string;
   /** Exact names: the name and the aliases made from it. */
   exact: { text: string; reason: "name" | "alias" }[];
   /** The name as lowercase words, to spot "Ollama Desktop" for "Ollama". */
   words: string[];
+  /** The tool's `officialDomains`, lowercase. */
+  domains: string[];
+  /** The provider's name and id, normalised. */
+  makers: string[];
 }
 
 export interface CatalogueIndex {
@@ -98,17 +103,24 @@ export function buildIndex(
   const repositories = new Map<string, string>();
 
   for (const tool of tools) {
+    const provider = providerById.get(tool.providerId);
     const own = normaliseName(tool.name);
     entries.push({
       toolId: tool.id,
+      name: tool.name,
       exact: [
         { text: own, reason: "name" },
-        ...aliasesOf(tool, providerById.get(tool.providerId)).map((text) => ({
+        ...aliasesOf(tool, provider).map((text) => ({
           text,
           reason: "alias" as const,
         })),
       ],
       words: wordsOf(tool.name),
+      domains: tool.officialDomains.map((domain) => domain.toLowerCase()),
+      makers: [
+        normaliseName(provider?.name ?? ""),
+        normaliseName(tool.providerId),
+      ].filter((maker) => maker !== ""),
     });
     for (const domain of tool.officialDomains) {
       // `github.com/owner` is shared by every project of the owner, so only
@@ -132,9 +144,59 @@ export interface Subject {
   name: string;
   homepage: string | null;
   repository: string | null;
+  /** Who is behind it, when known. Used to tell an extension from a namesake. */
+  maintainer?: string | null;
 }
 
-/** The catalogue tool a candidate already is, or null when it is new. */
+/** True when the address is on one of the tool's domains or owner paths. */
+function onToolDomains(
+  url: string | null,
+  domains: readonly string[],
+): boolean {
+  if (url === null) return false;
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return false;
+  }
+  const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+  const owner = parsed.pathname.split("/")[1]?.toLowerCase();
+  return domains.some((domain) => {
+    const [domainHost = "", domainOwner] = domain.split("/");
+    if (!onHost(host, domainHost)) return false;
+    return domainOwner === undefined || owner === domainOwner;
+  });
+}
+
+function sameMaker(maintainer: string | null | undefined, makers: string[]) {
+  const maker = normaliseName(maintainer ?? "");
+  if (maker === "") return false;
+  return makers.some(
+    (known) =>
+      maker === known ||
+      (known.length >= MIN_PREFIX_LENGTH && maker.startsWith(known)),
+  );
+}
+
+/** Whether the candidate's name begins with the whole name of the tool. */
+function startsWithName(words: readonly string[], entry: Entry): boolean {
+  const own = entry.words;
+  return (
+    own.join("").length >= MIN_PREFIX_LENGTH &&
+    own.length > 0 &&
+    words.length > own.length &&
+    own.every((word, offset) => words[offset] === word)
+  );
+}
+
+/**
+ * The catalogue tool a candidate already is, or null when it is new. A name
+ * that only starts with a listed tool's name ("Ollama Desktop") counts as that
+ * tool when the candidate sits on the tool's domains or comes from the same
+ * maker. Otherwise it is a namesake: new, and shown next to the tool by
+ * `findSimilar`.
+ */
 export function findDuplicate(
   subject: Subject,
   index: CatalogueIndex,
@@ -157,8 +219,9 @@ export function findDuplicate(
 
   for (const entry of index.entries) {
     const exact = entry.exact.find((candidate) => candidate.text === name);
-    if (exact !== undefined)
+    if (exact !== undefined) {
       return { toolId: entry.toolId, reason: exact.reason };
+    }
   }
   for (const entry of index.entries) {
     if (entry.exact.some((candidate) => wordsMatch(name, candidate.text))) {
@@ -168,17 +231,29 @@ export function findDuplicate(
 
   const words = wordsOf(subject.name);
   for (const entry of index.entries) {
-    const own = entry.words;
-    const longEnough = own.join("").length >= MIN_PREFIX_LENGTH;
-    const startsWith =
-      own.length > 0 &&
-      words.length > own.length &&
-      own.every((word, offset) => words[offset] === word);
-    if (longEnough && startsWith) {
-      return { toolId: entry.toolId, reason: "extends" };
-    }
+    if (!startsWithName(words, entry)) continue;
+    const owned =
+      onToolDomains(subject.homepage, entry.domains) ||
+      onToolDomains(subject.repository, entry.domains) ||
+      sameMaker(subject.maintainer, entry.makers);
+    if (owned) return { toolId: entry.toolId, reason: "extends" };
   }
   return null;
+}
+
+/**
+ * Listed tools whose whole name a new candidate's name starts with, which
+ * were not accepted as the same tool. They go in the candidate's "closest
+ * existing tools" so a reviewer sees the namesake.
+ */
+export function findSimilar(
+  subject: Subject,
+  index: CatalogueIndex,
+): { id: string; name: string }[] {
+  const words = wordsOf(subject.name);
+  return index.entries
+    .filter((entry) => startsWithName(words, entry))
+    .map((entry) => ({ id: entry.toolId, name: entry.name }));
 }
 
 /** Why a candidate is on the rejected list, or null when it is not. */

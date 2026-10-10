@@ -14,7 +14,12 @@ import {
   parseHits,
   searchUrl as hackerNewsUrl,
 } from "./sources/hackernews";
-import { fetchHuggingFace, parseList } from "./sources/huggingface";
+import {
+  fetchHuggingFace,
+  isDerivative,
+  parseList,
+  selectTop,
+} from "./sources/huggingface";
 import { fetchNews, toCandidate } from "./sources/news";
 import type { NewsItem, NewsSource } from "../news/types";
 
@@ -22,48 +27,84 @@ const config = parseConfig(configJson);
 const NOW = new Date("2026-10-10T12:00:00Z");
 
 describe("GitHub", () => {
-  const found = parseSearch(githubFixture);
-  const names = found.map((entry) => entry.name);
+  const { seen, kept } = parseSearch(githubFixture, config, NOW);
+  const names = kept.map((entry) => entry.name);
 
   it("extracts candidates with their stars and maker", () => {
-    const magpie = found.find((entry) => entry.name === "magpie")!;
+    const magpie = kept.find((entry) => entry.name === "magpie")!;
     expect(magpie.maintainer).toBe("yetone");
     expect(magpie.signals.githubStars).toBe(1450);
     expect(magpie.repository).toBe("https://github.com/yetone/magpie");
-    expect(magpie.homepage).toBe("https://magpie.example.dev");
+    expect(magpie.homepage).toBe("https://magpie.example.dev/");
     expect(magpie.kindHint).toBe("cli");
   });
 
-  it("skips forks, archived repositories, lists and malformed items", () => {
-    expect(names).not.toContain("forked-thing");
-    expect(names).not.toContain("old-project");
-    expect(names).not.toContain("awesome-llm-apps");
-    expect(found).toHaveLength(3);
+  it("counts what it saw before filtering", () => {
+    expect(seen).toBe(13);
+    expect(kept.length).toBeLessThan(seen);
   });
 
-  it("tolerates a missing description and an empty homepage", () => {
-    const plain = found.find((entry) => entry.name === "plain-tool")!;
-    expect(plain.description).toBe("");
-    expect(cleanCandidate(plain)?.homepage).toBeNull();
+  it("keeps only the tools", () => {
+    expect(names).toEqual(["magpie", "plain-tool", "hostile"]);
+  });
+
+  it.each([
+    ["forked-thing", "a fork"],
+    ["old-project", "an archived repository"],
+    ["awesome-llm-apps", "an awesome list"],
+    ["llm-course", "a course"],
+    ["my-dotfiles", "dotfiles"],
+    ["attention-code", "a paper"],
+    ["tiny-app", "too few stars"],
+    ["slow-burn", "stars that arrive too slowly"],
+    ["mystery", "no homepage and no user-facing word"],
+  ])("leaves out %s (%s)", (name) => {
+    expect(names).not.toContain(name);
+  });
+
+  it("accepts a description that names a tool when there is no homepage", () => {
+    const plain = kept.find((entry) => entry.name === "plain-tool")!;
+    expect(plain.homepage).toBeNull();
+  });
+
+  it("does not count the repository page as a homepage", () => {
+    const stricter = {
+      ...config,
+      github: { ...config.github, toolWords: ["zzz"] },
+    };
+    const result = parseSearch(githubFixture, stricter, NOW);
+    expect(result.kept.map((entry) => entry.name)).toEqual(["magpie"]);
+  });
+
+  it("uses the thresholds in the configuration", () => {
+    const loose = {
+      ...config,
+      github: { ...config.github, minStars: 100, minStarsPerDay: 0 },
+    };
+    const result = parseSearch(githubFixture, loose, NOW);
+    expect(result.kept.map((entry) => entry.name)).toContain("tiny-app");
+    expect(result.kept.map((entry) => entry.name)).toContain("slow-burn");
   });
 
   it("keeps hostile text out of the cleaned candidate", () => {
-    const hostile = found.find((entry) => entry.name === "hostile")!;
+    const hostile = kept.find((entry) => entry.name === "hostile")!;
     const clean = cleanCandidate(hostile)!;
     expect(clean.homepage).toBeNull();
     expect(clean.description).not.toMatch(/[<>`\n‮]/);
   });
 
   it("returns nothing for a response that is not a search result", () => {
-    expect(parseSearch({ message: "rate limited" })).toEqual([]);
-    expect(parseSearch(null)).toEqual([]);
+    expect(parseSearch({ message: "rate limited" }, config, NOW).kept).toEqual(
+      [],
+    );
+    expect(parseSearch(null, config, NOW).seen).toBe(0);
   });
 
   it("builds a search for recent, starred repositories of one topic", () => {
     const url = new URL(searchUrl("llm", "2026-06-12", config));
     expect(url.origin).toBe("https://api.github.com");
     expect(url.searchParams.get("q")).toBe(
-      "topic:llm created:>2026-06-12 stars:>=100",
+      "topic:llm created:>2026-06-12 stars:>=500",
     );
     expect(url.searchParams.get("sort")).toBe("stars");
   });
@@ -79,6 +120,7 @@ describe("GitHub", () => {
     const result = await fetchGithub(client, config, NOW, "secret-token");
     expect(result.ok).toBe(true);
     expect(calls).toHaveLength(config.github.topics.length);
+    expect(result.seen).toBe(13 * config.github.topics.length);
     for (const call of calls) {
       expect(new URL(call.url).hostname).toBe("api.github.com");
       expect(call.headers.authorization).toBe("Bearer secret-token");
@@ -104,8 +146,9 @@ describe("GitHub", () => {
     const client: JsonClient = {
       async getJson() {
         calls += 1;
-        if (calls > 1)
+        if (calls > 1) {
           throw new SourceError("rate limited or refused (HTTP 403)");
+        }
         return githubFixture;
       },
     };
@@ -127,58 +170,113 @@ describe("GitHub", () => {
 });
 
 describe("Hugging Face", () => {
-  it("keeps new, liked, original models", () => {
-    const found = parseList(modelsFixture, "model", config, NOW);
-    expect(found.map((entry) => entry.name)).toEqual(["embeddinggemma-2"]);
-    const model = found[0]!;
-    expect(model.maintainer).toBe("google");
-    expect(model.signals).toEqual({ hfLikes: 1459, hfDownloads: 45605 });
-    expect(model.kindHint).toBe("model");
-    expect(model.repository).toBe(
+  const models = parseList(modelsFixture, "model", config, NOW);
+  const modelIds = models.kept.map((entry) => entry.repository);
+
+  it("keeps recent, liked and downloaded original models", () => {
+    expect(models.seen).toBe(13);
+    expect(modelIds).toEqual([
       "https://huggingface.co/google/embeddinggemma-2",
-    );
+      "https://huggingface.co/Qwen/Qwen4",
+      "https://huggingface.co/person/hot-model",
+      "https://huggingface.co/person/warm-model",
+    ]);
+    const first = models.kept[0]!;
+    expect(first.maintainer).toBe("google");
+    expect(first.signals).toEqual({ hfLikes: 1459, hfDownloads: 45605 });
+    expect(first.kindHint).toBe("model");
   });
 
-  it("drops fine-tunes, quantisations, private, old and unliked items", () => {
-    const found = parseList(modelsFixture, "model", config, NOW);
-    expect(found).toHaveLength(1);
+  it.each([
+    ["fan/qwen-finetune", ["base_model:finetune:Qwen/Qwen4"]],
+    ["fan/qwen-quantised", ["gguf"]],
+    ["fan/mergekit-blend", ["mergekit"]],
+    ["fan/qwen-4-awq", []],
+    ["fan/model-ft", []],
+    ["fan/model-LoRA", []],
+  ])("recognises %s as a derivative", (id, tags) => {
+    expect(isDerivative({ id, tags }, config)).toBe(true);
   });
 
-  it("reads Spaces with their own address", () => {
-    const found = parseList(spacesFixture, "space", config, NOW);
-    expect(found).toHaveLength(1);
-    expect(found[0]!.repository).toBe(
+  it("does not treat an original as a derivative", () => {
+    expect(
+      isDerivative(
+        { id: "google/embeddinggemma-2", tags: ["transformers"] },
+        config,
+      ),
+    ).toBe(false);
+  });
+
+  it("needs downloads for a model, not for a Space", () => {
+    const spaces = parseList(spacesFixture, "space", config, NOW);
+    expect(spaces.kept.map((entry) => entry.name)).toEqual([
+      "deepsite",
+      "studio",
+    ]);
+    expect(spaces.kept[0]!.repository).toBe(
       "https://huggingface.co/spaces/enzostvs/deepsite",
     );
-    expect(found[0]!.signals.hfLikes).toBe(616);
   });
 
   it("skips a list that is not a list", () => {
-    expect(parseList({ error: "x" }, "model", config, NOW)).toEqual([]);
+    expect(parseList({ error: "x" }, "model", config, NOW).kept).toEqual([]);
   });
 
-  it("asks for the models and the spaces, and survives one failing", async () => {
+  it("prefers official organisations and keeps a person's account only when very liked", () => {
+    const official = new Set(["google", "Qwen"]);
+    const top = selectTop(models.kept, official, config);
+    expect(top.map((entry) => entry.name)).toEqual([
+      "Qwen4",
+      "embeddinggemma-2",
+      "hot-model",
+    ]);
+  });
+
+  it("keeps only the top few", () => {
+    const small = {
+      ...config,
+      huggingface: { ...config.huggingface, keepTop: 1 },
+    };
+    const top = selectTop(models.kept, new Set(["google", "Qwen"]), small);
+    expect(top.map((entry) => entry.name)).toEqual(["Qwen4"]);
+  });
+
+  it("asks for the lists and the organisations, and survives failures", async () => {
     const urls: string[] = [];
     const client: JsonClient = {
       async getJson(url) {
         urls.push(url);
-        if (url.includes("/spaces")) throw new SourceError("HTTP 500");
-        return modelsFixture;
+        const path = new URL(url).pathname;
+        if (path === "/api/models") return modelsFixture;
+        if (path === "/api/spaces") throw new SourceError("HTTP 500");
+        if (path === "/api/organizations/google/overview") {
+          return { isVerified: true };
+        }
+        if (path === "/api/organizations/Qwen/overview") {
+          return { isVerified: false, plan: "team" };
+        }
+        throw new SourceError("HTTP 404");
       },
     };
     const result = await fetchHuggingFace(client, config, NOW);
-    expect(urls).toHaveLength(2);
     expect(result.ok).toBe(true);
-    expect(result.items).toHaveLength(1);
     expect(result.error).toContain("spaces");
+    expect(result.items.map((entry) => entry.name)).toEqual([
+      "Qwen4",
+      "embeddinggemma-2",
+      "hot-model",
+    ]);
+    expect(urls.filter((url) => url.includes("/organizations/"))).toHaveLength(
+      3,
+    );
   });
 });
 
 describe("Hacker News", () => {
-  const found = parseHits(hackerNewsFixture);
+  const { seen, kept } = parseHits(hackerNewsFixture, config);
 
   it("reads Show HN posts and their points", () => {
-    const notefox = found.find((entry) => entry.name === "Notefox")!;
+    const notefox = kept.find((entry) => entry.name === "Notefox")!;
     expect(notefox.description).toBe("turn meeting notes into slides");
     expect(notefox.homepage).toBe("https://notefox.app/");
     expect(notefox.signals.hnPoints).toBe(120);
@@ -189,7 +287,7 @@ describe("Hacker News", () => {
   });
 
   it("uses the repository for a post that names none", () => {
-    const arrow = found.find(
+    const arrow = kept.find(
       (entry) => entry.name === "big-arrow-on-the-screen",
     )!;
     expect(arrow.repository).toBe(
@@ -198,23 +296,33 @@ describe("Hacker News", () => {
     expect(arrow.homepage).toBeNull();
   });
 
-  it("drops papers and malformed hits, and a post with no address is unusable", () => {
-    expect(found.map((entry) => entry.name)).not.toContain(
-      "A study of agent loops",
-    );
-    const noAddress = found.find((entry) => entry.name === "Ask me anything");
-    expect(noAddress).toBeDefined();
-    expect(cleanCandidate(noAddress!)).toBeNull();
-    expect(found.some((entry) => entry.seenUrl.endsWith("not-a-number"))).toBe(
-      false,
-    );
+  it("keeps only posts above the points and comments thresholds with an external https link", () => {
+    expect(seen).toBe(10);
+    expect(kept.map((entry) => entry.name)).toEqual([
+      "big-arrow-on-the-screen",
+      "Notefox",
+    ]);
   });
 
-  it("filters by points and age in the query", () => {
+  it.each([
+    ["Ask HN: What AI tools do you use?", "an Ask HN post"],
+    ["Quiet", "too few points"],
+    ["Lonely", "too few comments"],
+    ["Insecure", "a link that is not https"],
+    ["Discussion", "a link back to Hacker News"],
+    ["A study of agent loops", "a paper"],
+    ["Ask me anything", "no external link"],
+  ])("leaves out %s (%s)", (name) => {
+    expect(kept.map((entry) => entry.name)).not.toContain(name);
+  });
+
+  it("filters by points, comments and age in the query", () => {
     const url = new URL(hackerNewsUrl("AI", NOW, config));
     expect(url.hostname).toBe("hn.algolia.com");
     expect(url.searchParams.get("tags")).toBe("show_hn");
-    expect(url.searchParams.get("numericFilters")).toContain("points>=30");
+    const filters = url.searchParams.get("numericFilters")!;
+    expect(filters).toContain("points>=100");
+    expect(filters).toContain("num_comments>=20");
   });
 
   it("is skipped when the API fails", async () => {
@@ -279,6 +387,7 @@ describe("official news feeds", () => {
     const result = await fetchNews([source], config, NOW, fetchImpl);
     expect(result.ok).toBe(true);
     expect(result.items.map((entry) => entry.name)).toEqual(["Lumo"]);
+    expect(result.seen).toBeGreaterThan(0);
   });
 
   it("skips a failing feed and keeps the others", async () => {

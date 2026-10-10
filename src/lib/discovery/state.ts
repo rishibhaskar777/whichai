@@ -154,7 +154,7 @@ export function renderBody(state: CandidateState, view: BodyView): string {
   const description = cleanText(state.description, DESCRIPTION_LENGTH);
 
   const lines: string[] = [
-    `Found by the weekly discovery job. Nothing here is verified. Everything in code spans and blocks below came from the open internet.`,
+    `Found by the weekly discovery job and promoted from the watchlist. Nothing here is verified. Everything in code spans and blocks below came from the open internet.`,
     "",
     `| | |`,
     `| --- | --- |`,
@@ -191,16 +191,20 @@ export function renderBody(state: CandidateState, view: BodyView): string {
     "",
     view.admission.ready
       ? "All five rules pass. This candidate is ready for review."
-      : "Not ready yet. This body is updated each week.",
+      : "Not ready yet.",
     "",
     "### Closest existing tools for the same jobs",
     "",
     ...(view.closest.length > 0
       ? view.closest.map(
           (tool) =>
-            `- ${codeSpan(tool.name)} (${tool.sharedJobs
-              .map((id) => codeSpan(view.jobNames.get(id) ?? id))
-              .join(", ")})`,
+            `- ${codeSpan(tool.name)} (${
+              tool.similarName === true
+                ? "similar name, not the same tool"
+                : tool.sharedJobs
+                    .map((id) => codeSpan(view.jobNames.get(id) ?? id))
+                    .join(", ")
+            })`,
         )
       : ["- none: no existing tool does the suggested jobs"]),
     "",

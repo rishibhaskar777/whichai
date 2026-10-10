@@ -56,6 +56,7 @@ export async function fetchNews(
   fetchImpl?: typeof fetch,
 ): Promise<SourceResult<RawCandidate>> {
   const failures: string[] = [];
+  let seen = 0;
   const results = await Promise.all(
     sources.map(async (source) => {
       try {
@@ -69,6 +70,7 @@ export async function fetchNews(
           maxAgeMs: config.news.withinDays * DAY_MS,
         });
         if (items === null) throw new Error("not a feed");
+        seen += items.length;
         return fromItems(items, source, config, now);
       } catch (error) {
         failures.push(`${source.id}: ${reason(error)}`);
@@ -80,6 +82,7 @@ export async function fetchNews(
     source: "news",
     ok: failures.length < sources.length,
     items: results.flat(),
+    seen,
     error: failures.length > 0 ? failures.join("; ") : null,
     requests: sources.length,
   };

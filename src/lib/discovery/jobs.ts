@@ -38,6 +38,8 @@ export interface ClosestTool {
   id: string;
   name: string;
   sharedJobs: string[];
+  /** The candidate's name starts with this tool's name, but it is not the same tool. */
+  similarName?: boolean;
 }
 
 /**

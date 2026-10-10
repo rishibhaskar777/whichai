@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildIndex, findDuplicate, findRejected } from "./match";
+import { buildIndex, findDuplicate, findRejected, findSimilar } from "./match";
 
 const providers = [
   { id: "anysphere", name: "Anysphere" },
@@ -48,7 +48,8 @@ const subject = (
   name: string,
   homepage: string | null = null,
   repository: string | null = null,
-) => ({ name, homepage, repository });
+  maintainer: string | null = null,
+) => ({ name, homepage, repository, maintainer });
 
 describe("findDuplicate", () => {
   it("matches an exact name, ignoring case and punctuation", () => {
@@ -124,10 +125,61 @@ describe("findDuplicate", () => {
     ).toBeNull();
   });
 
-  it("matches a product that extends a catalogue tool", () => {
-    expect(findDuplicate(subject("Ollama Desktop"), index)).toEqual({
-      toolId: "ollama",
-      reason: "extends",
+  describe("a name that starts with a listed tool's name", () => {
+    it("is that tool when it is on the tool's own owner path", () => {
+      expect(
+        findDuplicate(
+          subject(
+            "Ollama Desktop",
+            null,
+            "https://github.com/ollama/ollama-desktop",
+          ),
+          index,
+        ),
+      ).toEqual({ toolId: "ollama", reason: "extends" });
+    });
+
+    it("is that tool when it is made by the same provider", () => {
+      expect(
+        findDuplicate(subject("Ollama Desktop", null, null, "Ollama"), index),
+      ).toEqual({ toolId: "ollama", reason: "extends" });
+      expect(
+        findDuplicate(
+          subject("Cursor Agents", null, null, "Anysphere engineering blog"),
+          index,
+        )?.toolId,
+      ).toBe("cursor");
+    });
+
+    it("is a new candidate when the maker and domain are someone else's", () => {
+      expect(
+        findDuplicate(
+          subject(
+            "Ollama Desktop",
+            "https://ollama-desktop.example.dev/",
+            "https://github.com/stranger/ollama-desktop",
+            "stranger",
+          ),
+          index,
+        ),
+      ).toBeNull();
+    });
+
+    it("is a new candidate when nothing is known about its maker", () => {
+      expect(findDuplicate(subject("Ollama Desktop"), index)).toBeNull();
+    });
+
+    it("lists the listed tool as similar when it is not the same tool", () => {
+      const namesake = subject(
+        "Ollama Desktop",
+        "https://ollama-desktop.example.dev/",
+        null,
+        "stranger",
+      );
+      expect(findSimilar(namesake, index)).toEqual([
+        { id: "ollama", name: "Ollama" },
+      ]);
+      expect(findSimilar(subject("Notefox"), index)).toEqual([]);
     });
   });
 

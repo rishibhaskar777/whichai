@@ -255,7 +255,7 @@ it("is ready only when all five rules pass", () => {
 });
 
 describe("history", () => {
-  it("keeps one snapshot per day, oldest first, at most 16", () => {
+  it("keeps one snapshot per day, oldest first, at most 6", () => {
     let history: Snapshot[] = [];
     for (let day = 1; day <= 25; day += 1) {
       const date = `2026-09-${String(day).padStart(2, "0")}`;
@@ -265,8 +265,8 @@ describe("history", () => {
       date: "2026-09-25",
       signals: { hnPoints: 999 },
     });
-    expect(history).toHaveLength(16);
-    expect(history[0]!.date).toBe("2026-09-10");
+    expect(history).toHaveLength(6);
+    expect(history[0]!.date).toBe("2026-09-20");
     expect(history.at(-1)!.signals.hnPoints).toBe(999);
   });
 

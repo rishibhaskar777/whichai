@@ -22,6 +22,10 @@ const LABEL_COLOURS: Record<string, { color: string; description: string }> = {
     color: "b60205",
     description: "Rejected; never reopened",
   },
+  [LABELS.watchlist]: {
+    color: "c5def5",
+    description: "The discovery watchlist, edited in place",
+  },
 };
 
 export interface IssueComment {
@@ -129,6 +133,32 @@ export class IssueApi {
     return found;
   }
 
+  /** The open watchlist issue the bot wrote, or null. The oldest one wins. */
+  async findWatchlist(): Promise<ExistingIssue | null> {
+    const query = new URLSearchParams({
+      labels: LABELS.watchlist,
+      state: "open",
+      per_page: "20",
+      direction: "asc",
+    });
+    const rows = (await this.#call("GET", `/issues?${query}`)) as RawIssue[];
+    const row = rows.find(
+      (item) =>
+        item.pull_request === undefined && item.user?.login === BOT_LOGIN,
+    );
+    if (row === undefined) return null;
+    return {
+      number: row.number,
+      state: "open",
+      labels: (row.labels ?? []).map((label) =>
+        typeof label === "string" ? label : (label.name ?? ""),
+      ),
+      createdAt: row.created_at,
+      body: row.body ?? "",
+      authorLogin: BOT_LOGIN,
+    };
+  }
+
   async getIssue(number: number): Promise<ExistingIssue | null> {
     const row = (await this.#call("GET", `/issues/${number}`)) as RawIssue;
     if (row.pull_request !== undefined) return null;
@@ -178,14 +208,44 @@ export class IssueApi {
     title: string,
     body: string,
     labels: string[],
-  ): Promise<number> {
+  ): Promise<{ number: number; nodeId: string }> {
     const row = (await this.#call("POST", "/issues", {
       title,
       body,
       labels,
-    })) as { number: number };
+    })) as { number: number; node_id: string };
     await sleep(this.#pauseMs);
-    return row.number;
+    return { number: row.number, nodeId: row.node_id };
+  }
+
+  /**
+   * Pins an issue to the repository. Pinning is a GraphQL mutation and may be
+   * refused to the workflow token; the caller treats a failure as "pin it by
+   * hand".
+   */
+  async pinIssue(nodeId: string): Promise<void> {
+    if (!/^[A-Za-z0-9_=-]{5,100}$/.test(nodeId)) {
+      throw new SourceError("not an issue id");
+    }
+    const response = await this.#fetch(`${API}/graphql`, {
+      method: "POST",
+      redirect: "manual",
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      headers: {
+        "user-agent": USER_AGENT,
+        "content-type": "application/json",
+        ...(this.#token ? { authorization: `Bearer ${this.#token}` } : {}),
+      },
+      body: JSON.stringify({
+        query:
+          "mutation($id: ID!) { pinIssue(input: { issueId: $id }) { issue { id } } }",
+        variables: { id: nodeId },
+      }),
+    });
+    const result = (await response.json()) as { errors?: unknown[] };
+    if (response.status >= 400 || (result.errors?.length ?? 0) > 0) {
+      throw new SourceError("GitHub refused to pin the issue");
+    }
   }
 
   async updateIssue(

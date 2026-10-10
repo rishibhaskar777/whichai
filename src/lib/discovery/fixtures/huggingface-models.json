@@ -1,9 +1,7 @@
 [
   {
-    "_id": "6aa80a7682023d2e774f1c9a",
     "id": "google/embeddinggemma-2",
     "likes": 1459,
-    "trendingScore": 1390,
     "private": false,
     "downloads": 45605,
     "tags": [
@@ -13,45 +11,85 @@
       "license:apache-2.0"
     ],
     "pipeline_tag": "feature-extraction",
-    "library_name": "transformers",
-    "createdAt": "2026-09-14T14:53:42.000Z",
-    "modelId": "google/embeddinggemma-2"
+    "createdAt": "2026-09-14T14:53:42.000Z"
   },
   {
-    "id": "fan/qwen-finetune-gguf",
-    "likes": 900,
-    "downloads": 1000,
-    "private": false,
-    "tags": [
-      "gguf",
-      "base_model:Qwen/Qwen3.8-27B",
-      "base_model:quantized:Qwen/Qwen3.8-27B"
-    ],
+    "id": "Qwen/Qwen4",
+    "likes": 5000,
+    "downloads": 900000,
     "pipeline_tag": "text-generation",
+    "tags": ["transformers"],
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  },
+  {
+    "id": "fan/qwen-finetune",
+    "likes": 900,
+    "downloads": 50000,
+    "tags": ["base_model:finetune:Qwen/Qwen4"],
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  },
+  {
+    "id": "fan/qwen-quantised",
+    "likes": 900,
+    "downloads": 50000,
+    "tags": ["gguf"],
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  },
+  {
+    "id": "fan/qwen-4-awq",
+    "likes": 900,
+    "downloads": 50000,
+    "tags": [],
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  },
+  {
+    "id": "fan/mergekit-blend",
+    "likes": 900,
+    "downloads": 50000,
+    "tags": ["mergekit"],
     "createdAt": "2026-09-20T00:00:00.000Z"
   },
   {
     "id": "org/low-likes",
     "likes": 3,
+    "downloads": 100000,
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  },
+  {
+    "id": "org/few-downloads",
+    "likes": 900,
     "downloads": 10,
     "createdAt": "2026-09-20T00:00:00.000Z"
   },
   {
     "id": "org/too-old",
     "likes": 5000,
-    "downloads": 10,
+    "downloads": 100000,
     "createdAt": "2024-01-01T00:00:00.000Z"
   },
   {
     "id": "gpt2",
     "likes": 5000,
-    "downloads": 10,
+    "downloads": 100000,
     "createdAt": "2026-09-20T00:00:00.000Z"
   },
   {
     "id": "org/secret",
     "likes": 500,
+    "downloads": 100000,
     "private": true,
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  },
+  {
+    "id": "person/hot-model",
+    "likes": 1500,
+    "downloads": 20000,
+    "createdAt": "2026-09-20T00:00:00.000Z"
+  },
+  {
+    "id": "person/warm-model",
+    "likes": 300,
+    "downloads": 20000,
     "createdAt": "2026-09-20T00:00:00.000Z"
   }
 ]

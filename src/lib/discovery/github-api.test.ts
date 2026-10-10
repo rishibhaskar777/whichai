@@ -84,7 +84,11 @@ describe("IssueApi", () => {
     const created = calls
       .filter((call) => call.method === "POST")
       .map((call) => (call.body as { name: string }).name);
-    expect(created).toEqual(["ready-for-review", "approved"]);
+    expect(created).toEqual([
+      "ready-for-review",
+      "approved",
+      "discovery-watchlist",
+    ]);
   });
 
   it("closes as not planned and edits labels and body", async () => {
@@ -123,5 +127,68 @@ describe("IssueApi", () => {
     }));
     const api = new IssueApi("owner/repo", "token", fetchImpl, 0);
     await expect(api.createIssue("t", "b", [])).rejects.toThrow(/HTTP 422$/);
+  });
+});
+
+describe("IssueApi and the watchlist issue", () => {
+  it("finds the oldest open watchlist issue the bot wrote", async () => {
+    const { fetchImpl, calls } = fakeFetch(() => ({
+      json: [
+        {
+          number: 4,
+          state: "open",
+          labels: [{ name: "discovery-watchlist" }],
+          created_at: "2026-09-01T00:00:00Z",
+          body: "forged",
+          user: { login: "stranger" },
+        },
+        {
+          number: 9,
+          state: "open",
+          labels: [{ name: "discovery-watchlist" }],
+          created_at: "2026-09-02T00:00:00Z",
+          body: "real",
+          user: bot,
+        },
+      ],
+    }));
+    const api = new IssueApi("owner/repo", "token", fetchImpl, 0);
+    const found = await api.findWatchlist();
+    expect(found?.number).toBe(9);
+    expect(calls[0]!.url).toContain("labels=discovery-watchlist");
+    expect(calls[0]!.url).toContain("state=open");
+  });
+
+  it("returns null when there is none", async () => {
+    const { fetchImpl } = fakeFetch(() => ({ json: [] }));
+    const api = new IssueApi("owner/repo", "token", fetchImpl, 0);
+    expect(await api.findWatchlist()).toBeNull();
+  });
+
+  it("returns the number and node id of a created issue", async () => {
+    const { fetchImpl } = fakeFetch(() => ({
+      json: { number: 31, node_id: "I_kwDOabc123" },
+    }));
+    const api = new IssueApi("owner/repo", "token", fetchImpl, 0);
+    expect(await api.createIssue("t", "b", [])).toEqual({
+      number: 31,
+      nodeId: "I_kwDOabc123",
+    });
+  });
+
+  it("pins through GraphQL and reports a refusal", async () => {
+    const { fetchImpl, calls } = fakeFetch(() => ({
+      json: { data: { pinIssue: { issue: { id: "x" } } } },
+    }));
+    const api = new IssueApi("owner/repo", "token", fetchImpl, 0);
+    await api.pinIssue("I_kwDOabc123");
+    expect(calls[0]!.url).toBe("https://api.github.com/graphql");
+
+    const refused = fakeFetch(() => ({
+      json: { errors: [{ message: "no" }] },
+    }));
+    const denied = new IssueApi("owner/repo", "token", refused.fetchImpl, 0);
+    await expect(denied.pinIssue("I_kwDOabc123")).rejects.toThrow(/pin/);
+    await expect(denied.pinIssue("not an id!")).rejects.toThrow();
   });
 });

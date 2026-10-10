@@ -62,6 +62,8 @@ export interface SourceResult<T> {
   source: string;
   ok: boolean;
   items: T[];
+  /** Items the source returned before this project's filters. */
+  seen: number;
   error: string | null;
   requests: number;
 }

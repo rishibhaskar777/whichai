@@ -1,25 +1,29 @@
 import {
   appendSnapshot,
+  daysBetween,
   evaluateAdmission,
   isoDay,
   priority,
   type Admission,
 } from "./admission.ts";
-import { cleanCandidate, mergeCandidates } from "./clean.ts";
+import { cleanCandidate, mergeCandidates, sameThing } from "./clean.ts";
 import type { DiscoveryConfig, RejectedList } from "./config.ts";
 import {
   closestTools,
   suggestJobs,
+  type ClosestTool,
   type JobInfo,
   type ToolInfo,
 } from "./jobs.ts";
 import {
   findDuplicate,
   findRejected,
+  findSimilar,
   type CatalogueIndex,
   type DuplicateReason,
 } from "./match.ts";
 import { decodeState, issueTitle, renderBody } from "./state.ts";
+import { emptyWatchlist, isExpiredNow, statusOf } from "./watchlist.ts";
 import {
   LABELS,
   SOURCE_NAMES,
@@ -30,6 +34,8 @@ import {
   type RawCandidate,
   type Signals,
   type SourceName,
+  type WatchEntry,
+  type Watchlist,
 } from "./types.ts";
 
 export interface RunContext {
@@ -39,10 +45,13 @@ export interface RunContext {
   index: CatalogueIndex;
   jobs: readonly JobInfo[];
   tools: readonly ToolInfo[];
-  existing: readonly ExistingIssue[];
+  /** Individual candidate issues, open and closed. */
+  issues: readonly ExistingIssue[];
+  /** The stored watchlist, or null the first time. */
+  watchlist: Watchlist | null;
   found: readonly RawCandidate[];
   checkHomepage: (url: string, today: string) => Promise<HomepageCheck>;
-  /** Fresh signals for a candidate not seen in this run's searches. */
+  /** Fresh signals for a tracked candidate the searches did not return. */
   lookup?: (state: CandidateState) => Promise<Signals | null>;
 }
 
@@ -52,47 +61,54 @@ export interface PlannedIssue {
   labels: string[];
   state: CandidateState;
   admission: Admission;
+  /** The watchlist entry it came from, to put back if creating the issue fails. */
+  entry: WatchEntry;
 }
 
-export interface PlannedUpdate {
+export interface PlannedClose {
   number: number;
   title: string;
-  /** Null when the body is unchanged. */
-  body: string | null;
-  labels: string[] | null;
-  close: boolean;
-  becameReady: boolean;
-  admission: Admission | null;
 }
 
 export interface SourceStats {
+  /** Items kept by the source's own filters. */
   produced: number;
   invalid: number;
   duplicates: number;
   duplicateReasons: Partial<Record<DuplicateReason, number>>;
   rejected: number;
+  /** Already has an issue, is on the expired list, or is on the watchlist. */
+  alreadyKnown: number;
+  /** Not seen before: what this source adds to the watchlist. */
+  fresh: number;
 }
 
 export interface RunStats {
   bySource: Record<SourceName, SourceStats>;
   merged: number;
-  alreadyKnownClosed: number;
-  matchedOpen: number;
-  newCandidates: number;
-  createdNow: number;
-  deferred: number;
+  tracked: number;
+  newlyAdded: number;
+  expired: number;
+  /** Removed because the catalogue or the rejected list now covers them. */
+  dropped: number;
+  /** Removed for the size limit, lowest score first. */
+  trimmed: number;
   refreshed: number;
+  /** Tracked candidates that pass all five rules this run. */
+  readyThisWeek: number;
+  issuesCreated: number;
+  readyDeferred: number;
   unreadableIssues: number;
-  readyNow: number;
 }
 
 export interface RunPlan {
   create: PlannedIssue[];
-  update: PlannedUpdate[];
+  close: PlannedClose[];
+  /** The watchlist after this run, before the size limit is applied. */
+  watchlist: Watchlist;
+  statuses: Map<string, string>;
   stats: RunStats;
 }
-
-const SKIP_LABELS: readonly string[] = [LABELS.approved];
 
 function emptySourceStats(): SourceStats {
   return {
@@ -101,18 +117,43 @@ function emptySourceStats(): SourceStats {
     duplicates: 0,
     duplicateReasons: {},
     rejected: 0,
+    alreadyKnown: 0,
+    fresh: 0,
   };
 }
 
-function jobNamesOf(jobs: readonly JobInfo[]): Map<string, string> {
-  return new Map(jobs.map((job) => [job.id, job.name]));
+function latestSignals(state: CandidateState): Signals {
+  return state.history[state.history.length - 1]?.signals ?? {};
 }
 
-function newState(
+const GROWTH_KEYS = [
+  "githubStars",
+  "hfLikes",
+  "hfDownloads",
+  "hnPoints",
+] as const;
+
+function grew(before: Signals, after: Signals): boolean {
+  return GROWTH_KEYS.some((key) => (after[key] ?? 0) > (before[key] ?? 0));
+}
+
+type Identity = { id: string; keys: readonly string[] };
+
+/**
+ * The same candidate: they share an id or a key, and neither points at a
+ * repository or site the other does not.
+ */
+function sharesKey(a: Identity, b: Identity): boolean {
+  const shared = a.id === b.id || a.keys.some((key) => b.keys.includes(key));
+  return shared && sameThing(a, b);
+}
+
+function newEntry(
   candidate: Candidate,
   jobIds: string[],
   today: string,
-): CandidateState {
+  config: DiscoveryConfig,
+): WatchEntry {
   return {
     version: 1,
     id: candidate.id,
@@ -123,83 +164,118 @@ function newState(
     announcement: candidate.announcement,
     maintainer: candidate.maintainer,
     kind: candidate.kind,
-    keys: candidate.keys.slice(0, 8),
-    sources: candidate.sources,
+    keys: candidate.keys.slice(0, 3),
+    sources: candidate.sources.slice(0, 3),
     topics: candidate.topics,
     jobs: jobIds,
     firstSeen: today,
     lastSeen: today,
     history: [{ date: today, signals: candidate.signals }],
     homepageCheck: null,
+    score: priority(candidate.signals, candidate.sources.length, config),
+    lastGrowth: today,
   };
 }
 
 /** The same candidate seen again: keep what is known, fill in what is new. */
-function refreshState(
-  state: CandidateState,
+function seenAgain(
+  entry: WatchEntry,
   candidate: Candidate,
   today: string,
-): CandidateState {
-  const previous = state.history[state.history.length - 1]?.signals ?? {};
-  const signals = { ...previous, ...candidate.signals };
-  const sources = [...state.sources];
+  config: DiscoveryConfig,
+): WatchEntry {
+  const before = latestSignals(entry);
+  const signals = { ...before, ...candidate.signals };
+  const sources = [...entry.sources];
   for (const link of candidate.sources) {
     const known = sources.some(
-      (entry) => entry.source === link.source && entry.url === link.url,
+      (item) => item.source === link.source && item.url === link.url,
     );
-    if (!known && sources.length < 6) sources.push(link);
+    if (!known && sources.length < 3) sources.push(link);
   }
   return {
-    ...state,
+    ...entry,
     description:
-      state.description === "" ? candidate.description : state.description,
-    homepage: state.homepage ?? candidate.homepage,
-    repository: state.repository ?? candidate.repository,
-    announcement: state.announcement ?? candidate.announcement,
-    maintainer: state.maintainer ?? candidate.maintainer,
-    keys: [...new Set([...state.keys, ...candidate.keys])].slice(0, 8),
+      entry.description === "" ? candidate.description : entry.description,
+    homepage: entry.homepage ?? candidate.homepage,
+    repository: entry.repository ?? candidate.repository,
+    announcement: entry.announcement ?? candidate.announcement,
+    maintainer: entry.maintainer ?? candidate.maintainer,
+    keys: [...new Set([...entry.keys, ...candidate.keys])].slice(0, 3),
     sources,
     lastSeen: today,
-    history: appendSnapshot(state.history, { date: today, signals }),
+    history: appendSnapshot(entry.history, { date: today, signals }),
+    lastGrowth: grew(before, signals) ? today : entry.lastGrowth,
+    score: priority(signals, sources.length, config),
   };
 }
 
-function withSignals(state: CandidateState, fresh: Signals, today: string) {
-  const previous = state.history[state.history.length - 1]?.signals ?? {};
+function withFreshSignals(
+  entry: WatchEntry,
+  fresh: Signals,
+  today: string,
+  config: DiscoveryConfig,
+): WatchEntry {
+  const before = latestSignals(entry);
+  const signals = { ...before, ...fresh };
   return {
-    ...state,
+    ...entry,
     lastSeen: today,
-    history: appendSnapshot(state.history, {
-      date: today,
-      signals: { ...previous, ...fresh },
-    }),
+    history: appendSnapshot(entry.history, { date: today, signals }),
+    lastGrowth: grew(before, signals) ? today : entry.lastGrowth,
+    score: priority(signals, entry.sources.length, config),
   };
+}
+
+function addDays(day: string, days: number): string {
+  return isoDay(new Date(Date.parse(day) + days * 86_400_000));
 }
 
 /**
- * Decides what a run would do, without doing it. Network access goes through
- * `checkHomepage` and `lookup`; creating and editing issues is the caller's.
+ * Decides what a run would do, without doing it. The watchlist is updated in
+ * memory; an issue is planned only for a candidate that passes all five
+ * rules, at most `maxNewIssuesPerRun` of them, highest score first. Network
+ * access goes through `checkHomepage` and `lookup`.
  */
 export async function planRun(context: RunContext): Promise<RunPlan> {
   const { config, now, index } = context;
   const today = isoDay(now);
-  const jobNames = jobNamesOf(context.jobs);
+  const jobNames = new Map(context.jobs.map((job) => [job.id, job.name]));
   const stats: RunStats = {
     bySource: Object.fromEntries(
       SOURCE_NAMES.map((name) => [name, emptySourceStats()]),
     ) as Record<SourceName, SourceStats>,
     merged: 0,
-    alreadyKnownClosed: 0,
-    matchedOpen: 0,
-    newCandidates: 0,
-    createdNow: 0,
-    deferred: 0,
+    tracked: 0,
+    newlyAdded: 0,
+    expired: 0,
+    dropped: 0,
+    trimmed: 0,
     refreshed: 0,
+    readyThisWeek: 0,
+    issuesCreated: 0,
+    readyDeferred: 0,
     unreadableIssues: 0,
-    readyNow: 0,
   };
 
-  // 1. Clean, then drop what the catalogue or the rejected list already covers.
+  const stored = context.watchlist ?? emptyWatchlist(today);
+  let tracked: WatchEntry[] = [...stored.tracked];
+  const expired = stored.expired.filter((entry) => isExpiredNow(entry, today));
+
+  const issues: { issue: ExistingIssue; state: CandidateState }[] = [];
+  for (const issue of context.issues) {
+    const state = decodeState(issue.body);
+    if (state === null) stats.unreadableIssues += 1;
+    else issues.push({ issue, state });
+  }
+  const issued = (candidate: Identity) =>
+    issues.some(({ state }) => sharesKey(state, candidate));
+  const isExpired = (candidate: Identity) =>
+    expired.some((entry) => sharesKey(entry, candidate));
+  const trackedMatch = (candidate: Identity) =>
+    tracked.find((entry) => sharesKey(entry, candidate));
+
+  // 1. Clean what the sources returned and drop what is already covered.
   const usable: Candidate[] = [];
   for (const raw of context.found) {
     const counts = stats.bySource[raw.source];
@@ -220,152 +296,183 @@ export async function planRun(context: RunContext): Promise<RunPlan> {
       counts.rejected += 1;
       continue;
     }
+    if (issued(candidate) || isExpired(candidate)) {
+      counts.alreadyKnown += 1;
+      continue;
+    }
+    if (trackedMatch(candidate) !== undefined) counts.alreadyKnown += 1;
+    else counts.fresh += 1;
     usable.push(candidate);
   }
   const merged = mergeCandidates(usable);
   stats.merged = merged.length;
 
-  // 2. Existing issues are the state. Closed ones are never touched.
-  const issues: { issue: ExistingIssue; state: CandidateState }[] = [];
-  for (const issue of context.existing) {
-    const state = decodeState(issue.body);
-    if (state === null) stats.unreadableIssues += 1;
-    else issues.push({ issue, state });
-  }
-  const findIssue = (candidate: Candidate) =>
-    issues.find(
-      ({ state }) =>
-        state.id === candidate.id ||
-        state.keys.some((key) => candidate.keys.includes(key)),
-    );
-
-  const seenNow = new Map<number, Candidate>();
-  const fresh: Candidate[] = [];
+  // 2. Fold them into the watchlist. The 30 day clock starts here.
+  const seenIds = new Set<string>();
   for (const candidate of merged) {
-    const hit = findIssue(candidate);
-    if (hit === undefined) fresh.push(candidate);
-    else if (hit.issue.state === "closed") stats.alreadyKnownClosed += 1;
-    else seenNow.set(hit.issue.number, candidate);
+    const known = trackedMatch(candidate);
+    if (known === undefined) {
+      const jobIds = suggestJobs(
+        `${candidate.name} ${candidate.description} ${candidate.topics.join(" ")}`,
+        context.jobs,
+      );
+      const entry = newEntry(candidate, jobIds, today, config);
+      tracked.push(entry);
+      seenIds.add(entry.id);
+      stats.newlyAdded += 1;
+    } else {
+      const updated = seenAgain(known, candidate, today, config);
+      tracked = tracked.map((entry) => (entry === known ? updated : entry));
+      seenIds.add(updated.id);
+    }
   }
-  stats.matchedOpen = seenNow.size;
-  stats.newCandidates = fresh.length;
 
-  // 3. New issues, strongest first, at most the per-run limit.
-  fresh.sort(
-    (a, b) =>
-      priority(b.signals, b.sources.length, config) -
-        priority(a.signals, a.sources.length, config) ||
-      a.name.localeCompare(b.name),
-  );
-  const create: PlannedIssue[] = [];
-  for (const candidate of fresh.slice(0, config.maxNewIssuesPerRun)) {
-    const jobIds = suggestJobs(
-      `${candidate.name} ${candidate.description} ${candidate.topics.join(" ")}`,
-      context.jobs,
-    );
-    const state = newState(candidate, jobIds, today);
-    const admission = evaluateAdmission({
-      state,
-      firstSeen: today,
-      now,
-      config,
-      duplicate: null,
-      rejectedReason: null,
-    });
-    create.push({
-      title: issueTitle(state),
-      body: renderBody(state, {
-        admission,
-        closest: closestTools(jobIds, context.tools),
-        jobNames,
-      }),
-      labels: [LABELS.candidate],
-      state,
-      admission,
-    });
-  }
-  stats.createdNow = create.length;
-  stats.deferred = fresh.length - create.length;
-
-  // 4. Open candidates: refresh signals, apply the rules, edit the body.
-  const update: PlannedUpdate[] = [];
+  // 3. Refresh what the searches did not return.
   let lookups = 0;
-  for (const { issue, state: stored } of issues) {
-    if (issue.state !== "open") continue;
-    if (issue.labels.some((label) => SKIP_LABELS.includes(label))) continue;
-    if (issue.labels.includes(LABELS.rejected)) {
-      update.push({
-        number: issue.number,
-        title: issueTitle(stored),
-        body: null,
-        labels: null,
-        close: true,
-        becameReady: false,
-        admission: null,
-      });
+  if (context.lookup !== undefined) {
+    for (const [position, entry] of tracked.entries()) {
+      if (seenIds.has(entry.id) || lookups >= config.maxRefreshLookups) {
+        continue;
+      }
+      lookups += 1;
+      const fresh = await context.lookup(entry).catch(() => null);
+      if (fresh === null) continue;
+      tracked[position] = withFreshSignals(entry, fresh, today, config);
+      stats.refreshed += 1;
+    }
+  }
+
+  // 4. Remove what the catalogue or the rejected list now covers, and what
+  //    has not grown for too long.
+  const kept: WatchEntry[] = [];
+  for (const entry of tracked) {
+    if (
+      findDuplicate(entry, index) !== null ||
+      findRejected(entry, context.rejected) !== null
+    ) {
+      stats.dropped += 1;
       continue;
     }
-
-    let state = stored;
-    const candidate = seenNow.get(issue.number);
-    if (candidate !== undefined) {
-      state = refreshState(stored, candidate, today);
-    } else if (
-      context.lookup !== undefined &&
-      lookups < config.maxRefreshLookups
+    if (
+      daysBetween(entry.lastGrowth, today) >= config.watchlist.expireAfterDays
     ) {
-      lookups += 1;
-      const signals = await context.lookup(stored).catch(() => null);
-      if (signals !== null) {
-        state = withSignals(stored, signals, today);
-        stats.refreshed += 1;
-      }
-    }
-
-    const duplicate = findDuplicate(state, index);
-    const rejectedReason = findRejected(state, context.rejected);
-    const evaluate = () =>
-      evaluateAdmission({
-        state,
-        firstSeen: isoDay(new Date(issue.createdAt)),
-        now,
-        config,
-        duplicate,
-        rejectedReason,
+      expired.push({
+        id: entry.id,
+        keys: entry.keys.slice(0, 2),
+        until: addDays(today, config.watchlist.reAddAfterDays),
       });
-    let admission = evaluate();
-    if (admission.needsHomepageCheck && state.homepage !== null) {
-      state = {
-        ...state,
-        homepageCheck: await context.checkHomepage(state.homepage, today),
-      };
-      admission = evaluate();
+      stats.expired += 1;
+      continue;
     }
-
-    const jobIds = state.jobs;
-    const body = renderBody(state, {
-      admission,
-      closest: closestTools(jobIds, context.tools),
-      jobNames,
-    });
-    const hadReady = issue.labels.includes(LABELS.ready);
-    const labels =
-      admission.ready === hadReady
-        ? null
-        : admission.ready
-          ? [...issue.labels, LABELS.ready]
-          : issue.labels.filter((label) => label !== LABELS.ready);
-    if (admission.ready) stats.readyNow += 1;
-    update.push({
-      number: issue.number,
-      title: issueTitle(state),
-      body: body === issue.body ? null : body,
-      labels,
-      close: false,
-      becameReady: admission.ready && !hadReady,
-      admission,
-    });
+    kept.push(entry);
   }
 
-  return { create, update, stats };
+  // 5. Apply the rules. The homepage is checked only when every other rule
+  //    already passes.
+  const statuses = new Map<string, string>();
+  const ready: { entry: WatchEntry; admission: Admission }[] = [];
+  for (const [position, original] of kept.entries()) {
+    let entry = original;
+    const evaluate = () =>
+      evaluateAdmission({
+        state: entry,
+        firstSeen: entry.firstSeen,
+        now,
+        config,
+        duplicate: null,
+        rejectedReason: null,
+      });
+    let admission = evaluate();
+    if (admission.needsHomepageCheck && entry.homepage !== null) {
+      entry = {
+        ...entry,
+        homepageCheck: await context.checkHomepage(entry.homepage, today),
+      };
+      kept[position] = entry;
+      admission = evaluate();
+    }
+    statuses.set(entry.id, statusOf(admission));
+    if (admission.ready) ready.push({ entry, admission });
+  }
+  stats.readyThisWeek = ready.length;
+
+  // 6. An issue of its own for the best ready candidates.
+  ready.sort(
+    (a, b) =>
+      b.entry.score - a.entry.score || a.entry.name.localeCompare(b.entry.name),
+  );
+  const create: PlannedIssue[] = [];
+  for (const { entry, admission } of ready.slice(
+    0,
+    config.maxNewIssuesPerRun,
+  )) {
+    const similar: ClosestTool[] = findSimilar(entry, index).map((tool) => ({
+      id: tool.id,
+      name: tool.name,
+      sharedJobs: [],
+      similarName: true,
+    }));
+    const closest = [
+      ...similar,
+      ...closestTools(entry.jobs, context.tools).filter(
+        (tool) => !similar.some((item) => item.id === tool.id),
+      ),
+    ].slice(0, 6);
+    const state: CandidateState = {
+      version: 1,
+      id: entry.id,
+      name: entry.name,
+      description: entry.description,
+      homepage: entry.homepage,
+      repository: entry.repository,
+      announcement: entry.announcement,
+      maintainer: entry.maintainer,
+      kind: entry.kind,
+      keys: entry.keys,
+      sources: entry.sources,
+      topics: entry.topics,
+      jobs: entry.jobs,
+      firstSeen: entry.firstSeen,
+      lastSeen: entry.lastSeen,
+      history: entry.history,
+      homepageCheck: entry.homepageCheck,
+    };
+    create.push({
+      title: issueTitle(state),
+      body: renderBody(state, { admission, closest, jobNames }),
+      labels: [LABELS.candidate, LABELS.ready],
+      state,
+      admission,
+      entry,
+    });
+  }
+  stats.issuesCreated = create.length;
+  stats.readyDeferred = ready.length - create.length;
+  const promoted = new Set(create.map((item) => item.entry.id));
+
+  // 7. Individual issues the maintainer labelled "rejected" are closed.
+  const close: PlannedClose[] = issues
+    .filter(
+      ({ issue }) =>
+        issue.state === "open" && issue.labels.includes(LABELS.rejected),
+    )
+    .map(({ issue, state }) => ({
+      number: issue.number,
+      title: issueTitle(state),
+    }));
+
+  const remaining = kept
+    .filter((entry) => !promoted.has(entry.id))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, config.watchlist.maxTracked);
+  stats.trimmed = kept.length - promoted.size - remaining.length;
+  stats.tracked = remaining.length;
+
+  return {
+    create,
+    close,
+    watchlist: { version: 1, updated: today, tracked: remaining, expired },
+    statuses,
+    stats,
+  };
 }
