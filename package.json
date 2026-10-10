@@ -14,7 +14,8 @@
     "test": "vitest run",
     "format": "prettier --write .",
     "data:report": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/data-report.ts",
-    "data:version": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/catalogue-version.ts"
+    "data:version": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/catalogue-version.ts",
+    "links:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-links.ts"
   },
   "dependencies": {
     "arctic": "^3.7.0",
