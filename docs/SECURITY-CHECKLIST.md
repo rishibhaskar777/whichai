@@ -71,8 +71,9 @@ Apply to every release and re-check when a phase adds a new input, route or depe
 - [ ] Each request has a 10 second timeout, a `User-Agent` naming the project, no redirect and a size limit; a failing source is skipped for the run
 - [ ] A candidate's website gets one HEAD or GET request: https only, no credentials, port or IP address, redirects reported and never followed, no body read
 - [ ] Candidate text is cleaned (control, invisible and bidirectional characters, angle brackets, backticks, length) and appears only in code spans or code blocks; titles use letters, digits and a few marks; no `@mention`, no `#123` reference, no clickable candidate text; only https addresses are shown
-- [ ] The hidden state block is escaped so it cannot end its comment, the last block wins, every field is validated on read, and only issues written by `github-actions[bot]` with the `tool-candidate` label are read as state
-- [ ] At most 10 new issues per run; closed issues are never reopened; rejected names and domains are never recreated
+- [ ] The hidden state blocks (watchlist and candidate issues) are escaped so they cannot end their comment, the last block wins, every field is validated on read, and only issues written by `github-actions[bot]` with the `discovery-watchlist` or `tool-candidate` label are read as state
+- [ ] The watchlist body is kept under GitHub's 65,536 character limit by construction: compact fields, at most 100 tracked candidates, and the lowest scores dropped first if it is still too long
+- [ ] The watchlist is edited in place and never commented on; at most 5 new candidate issues per run; closed issues are never reopened; rejected names and domains and expired candidates are never re-added early
 - [ ] The approval workflow reads the issue through the API and never interpolates issue or label text into a script
 - [ ] Draft records are unverified with a price placeholder and an empty `getIt`; `discover:import` validates against the catalogue schema and cross-file checks and asks for confirmation before writing
 - [ ] Every candidate is reviewed by hand with the checklist in [TOOL-DISCOVERY.md](TOOL-DISCOVERY.md) before `approved` is added

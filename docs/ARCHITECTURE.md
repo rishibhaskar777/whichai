@@ -212,15 +212,16 @@ A weekly job finds candidates for the catalogue and keeps its state in GitHub is
 ```
 sources (GitHub, Hugging Face, Hacker News, news feeds)
    --> clean (sanitize.ts, clean.ts) --> drop known (match.ts) and rejected --> merge by repository, site, name
-   --> run.ts: plan creates and edits against the existing issues (state.ts decodes the hidden block)
+   --> run.ts: plan the watchlist update and the (few) new issues (watchlist.ts, state.ts decode the hidden blocks)
    --> github-api.ts: create or edit issues; label approved --> workflow --> draft.ts comment
    --> import.ts + scripts/discover-import.ts: validate, confirm, write locally
 ```
 
-- `sources/` has one module per source: a pure parser over the response, and a fetch with a timeout that returns a result instead of throwing, so a failing source is skipped.
+- `sources/` has one module per source: a pure parser that applies the source's own filters (thresholds in `config.json`), and a fetch with a timeout that returns a result instead of throwing, so a failing source is skipped.
 - `admission.ts` holds the five rules and the signal thresholds (read from `src/data/discovery/config.json`); it never compares a candidate with a listed tool. `jobs.ts` suggests jobs and lists the closest listed tools.
-- `run.ts` is a planner: it takes the found items and the existing issues and returns what to create and edit. The scripts execute the plan, so the whole decision logic is testable without a network.
-- `state.ts` writes and reads the issue body. Candidate text appears only in code spans and blocks, and the hidden JSON block is escaped and validated on read.
+- `run.ts` is a planner: it takes the found items, the stored watchlist and the existing candidate issues, and returns the new watchlist, the issues to open and the issues to close. The scripts execute the plan, so the whole decision logic is testable without a network.
+- `watchlist.ts` writes and reads the watchlist issue: a short summary table of the top 20, and a compact hidden block with every tracked candidate and the expired list, trimmed to fit GitHub's body limit.
+- `state.ts` writes and reads the body of a candidate's own issue. Candidate text appears only in code spans and blocks, and the hidden JSON block is escaped and validated on read.
 - Everything under `src/lib/discovery/` runs under Node without a build, like the link and news checkers. It reuses `plan/text-match.ts` (edit distance), `news/fetch-feed.ts` and `news/parse-feed.ts`, and the catalogue schema and checks.
 - The weekly job writes issues only. `discover:import` is the one piece that writes catalogue files, and it runs locally.
 

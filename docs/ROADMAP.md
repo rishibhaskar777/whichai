@@ -77,7 +77,8 @@ Every phase follows the [zero-cost rule](decisions/0006-zero-cost.md): local cod
 ### 5c: Tool discovery (done, [0013](decisions/0013-tool-discovery.md))
 
 - A weekly GitHub Actions job finds candidate tools from GitHub search, Hugging Face, Hacker News (Show HN) and our own news feeds, using free public endpoints only
-- Candidates are GitHub issues labelled `tool-candidate`, with a hidden state block and a weekly edited body; at most 10 new issues per run
+- Candidates are tracked in one pinned issue, "Discovery watchlist", edited in place with a hidden state block; a candidate gets an issue of its own (`tool-candidate`, `ready-for-review`) only when it passes all five rules, at most 5 per run. Candidates with no growth for 90 days expire and are not re-added for 180
+- Per-source filters (GitHub, Hugging Face, Hacker News) with thresholds in `config.json`, and a name that merely starts with a listed tool's name counts as that tool only when the domain or maker matches
 - Five admission rules (a real place and maker, 30 days, usage signals, not in the catalogue, not rejected) with thresholds in `src/data/discovery/config.json`; the job lists the closest listed tools and never judges better or worse
 - The `approved` label posts a draft record; `npm run discover:import` validates and adds it locally for review, verification and a commit
 - `npm run discover:dry-run` for local use. How it works and the review checklist: [TOOL-DISCOVERY.md](TOOL-DISCOVERY.md)
