@@ -50,6 +50,8 @@ export interface ParseOptions {
   /** Milliseconds since the epoch; items dated after it are dropped. */
   now: number;
   matchTools: ToolMatcher;
+  /** Oldest item kept. Defaults to 60 days; the source check widens it. */
+  maxAgeMs?: number;
 }
 
 export function isReleasesFeed(feedUrl: string): boolean {
@@ -235,7 +237,7 @@ function readEntry(
 
   const published = parseDate(entry);
   if (published === null || published > options.now) return null;
-  if (options.now - published > MAX_AGE_MS) return null;
+  if (options.now - published > (options.maxAgeMs ?? MAX_AGE_MS)) return null;
 
   let url: string | null = null;
   for (const candidate of candidateLinks(entry)) {
