@@ -1,0 +1,47 @@
+{
+  "minAgeDays": 30,
+  "maxNewIssuesPerRun": 10,
+  "maxSignalAgeDays": 21,
+  "maxRefreshLookups": 30,
+  "listing": {
+    "githubStars": 100,
+    "hfLikes": 50,
+    "hnPoints": 30
+  },
+  "moderate": {
+    "githubStars": 300,
+    "githubStarGrowth": 100,
+    "hfLikes": 100,
+    "hfDownloads": 5000,
+    "hnPoints": 50,
+    "independentSources": 2
+  },
+  "strong": {
+    "githubStars": 1000,
+    "githubStarGrowth": 500,
+    "hfLikes": 500,
+    "hfDownloads": 50000,
+    "hnPoints": 150
+  },
+  "required": {
+    "strongSignals": 1,
+    "moderateSignals": 2
+  },
+  "github": {
+    "topics": ["ai", "llm", "generative-ai", "ai-agents", "chatgpt"],
+    "createdWithinDays": 120,
+    "perQuery": 30
+  },
+  "huggingface": {
+    "createdWithinDays": 120,
+    "perList": 50
+  },
+  "hackernews": {
+    "queries": ["AI", "LLM", "GPT", "agent"],
+    "withinDays": 60,
+    "perQuery": 30
+  },
+  "news": {
+    "withinDays": 45
+  }
+}
