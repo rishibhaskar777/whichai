@@ -14,7 +14,8 @@ Early development. See [docs/ROADMAP.md](docs/ROADMAP.md) for the phases.
 | 2     | Understanding step and plan view            | Done        |
 | 3     | Tool data in JSON, rules engine             | In progress |
 | 4     | Sign-in, saved plans and feedback           | Done        |
-| 5     | News and update pipeline                    | Planned     |
+| 5a    | Tool catalogue, Get it links, library       | Done        |
+| 5b    | News and update pipeline                    | Planned     |
 
 The project follows a [zero-cost rule](docs/decisions/0006-zero-cost.md): no paid APIs, no AI APIs, no hosted databases, no trackers.
 
@@ -38,15 +39,17 @@ The site runs at http://localhost:3000. Sign-in is optional and needs free Googl
 
 ## Scripts
 
-| Command               | What it does                                       |
-| --------------------- | -------------------------------------------------- |
-| `npm run dev`         | Start the development server                       |
-| `npm run build`       | Production build                                   |
-| `npm run start`       | Serve the production build                         |
-| `npm run lint`        | Run ESLint                                         |
-| `npm run typecheck`   | Run the TypeScript compiler without emitting files |
-| `npm test`            | Run unit tests                                     |
-| `npm run data:report` | Print how much of the tool catalogue is verified   |
+| Command                | What it does                                       |
+| ---------------------- | -------------------------------------------------- |
+| `npm run dev`          | Start the development server                       |
+| `npm run build`        | Production build                                   |
+| `npm run start`        | Serve the production build                         |
+| `npm run lint`         | Run ESLint                                         |
+| `npm run typecheck`    | Run the TypeScript compiler without emitting files |
+| `npm test`             | Run unit tests                                     |
+| `npm run data:report`  | Print how much of the tool catalogue is verified   |
+| `npm run data:version` | Write the catalogue version after a data change    |
+| `npm run links:check`  | Check every catalogue address (run by hand)        |
 
 ## Project layout
 
@@ -58,7 +61,8 @@ Next.js App Router with a `src/` directory: `app/` for routes, `components/` for
 - Describe a goal and a local, rule-based interpreter (no AI service) shows what it understood as chips you can remove or add. It tolerates typos, understands synonyms, and turns a task such as "make a logo" into tool picks. Only text it recognises nothing in gets an honest "no plan yet" message.
 - Confirm to see a plan at Simple, Polished and Advanced levels. It lists the right mix of AI tools, models, libraries and services for the goal: a toolkit at a glance, a card per job with the kind of tool, which model class to use for which step, compatibility, other options, a workflow with copyable prompts and a starter brief. Nine goals are covered.
 - A "Make this more accurate" card feeds your monthly budget and the tools you already use back into the engine. At ₹0 only tools with a free option, or one not yet confirmed, remain. A tool you already use is marked Keep when it scores close to the best.
-- **All tool data is unverified.** The catalogue (about 80 tools) holds stable facts only. Every price and limit is a placeholder, and fit scores are editorial estimates, not test results. Each card says "Not verified" and the plan says "Sample data, not verified" until records are checked ([docs/VERIFYING-DATA.md](docs/VERIFYING-DATA.md)). Nothing you type is sent, stored or put in the URL.
+- **Tool Library** at `/tools`: about 300 tools, models, extensions and command-line tools, with search, filters (category, job, kind, platform, free option, verified), sort and shareable URLs. Each tool has a page at `/tools/<id>` and a **Get it** block with official download links, shown for your platform first. Pick up to three tools and open **Compare** at `/compare`. See [0011](docs/decisions/0011-get-it-links.md).
+- **All tool data is unverified.** The catalogue (about 300 tools) holds stable facts only. Every price and limit is a placeholder, and fit scores are editorial estimates, not test results. Each card says "Not verified" and the plan says "Sample data, not verified" until records are checked ([docs/VERIFYING-DATA.md](docs/VERIFYING-DATA.md)). Nothing you type is sent, stored or put in the URL.
 - **Saved plans (Projects).** Save stores only the plan request (goal type, chips, level, budget, tools you use) in your browser, in IndexedDB with a localStorage fallback. Opening one rebuilds the plan from current data, and a badge shows when tools were updated since you saved. Rename, duplicate, delete with Undo, search and sort. The sidebar shows your five most recent. Nothing is sent to a server ([0009](docs/decisions/0009-local-first-data.md)).
 - **Search history (Searches)**, grouped by Today, Yesterday, Previous 7 days and Older, with re-run, delete and clear. It can be switched off.
 - **Share links, export and import, PDF.** Copy share link puts the plan request after the `#` so it never reaches the server. Export all local data to one JSON file, import it with validation (max 1 MB, merge or replace). Download PDF opens the print dialog with a clean print stylesheet.
@@ -68,7 +72,7 @@ Next.js App Router with a `src/` directory: `app/` for routes, `components/` for
 - Collapsible sidebar, mobile drawer, light, dark and system themes (the explicit choice is stored in a cookie).
 - Sign in with Google or GitHub from the sidebar, in a glass popup (or at `/sign-in` without JavaScript). The session is an encrypted cookie that holds only your provider, provider id and name; there is no database, and your plans still stay in this browser. The popup lists Google, GitHub, Microsoft, Apple, email and phone; Google and GitHub work once configured and the rest say they are coming in an upcoming update. See [0008](docs/decisions/0008-sign-in.md).
 - A plain-language privacy page at `/privacy` that says what stays on your device and how to delete it.
-- Tool Library, What Changed and Compare Plans show a coming-soon notice.
+- What Changed shows a coming-soon notice.
 - The news panel is marked as sample content and contains no real announcements.
 
 ## Security

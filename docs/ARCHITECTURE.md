@@ -32,7 +32,10 @@ src/
     .well-known/       security.txt
     plan/              plan from a saved id or a share link
     projects/, searches/, settings/, help/, about/, not-found
-    tool-library/, what-changed/, compare-plans/   coming-soon pages
+    tools/, tools/[id]/ Tool Library and one page per tool (server-rendered)
+    compare/           side-by-side comparison, selection in the URL
+    what-changed/      coming-soon page
+    tool-library/, compare-plans/   redirect to /tools and /compare
   components/          UI components, one folder per component
     app-shell/         three-region layout, drawer, panel state
     sidebar/           navigation, sign-in button, account menu
@@ -47,6 +50,7 @@ src/
     copy-button/       clipboard copy with visible success and failure states
     local-data/        provider over the storage layer, plan actions, storage notice
     projects/, searches/, settings/, plan-route/   the pages' interface
+    tools/             library, tool card and page, Get it block, compare view
     toast/, dialog/, shortcuts/, state-page/, content/   shared interface pieces
     theme-control/, wordmark/, coming-soon/, icons/
   lib/
@@ -58,6 +62,8 @@ src/
     storage/           local storage layer (see below)
     share/             share-link encode and decode
     new-plan-signal.tsx lets the sidebar reset the home flow
+    platform.ts        visitor system and browser from client hints or user agent
+    library/           library query, filter and sort, compare selection, tool details
     plan/              goal interpreter, text matching, chip helpers
     engine/            tool selection, plan assembly, text for cards
     catalogue/         cross-file data checks and the data report
@@ -68,11 +74,14 @@ src/
     global.css         reset and base styles
     controls.module.css shared button and screen-reader-only classes
   data/
-    catalogue/         providers, jobs, tools, model classes, goal templates
+    catalogue/         providers, jobs, model classes, goal templates, and
+                       tools/ with one file per job category
     sample/            sample news only
     suggestions.ts     suggestion chips and placeholder examples
 scripts/
   data-report.ts       prints verification status of the catalogue
+  catalogue-version.ts writes src/data/catalogue/version.ts
+  check-links.ts       requests every catalogue address (npm run links:check)
 docs/
   decisions/           architecture decision records
   VERIFYING-DATA.md    how to check a tool record
@@ -82,17 +91,19 @@ public/                static assets
 
 ## The catalogue
 
-Five JSON files in `src/data/catalogue/`, described by `src/lib/schemas/catalogue.ts`:
+JSON files in `src/data/catalogue/`, described by `src/lib/schemas/catalogue.ts`:
 
-| File                 | Holds                                                                                                                                                          |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `providers.json`     | Company or project id, name and homepage                                                                                                                       |
-| `jobs.json`          | The roles a tool can play (AI assistant, hosting, flashcards ...) with a category and keywords for matching tasks                                              |
-| `tools.json`         | Each tool: provider, jobs, plain summary, kind, skill level, free-option flag, strengths, cautions, per-job fit score, compatible tools, official link, status |
-| `model-classes.json` | Capability classes with plain "use it for" and effort advice. No model names                                                                                   |
-| `goals.json`         | Goal templates: keywords, synonyms, features and, for each of the three levels, the jobs, workflow, mistakes, upgrade advice and model guidance                |
+| File                    | Holds                                                                                                                                                                                                                                                                                                                                              |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `providers.json`        | Company or project id, name and homepage                                                                                                                                                                                                                                                                                                           |
+| `jobs.json`             | The roles a tool can play (AI assistant, hosting, flashcards ...) with a category and keywords for matching tasks                                                                                                                                                                                                                                  |
+| `tools/<category>.json` | Each tool: provider, jobs, plain summary, kind (`ai-tool`, `library`, `service`, `app`, `template-source`, `model`, `extension`, `cli`), skill level, free-option flag, strengths, cautions, per-job fit score, compatible tools, official link and domains, optional `getIt` links, status. A tool lives in the file for its first job's category |
+| `model-classes.json`    | Capability classes with plain "use it for" and effort advice. No model names                                                                                                                                                                                                                                                                       |
+| `goals.json`            | Goal templates: keywords, synonyms, features and, for each of the three levels, the jobs, workflow, mistakes, upgrade advice and model guidance                                                                                                                                                                                                    |
 
-`src/data/catalogue/index.ts` parses the files with the schemas and runs `findProblems` from `src/lib/catalogue/validate.ts` when the module loads. A test runs the same checks, so a bad reference, a duplicate id, a non-https link or a stray price fails both the tests and the build. Every tool is unverified and uses placeholders for prices ([0007](decisions/0007-catalogue-and-engine.md)).
+`src/data/catalogue/index.ts` parses the files with the schemas and runs `findProblems` from `src/lib/catalogue/validate.ts` when the module loads on the server. A test runs the same checks, so a bad reference, a duplicate id, a non-https link, a link off a tool's official domains or a stray price fails both the tests and the build.
+
+`version.ts` holds the catalogue version, a hash of every catalogue file, written by `npm run data:version` and checked by a test. `goal-titles.ts` holds the nine goal titles for pages that must not load the whole catalogue. Every tool is unverified and uses placeholders for prices ([0007](decisions/0007-catalogue-and-engine.md)).
 
 ## Plan data flow
 
@@ -120,6 +131,8 @@ text --interpretGoal--> UnderstoodGoal --buildPlan--> Plan --PlanView--> cards
 
 "New plan" in the sidebar calls a small context signal (`new-plan-signal`) that `HomeFlow` listens to; it resets the stage, clears the text and focuses the search.
 
+Loading: the interpreter (`lib/plan/interpret-goal.ts`), the catalogue it reads and `PlanView` are separate chunks. `HomeFlow` loads the interpreter through `lib/plan/load-interpreter.ts` when the search is focused or a goal is submitted, and loads `PlanView` with `next/dynamic`. The home page therefore ships without the catalogue.
+
 ### Schemas
 
 `src/lib/schemas/plan.ts` holds the Zod schemas and inferred types for `UnderstoodGoal`, `Plan`, `PlanLevel`, `JobRecommendation`, `ToolkitGroup`, `ModelGuidance`, `TierComparison` and `WorkflowStep`. They are the contract between the interface and the engine; see [0005](decisions/0005-plan-contract.md) and the extensions in [0007](decisions/0007-catalogue-and-engine.md). `src/lib/schemas/catalogue.ts` holds the schemas for the data files.
@@ -145,6 +158,18 @@ Goal understanding never calls an AI service ([0006](decisions/0006-zero-cost.md
 - `build-plan.ts`: `buildPlan`, which picks tools for each job at each level, skips jobs a chosen tool already covers, attaches model guidance to AI tools, groups the chosen tools into the toolkit and assembles a `Plan`.
 
 The engine imports no component, and no component imports a ranking rule.
+
+## Tool Library, tool pages and comparison
+
+All three are server components over the catalogue; only the Get it block is a client component, because it reads the visitor's platform.
+
+- `/tools`: `parseLibraryQuery` reads `q`, `category`, `job`, `kind`, `platform`, `free`, `verified`, `sort`, `page` and `compare` from the URL and falls back to defaults for anything unknown. `queryLibrary` filters, sorts and pages. The filters are a plain GET form, so they work without JavaScript. 24 tools per page.
+- `/tools/[id]`: `toolDetails` gathers the provider, jobs, alternatives per job (best fit first) and the goals that use one of the tool's jobs. `generateStaticParams` lists every tool, and each page has its own title, description and canonical address. A tool that does not exist is a 404.
+- `/compare?tools=a,b,c`: `parseCompareSelection` keeps known ids, at most three. The add box sends `add=<name>`; the page resolves it and redirects to a clean address.
+- `GetIt` shows `getIt` links as buttons with platform icons, the visitor's platform first. `detectVisitor` in `lib/platform.ts` reads client hints, then the user agent. `cliInstall` is shown as text with a copy button and never run.
+- A plan's job cards carry the same `getIt` data (`JobRecommendation.getIt`), so a plan shows the compact block.
+
+Link rules are in `src/lib/catalogue/links.ts`, the checker's pure helpers in `link-check.ts` and the network part in `scripts/check-links.ts` ([0011](decisions/0011-get-it-links.md)).
 
 ## Sign-in
 

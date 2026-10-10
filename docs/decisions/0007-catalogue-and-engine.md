@@ -53,6 +53,6 @@ The interpreter reads keywords, synonyms and feature words from `goals.json` and
 - Adding a goal, a job or a tool is a data change plus tests. The engine and interface do not change.
 - The plan text for a goal is written once per level, not once per tool. Tool names are filled in with `{job:id}` placeholders.
 - Editorial scores can be wrong or biased. They are labelled as such everywhere they are shown and are the first thing to improve once records are verified.
-- The data files grow with the catalogue and ship in the client bundle, since goal matching and plan building run in the browser. This is acceptable while the catalogue is in the low hundreds of records.
+- The data files grow with the catalogue, and goal matching and plan building run in the browser. Since [0011](0011-get-it-links.md) the catalogue is loaded on demand, in its own chunk, when a person focuses the search or opens a plan, and library and tool pages read it on the server.
 - A plan keeps its sample notice until every tool it names is verified.
 - Compatibility, `includes` and the model-guidance steps are editorial too. Only the schema checks that they refer to real ids.
