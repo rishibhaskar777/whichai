@@ -47,7 +47,7 @@ Look at the `link` values in the feed, not only at the homepage. Many blogs link
 3. Check that it has items with dates (`pubDate`, `published`, `updated` or `dc:date`) and links on the company's domains, and that the newest item is recent.
 4. Note the size. The fetcher reads at most 1 MB. A bigger feed still works if its newest entries come first.
 5. Add the record to `sources.json`, with `toolIds` that exist in the catalogue.
-6. Run `npm test`. `src/lib/news/sources.test.ts` checks the schema, that the feed and homepage are on the source's domains and that every tool id exists.
+6. Run `npm run news:check`; it fetches every source with the same code as the site and prints the ones that fail, are not feeds, have no usable items or are quiet. Then run `npm test`. `src/lib/news/sources.test.ts` checks the schema, that the feed and homepage are on the source's domains and that every tool id exists.
 7. Start the app (`npm run build && npm start`), open `/what-changed?source=<id>` and look at what came through: titles, summaries, tags, links. Check the server log for a warning naming the source.
 8. Commit the file with a message such as `feat(news): add Example Labs blog`.
 
@@ -56,6 +56,10 @@ Look at the `link` values in the feed, not only at the homepage. Many blogs link
 Delete the record, or edit the address, and run the tests. Nothing else refers to a source id except links people may have saved with `?source=<id>`, which fall back to "all sources".
 
 Remove a source when its feed has been dead for a while (the server log shows one warning per outage), when it has stopped publishing for more than 60 days (nothing would be shown anyway), or when it is no longer official.
+
+## The weekly check
+
+The weekly workflow (`.github/workflows/link-check.yml`) runs `npm run news:check` next to the catalogue link check. A source is reported when its request fails, the response is not a feed, it yields no items (empty, undated, or links off its domains), or its newest item is older than 60 days. Problems go in the same "Broken catalogue links" issue under a "News sources" heading, and the issue is closed when both checks are clean. A report means: fix the address or domains, or remove the source.
 
 ## What the server does with a feed
 

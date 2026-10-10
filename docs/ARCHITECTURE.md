@@ -190,7 +190,7 @@ sources.json --> service.get() --(every 30 min, parallel)--> fetchFeedText --> p
 ```
 
 - `src/data/news/sources.json` is validated by `src/lib/news/sources.ts`, and a test checks its tool ids against the catalogue.
-- `fetch-feed.ts`: https only, 5 second timeout, no redirect, at most 1 MB read. `parse-feed.ts`: a small RSS 2.0, RSS 1.0 and Atom reader that keeps title, link, date and a 160 character plain-text summary, and drops links that are not https on the source's `officialDomains`. `text.ts` strips markup and decodes entities.
+- `fetch-feed.ts`: https only, 5 second timeout, no redirect, at most 1 MB read. `parse-feed.ts`: an RSS 2.0, RSS 1.0 and Atom reader built on `fast-xml-parser` (no entity processing, DOCTYPE removed first, nesting and size limited) that keeps title, link, date and a 160 character plain-text summary, and drops links that are not https on the source's `officialDomains`. `text.ts` strips markup and decodes entities.
 - `service.ts`: the in-memory cache. The first call waits for a refresh, later calls return at once and refresh in the background when the data is 30 minutes old. A failing feed keeps its last good items and logs one warning. `getNews()` in `index.ts` never throws and returns an empty list during the production build.
 - `tagging.ts` and `tool-match.ts`: keyword rules for the tag, and whole-word catalogue names in the title for `toolIds`.
 - `affects-plans.ts` and `PlanToolsProvider`: in the browser, saved plans are rebuilt with `buildPlan`, and an item is flagged when its `toolIds` overlap the tools of a plan or the tools the person uses. The engine loads only when a saved plan exists and the browser is idle.

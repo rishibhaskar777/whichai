@@ -1,6 +1,6 @@
 # 0012: News from official feeds
 
-Status: accepted. Applies [0006](0006-zero-cost.md) and [0009](0009-local-first-data.md), and replaces the plan in the roadmap to open pull requests from a scheduled script.
+Status: accepted. Amended: the parser is `fast-xml-parser`, and the weekly workflow checks the sources. Applies [0006](0006-zero-cost.md) and [0009](0009-local-first-data.md), and replaces the plan in the roadmap to open pull requests from a scheduled script.
 
 ## Context
 
@@ -30,22 +30,26 @@ Official sites publish RSS or Atom feeds. GitHub publishes an Atom feed of relea
 - The production build does not fetch. It gets an empty list.
 - The browser never requests a news site. The CSP `connect-src` stays `'self'`.
 
-### Parsing is small, strict and linear
+### Parsing is configured to be strict
 
-A feed is untrusted input from a third party. Items are read with `src/lib/news/parse-feed.ts`, a reader of a few hundred lines written for this project that handles RSS 2.0, RSS 1.0 and Atom, instead of an XML library.
+A feed is untrusted input from a third party. Items are read with `src/lib/news/parse-feed.ts`, which uses `fast-xml-parser` (MIT, free) for RSS 2.0, RSS 1.0 and Atom. The first version of this feature used a reader written for the project, and was replaced (see "Why a library" below).
 
-- It finds the few elements it needs (`item` or `entry`, `title`, `link`, `pubDate`, `published`, `updated`, `dc:date`, `description`, `summary`, `content`) with string search. It never builds a tree, ignores any DTD, and decodes only the five XML entities, the common HTML ones and numeric references. Entity expansion, external entities and "billion laughs" cannot happen because nothing is expanded.
-- Time is linear in the input and the input is capped at 1 MB. Input text for a summary is cut to 20,000 characters before any pattern runs.
-- A truncated or malformed feed yields the items that are complete. Text that is not a feed (a login page, an error page) is a failure.
+- The parser runs with `processEntities: false` and `htmlEntities: false`. `<!DOCTYPE>` blocks, with any internal subset, are removed from the text before parsing, so no entity can be declared, internal or external, and nothing is ever expanded or fetched.
+- Entities are decoded afterwards, by the plain-text step, which knows the five XML entities, numeric references (decimal and hex, invalid ones left as text) and a short list of common HTML names such as `&nbsp;` and `&rsquo;`. Text such as `&lt;script&gt;` decodes to markup and is then stripped.
+- CDATA is kept apart (`cdataPropName`) from escaped text, so raw and escaped markup are handled correctly. Attributes are parsed, because Atom carries links in `href` and `rel`. Values stay strings (no number or date coercion), and namespaced names such as `dc:date` and `content:encoded` are kept as written, so `atom:link` is never mistaken for `link`.
+- Nesting is limited to 40 levels (`maxNestedTags`). The input is cut at 1 MB before parsing, in addition to the 1 MB read limit of the fetcher. At most 2000 entries are looked at, and text used for a summary is cut to 20,000 characters before any pattern runs.
+- A truncated or malformed feed is repaired once by keeping everything up to the last complete entry and closing the document, so the complete entries survive. If that fails too, or the text is not a feed (a login page, an error page), the feed counts as failed and its last good items are kept.
 - An item is kept as `{ id, title, url, publishedAt, sourceId, sourceName, summary, tag, toolIds }`. The summary is plain text of at most 160 characters taken from the feed's own description; articles are never copied.
 - Tags and markup are removed, `<script>` and `<style>` blocks are removed with their content, and everything is rendered as text by React. There is no `dangerouslySetInnerHTML`.
 - The link must be https, carry no credentials, and be on the source's `officialDomains` (the same rule as download links in [0011](0011-get-it-links.md), including `github.com/owner`). Anything else drops the item.
 - Items are de-duplicated by link, sorted newest first, and dropped when older than 60 days, future-dated, or without a valid date. A missing date is not guessed.
 - In a GitHub releases feed, pre-releases (`rc`, `alpha`, `beta`, `nightly`, `canary`, `preview`) are skipped and only the five newest releases are kept, so a chatty repository does not drown out blog posts.
 
-#### Why not a library
+#### Why a library, after all
 
-A maintained parser such as `fast-xml-parser` would be a runtime dependency to review and update, with a configuration surface where the safe settings (no entity processing, no prototype keys) have to be remembered. The feeds only need a handful of fields, and a tolerant reader that never expands anything has a smaller attack surface than a general parser. If a source ever needs namespaces or nested structures this reader cannot handle, adding a library should be reconsidered.
+The reader written first was about 250 lines and avoided a dependency, on the reasoning that a tolerant string search has a smaller attack surface than a general parser. It worked, but it was one more piece of hand-written text processing to maintain and to trust: XML has edge cases (attribute quoting, nested CDATA, namespaces, comments, processing instructions) that a maintained parser with a public history handles and that a hand-written one handles only as far as its tests reach. Replacing it with `fast-xml-parser` moves that work to code that many projects exercise, and the safety properties are now stated as configuration and tests instead of as a property of our own scanning code.
+
+The cost is a runtime dependency to keep updated, and a configuration surface where the safe settings have to be kept. They are fixed in one place, `parse-feed.ts`, and the parser tests (hostile DTD, numeric and HTML entities, CDATA, namespaces, depth, size, truncation) fail if one is loosened. The library also parses a DOCTYPE even with entity processing off and throws on an external entity, which is why the DOCTYPE is removed before it sees the text.
 
 ### Tags and tools are rules
 
@@ -65,7 +69,7 @@ Both are heuristics. They mislabel some headlines, for example a customer story 
 ## Consequences
 
 - The site is only as current as the last refresh, up to 30 minutes plus the time a feed takes to update.
-- A source can break without anyone noticing until its items stop appearing. The server log shows one warning per outage. There is no scheduled check; NEWS-SOURCES.md describes how to test a feed by hand.
+- A source can break without anyone noticing until its items stop appearing. The server log shows one warning per outage. The weekly workflow also runs `npm run news:check`, which fetches every source and reports feeds that fail, are not feeds, return no items, or whose newest item is older than 60 days; findings go in the same "Broken catalogue links" issue under a "News sources" heading.
 - Feeds differ. Some have no description, some no dates (the Google for Developers blog feed has none and is not listed), and some are very large (Vercel's changelog exceeds 1 MB, so only its newest entries are read).
 - Several companies have no usable official feed and are not covered. They are listed in NEWS-SOURCES.md.
 - Headlines are third-party text. They are shown as text, from official domains only, but their content is not reviewed by this project.
