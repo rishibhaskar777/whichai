@@ -1,0 +1,3164 @@
+[
+  {
+    "id": "angular",
+    "name": "Angular",
+    "providerId": "angular",
+    "jobs": ["framework"],
+    "summary": "Google's full framework for building large web apps with TypeScript, with routing and forms included.",
+    "kind": "library",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [],
+    "strengths": [
+      "everything included in one framework",
+      "strong for large teams"
+    ],
+    "watchOutFor": [
+      "More to learn than lighter frameworks.",
+      "Heavier than needed for a simple site."
+    ],
+    "fitScores": {
+      "framework": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://angular.dev",
+    "officialDomains": ["angular.dev", "github.com/angular"],
+    "getIt": {
+      "cliInstall": "npm install -g @angular/cli"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "animejs",
+    "name": "Anime.js",
+    "providerId": "animejs",
+    "jobs": ["animation-library"],
+    "summary": "A lightweight JavaScript animation library for CSS properties, SVG and DOM elements.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [],
+    "strengths": [
+      "small and easy to start with",
+      "works with any framework or none"
+    ],
+    "watchOutFor": [
+      "Fewer React-specific helpers than some libraries.",
+      "Follow the current docs because the API changed between versions."
+    ],
+    "fitScores": {
+      "animation-library": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://animejs.com",
+    "officialDomains": ["animejs.com", "github.com/juliangarnier"],
+    "getIt": {
+      "cliInstall": "npm install animejs"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "astro",
+    "name": "Astro",
+    "providerId": "astro",
+    "jobs": ["framework"],
+    "summary": "A web framework for fast, content-focused sites that can still use React and other tools.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [
+      "astro-themes",
+      "react",
+      "motion",
+      "gsap",
+      "daisyui",
+      "sanity",
+      "strapi",
+      "vercel",
+      "netlify",
+      "cloudflare-pages",
+      "github-pages",
+      "google-analytics",
+      "plausible",
+      "umami",
+      "formspree",
+      "web3forms",
+      "supabase"
+    ],
+    "strengths": [
+      "fast, mostly static sites for content",
+      "using React or other tools only where needed"
+    ],
+    "watchOutFor": [
+      "It is less suited to apps with many interactive screens.",
+      "You still need some HTML and command-line comfort."
+    ],
+    "fitScores": {
+      "framework": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://astro.build",
+    "officialDomains": ["astro.build", "github.com/withastro"],
+    "getIt": {
+      "web": {
+        "url": "https://astro.build",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm create astro@latest"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "auth0",
+    "name": "Auth0",
+    "providerId": "okta",
+    "jobs": ["authentication"],
+    "summary": "A hosted identity service for sign-in, with support for many login methods and company accounts.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["nextjs", "react", "expo"],
+    "strengths": [
+      "a mature service with many sign-in options",
+      "support for company and enterprise logins"
+    ],
+    "watchOutFor": [
+      "It can be complex to configure.",
+      "Costs can rise with the number of users."
+    ],
+    "fitScores": {
+      "authentication": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://auth0.com",
+    "officialDomains": ["auth0.com", "okta.com"],
+    "getIt": {
+      "web": {
+        "url": "https://auth0.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "authjs",
+    "name": "Auth.js",
+    "providerId": "authjs",
+    "jobs": ["authentication"],
+    "summary": "An open-source library that adds sign-in with Google, GitHub, email and other providers to a web app.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["nextjs"],
+    "strengths": [
+      "open-source sign-in with no per-user fee",
+      "sign-in through many providers"
+    ],
+    "watchOutFor": [
+      "You manage more of the set-up yourself.",
+      "Security details matter. Follow the documentation closely."
+    ],
+    "fitScores": {
+      "authentication": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://authjs.dev",
+    "officialDomains": ["authjs.dev", "github.com/nextauthjs"],
+    "getIt": {
+      "web": {
+        "url": "https://authjs.dev",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "better-auth",
+    "name": "Better Auth",
+    "providerId": "better-auth",
+    "jobs": ["authentication"],
+    "summary": "An open-source TypeScript library for adding sign-in, sessions and plug-ins to your own app.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["nextjs", "react"],
+    "strengths": [
+      "you keep the user data in your own database",
+      "plug-ins for common sign-in methods"
+    ],
+    "watchOutFor": [
+      "You are responsible for configuring it safely.",
+      "A newer library. Follow the current docs."
+    ],
+    "fitScores": {
+      "authentication": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.better-auth.com",
+    "officialDomains": ["better-auth.com", "github.com/better-auth"],
+    "getIt": {
+      "cliInstall": "npm install better-auth"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "bootstrap",
+    "name": "Bootstrap",
+    "providerId": "bootstrap",
+    "jobs": ["component-library"],
+    "summary": "A long-running CSS and JavaScript framework with ready layouts and components.",
+    "kind": "library",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [],
+    "strengths": ["ready components and a grid", "very well documented"],
+    "watchOutFor": [
+      "Sites can look alike without changes.",
+      "Heavier than a few custom styles."
+    ],
+    "fitScores": {
+      "component-library": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://getbootstrap.com",
+    "officialDomains": ["getbootstrap.com", "github.com/twbs"],
+    "getIt": {
+      "cliInstall": "npm i bootstrap"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "botpress",
+    "name": "Botpress",
+    "providerId": "botpress",
+    "jobs": ["chatbot-builder"],
+    "summary": "A platform for building AI chatbots and agents for websites and messaging apps with a visual editor.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "visual builder with AI knowledge sources",
+      "connects to common messaging channels"
+    ],
+    "watchOutFor": [
+      "Usage-based costs can add up. Check the pricing page.",
+      "Test answers carefully before going public."
+    ],
+    "fitScores": {
+      "chatbot-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://botpress.com",
+    "officialDomains": ["botpress.com"],
+    "getIt": {
+      "web": {
+        "url": "https://botpress.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "carrd",
+    "name": "Carrd",
+    "providerId": "carrd",
+    "jobs": ["website-builder"],
+    "summary": "A simple builder for one-page sites such as portfolios, link pages and landing pages.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "includes": ["hosting"],
+    "strengths": ["very quick for a one-page site", "simple to understand"],
+    "watchOutFor": [
+      "One page only on most plans.",
+      "Some features are paid. Check the current rules."
+    ],
+    "fitScores": {
+      "website-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://carrd.com",
+    "officialDomains": ["carrd.com", "carrd.co"],
+    "getIt": {
+      "web": {
+        "url": "https://carrd.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "cashfree",
+    "name": "Cashfree Payments",
+    "providerId": "cashfree",
+    "jobs": ["payments-india"],
+    "summary": "An Indian payment gateway and payouts service for businesses and developers.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["nextjs", "react"],
+    "strengths": [
+      "Indian payment methods and payouts",
+      "developer documentation"
+    ],
+    "watchOutFor": [
+      "Check fees and settlement times.",
+      "Real payments need business verification."
+    ],
+    "fitScores": {
+      "payments-india": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.cashfree.com",
+    "officialDomains": ["cashfree.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.cashfree.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "chatbase",
+    "name": "Chatbase",
+    "providerId": "chatbase",
+    "jobs": ["chatbot-builder", "pdf-and-document-chat"],
+    "summary": "A no-code tool that builds a chatbot from your documents and website pages and embeds it on your site.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a bot from your own files, fast",
+      "an embeddable chat widget"
+    ],
+    "watchOutFor": [
+      "Answers are only as good as the content you give it.",
+      "Message limits depend on the plan. Check the pricing page."
+    ],
+    "fitScores": {
+      "chatbot-builder": 4,
+      "pdf-and-document-chat": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.chatbase.co",
+    "officialDomains": ["chatbase.co"],
+    "getIt": {
+      "web": {
+        "url": "https://www.chatbase.co",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "clerk",
+    "name": "Clerk",
+    "providerId": "clerk",
+    "jobs": ["authentication"],
+    "summary": "A hosted sign-in service with ready-made sign-up and account screens for web apps.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["nextjs", "react", "expo"],
+    "strengths": ["ready-made sign-in and account screens", "quick set-up"],
+    "watchOutFor": [
+      "Free limits and per-user costs can change.",
+      "Your users' accounts live on its service."
+    ],
+    "fitScores": {
+      "authentication": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://clerk.com",
+    "officialDomains": ["clerk.com"],
+    "getIt": {
+      "web": {
+        "url": "https://clerk.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "cloudflare-pages",
+    "name": "Cloudflare Pages",
+    "providerId": "cloudflare",
+    "jobs": ["hosting"],
+    "summary": "A hosting service from Cloudflare that publishes static and server-rendered sites from Git.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "command-line"],
+    "worksWith": ["astro", "nextjs", "react"],
+    "strengths": [
+      "hosting on a large global network",
+      "a custom domain next to Cloudflare's other tools"
+    ],
+    "watchOutFor": [
+      "Some Next.js features need extra set-up.",
+      "Check the free limits before you rely on it."
+    ],
+    "fitScores": {
+      "hosting": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://pages.cloudflare.com",
+    "officialDomains": ["pages.cloudflare.com", "cloudflare.com"],
+    "getIt": {
+      "web": {
+        "url": "https://pages.cloudflare.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "contentful",
+    "name": "Contentful",
+    "providerId": "contentful",
+    "jobs": ["content-management"],
+    "summary": "A hosted content platform for teams, where content is stored separately and delivered to sites and apps by API.",
+    "kind": "service",
+    "skillLevel": "advanced",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": [],
+    "strengths": [
+      "structured content for many channels",
+      "built for teams and workflows"
+    ],
+    "watchOutFor": [
+      "Aimed at larger projects.",
+      "Free use is limited. Check the current rules."
+    ],
+    "fitScores": {
+      "content-management": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.contentful.com",
+    "officialDomains": ["contentful.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.contentful.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "copilot-studio",
+    "name": "Microsoft Copilot Studio",
+    "providerId": "microsoft",
+    "jobs": ["chatbot-builder", "automation-and-workflows"],
+    "summary": "Microsoft's low-code tool for building chat agents that connect to Microsoft 365 and other business data.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "fits companies already on Microsoft 365",
+      "connects to business data and workflows"
+    ],
+    "watchOutFor": [
+      "Mostly aimed at organisations with Microsoft accounts.",
+      "Licensing is complex. Check the official page."
+    ],
+    "fitScores": {
+      "chatbot-builder": 3,
+      "automation-and-workflows": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.microsoft.com",
+    "officialDomains": ["microsoft.com"],
+    "getIt": {
+      "web": {
+        "url": "https://copilotstudio.microsoft.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "daisyui",
+    "name": "daisyUI",
+    "providerId": "daisyui",
+    "jobs": ["component-library"],
+    "summary": "A plugin for Tailwind CSS that adds ready-made component styles and themes, including dark mode.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["astro", "nextjs", "react"],
+    "strengths": [
+      "component styles through simple class names",
+      "built-in colour themes, including dark mode"
+    ],
+    "watchOutFor": [
+      "It needs Tailwind CSS set up first.",
+      "Themes can make sites look alike."
+    ],
+    "fitScores": {
+      "component-library": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://daisyui.com",
+    "officialDomains": ["daisyui.com", "github.com/saadeghi"],
+    "getIt": {
+      "web": {
+        "url": "https://daisyui.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm i -D daisyui"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "dify",
+    "name": "Dify",
+    "providerId": "dify",
+    "jobs": ["chatbot-builder"],
+    "summary": "An open-source platform for building AI apps and chat agents, with a visual workflow editor and a hosted option.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "visual workflows and knowledge bases",
+      "hosted version or self-hosting"
+    ],
+    "watchOutFor": [
+      "Self-hosting needs server skills.",
+      "Check what data each connected model receives."
+    ],
+    "fitScores": {
+      "chatbot-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://dify.ai",
+    "officialDomains": ["dify.ai", "github.com/langgenius"],
+    "getIt": {
+      "web": {
+        "url": "https://dify.ai",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "django",
+    "name": "Django",
+    "providerId": "django",
+    "jobs": ["framework"],
+    "summary": "A Python web framework with an admin panel, database tools and sign-in included.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [],
+    "strengths": [
+      "a lot included, such as admin and auth",
+      "mature and well documented"
+    ],
+    "watchOutFor": [
+      "You need to know Python.",
+      "More structure than a small script needs."
+    ],
+    "fitScores": {
+      "framework": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.djangoproject.com",
+    "officialDomains": ["djangoproject.com"],
+    "getIt": {
+      "cliInstall": "python -m pip install Django"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "expo",
+    "name": "Expo",
+    "providerId": "expo",
+    "jobs": ["framework"],
+    "summary": "A toolset built on React Native for making Android and iOS apps with JavaScript.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [
+      "react",
+      "supabase",
+      "firebase",
+      "clerk",
+      "auth0",
+      "razorpay",
+      "lottie"
+    ],
+    "strengths": [
+      "building phone apps with React skills",
+      "testing on your own phone quickly"
+    ],
+    "watchOutFor": [
+      "Publishing to app stores has its own steps and fees.",
+      "It suits mobile apps, not ordinary websites."
+    ],
+    "fitScores": {
+      "framework": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://expo.dev",
+    "officialDomains": ["expo.dev", "github.com/expo"],
+    "getIt": {
+      "web": {
+        "url": "https://expo.dev",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npx create-expo-app@latest"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "fastapi",
+    "name": "FastAPI",
+    "providerId": "fastapi",
+    "jobs": ["framework"],
+    "summary": "A Python framework for building APIs quickly, with automatic documentation.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [],
+    "strengths": [
+      "automatic interactive API docs",
+      "type hints used for checks"
+    ],
+    "watchOutFor": [
+      "You need to know Python.",
+      "It is for APIs, not a full website builder."
+    ],
+    "fitScores": {
+      "framework": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://fastapi.tiangolo.com",
+    "officialDomains": ["fastapi.tiangolo.com", "github.com/fastapi"],
+    "getIt": {
+      "cliInstall": "pip install \"fastapi[standard]\""
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "firebase",
+    "name": "Firebase",
+    "providerId": "google",
+    "jobs": ["database", "authentication", "hosting"],
+    "summary": "Google's app platform with a database, sign-in, file storage and hosting.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios", "code"],
+    "worksWith": ["react", "nextjs", "expo"],
+    "strengths": [
+      "quick set-up for web and mobile apps",
+      "database, sign-in and hosting in one place"
+    ],
+    "watchOutFor": [
+      "Costs can grow with usage. Set budget alerts.",
+      "Data is shaped for its own model, which can make later moves harder."
+    ],
+    "fitScores": {
+      "database": 4,
+      "authentication": 4,
+      "hosting": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://firebase.google.com",
+    "officialDomains": ["firebase.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://firebase.google.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm install -g firebase-tools"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "flowise",
+    "name": "Flowise",
+    "providerId": "flowiseai",
+    "jobs": ["chatbot-builder"],
+    "summary": "An open-source visual builder for chat agents and AI workflows that you can run yourself.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "command-line"],
+    "worksWith": [],
+    "strengths": [
+      "drag-and-drop building of AI flows",
+      "self-host it or use a hosted version"
+    ],
+    "watchOutFor": [
+      "Self-hosting means you secure and update it.",
+      "Do not expose it without sign-in."
+    ],
+    "fitScores": {
+      "chatbot-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://flowiseai.com",
+    "officialDomains": ["flowiseai.com", "github.com/FlowiseAI"],
+    "getIt": {
+      "web": {
+        "url": "https://flowiseai.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm install -g flowise"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "flutter",
+    "name": "Flutter",
+    "providerId": "flutter",
+    "jobs": ["framework"],
+    "summary": "Google's toolkit for building mobile, web and desktop apps from one codebase in Dart.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [],
+    "strengths": [
+      "one codebase for several platforms",
+      "fast, consistent interfaces"
+    ],
+    "watchOutFor": [
+      "You need to learn Dart.",
+      "Apps can look different from native ones."
+    ],
+    "fitScores": {
+      "framework": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://flutter.dev",
+    "officialDomains": ["flutter.dev", "dart.dev", "github.com/flutter"],
+    "getIt": {
+      "web": {
+        "url": "https://docs.flutter.dev/install",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "formspree",
+    "name": "Formspree",
+    "providerId": "formspree",
+    "jobs": ["contact-form"],
+    "summary": "A service that receives form submissions from a static site and emails them to you.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["astro", "nextjs", "react", "netlify", "github-pages"],
+    "strengths": [
+      "a working form on a static site without a server",
+      "submissions sent to your email"
+    ],
+    "watchOutFor": [
+      "Free plans limit the number of submissions.",
+      "Add spam protection to the form."
+    ],
+    "fitScores": {
+      "contact-form": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://formspree.io",
+    "officialDomains": ["formspree.io"],
+    "getIt": {
+      "web": {
+        "url": "https://formspree.io",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "ghost",
+    "name": "Ghost",
+    "providerId": "ghost",
+    "jobs": ["content-management"],
+    "summary": "A publishing platform for blogs and newsletters, which you can host yourself or use as a service.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "made for writing, memberships and newsletters",
+      "open source with a hosted option"
+    ],
+    "watchOutFor": [
+      "Hosted plans are paid.",
+      "Self-hosting means you handle updates."
+    ],
+    "fitScores": {
+      "content-management": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://ghost.org",
+    "officialDomains": ["ghost.org", "github.com/TryGhost"],
+    "getIt": {
+      "web": {
+        "url": "https://ghost.org",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "providerId": "git-scm",
+    "jobs": ["version-control"],
+    "summary": "The free, open-source tool that records changes to your files so you can go back, compare and share work.",
+    "kind": "cli",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux", "command-line"],
+    "worksWith": ["github", "gitlab"],
+    "strengths": [
+      "the standard way to track code changes",
+      "works offline on your own computer"
+    ],
+    "watchOutFor": [
+      "The commands take time to learn.",
+      "Never commit passwords or keys."
+    ],
+    "fitScores": {
+      "version-control": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://git-scm.com",
+    "officialDomains": ["git-scm.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://git-scm.com/downloads",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://git-scm.com/downloads",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://git-scm.com/downloads",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "providerId": "github",
+    "jobs": ["version-control"],
+    "summary": "The most widely used website for hosting Git repositories, reviewing code and working with others.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": ["git", "github-pages"],
+    "strengths": [
+      "a huge community and many open-source projects",
+      "free hosting for your repositories"
+    ],
+    "watchOutFor": [
+      "Repositories can be public. Check before you push private data.",
+      "Some features need a paid plan."
+    ],
+    "fitScores": {
+      "version-control": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://github.com",
+    "officialDomains": ["github.com"],
+    "getIt": {
+      "web": {
+        "url": "https://github.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "github-pages",
+    "name": "GitHub Pages",
+    "providerId": "github",
+    "jobs": ["hosting"],
+    "summary": "Free-to-start hosting for static sites, published straight from a GitHub repository.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": ["astro", "react", "nextjs"],
+    "strengths": [
+      "free hosting for static sites from your repository",
+      "no separate account if you already use GitHub"
+    ],
+    "watchOutFor": [
+      "Static files only. There is no server code.",
+      "Check its usage limits and terms."
+    ],
+    "fitScores": {
+      "hosting": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://pages.github.com",
+    "officialDomains": ["pages.github.com", "github.com", "docs.github.com"],
+    "getIt": {
+      "web": {
+        "url": "https://pages.github.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gitlab",
+    "name": "GitLab",
+    "providerId": "gitlab",
+    "jobs": ["version-control"],
+    "summary": "A website for hosting Git repositories with built-in issue tracking and automated builds.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": ["git"],
+    "strengths": [
+      "code hosting and automation in one product",
+      "can be run on your own server"
+    ],
+    "watchOutFor": [
+      "More to learn than a simple host.",
+      "Some features need a paid plan."
+    ],
+    "fitScores": {
+      "version-control": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://about.gitlab.com",
+    "officialDomains": ["gitlab.com"],
+    "getIt": {
+      "web": {
+        "url": "https://gitlab.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-analytics",
+    "name": "Google Analytics",
+    "providerId": "google",
+    "jobs": ["analytics"],
+    "summary": "Google's web analytics service that reports who visits a site and what they do there.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": ["nextjs", "astro"],
+    "strengths": [
+      "detailed reports on traffic and behaviour",
+      "a tool many teams already know"
+    ],
+    "watchOutFor": [
+      "Many regions require a cookie notice.",
+      "The reports can be overwhelming for a small site."
+    ],
+    "fitScores": {
+      "analytics": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://analytics.google.com",
+    "officialDomains": ["analytics.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://analytics.google.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-forms",
+    "name": "Google Forms",
+    "providerId": "google",
+    "jobs": ["contact-form"],
+    "summary": "A free form builder in Google's office suite that collects answers into a spreadsheet.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": ["google-slides", "gemini"],
+    "strengths": [
+      "free forms with answers collected in a spreadsheet",
+      "no code and nothing to host"
+    ],
+    "watchOutFor": [
+      "It looks like a Google form unless you style the page around it.",
+      "You need a Google account."
+    ],
+    "fitScores": {
+      "contact-form": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://forms.google.com",
+    "officialDomains": ["forms.google.com", "docs.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://forms.google.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-sites",
+    "name": "Google Sites",
+    "providerId": "google",
+    "jobs": ["website-builder"],
+    "summary": "Google's simple website builder that works inside a Google account, good for basic pages.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "includes": ["hosting"],
+    "strengths": [
+      "free with a Google account",
+      "easy to embed Docs, Sheets and Forms"
+    ],
+    "watchOutFor": [
+      "Limited design control.",
+      "Fewer features than full builders."
+    ],
+    "fitScores": {
+      "website-builder": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://sites.google.com",
+    "officialDomains": ["sites.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://sites.google.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gradio",
+    "name": "Gradio",
+    "providerId": "gradio",
+    "jobs": ["framework"],
+    "summary": "A Python library for building quick web interfaces to try machine-learning models.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["huggingface-spaces"],
+    "strengths": ["a demo interface in a few lines", "easy to share online"],
+    "watchOutFor": [
+      "Aimed at demos more than full products.",
+      "You need to know Python."
+    ],
+    "fitScores": {
+      "framework": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.gradio.app",
+    "officialDomains": ["gradio.app", "github.com/gradio-app"],
+    "getIt": {
+      "cliInstall": "pip install gradio"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gsap",
+    "name": "GSAP",
+    "providerId": "greensock",
+    "jobs": ["animation-library"],
+    "summary": "A JavaScript animation library for detailed, timed and scroll-driven animation on web pages.",
+    "kind": "library",
+    "skillLevel": "advanced",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["react", "nextjs", "astro"],
+    "strengths": [
+      "fine control over complex sequences",
+      "scroll-triggered animation"
+    ],
+    "watchOutFor": [
+      "The learning curve is steep.",
+      "Check the licence terms for your kind of use."
+    ],
+    "fitScores": {
+      "animation-library": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://gsap.com",
+    "officialDomains": ["gsap.com", "greensock.com"],
+    "getIt": {
+      "web": {
+        "url": "https://gsap.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm install gsap"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "gumroad",
+    "name": "Gumroad",
+    "providerId": "gumroad",
+    "jobs": ["payments-global"],
+    "summary": "A simple platform for creators to sell digital products, memberships and courses.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "very simple for selling a digital product",
+      "no site needed"
+    ],
+    "watchOutFor": [
+      "Check fees on the official page.",
+      "Payout rules differ by country."
+    ],
+    "fitScores": {
+      "payments-global": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://gumroad.com",
+    "officialDomains": ["gumroad.com"],
+    "getIt": {
+      "web": {
+        "url": "https://gumroad.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "hostinger",
+    "name": "Hostinger",
+    "providerId": "hostinger",
+    "jobs": ["hosting", "website-builder"],
+    "summary": "A budget web hosting company with shared hosting, WordPress hosting and its own website builder.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "low-cost hosting plans",
+      "WordPress and website builder options"
+    ],
+    "watchOutFor": [
+      "Paid plans only, with renewal prices that can differ. Check the terms.",
+      "Shared hosting is slower than dedicated options."
+    ],
+    "fitScores": {
+      "hosting": 3,
+      "website-builder": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.hostinger.com",
+    "officialDomains": ["hostinger.com", "hostinger.in"],
+    "getIt": {
+      "web": {
+        "url": "https://www.hostinger.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "huggingface-spaces",
+    "name": "Hugging Face Spaces",
+    "providerId": "hugging-face",
+    "jobs": ["hosting", "chatbot-builder"],
+    "summary": "A hosting service for small AI demos and apps built with Gradio, Streamlit or Docker.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": ["gradio", "streamlit"],
+    "strengths": [
+      "quick hosting for AI demos",
+      "fits Gradio and Streamlit apps"
+    ],
+    "watchOutFor": [
+      "Free hardware is slow and can sleep.",
+      "Public spaces can be seen by anyone."
+    ],
+    "fitScores": {
+      "hosting": 3,
+      "chatbot-builder": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://huggingface.co",
+    "officialDomains": ["huggingface.co"],
+    "getIt": {
+      "web": {
+        "url": "https://huggingface.co/spaces",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "jetbrains-ides",
+    "name": "JetBrains IDEs",
+    "providerId": "jetbrains",
+    "jobs": ["code-editor"],
+    "summary": "A family of full-featured editors from JetBrains, such as IntelliJ IDEA, PyCharm and WebStorm.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "deep help for one language or stack",
+      "strong refactoring and debugging tools"
+    ],
+    "watchOutFor": [
+      "Heavier than a simple editor.",
+      "Some editions are paid. Check the official page."
+    ],
+    "fitScores": {
+      "code-editor": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.jetbrains.com",
+    "officialDomains": ["jetbrains.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.jetbrains.com/ides/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.jetbrains.com/ides/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://www.jetbrains.com/ides/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "keycloak",
+    "name": "Keycloak",
+    "providerId": "keycloak",
+    "jobs": ["authentication"],
+    "summary": "An open-source identity server for sign-in, single sign-on and user management that you run yourself.",
+    "kind": "service",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": [],
+    "strengths": [
+      "open source and self-hosted",
+      "single sign-on and many protocols"
+    ],
+    "watchOutFor": [
+      "Needs server skills to run and secure.",
+      "More than a small site needs."
+    ],
+    "fitScores": {
+      "authentication": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.keycloak.org",
+    "officialDomains": ["keycloak.org", "github.com/keycloak"],
+    "getIt": {
+      "web": {
+        "url": "https://www.keycloak.org/downloads",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "landbot",
+    "name": "Landbot",
+    "providerId": "landbot",
+    "jobs": ["chatbot-builder"],
+    "summary": "A no-code builder for chatbots and conversational forms on websites and WhatsApp.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "visual builder with no code",
+      "conversational forms and lead capture"
+    ],
+    "watchOutFor": [
+      "Check plan limits on conversations.",
+      "Test every path before launch."
+    ],
+    "fitScores": {
+      "chatbot-builder": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://landbot.io",
+    "officialDomains": ["landbot.io"],
+    "getIt": {
+      "web": {
+        "url": "https://landbot.io",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "lemon-squeezy",
+    "name": "Lemon Squeezy",
+    "providerId": "lemon-squeezy",
+    "jobs": ["payments-global"],
+    "summary": "A service for selling digital products and subscriptions that handles sales tax as the seller of record.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "handles tax and invoices for you",
+      "built for digital products"
+    ],
+    "watchOutFor": [
+      "Check payout availability for your country.",
+      "Check its current status and terms on the official site."
+    ],
+    "fitScores": {
+      "payments-global": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.lemonsqueezy.com",
+    "officialDomains": ["lemonsqueezy.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.lemonsqueezy.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "lottie",
+    "name": "Lottie",
+    "providerId": "lottiefiles",
+    "jobs": ["animation-library"],
+    "summary": "A format and player for small vector animations exported from design tools and used on web pages and apps.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["react", "nextjs", "expo"],
+    "strengths": [
+      "playing animations made by a designer",
+      "small files compared with video"
+    ],
+    "watchOutFor": [
+      "Large animations slow down a page.",
+      "You still need a tool to make the animation."
+    ],
+    "fitScores": {
+      "animation-library": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://lottiefiles.com",
+    "officialDomains": ["lottiefiles.com"],
+    "getIt": {
+      "web": {
+        "url": "https://lottiefiles.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "mantine",
+    "name": "Mantine",
+    "providerId": "mantine",
+    "jobs": ["component-library"],
+    "summary": "A React component library with many components and hooks for forms, dates and notifications.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["react", "nextjs"],
+    "strengths": ["a large set of components and hooks", "good documentation"],
+    "watchOutFor": [
+      "React only.",
+      "You need to follow its set-up for your framework."
+    ],
+    "fitScores": {
+      "component-library": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://mantine.dev",
+    "officialDomains": ["mantine.dev", "github.com/mantinedev"],
+    "getIt": {
+      "cliInstall": "npm install @mantine/core @mantine/hooks"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "matomo",
+    "name": "Matomo",
+    "providerId": "matomo",
+    "jobs": ["analytics"],
+    "summary": "A privacy-focused web analytics tool that you can self-host or use as a hosted service.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": ["you can own the data", "an alternative to Google Analytics"],
+    "watchOutFor": [
+      "Hosted plans are paid.",
+      "Self-hosting means you handle updates."
+    ],
+    "fitScores": {
+      "analytics": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://matomo.org",
+    "officialDomains": ["matomo.org", "github.com/matomo-org"],
+    "getIt": {
+      "web": {
+        "url": "https://matomo.org",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "microsoft-clarity",
+    "name": "Microsoft Clarity",
+    "providerId": "microsoft",
+    "jobs": ["analytics"],
+    "summary": "A free tool from Microsoft that shows heatmaps and recordings of how people use a site.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "free heatmaps and session recordings",
+      "easy to add to a site"
+    ],
+    "watchOutFor": [
+      "Recordings can capture sensitive data. Mask forms.",
+      "Tell visitors in your privacy policy."
+    ],
+    "fitScores": {
+      "analytics": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://clarity.microsoft.com",
+    "officialDomains": ["clarity.microsoft.com", "microsoft.com"],
+    "getIt": {
+      "web": {
+        "url": "https://clarity.microsoft.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "mongodb-atlas",
+    "name": "MongoDB Atlas",
+    "providerId": "mongodb",
+    "jobs": ["database"],
+    "summary": "A hosted document database from MongoDB, where data is stored as flexible JSON-like records.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["nextjs", "react"],
+    "strengths": [
+      "flexible records without fixed tables",
+      "a hosted service that scales"
+    ],
+    "watchOutFor": [
+      "Check free tier limits before relying on it.",
+      "Flexible data still needs a plan to stay tidy."
+    ],
+    "fitScores": {
+      "database": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.mongodb.com",
+    "officialDomains": ["mongodb.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.mongodb.com/atlas",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "motion",
+    "name": "Motion",
+    "providerId": "motion",
+    "jobs": ["animation-library"],
+    "summary": "An animation library for React and JavaScript, formerly known as Framer Motion.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["react", "nextjs", "astro"],
+    "strengths": [
+      "smooth animation with little code",
+      "entrance, layout and gesture effects"
+    ],
+    "watchOutFor": [
+      "Heavy motion slows pages. Respect reduced-motion settings.",
+      "You need to know basic React."
+    ],
+    "fitScores": {
+      "animation-library": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://motion.dev",
+    "officialDomains": ["motion.dev", "github.com/motiondivision"],
+    "getIt": {
+      "web": {
+        "url": "https://motion.dev",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm install motion"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "mui",
+    "name": "MUI",
+    "providerId": "mui",
+    "jobs": ["component-library"],
+    "summary": "A large library of ready-made React components, previously known as Material UI.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["react", "nextjs"],
+    "strengths": [
+      "a large, mature set of components",
+      "lots of documentation and examples"
+    ],
+    "watchOutFor": [
+      "The default look is easy to recognise. Customise it.",
+      "Some advanced components may be paid."
+    ],
+    "fitScores": {
+      "component-library": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://mui.com",
+    "officialDomains": ["mui.com", "github.com/mui"],
+    "getIt": {
+      "web": {
+        "url": "https://mui.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm install @mui/material @emotion/react @emotion/styled"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "neon",
+    "name": "Neon",
+    "providerId": "neon",
+    "jobs": ["database"],
+    "summary": "A hosted Postgres database that scales to zero when idle and supports branching.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": [],
+    "strengths": [
+      "standard Postgres with a generous start",
+      "branches for testing changes"
+    ],
+    "watchOutFor": [
+      "Free use is limited. Check the current rules.",
+      "Idle databases may pause and wake slowly."
+    ],
+    "fitScores": {
+      "database": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://neon.com",
+    "officialDomains": ["neon.com", "neon.tech"],
+    "getIt": {
+      "web": {
+        "url": "https://neon.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "netlify",
+    "name": "Netlify",
+    "providerId": "netlify",
+    "jobs": ["hosting", "contact-form"],
+    "summary": "A hosting service that publishes a site from a folder or a Git repository, with built-in form handling.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "command-line"],
+    "worksWith": ["astro", "nextjs", "react", "formspree"],
+    "strengths": [
+      "publishing by dragging a folder in",
+      "form handling without extra services"
+    ],
+    "watchOutFor": [
+      "Free plans have bandwidth and form limits.",
+      "Check the terms if the site earns money."
+    ],
+    "fitScores": {
+      "hosting": 4,
+      "contact-form": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.netlify.com",
+    "officialDomains": ["netlify.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.netlify.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm install -g netlify-cli"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "nextjs",
+    "name": "Next.js",
+    "providerId": "vercel",
+    "jobs": ["framework"],
+    "summary": "A React framework for building websites and web apps with pages, routing and server features.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [
+      "react",
+      "shadcn-ui",
+      "mui",
+      "motion",
+      "gsap",
+      "supabase",
+      "firebase",
+      "mongodb-atlas",
+      "authjs",
+      "clerk",
+      "auth0",
+      "sanity",
+      "strapi",
+      "vercel",
+      "netlify",
+      "cloudflare-pages",
+      "github-pages",
+      "razorpay",
+      "cashfree",
+      "payu",
+      "google-analytics",
+      "plausible",
+      "umami",
+      "formspree",
+      "web3forms"
+    ],
+    "strengths": [
+      "routing, rendering and a large ecosystem",
+      "pairing with many hosting options"
+    ],
+    "watchOutFor": [
+      "You need to know React first.",
+      "Its server features take time to learn."
+    ],
+    "fitScores": {
+      "framework": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://nextjs.org",
+    "officialDomains": ["nextjs.org", "vercel.com", "github.com/vercel"],
+    "getIt": {
+      "web": {
+        "url": "https://nextjs.org",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npx create-next-app@latest"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "nodejs",
+    "name": "Node.js",
+    "providerId": "openjs",
+    "jobs": ["framework"],
+    "summary": "A JavaScript runtime that runs code outside the browser, used for servers and build tools.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "JavaScript on the server and for tooling",
+      "a huge package ecosystem"
+    ],
+    "watchOutFor": [
+      "It is a runtime, not a web framework.",
+      "Install only from the official site."
+    ],
+    "fitScores": {
+      "framework": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://nodejs.org",
+    "officialDomains": ["nodejs.org"],
+    "getIt": {
+      "windows": {
+        "url": "https://nodejs.org/en/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://nodejs.org/en/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://nodejs.org/en/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "payload-cms",
+    "name": "Payload",
+    "providerId": "payload",
+    "jobs": ["content-management"],
+    "summary": "An open-source headless CMS and app framework built with TypeScript, that fits into a Next.js project.",
+    "kind": "service",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["nextjs"],
+    "strengths": ["code-first and open source", "fits into a Next.js app"],
+    "watchOutFor": ["Aimed at developers.", "You host and update it yourself."],
+    "fitScores": {
+      "content-management": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://payloadcms.com",
+    "officialDomains": ["payloadcms.com", "github.com/payloadcms"],
+    "getIt": {
+      "cliInstall": "npx create-payload-app@latest"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "paypal",
+    "name": "PayPal",
+    "providerId": "paypal",
+    "jobs": ["payments-global"],
+    "summary": "A widely known service for online payments and checkout buttons, used by buyers and sellers worldwide.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "customers already trust the brand",
+      "simple checkout buttons"
+    ],
+    "watchOutFor": [
+      "Availability and rules depend on your country.",
+      "Check fees on the official pricing page."
+    ],
+    "fitScores": {
+      "payments-global": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.paypal.com",
+    "officialDomains": ["paypal.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.paypal.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "paytm-payment-gateway",
+    "name": "Paytm Payment Gateway",
+    "providerId": "paytm",
+    "jobs": ["payments-india"],
+    "summary": "Paytm's payment gateway for Indian businesses, supporting UPI, cards, wallets and net banking.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": [],
+    "strengths": [
+      "supports many Indian payment methods",
+      "a brand many Indian customers know"
+    ],
+    "watchOutFor": [
+      "Business sign-up and approval rules apply.",
+      "Check fees and settlement terms with the provider."
+    ],
+    "fitScores": {
+      "payments-india": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://paytm.com",
+    "officialDomains": ["paytm.com"],
+    "getIt": {
+      "web": {
+        "url": "https://business.paytm.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "payu",
+    "name": "PayU",
+    "providerId": "payu",
+    "jobs": ["payments-india"],
+    "summary": "An Indian payment gateway that accepts cards, netbanking, UPI and wallets.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["nextjs", "react"],
+    "strengths": [
+      "an established gateway for Indian merchants",
+      "many payment methods"
+    ],
+    "watchOutFor": [
+      "Check fees and onboarding steps.",
+      "Real payments need business verification."
+    ],
+    "fitScores": {
+      "payments-india": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://payu.in",
+    "officialDomains": ["payu.in"],
+    "getIt": {
+      "web": {
+        "url": "https://payu.in",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "phonepe-payment-gateway",
+    "name": "PhonePe Payment Gateway",
+    "providerId": "phonepe",
+    "jobs": ["payments-india"],
+    "summary": "PhonePe's payment gateway for Indian businesses, supporting UPI, cards and wallets on websites and apps.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": [],
+    "strengths": ["strong UPI support", "a brand many Indian customers know"],
+    "watchOutFor": [
+      "Business sign-up and approval rules apply.",
+      "Check fees and settlement terms with the provider."
+    ],
+    "fitScores": {
+      "payments-india": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.phonepe.com",
+    "officialDomains": ["phonepe.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.phonepe.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "plausible",
+    "name": "Plausible",
+    "providerId": "plausible",
+    "jobs": ["analytics"],
+    "summary": "A simple, privacy-focused web analytics service that shows key numbers on one page.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": ["nextjs", "astro"],
+    "strengths": [
+      "one simple page of key numbers",
+      "tracking that avoids cookies"
+    ],
+    "watchOutFor": [
+      "The hosted service may be paid. Self-hosting is possible.",
+      "It is less detailed than larger tools."
+    ],
+    "fitScores": {
+      "analytics": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://plausible.io",
+    "officialDomains": ["plausible.io", "github.com/plausible"],
+    "getIt": {
+      "web": {
+        "url": "https://plausible.io",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "pocketbase",
+    "name": "PocketBase",
+    "providerId": "pocketbase",
+    "jobs": ["database", "authentication"],
+    "summary": "An open-source back end in a single file, with a database, sign-in, file storage and an admin screen.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": ["one file to run", "database, auth and files together"],
+    "watchOutFor": [
+      "You host it yourself.",
+      "Still changing quickly before version 1."
+    ],
+    "fitScores": {
+      "database": 3,
+      "authentication": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://pocketbase.io",
+    "officialDomains": ["pocketbase.io", "github.com/pocketbase"],
+    "getIt": {
+      "web": {
+        "url": "https://pocketbase.io/docs/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "postgresql",
+    "name": "PostgreSQL",
+    "providerId": "postgresql",
+    "jobs": ["database"],
+    "summary": "A powerful, free, open-source database used for everything from small apps to large systems.",
+    "kind": "app",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "very capable and standards-based",
+      "supported by many hosts"
+    ],
+    "watchOutFor": [
+      "Running it yourself needs server skills.",
+      "A hosted service is simpler for beginners."
+    ],
+    "fitScores": {
+      "database": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.postgresql.org",
+    "officialDomains": ["postgresql.org"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.postgresql.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.postgresql.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://www.postgresql.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "posthog",
+    "name": "PostHog",
+    "providerId": "posthog",
+    "jobs": ["analytics"],
+    "summary": "An analytics platform with page views, funnels, session replay and feature flags, hosted or self-hosted.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": [],
+    "strengths": [
+      "analytics, replay and flags together",
+      "open source with a hosted option"
+    ],
+    "watchOutFor": [
+      "Free use is limited. Check the current rules.",
+      "A lot of features for a simple site."
+    ],
+    "fitScores": {
+      "analytics": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://posthog.com",
+    "officialDomains": ["posthog.com", "github.com/PostHog"],
+    "getIt": {
+      "web": {
+        "url": "https://posthog.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm install posthog-js"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "radix-ui",
+    "name": "Radix UI",
+    "providerId": "workos",
+    "jobs": ["component-library"],
+    "summary": "Unstyled, accessible building blocks for React such as dialogs, menus and tabs that you style yourself.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["react", "nextjs", "shadcn-ui"],
+    "strengths": ["accessible by default", "full control over styling"],
+    "watchOutFor": ["You write the styles.", "React only."],
+    "fitScores": {
+      "component-library": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.radix-ui.com",
+    "officialDomains": ["radix-ui.com", "github.com/radix-ui"],
+    "getIt": {
+      "cliInstall": "npm install radix-ui"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "railway",
+    "name": "Railway",
+    "providerId": "railway",
+    "jobs": ["hosting"],
+    "summary": "A hosting platform for apps and databases with a simple dashboard and Git deploys.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "command-line"],
+    "worksWith": [],
+    "strengths": ["quick to deploy apps and databases", "simple dashboard"],
+    "watchOutFor": [
+      "Usage-based costs. Set limits.",
+      "Check current free options."
+    ],
+    "fitScores": {
+      "hosting": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://railway.com",
+    "officialDomains": ["railway.com", "railway.app"],
+    "getIt": {
+      "web": {
+        "url": "https://railway.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "razorpay",
+    "name": "Razorpay",
+    "providerId": "razorpay",
+    "jobs": ["payments-india"],
+    "summary": "An Indian payment gateway for UPI, cards and netbanking, with no-code payment links and developer tools.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios", "code"],
+    "worksWith": ["nextjs", "react", "expo"],
+    "strengths": [
+      "UPI, cards and netbanking for Indian customers",
+      "payment links that need no code"
+    ],
+    "watchOutFor": [
+      "You need to complete business verification before taking real payments.",
+      "Check fees and settlement times."
+    ],
+    "fitScores": {
+      "payments-india": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://razorpay.com",
+    "officialDomains": ["razorpay.com"],
+    "getIt": {
+      "web": {
+        "url": "https://razorpay.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "react",
+    "name": "React",
+    "providerId": "meta",
+    "jobs": ["framework"],
+    "summary": "A JavaScript library for building interactive user interfaces from reusable components.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [
+      "nextjs",
+      "astro",
+      "expo",
+      "shadcn-ui",
+      "mui",
+      "motion",
+      "gsap",
+      "supabase",
+      "firebase",
+      "clerk",
+      "auth0",
+      "sanity",
+      "strapi",
+      "vercel",
+      "netlify",
+      "cloudflare-pages",
+      "github-pages",
+      "razorpay"
+    ],
+    "strengths": [
+      "a huge community and many tutorials",
+      "components you can reuse"
+    ],
+    "watchOutFor": [
+      "It is a library, not a full framework. You choose routing and structure yourself.",
+      "Beginners face many setup choices."
+    ],
+    "fitScores": {
+      "framework": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://react.dev",
+    "officialDomains": ["react.dev", "github.com/facebook"],
+    "getIt": {
+      "web": {
+        "url": "https://react.dev/learn",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "render",
+    "name": "Render",
+    "providerId": "render",
+    "jobs": ["hosting"],
+    "summary": "A hosting platform for websites, back ends and databases that deploys from a Git repository.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "command-line"],
+    "worksWith": [],
+    "strengths": [
+      "simple deploys from Git",
+      "supports static sites, servers and databases"
+    ],
+    "watchOutFor": [
+      "Free services may sleep when idle.",
+      "Check current free limits."
+    ],
+    "fitScores": {
+      "hosting": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://render.com",
+    "officialDomains": ["render.com"],
+    "getIt": {
+      "web": {
+        "url": "https://render.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "sanity",
+    "name": "Sanity",
+    "providerId": "sanity",
+    "jobs": ["content-management"],
+    "summary": "A hosted content system with an editing studio that you shape to fit your content.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["nextjs", "astro", "react"],
+    "strengths": [
+      "flexible, developer-friendly content editing",
+      "a hosted service with nothing to run yourself"
+    ],
+    "watchOutFor": [
+      "A developer needs to set up the editing studio.",
+      "Free limits and plans may change."
+    ],
+    "fitScores": {
+      "content-management": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.sanity.io",
+    "officialDomains": ["sanity.io"],
+    "getIt": {
+      "web": {
+        "url": "https://www.sanity.io",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm create sanity@latest"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "shadcn-ui",
+    "name": "shadcn/ui",
+    "providerId": "shadcn",
+    "jobs": ["component-library", "ui-templates"],
+    "summary": "A set of accessible React interface components that you copy into your project and change freely.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["react", "nextjs", "astro", "v0"],
+    "strengths": [
+      "components you own and can change freely",
+      "accessible building blocks"
+    ],
+    "watchOutFor": [
+      "It expects React and Tailwind CSS.",
+      "Left unchanged, every site built with it looks alike."
+    ],
+    "fitScores": {
+      "component-library": 5,
+      "ui-templates": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://ui.shadcn.com",
+    "officialDomains": ["ui.shadcn.com", "shadcn.com", "github.com/shadcn-ui"],
+    "getIt": {
+      "web": {
+        "url": "https://ui.shadcn.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npx shadcn@latest init"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "shopify",
+    "name": "Shopify",
+    "providerId": "shopify",
+    "jobs": ["website-builder"],
+    "summary": "A platform for building and running an online shop, with payments, shipping and apps.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "android", "ios"],
+    "worksWith": [],
+    "includes": ["hosting"],
+    "strengths": ["everything for an online shop", "a large app store"],
+    "watchOutFor": [
+      "Paid subscription with a trial listed on the official page.",
+      "Apps and transaction fees add to the cost."
+    ],
+    "fitScores": {
+      "website-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.shopify.com",
+    "officialDomains": ["shopify.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.shopify.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "sqlite",
+    "name": "SQLite",
+    "providerId": "sqlite",
+    "jobs": ["database"],
+    "summary": "A small, free database that lives in a single file, used in apps, phones and browsers.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [],
+    "strengths": ["no server to run", "extremely widely used"],
+    "watchOutFor": [
+      "Not meant for many writers at once.",
+      "Back it up as you would any file."
+    ],
+    "fitScores": {
+      "database": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.sqlite.org",
+    "officialDomains": ["sqlite.org"],
+    "getIt": {
+      "web": {
+        "url": "https://www.sqlite.org/download.html",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "squarespace",
+    "name": "Squarespace",
+    "providerId": "squarespace",
+    "jobs": ["website-builder", "ui-templates"],
+    "summary": "A website builder known for polished templates, with hosting, domains and simple shops built in.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "includes": ["hosting"],
+    "strengths": ["polished templates", "hosting and a domain in one place"],
+    "watchOutFor": [
+      "Paid subscription with a trial listed on the official page.",
+      "Moving your site elsewhere later can be hard."
+    ],
+    "fitScores": {
+      "website-builder": 4,
+      "ui-templates": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.squarespace.com",
+    "officialDomains": ["squarespace.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.squarespace.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "strapi",
+    "name": "Strapi",
+    "providerId": "strapi",
+    "jobs": ["content-management"],
+    "summary": "An open-source content system you run yourself, with a ready admin panel and an API.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["nextjs", "astro", "react"],
+    "strengths": [
+      "an admin panel without writing one",
+      "open source, so you control your data"
+    ],
+    "watchOutFor": [
+      "Self-hosting means you run and secure the server.",
+      "A hosted version, if you want one, is a paid service."
+    ],
+    "fitScores": {
+      "content-management": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://strapi.io",
+    "officialDomains": ["strapi.io", "github.com/strapi"],
+    "getIt": {
+      "web": {
+        "url": "https://strapi.io",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npx create-strapi@latest"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "streamlit",
+    "name": "Streamlit",
+    "providerId": "streamlit",
+    "jobs": ["framework", "data-analysis"],
+    "summary": "A Python library for turning scripts into simple web apps for data and AI demos.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [],
+    "strengths": [
+      "a web app from a Python script",
+      "quick for data dashboards and demos"
+    ],
+    "watchOutFor": ["Limited control over layout.", "You need to know Python."],
+    "fitScores": {
+      "framework": 3,
+      "data-analysis": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://streamlit.io",
+    "officialDomains": ["streamlit.io", "github.com/streamlit"],
+    "getIt": {
+      "cliInstall": "pip install streamlit"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "stripe",
+    "name": "Stripe",
+    "providerId": "stripe",
+    "jobs": ["payments-global"],
+    "summary": "A payments platform for taking cards and subscriptions online, with strong developer tools.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": [],
+    "strengths": [
+      "well-documented developer tools",
+      "one-time payments, subscriptions and invoices"
+    ],
+    "watchOutFor": [
+      "Availability depends on your country and business type.",
+      "Check fees on the official pricing page."
+    ],
+    "fitScores": {
+      "payments-global": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://stripe.com",
+    "officialDomains": ["stripe.com"],
+    "getIt": {
+      "web": {
+        "url": "https://stripe.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "supabase",
+    "name": "Supabase",
+    "providerId": "supabase",
+    "jobs": ["database", "authentication"],
+    "summary": "An open-source back end that offers a Postgres database, sign-in and file storage.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["nextjs", "react", "expo", "astro", "lovable"],
+    "strengths": [
+      "a full database with sign-in built in",
+      "an open-source base you can move away from"
+    ],
+    "watchOutFor": [
+      "Learn its access rules before storing private data.",
+      "Free projects may pause when unused."
+    ],
+    "fitScores": {
+      "database": 5,
+      "authentication": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://supabase.com",
+    "officialDomains": ["supabase.com", "github.com/supabase"],
+    "getIt": {
+      "web": {
+        "url": "https://supabase.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm install @supabase/supabase-js"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "sveltekit",
+    "name": "SvelteKit",
+    "providerId": "svelte",
+    "jobs": ["framework"],
+    "summary": "A framework for building websites and apps with Svelte, with routing and server rendering built in.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": [],
+    "strengths": ["less code for the same interface", "fast pages by default"],
+    "watchOutFor": [
+      "A smaller ecosystem than React.",
+      "Fewer ready-made libraries."
+    ],
+    "fitScores": {
+      "framework": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://svelte.dev",
+    "officialDomains": ["svelte.dev", "github.com/sveltejs"],
+    "getIt": {
+      "cliInstall": "npx sv create my-app"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "tailwindcss",
+    "name": "Tailwind CSS",
+    "providerId": "tailwind-labs",
+    "jobs": ["component-library"],
+    "summary": "A CSS framework of small utility classes that you combine to style a page directly in your markup.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["nextjs", "react", "astro", "daisyui", "shadcn-ui"],
+    "strengths": ["fast to build custom looks", "works with most frameworks"],
+    "watchOutFor": [
+      "Class names can get long. Learn it before a big project.",
+      "It styles. It does not give you ready components."
+    ],
+    "fitScores": {
+      "component-library": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://tailwindcss.com",
+    "officialDomains": ["tailwindcss.com", "github.com/tailwindlabs"],
+    "getIt": {
+      "cliInstall": "npm install tailwindcss"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "tally",
+    "name": "Tally",
+    "providerId": "tally",
+    "jobs": ["contact-form"],
+    "summary": "A simple form builder that works like a document, with a generous free start for surveys and sign-ups.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": ["build a form like a document", "embeds in a site easily"],
+    "watchOutFor": [
+      "Some features need a paid plan.",
+      "Check the current free limits."
+    ],
+    "fitScores": {
+      "contact-form": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://tally.so",
+    "officialDomains": ["tally.so"],
+    "getIt": {
+      "web": {
+        "url": "https://tally.so",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "threejs",
+    "name": "three.js",
+    "providerId": "threejs",
+    "jobs": ["animation-library", "3d-and-design-assets"],
+    "summary": "A JavaScript library for showing 3D scenes in the browser.",
+    "kind": "library",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code", "web"],
+    "worksWith": [],
+    "strengths": [
+      "the standard way to do 3D on the web",
+      "a large set of examples"
+    ],
+    "watchOutFor": [
+      "3D code takes time to learn.",
+      "Heavy scenes can be slow on phones."
+    ],
+    "fitScores": {
+      "animation-library": 3,
+      "3d-and-design-assets": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://threejs.org",
+    "officialDomains": ["threejs.org", "github.com/mrdoob"],
+    "getIt": {
+      "cliInstall": "npm install three"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "typeform",
+    "name": "Typeform",
+    "providerId": "typeform",
+    "jobs": ["contact-form"],
+    "summary": "A form builder that shows one question at a time, for surveys and sign-ups with a friendly feel.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a friendly one-question-at-a-time style",
+      "templates and logic"
+    ],
+    "watchOutFor": [
+      "Free use limits responses. Check the current rules.",
+      "Longer forms can feel slow."
+    ],
+    "fitScores": {
+      "contact-form": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.typeform.com",
+    "officialDomains": ["typeform.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.typeform.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "umami",
+    "name": "Umami",
+    "providerId": "umami",
+    "jobs": ["analytics"],
+    "summary": "An open-source, privacy-focused web analytics tool you can host yourself or use as a service.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["nextjs", "astro"],
+    "strengths": [
+      "open source and self-hostable",
+      "simple privacy-friendly tracking"
+    ],
+    "watchOutFor": [
+      "Self-hosting means you run the server and database.",
+      "A hosted version may be paid."
+    ],
+    "fitScores": {
+      "analytics": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://umami.is",
+    "officialDomains": ["umami.is", "github.com/umami-software"],
+    "getIt": {
+      "web": {
+        "url": "https://umami.is",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "providerId": "vercel",
+    "jobs": ["hosting"],
+    "summary": "A hosting service that publishes a site from a Git repository and gives each change a preview link.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "command-line"],
+    "worksWith": ["nextjs", "astro", "react", "v0"],
+    "strengths": [
+      "a live site on every push to Git",
+      "preview links for each change"
+    ],
+    "watchOutFor": [
+      "Free plans can limit commercial use.",
+      "Check bandwidth and function limits."
+    ],
+    "fitScores": {
+      "hosting": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://vercel.com",
+    "officialDomains": ["vercel.com"],
+    "getIt": {
+      "web": {
+        "url": "https://vercel.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "cliInstall": "npm i -g vercel"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "visual-studio-code",
+    "name": "Visual Studio Code",
+    "providerId": "microsoft",
+    "jobs": ["code-editor"],
+    "summary": "A free, extensible code editor from Microsoft, with a large library of extensions, including AI assistants.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux", "web"],
+    "worksWith": ["github-copilot", "cline"],
+    "strengths": [
+      "free and works on Windows, macOS and Linux",
+      "a huge range of extensions"
+    ],
+    "watchOutFor": [
+      "You choose and install extensions yourself, so check who publishes each one.",
+      "AI features come from extensions and may have their own limits."
+    ],
+    "fitScores": {
+      "code-editor": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://code.visualstudio.com",
+    "officialDomains": ["code.visualstudio.com", "vscode.dev"],
+    "getIt": {
+      "web": {
+        "url": "https://vscode.dev",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "windows": {
+        "url": "https://code.visualstudio.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://code.visualstudio.com/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://code.visualstudio.com/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "vite",
+    "name": "Vite",
+    "providerId": "vite",
+    "jobs": ["framework"],
+    "summary": "A fast build tool and dev server for modern web projects, with templates for React, Vue and others.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["react", "vuejs"],
+    "strengths": [
+      "very fast start-up and reloads",
+      "templates for many frameworks"
+    ],
+    "watchOutFor": [
+      "It is a build tool, not a full framework.",
+      "You choose routing and data tools yourself."
+    ],
+    "fitScores": {
+      "framework": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://vite.dev",
+    "officialDomains": ["vite.dev", "vitejs.dev", "github.com/vitejs"],
+    "getIt": {
+      "cliInstall": "npm create vite@latest"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "voiceflow",
+    "name": "Voiceflow",
+    "providerId": "voiceflow",
+    "jobs": ["chatbot-builder"],
+    "summary": "A collaborative tool for designing and launching chat and voice assistants.",
+    "kind": "service",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a visual canvas for conversation flows",
+      "team collaboration features"
+    ],
+    "watchOutFor": [
+      "Plans and limits change. Check the pricing page.",
+      "Test answers carefully before going public."
+    ],
+    "fitScores": {
+      "chatbot-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.voiceflow.com",
+    "officialDomains": ["voiceflow.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.voiceflow.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "vuejs",
+    "name": "Vue.js",
+    "providerId": "vuejs",
+    "jobs": ["framework"],
+    "summary": "A JavaScript framework for building web interfaces, known for being easy to pick up.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["vite"],
+    "strengths": ["a gentle learning curve", "clear documentation"],
+    "watchOutFor": [
+      "A smaller job market than React in some regions.",
+      "Pick one set-up and follow its docs."
+    ],
+    "fitScores": {
+      "framework": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://vuejs.org",
+    "officialDomains": ["vuejs.org", "github.com/vuejs"],
+    "getIt": {
+      "cliInstall": "npm create vue@latest"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "web3forms",
+    "name": "Web3Forms",
+    "providerId": "web3forms",
+    "jobs": ["contact-form"],
+    "summary": "A form back end that sends submissions from a static site to your email with no server of your own.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": ["astro", "nextjs", "react"],
+    "strengths": [
+      "a form back end with no server to run",
+      "simple set-up with a key in your form"
+    ],
+    "watchOutFor": [
+      "Check submission limits on free use.",
+      "Add spam protection to the form."
+    ],
+    "fitScores": {
+      "contact-form": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://web3forms.com",
+    "officialDomains": ["web3forms.com"],
+    "getIt": {
+      "web": {
+        "url": "https://web3forms.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "wordpress",
+    "name": "WordPress",
+    "providerId": "wordpress",
+    "jobs": ["content-management", "website-builder"],
+    "summary": "A widely used open-source system for running a blog or website, with themes and plugins.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a huge range of themes and plugins",
+      "editing posts and pages without code"
+    ],
+    "watchOutFor": [
+      "Keep plugins and themes updated. Old ones are a security risk.",
+      "Hosting is a separate cost."
+    ],
+    "fitScores": {
+      "content-management": 4,
+      "website-builder": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://wordpress.org",
+    "officialDomains": ["wordpress.org"],
+    "getIt": {
+      "web": {
+        "url": "https://wordpress.org",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "zed",
+    "name": "Zed",
+    "providerId": "zed-industries",
+    "jobs": ["code-editor", "coding-assistant"],
+    "summary": "A fast code editor built for speed and collaboration, with built-in AI features.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["macos", "linux", "windows"],
+    "worksWith": [],
+    "strengths": [
+      "very quick to open and use",
+      "built-in AI assistant and real-time collaboration"
+    ],
+    "watchOutFor": [
+      "Smaller extension library than the biggest editors.",
+      "AI features may need an account or your own model keys."
+    ],
+    "fitScores": {
+      "code-editor": 4,
+      "coding-assistant": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://zed.dev",
+    "officialDomains": ["zed.dev", "github.com/zed-industries"],
+    "getIt": {
+      "windows": {
+        "url": "https://zed.dev/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://zed.dev/download",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://zed.dev/download",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  }
+]

@@ -31,6 +31,7 @@ function tool(id: string, patch: Partial<Tool> = {}): Tool {
     fitScores: Object.fromEntries(jobs.map((job) => [job, 3])),
     scoreSource: "editorial-estimate",
     officialUrl: `https://${id}.example.com`,
+    officialDomains: [`${id}.example.com`],
     verified: false,
     lastVerified: null,
     ...patch,

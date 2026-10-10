@@ -172,9 +172,15 @@ describe("interpretGoal: typos", () => {
 describe("interpretGoal: tasks without a goal", () => {
   it.each([
     ["make a logo", ["image-generation", "design-tool"]],
-    ["summarise a pdf", ["research-with-sources", "ai-assistant"]],
+    [
+      "summarise a pdf",
+      ["research-with-sources", "ai-assistant", "pdf-and-document-chat"],
+    ],
     ["edit a video", ["video-editing"]],
-    ["transcribe my lecture audio", ["voice-and-audio"]],
+    [
+      "transcribe my lecture audio",
+      ["voice-and-audio", "meeting-notes-and-transcription"],
+    ],
     ["fix a bug in my script", ["coding-assistant"]],
     ["design a poster", ["design-tool", "image-generation"]],
   ])("%s", (text, jobs) => {

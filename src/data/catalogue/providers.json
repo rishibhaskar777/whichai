@@ -1,23 +1,39 @@
 [
-  { "id": "openai", "name": "OpenAI", "homepage": "https://openai.com" },
+  {
+    "id": "openai",
+    "name": "OpenAI",
+    "homepage": "https://openai.com"
+  },
   {
     "id": "anthropic",
     "name": "Anthropic",
     "homepage": "https://www.anthropic.com"
   },
-  { "id": "google", "name": "Google", "homepage": "https://www.google.com" },
+  {
+    "id": "google",
+    "name": "Google",
+    "homepage": "https://www.google.com"
+  },
   {
     "id": "microsoft",
     "name": "Microsoft",
     "homepage": "https://www.microsoft.com"
   },
-  { "id": "meta", "name": "Meta", "homepage": "https://about.meta.com" },
+  {
+    "id": "meta",
+    "name": "Meta",
+    "homepage": "https://about.meta.com"
+  },
   {
     "id": "perplexity-ai",
     "name": "Perplexity AI",
     "homepage": "https://www.perplexity.ai"
   },
-  { "id": "elicit-org", "name": "Elicit", "homepage": "https://elicit.com" },
+  {
+    "id": "elicit-org",
+    "name": "Elicit",
+    "homepage": "https://elicit.com"
+  },
   {
     "id": "project-gutenberg",
     "name": "Project Gutenberg",
@@ -33,11 +49,31 @@
     "name": "Sacred Texts Archive",
     "homepage": "https://sacred-texts.com"
   },
-  { "id": "github", "name": "GitHub", "homepage": "https://github.com" },
-  { "id": "anysphere", "name": "Anysphere", "homepage": "https://cursor.com" },
-  { "id": "replit", "name": "Replit", "homepage": "https://replit.com" },
-  { "id": "lovable", "name": "Lovable", "homepage": "https://lovable.dev" },
-  { "id": "vercel", "name": "Vercel", "homepage": "https://vercel.com" },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "homepage": "https://github.com"
+  },
+  {
+    "id": "anysphere",
+    "name": "Anysphere",
+    "homepage": "https://cursor.com"
+  },
+  {
+    "id": "replit",
+    "name": "Replit",
+    "homepage": "https://replit.com"
+  },
+  {
+    "id": "lovable",
+    "name": "Lovable",
+    "homepage": "https://lovable.dev"
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "homepage": "https://vercel.com"
+  },
   {
     "id": "midjourney",
     "name": "Midjourney",
@@ -48,10 +84,26 @@
     "name": "Stability AI",
     "homepage": "https://stability.ai"
   },
-  { "id": "adobe", "name": "Adobe", "homepage": "https://www.adobe.com" },
-  { "id": "runway", "name": "Runway", "homepage": "https://runwayml.com" },
-  { "id": "luma-ai", "name": "Luma AI", "homepage": "https://lumalabs.ai" },
-  { "id": "heygen", "name": "HeyGen", "homepage": "https://www.heygen.com" },
+  {
+    "id": "adobe",
+    "name": "Adobe",
+    "homepage": "https://www.adobe.com"
+  },
+  {
+    "id": "runway",
+    "name": "Runway",
+    "homepage": "https://runwayml.com"
+  },
+  {
+    "id": "luma-ai",
+    "name": "Luma AI",
+    "homepage": "https://lumalabs.ai"
+  },
+  {
+    "id": "heygen",
+    "name": "HeyGen",
+    "homepage": "https://www.heygen.com"
+  },
   {
     "id": "bytedance",
     "name": "ByteDance",
@@ -77,7 +129,11 @@
     "name": "Audacity",
     "homepage": "https://www.audacityteam.org"
   },
-  { "id": "gamma", "name": "Gamma", "homepage": "https://gamma.app" },
+  {
+    "id": "gamma",
+    "name": "Gamma",
+    "homepage": "https://gamma.app"
+  },
   {
     "id": "grammarly",
     "name": "Grammarly",
@@ -93,44 +149,136 @@
     "name": "Notion",
     "homepage": "https://www.notion.com"
   },
-  { "id": "obsidian", "name": "Obsidian", "homepage": "https://obsidian.md" },
-  { "id": "anki", "name": "Anki", "homepage": "https://apps.ankiweb.net" },
-  { "id": "quizlet", "name": "Quizlet", "homepage": "https://quizlet.com" },
-  { "id": "astro", "name": "Astro", "homepage": "https://astro.build" },
-  { "id": "framer", "name": "Framer", "homepage": "https://www.framer.com" },
-  { "id": "webflow", "name": "Webflow", "homepage": "https://webflow.com" },
-  { "id": "wix", "name": "Wix", "homepage": "https://www.wix.com" },
-  { "id": "shadcn", "name": "shadcn", "homepage": "https://ui.shadcn.com" },
-  { "id": "mui", "name": "MUI", "homepage": "https://mui.com" },
-  { "id": "daisyui", "name": "daisyUI", "homepage": "https://daisyui.com" },
-  { "id": "motion", "name": "Motion", "homepage": "https://motion.dev" },
-  { "id": "greensock", "name": "GreenSock", "homepage": "https://gsap.com" },
+  {
+    "id": "obsidian",
+    "name": "Obsidian",
+    "homepage": "https://obsidian.md"
+  },
+  {
+    "id": "anki",
+    "name": "Anki",
+    "homepage": "https://apps.ankiweb.net"
+  },
+  {
+    "id": "quizlet",
+    "name": "Quizlet",
+    "homepage": "https://quizlet.com"
+  },
+  {
+    "id": "astro",
+    "name": "Astro",
+    "homepage": "https://astro.build"
+  },
+  {
+    "id": "framer",
+    "name": "Framer",
+    "homepage": "https://www.framer.com"
+  },
+  {
+    "id": "webflow",
+    "name": "Webflow",
+    "homepage": "https://webflow.com"
+  },
+  {
+    "id": "wix",
+    "name": "Wix",
+    "homepage": "https://www.wix.com"
+  },
+  {
+    "id": "shadcn",
+    "name": "shadcn",
+    "homepage": "https://ui.shadcn.com"
+  },
+  {
+    "id": "mui",
+    "name": "MUI",
+    "homepage": "https://mui.com"
+  },
+  {
+    "id": "daisyui",
+    "name": "daisyUI",
+    "homepage": "https://daisyui.com"
+  },
+  {
+    "id": "motion",
+    "name": "Motion",
+    "homepage": "https://motion.dev"
+  },
+  {
+    "id": "greensock",
+    "name": "GreenSock",
+    "homepage": "https://gsap.com"
+  },
   {
     "id": "lottiefiles",
     "name": "LottieFiles",
     "homepage": "https://lottiefiles.com"
   },
-  { "id": "expo", "name": "Expo", "homepage": "https://expo.dev" },
-  { "id": "sanity", "name": "Sanity", "homepage": "https://www.sanity.io" },
-  { "id": "strapi", "name": "Strapi", "homepage": "https://strapi.io" },
+  {
+    "id": "expo",
+    "name": "Expo",
+    "homepage": "https://expo.dev"
+  },
+  {
+    "id": "sanity",
+    "name": "Sanity",
+    "homepage": "https://www.sanity.io"
+  },
+  {
+    "id": "strapi",
+    "name": "Strapi",
+    "homepage": "https://strapi.io"
+  },
   {
     "id": "wordpress",
     "name": "WordPress",
     "homepage": "https://wordpress.org"
   },
-  { "id": "supabase", "name": "Supabase", "homepage": "https://supabase.com" },
-  { "id": "mongodb", "name": "MongoDB", "homepage": "https://www.mongodb.com" },
-  { "id": "authjs", "name": "Auth.js", "homepage": "https://authjs.dev" },
-  { "id": "clerk", "name": "Clerk", "homepage": "https://clerk.com" },
-  { "id": "okta", "name": "Okta", "homepage": "https://www.okta.com" },
-  { "id": "razorpay", "name": "Razorpay", "homepage": "https://razorpay.com" },
+  {
+    "id": "supabase",
+    "name": "Supabase",
+    "homepage": "https://supabase.com"
+  },
+  {
+    "id": "mongodb",
+    "name": "MongoDB",
+    "homepage": "https://www.mongodb.com"
+  },
+  {
+    "id": "authjs",
+    "name": "Auth.js",
+    "homepage": "https://authjs.dev"
+  },
+  {
+    "id": "clerk",
+    "name": "Clerk",
+    "homepage": "https://clerk.com"
+  },
+  {
+    "id": "okta",
+    "name": "Okta",
+    "homepage": "https://www.okta.com"
+  },
+  {
+    "id": "razorpay",
+    "name": "Razorpay",
+    "homepage": "https://razorpay.com"
+  },
   {
     "id": "cashfree",
     "name": "Cashfree Payments",
     "homepage": "https://www.cashfree.com"
   },
-  { "id": "payu", "name": "PayU", "homepage": "https://payu.in" },
-  { "id": "netlify", "name": "Netlify", "homepage": "https://www.netlify.com" },
+  {
+    "id": "payu",
+    "name": "PayU",
+    "homepage": "https://payu.in"
+  },
+  {
+    "id": "netlify",
+    "name": "Netlify",
+    "homepage": "https://www.netlify.com"
+  },
   {
     "id": "cloudflare",
     "name": "Cloudflare",
@@ -141,7 +289,11 @@
     "name": "Plausible",
     "homepage": "https://plausible.io"
   },
-  { "id": "umami", "name": "Umami", "homepage": "https://umami.is" },
+  {
+    "id": "umami",
+    "name": "Umami",
+    "homepage": "https://umami.is"
+  },
   {
     "id": "formspree",
     "name": "Formspree",
@@ -157,8 +309,909 @@
     "name": "Reactive Resume",
     "homepage": "https://rxresu.me"
   },
-  { "id": "enhancv", "name": "Enhancv", "homepage": "https://enhancv.com" },
-  { "id": "figma", "name": "Figma", "homepage": "https://www.figma.com" },
-  { "id": "penpot", "name": "Penpot", "homepage": "https://penpot.app" },
-  { "id": "canva", "name": "Canva", "homepage": "https://www.canva.com" }
+  {
+    "id": "enhancv",
+    "name": "Enhancv",
+    "homepage": "https://enhancv.com"
+  },
+  {
+    "id": "figma",
+    "name": "Figma",
+    "homepage": "https://www.figma.com"
+  },
+  {
+    "id": "penpot",
+    "name": "Penpot",
+    "homepage": "https://penpot.app"
+  },
+  {
+    "id": "canva",
+    "name": "Canva",
+    "homepage": "https://www.canva.com"
+  },
+  {
+    "id": "xai",
+    "name": "xAI",
+    "homepage": "https://x.ai"
+  },
+  {
+    "id": "deepseek",
+    "name": "DeepSeek",
+    "homepage": "https://www.deepseek.com"
+  },
+  {
+    "id": "mistral-ai",
+    "name": "Mistral AI",
+    "homepage": "https://mistral.ai"
+  },
+  {
+    "id": "qwen",
+    "name": "Qwen (Alibaba)",
+    "homepage": "https://qwen.ai"
+  },
+  {
+    "id": "quora",
+    "name": "Quora",
+    "homepage": "https://www.quora.com"
+  },
+  {
+    "id": "brave",
+    "name": "Brave",
+    "homepage": "https://brave.com"
+  },
+  {
+    "id": "ollama",
+    "name": "Ollama",
+    "homepage": "https://ollama.com"
+  },
+  {
+    "id": "lm-studio",
+    "name": "LM Studio",
+    "homepage": "https://lmstudio.ai"
+  },
+  {
+    "id": "jan",
+    "name": "Jan",
+    "homepage": "https://jan.ai"
+  },
+  {
+    "id": "nomic-ai",
+    "name": "Nomic",
+    "homepage": "https://www.nomic.ai"
+  },
+  {
+    "id": "ggml",
+    "name": "ggml (llama.cpp)",
+    "homepage": "https://ggml.ai"
+  },
+  {
+    "id": "open-webui",
+    "name": "Open WebUI",
+    "homepage": "https://openwebui.com"
+  },
+  {
+    "id": "mintplex-labs",
+    "name": "Mintplex Labs",
+    "homepage": "https://anythingllm.com"
+  },
+  {
+    "id": "black-forest-labs",
+    "name": "Black Forest Labs",
+    "homepage": "https://bfl.ai"
+  },
+  {
+    "id": "cline",
+    "name": "Cline",
+    "homepage": "https://cline.bot"
+  },
+  {
+    "id": "aider",
+    "name": "Aider",
+    "homepage": "https://aider.chat"
+  },
+  {
+    "id": "stackblitz",
+    "name": "StackBlitz",
+    "homepage": "https://stackblitz.com"
+  },
+  {
+    "id": "zed-industries",
+    "name": "Zed Industries",
+    "homepage": "https://zed.dev"
+  },
+  {
+    "id": "jetbrains",
+    "name": "JetBrains",
+    "homepage": "https://www.jetbrains.com"
+  },
+  {
+    "id": "gitlab",
+    "name": "GitLab",
+    "homepage": "https://about.gitlab.com"
+  },
+  {
+    "id": "atlassian",
+    "name": "Atlassian",
+    "homepage": "https://www.atlassian.com"
+  },
+  {
+    "id": "git-scm",
+    "name": "Git",
+    "homepage": "https://git-scm.com"
+  },
+  {
+    "id": "sider",
+    "name": "Sider",
+    "homepage": "https://sider.ai"
+  },
+  {
+    "id": "monica",
+    "name": "Monica",
+    "homepage": "https://monica.im"
+  },
+  {
+    "id": "harpa-ai",
+    "name": "HARPA AI",
+    "homepage": "https://harpa.ai"
+  },
+  {
+    "id": "glasp",
+    "name": "Glasp",
+    "homepage": "https://glasp.co"
+  },
+  {
+    "id": "botpress",
+    "name": "Botpress",
+    "homepage": "https://botpress.com"
+  },
+  {
+    "id": "voiceflow",
+    "name": "Voiceflow",
+    "homepage": "https://www.voiceflow.com"
+  },
+  {
+    "id": "chatbase",
+    "name": "Chatbase",
+    "homepage": "https://www.chatbase.co"
+  },
+  {
+    "id": "landbot",
+    "name": "Landbot",
+    "homepage": "https://landbot.io"
+  },
+  {
+    "id": "flowiseai",
+    "name": "FlowiseAI",
+    "homepage": "https://flowiseai.com"
+  },
+  {
+    "id": "dify",
+    "name": "Dify",
+    "homepage": "https://dify.ai"
+  },
+  {
+    "id": "ideogram",
+    "name": "Ideogram",
+    "homepage": "https://ideogram.ai"
+  },
+  {
+    "id": "leonardo-ai",
+    "name": "Leonardo.Ai",
+    "homepage": "https://leonardo.ai"
+  },
+  {
+    "id": "comfy-org",
+    "name": "Comfy Org",
+    "homepage": "https://www.comfy.org"
+  },
+  {
+    "id": "gimp",
+    "name": "GIMP",
+    "homepage": "https://www.gimp.org"
+  },
+  {
+    "id": "photopea",
+    "name": "Photopea",
+    "homepage": "https://www.photopea.com"
+  },
+  {
+    "id": "photoroom",
+    "name": "Photoroom",
+    "homepage": "https://www.photoroom.com"
+  },
+  {
+    "id": "kuaishou",
+    "name": "Kuaishou",
+    "homepage": "https://klingai.com"
+  },
+  {
+    "id": "synthesia",
+    "name": "Synthesia",
+    "homepage": "https://www.synthesia.io"
+  },
+  {
+    "id": "invideo",
+    "name": "InVideo",
+    "homepage": "https://invideo.io"
+  },
+  {
+    "id": "apple",
+    "name": "Apple",
+    "homepage": "https://www.apple.com"
+  },
+  {
+    "id": "kdenlive",
+    "name": "Kdenlive",
+    "homepage": "https://kdenlive.org"
+  },
+  {
+    "id": "vn-editor",
+    "name": "VN",
+    "homepage": "https://www.vlognow.me"
+  },
+  {
+    "id": "inshot",
+    "name": "InShot",
+    "homepage": "https://inshot.com"
+  },
+  {
+    "id": "veed",
+    "name": "VEED",
+    "homepage": "https://www.veed.io"
+  },
+  {
+    "id": "kapwing",
+    "name": "Kapwing",
+    "homepage": "https://www.kapwing.com"
+  },
+  {
+    "id": "ffmpeg",
+    "name": "FFmpeg",
+    "homepage": "https://ffmpeg.org"
+  },
+  {
+    "id": "obs-project",
+    "name": "OBS Project",
+    "homepage": "https://obsproject.com"
+  },
+  {
+    "id": "loom",
+    "name": "Loom",
+    "homepage": "https://www.loom.com"
+  },
+  {
+    "id": "techsmith",
+    "name": "TechSmith",
+    "homepage": "https://www.techsmith.com"
+  },
+  {
+    "id": "murf",
+    "name": "Murf AI",
+    "homepage": "https://murf.ai"
+  },
+  {
+    "id": "speechify",
+    "name": "Speechify",
+    "homepage": "https://speechify.com"
+  },
+  {
+    "id": "bandlab",
+    "name": "BandLab",
+    "homepage": "https://www.bandlab.com"
+  },
+  {
+    "id": "krisp",
+    "name": "Krisp",
+    "homepage": "https://krisp.ai"
+  },
+  {
+    "id": "suno",
+    "name": "Suno",
+    "homepage": "https://suno.com"
+  },
+  {
+    "id": "udio",
+    "name": "Udio",
+    "homepage": "https://www.udio.com"
+  },
+  {
+    "id": "aiva",
+    "name": "AIVA",
+    "homepage": "https://www.aiva.ai"
+  },
+  {
+    "id": "soundraw",
+    "name": "Soundraw",
+    "homepage": "https://soundraw.io"
+  },
+  {
+    "id": "beatoven",
+    "name": "Beatoven.ai",
+    "homepage": "https://www.beatoven.ai"
+  },
+  {
+    "id": "buffer",
+    "name": "Buffer",
+    "homepage": "https://buffer.com"
+  },
+  {
+    "id": "hootsuite",
+    "name": "Hootsuite",
+    "homepage": "https://www.hootsuite.com"
+  },
+  {
+    "id": "later",
+    "name": "Later",
+    "homepage": "https://later.com"
+  },
+  {
+    "id": "opus-clip",
+    "name": "Opus",
+    "homepage": "https://www.opus.pro"
+  },
+  {
+    "id": "inkscape",
+    "name": "Inkscape",
+    "homepage": "https://inkscape.org"
+  },
+  {
+    "id": "miro",
+    "name": "Miro",
+    "homepage": "https://miro.com"
+  },
+  {
+    "id": "whimsical",
+    "name": "Whimsical",
+    "homepage": "https://whimsical.com"
+  },
+  {
+    "id": "excalidraw",
+    "name": "Excalidraw",
+    "homepage": "https://excalidraw.com"
+  },
+  {
+    "id": "diagrams-net",
+    "name": "diagrams.net",
+    "homepage": "https://www.drawio.com"
+  },
+  {
+    "id": "mermaid",
+    "name": "Mermaid",
+    "homepage": "https://mermaid.js.org"
+  },
+  {
+    "id": "blender",
+    "name": "Blender",
+    "homepage": "https://www.blender.org"
+  },
+  {
+    "id": "spline",
+    "name": "Spline",
+    "homepage": "https://spline.design"
+  },
+  {
+    "id": "sketchfab",
+    "name": "Sketchfab",
+    "homepage": "https://sketchfab.com"
+  },
+  {
+    "id": "poly-haven",
+    "name": "Poly Haven",
+    "homepage": "https://polyhaven.com"
+  },
+  {
+    "id": "unsplash",
+    "name": "Unsplash",
+    "homepage": "https://unsplash.com"
+  },
+  {
+    "id": "pexels",
+    "name": "Pexels",
+    "homepage": "https://www.pexels.com"
+  },
+  {
+    "id": "pixabay",
+    "name": "Pixabay",
+    "homepage": "https://pixabay.com"
+  },
+  {
+    "id": "lucide",
+    "name": "Lucide",
+    "homepage": "https://lucide.dev"
+  },
+  {
+    "id": "coursera",
+    "name": "Coursera",
+    "homepage": "https://www.coursera.org"
+  },
+  {
+    "id": "khan-academy",
+    "name": "Khan Academy",
+    "homepage": "https://www.khanacademy.org"
+  },
+  {
+    "id": "swayam",
+    "name": "SWAYAM (Government of India)",
+    "homepage": "https://swayam.gov.in"
+  },
+  {
+    "id": "nptel",
+    "name": "NPTEL",
+    "homepage": "https://nptel.ac.in"
+  },
+  {
+    "id": "freecodecamp",
+    "name": "freeCodeCamp",
+    "homepage": "https://www.freecodecamp.org"
+  },
+  {
+    "id": "mit",
+    "name": "MIT OpenCourseWare",
+    "homepage": "https://ocw.mit.edu"
+  },
+  {
+    "id": "wolfram",
+    "name": "Wolfram",
+    "homepage": "https://www.wolframalpha.com"
+  },
+  {
+    "id": "desmos",
+    "name": "Desmos",
+    "homepage": "https://www.desmos.com"
+  },
+  {
+    "id": "geogebra",
+    "name": "GeoGebra",
+    "homepage": "https://www.geogebra.org"
+  },
+  {
+    "id": "duolingo",
+    "name": "Duolingo",
+    "homepage": "https://www.duolingo.com"
+  },
+  {
+    "id": "babbel",
+    "name": "Babbel",
+    "homepage": "https://www.babbel.com"
+  },
+  {
+    "id": "remnote",
+    "name": "RemNote",
+    "homepage": "https://www.remnote.com"
+  },
+  {
+    "id": "kahoot",
+    "name": "Kahoot!",
+    "homepage": "https://kahoot.com"
+  },
+  {
+    "id": "knowt",
+    "name": "Knowt",
+    "homepage": "https://knowt.com"
+  },
+  {
+    "id": "consensus",
+    "name": "Consensus",
+    "homepage": "https://consensus.app"
+  },
+  {
+    "id": "scispace",
+    "name": "SciSpace",
+    "homepage": "https://scispace.com"
+  },
+  {
+    "id": "semantic-scholar",
+    "name": "Semantic Scholar",
+    "homepage": "https://www.semanticscholar.org"
+  },
+  {
+    "id": "zotero",
+    "name": "Zotero",
+    "homepage": "https://www.zotero.org"
+  },
+  {
+    "id": "nih",
+    "name": "National Library of Medicine",
+    "homepage": "https://pubmed.ncbi.nlm.nih.gov"
+  },
+  {
+    "id": "ndli",
+    "name": "National Digital Library of India",
+    "homepage": "https://ndl.iitkgp.ac.in"
+  },
+  {
+    "id": "chatpdf",
+    "name": "ChatPDF",
+    "homepage": "https://www.chatpdf.com"
+  },
+  {
+    "id": "beautiful-ai",
+    "name": "Beautiful.ai",
+    "homepage": "https://www.beautiful.ai"
+  },
+  {
+    "id": "pitch",
+    "name": "Pitch",
+    "homepage": "https://pitch.com"
+  },
+  {
+    "id": "document-foundation",
+    "name": "The Document Foundation",
+    "homepage": "https://www.libreoffice.org"
+  },
+  {
+    "id": "quillbot",
+    "name": "QuillBot",
+    "homepage": "https://quillbot.com"
+  },
+  {
+    "id": "hemingway",
+    "name": "Hemingway App",
+    "homepage": "https://hemingwayapp.com"
+  },
+  {
+    "id": "literature-and-latte",
+    "name": "Literature & Latte",
+    "homepage": "https://www.literatureandlatte.com"
+  },
+  {
+    "id": "logseq",
+    "name": "Logseq",
+    "homepage": "https://logseq.com"
+  },
+  {
+    "id": "todoist",
+    "name": "Doist",
+    "homepage": "https://www.todoist.com"
+  },
+  {
+    "id": "asana",
+    "name": "Asana",
+    "homepage": "https://asana.com"
+  },
+  {
+    "id": "superhuman",
+    "name": "Superhuman",
+    "homepage": "https://superhuman.com"
+  },
+  {
+    "id": "airtable",
+    "name": "Airtable",
+    "homepage": "https://www.airtable.com"
+  },
+  {
+    "id": "julius",
+    "name": "Julius AI",
+    "homepage": "https://julius.ai"
+  },
+  {
+    "id": "jupyter",
+    "name": "Project Jupyter",
+    "homepage": "https://jupyter.org"
+  },
+  {
+    "id": "tableau",
+    "name": "Tableau",
+    "homepage": "https://www.tableau.com"
+  },
+  {
+    "id": "metabase",
+    "name": "Metabase",
+    "homepage": "https://www.metabase.com"
+  },
+  {
+    "id": "otter",
+    "name": "Otter.ai",
+    "homepage": "https://otter.ai"
+  },
+  {
+    "id": "fireflies",
+    "name": "Fireflies.ai",
+    "homepage": "https://fireflies.ai"
+  },
+  {
+    "id": "fathom-video",
+    "name": "Fathom",
+    "homepage": "https://fathom.video"
+  },
+  {
+    "id": "zoom",
+    "name": "Zoom",
+    "homepage": "https://zoom.com"
+  },
+  {
+    "id": "deepl",
+    "name": "DeepL",
+    "homepage": "https://www.deepl.com"
+  },
+  {
+    "id": "reverso",
+    "name": "Reverso",
+    "homepage": "https://www.reverso.net"
+  },
+  {
+    "id": "bhashini",
+    "name": "Bhashini (Government of India)",
+    "homepage": "https://bhashini.gov.in"
+  },
+  {
+    "id": "zapier",
+    "name": "Zapier",
+    "homepage": "https://zapier.com"
+  },
+  {
+    "id": "make",
+    "name": "Make",
+    "homepage": "https://www.make.com"
+  },
+  {
+    "id": "n8n",
+    "name": "n8n",
+    "homepage": "https://n8n.io"
+  },
+  {
+    "id": "ifttt",
+    "name": "IFTTT",
+    "homepage": "https://ifttt.com"
+  },
+  {
+    "id": "ahrefs",
+    "name": "Ahrefs",
+    "homepage": "https://ahrefs.com"
+  },
+  {
+    "id": "semrush",
+    "name": "Semrush",
+    "homepage": "https://www.semrush.com"
+  },
+  {
+    "id": "neil-patel",
+    "name": "NP Digital",
+    "homepage": "https://neilpatel.com"
+  },
+  {
+    "id": "screaming-frog",
+    "name": "Screaming Frog",
+    "homepage": "https://www.screamingfrog.co.uk"
+  },
+  {
+    "id": "yoast",
+    "name": "Yoast",
+    "homepage": "https://yoast.com"
+  },
+  {
+    "id": "flowcv",
+    "name": "FlowCV",
+    "homepage": "https://flowcv.com"
+  },
+  {
+    "id": "kickresume",
+    "name": "Kickresume",
+    "homepage": "https://www.kickresume.com"
+  },
+  {
+    "id": "teal",
+    "name": "Teal",
+    "homepage": "https://www.tealhq.com"
+  },
+  {
+    "id": "jobscan",
+    "name": "Jobscan",
+    "homepage": "https://www.jobscan.co"
+  },
+  {
+    "id": "overleaf",
+    "name": "Overleaf",
+    "homepage": "https://www.overleaf.com"
+  },
+  {
+    "id": "hugging-face",
+    "name": "Hugging Face",
+    "homepage": "https://huggingface.co"
+  },
+  {
+    "id": "tailwind-labs",
+    "name": "Tailwind Labs",
+    "homepage": "https://tailwindcss.com"
+  },
+  {
+    "id": "bootstrap",
+    "name": "Bootstrap",
+    "homepage": "https://getbootstrap.com"
+  },
+  {
+    "id": "workos",
+    "name": "WorkOS",
+    "homepage": "https://workos.com"
+  },
+  {
+    "id": "mantine",
+    "name": "Mantine",
+    "homepage": "https://mantine.dev"
+  },
+  {
+    "id": "animejs",
+    "name": "Anime.js",
+    "homepage": "https://animejs.com"
+  },
+  {
+    "id": "threejs",
+    "name": "three.js",
+    "homepage": "https://threejs.org"
+  },
+  {
+    "id": "vuejs",
+    "name": "Vue.js",
+    "homepage": "https://vuejs.org"
+  },
+  {
+    "id": "svelte",
+    "name": "Svelte",
+    "homepage": "https://svelte.dev"
+  },
+  {
+    "id": "angular",
+    "name": "Angular",
+    "homepage": "https://angular.dev"
+  },
+  {
+    "id": "vite",
+    "name": "Vite",
+    "homepage": "https://vite.dev"
+  },
+  {
+    "id": "django",
+    "name": "Django Software Foundation",
+    "homepage": "https://www.djangoproject.com"
+  },
+  {
+    "id": "fastapi",
+    "name": "FastAPI",
+    "homepage": "https://fastapi.tiangolo.com"
+  },
+  {
+    "id": "flutter",
+    "name": "Flutter",
+    "homepage": "https://flutter.dev"
+  },
+  {
+    "id": "streamlit",
+    "name": "Streamlit",
+    "homepage": "https://streamlit.io"
+  },
+  {
+    "id": "gradio",
+    "name": "Gradio",
+    "homepage": "https://www.gradio.app"
+  },
+  {
+    "id": "openjs",
+    "name": "OpenJS Foundation",
+    "homepage": "https://nodejs.org"
+  },
+  {
+    "id": "contentful",
+    "name": "Contentful",
+    "homepage": "https://www.contentful.com"
+  },
+  {
+    "id": "ghost",
+    "name": "Ghost",
+    "homepage": "https://ghost.org"
+  },
+  {
+    "id": "payload",
+    "name": "Payload",
+    "homepage": "https://payloadcms.com"
+  },
+  {
+    "id": "squarespace",
+    "name": "Squarespace",
+    "homepage": "https://www.squarespace.com"
+  },
+  {
+    "id": "carrd",
+    "name": "Carrd",
+    "homepage": "https://carrd.co"
+  },
+  {
+    "id": "shopify",
+    "name": "Shopify",
+    "homepage": "https://www.shopify.com"
+  },
+  {
+    "id": "neon",
+    "name": "Neon",
+    "homepage": "https://neon.com"
+  },
+  {
+    "id": "pocketbase",
+    "name": "PocketBase",
+    "homepage": "https://pocketbase.io"
+  },
+  {
+    "id": "sqlite",
+    "name": "SQLite",
+    "homepage": "https://www.sqlite.org"
+  },
+  {
+    "id": "postgresql",
+    "name": "PostgreSQL",
+    "homepage": "https://www.postgresql.org"
+  },
+  {
+    "id": "better-auth",
+    "name": "Better Auth",
+    "homepage": "https://www.better-auth.com"
+  },
+  {
+    "id": "keycloak",
+    "name": "Keycloak",
+    "homepage": "https://www.keycloak.org"
+  },
+  {
+    "id": "phonepe",
+    "name": "PhonePe",
+    "homepage": "https://www.phonepe.com"
+  },
+  {
+    "id": "paytm",
+    "name": "Paytm",
+    "homepage": "https://paytm.com"
+  },
+  {
+    "id": "stripe",
+    "name": "Stripe",
+    "homepage": "https://stripe.com"
+  },
+  {
+    "id": "paypal",
+    "name": "PayPal",
+    "homepage": "https://www.paypal.com"
+  },
+  {
+    "id": "lemon-squeezy",
+    "name": "Lemon Squeezy",
+    "homepage": "https://www.lemonsqueezy.com"
+  },
+  {
+    "id": "gumroad",
+    "name": "Gumroad",
+    "homepage": "https://gumroad.com"
+  },
+  {
+    "id": "render",
+    "name": "Render",
+    "homepage": "https://render.com"
+  },
+  {
+    "id": "railway",
+    "name": "Railway",
+    "homepage": "https://railway.com"
+  },
+  {
+    "id": "hostinger",
+    "name": "Hostinger",
+    "homepage": "https://www.hostinger.com"
+  },
+  {
+    "id": "posthog",
+    "name": "PostHog",
+    "homepage": "https://posthog.com"
+  },
+  {
+    "id": "matomo",
+    "name": "Matomo",
+    "homepage": "https://matomo.org"
+  },
+  {
+    "id": "typeform",
+    "name": "Typeform",
+    "homepage": "https://www.typeform.com"
+  },
+  {
+    "id": "tally",
+    "name": "Tally",
+    "homepage": "https://tally.so"
+  }
 ]

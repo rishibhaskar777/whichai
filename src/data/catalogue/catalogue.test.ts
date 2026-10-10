@@ -11,17 +11,16 @@ import {
   toolSchema,
   type Catalogue,
 } from "@/lib/schemas/catalogue";
-import { catalogue } from ".";
+import { catalogue, toolFiles } from ".";
 import goalsJson from "./goals.json";
 import jobsJson from "./jobs.json";
 import modelClassesJson from "./model-classes.json";
 import providersJson from "./providers.json";
-import toolsJson from "./tools.json";
 
 const raw = {
   providers: providersJson,
   jobs: jobsJson,
-  tools: toolsJson,
+  tools: Object.values(toolFiles).flat(),
   modelClasses: modelClassesJson,
   goals: goalsJson,
 };
@@ -44,7 +43,15 @@ describe("catalogue data files", () => {
     expect(urls.length).toBeGreaterThan(100);
     for (const url of urls) {
       expect(new URL(url).protocol).toBe("https:");
-      expect(new URL(url).pathname).toBe("/");
+    }
+    // Only projects on a shared host may point below the root.
+    for (const url of urls) {
+      const { hostname, pathname } = new URL(url);
+      const shared =
+        hostname === "github.com" ||
+        hostname === "search.google.com" ||
+        hostname.endsWith(".github.io");
+      if (!shared) expect(pathname, url).toBe("/");
     }
   });
 
@@ -101,10 +108,10 @@ describe("catalogue coverage", () => {
   });
 
   it("has a good number of tools from many companies", () => {
-    expect(catalogue.tools.length).toBeGreaterThanOrEqual(60);
-    expect(catalogue.tools.length).toBeLessThanOrEqual(90);
+    expect(catalogue.tools.length).toBeGreaterThanOrEqual(200);
+    expect(catalogue.tools.length).toBeLessThanOrEqual(300);
     const providers = new Set(catalogue.tools.map((tool) => tool.providerId));
-    expect(providers.size).toBeGreaterThanOrEqual(40);
+    expect(providers.size).toBeGreaterThanOrEqual(100);
   });
 
   it("has at least three tools for every job", () => {
@@ -164,6 +171,75 @@ describe("catalogue coverage", () => {
   });
 });
 
+describe("catalogue files", () => {
+  it("keeps each tool in the file for its first job's category", () => {
+    const jobCategory = new Map(
+      catalogue.jobs.map((job) => [job.id, job.category]),
+    );
+    for (const [category, tools] of Object.entries(toolFiles)) {
+      for (const tool of tools) {
+        expect(jobCategory.get(tool.jobs[0]!), tool.id).toBe(category);
+      }
+    }
+  });
+
+  it("has well-known general assistants from several companies", () => {
+    const ids = catalogue.tools.map((tool) => tool.id);
+    expect(ids).toEqual(
+      expect.arrayContaining([
+        "chatgpt",
+        "claude",
+        "gemini",
+        "grok",
+        "perplexity",
+        "microsoft-copilot",
+        "meta-ai",
+        "deepseek",
+      ]),
+    );
+    const assistants = catalogue.tools.filter((tool) =>
+      tool.jobs.includes("ai-assistant"),
+    );
+    expect(
+      new Set(assistants.map((tool) => tool.providerId)).size,
+    ).toBeGreaterThan(8);
+  });
+
+  it("has the new kinds and jobs", () => {
+    const kinds = new Set(catalogue.tools.map((tool) => tool.kind));
+    for (const kind of ["model", "extension", "cli"] as const) {
+      expect(kinds.has(kind), kind).toBe(true);
+    }
+    const jobs = catalogue.jobs.map((job) => job.id);
+    expect(jobs).toEqual(
+      expect.arrayContaining([
+        "run-ai-locally",
+        "browser-extension",
+        "meeting-notes-and-transcription",
+        "translation",
+        "music-generation",
+        "data-analysis",
+        "spreadsheet-ai",
+        "automation-and-workflows",
+        "chatbot-builder",
+        "pdf-and-document-chat",
+        "email-writing",
+        "social-media",
+        "seo",
+        "3d-and-design-assets",
+      ]),
+    );
+  });
+
+  it("keeps every record unverified until a person checks it", () => {
+    for (const tool of catalogue.tools) {
+      expect(tool.verified, tool.id).toBe(false);
+      expect(tool.lastVerified, tool.id).toBeNull();
+      expect(tool.pricing, tool.id).toBe("[verify]");
+    }
+  });
+});
+
 describe("tool schema rules", () => {
   const sample = catalogue.tools[0]!;
 
@@ -219,8 +295,8 @@ describe("findProblems", () => {
     expect(findProblems(withTool({ providerId: "nobody" }))).toContain(
       `tool ${firstId}: unknown provider nobody`,
     );
-    expect(findProblems(withTool({ worksWith: ["ghost"] })).join()).toMatch(
-      /unknown tool ghost/,
+    expect(findProblems(withTool({ worksWith: ["no-such-tool"] })).join()).toMatch(
+      /unknown tool no-such-tool/,
     );
   });
 

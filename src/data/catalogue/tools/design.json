@@ -1,0 +1,856 @@
+[
+  {
+    "id": "adobe-photoshop",
+    "name": "Adobe Photoshop",
+    "providerId": "adobe",
+    "jobs": ["design-tool", "image-editing"],
+    "summary": "A professional image and photo editor with layers, retouching and design tools.",
+    "kind": "app",
+    "skillLevel": "advanced",
+    "hasFreeOption": false,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "ios"],
+    "worksWith": ["adobe-firefly", "adobe-premiere-pro"],
+    "strengths": [
+      "deep photo editing and retouching",
+      "an industry standard for image work"
+    ],
+    "watchOutFor": [
+      "It is a subscription product, with a trial rather than a free plan.",
+      "It takes time to learn."
+    ],
+    "fitScores": {
+      "design-tool": 4,
+      "image-editing": 5
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.adobe.com",
+    "officialDomains": ["adobe.com"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.adobe.com/products/photoshop.html",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.adobe.com/products/photoshop.html",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "astro-themes",
+    "name": "Astro themes",
+    "providerId": "astro",
+    "jobs": ["ui-templates"],
+    "summary": "A catalogue of ready-made website themes for the Astro framework, free and paid.",
+    "kind": "template-source",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["code"],
+    "worksWith": ["astro"],
+    "strengths": [
+      "finished layouts for portfolios, blogs and business sites",
+      "fast pages with little code"
+    ],
+    "watchOutFor": [
+      "Most themes need a build step and some command-line use.",
+      "Check each theme's licence."
+    ],
+    "fitScores": {
+      "ui-templates": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://astro.build",
+    "officialDomains": ["astro.build"],
+    "getIt": {
+      "web": {
+        "url": "https://astro.build/themes/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "blender",
+    "name": "Blender",
+    "providerId": "blender",
+    "jobs": ["3d-and-design-assets", "video-editing"],
+    "summary": "A free, open-source program for 3D modelling, animation, rendering and even video editing.",
+    "kind": "app",
+    "skillLevel": "advanced",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "a full 3D suite that is free",
+      "a very large community and many tutorials"
+    ],
+    "watchOutFor": [
+      "A steep learning curve.",
+      "Rendering needs a reasonably powerful computer."
+    ],
+    "fitScores": {
+      "3d-and-design-assets": 5,
+      "video-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.blender.org",
+    "officialDomains": ["blender.org"],
+    "getIt": {
+      "windows": {
+        "url": "https://www.blender.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.blender.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "linux": {
+        "url": "https://www.blender.org/download/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "canva",
+    "name": "Canva",
+    "providerId": "canva",
+    "jobs": [
+      "design-tool",
+      "presentation-maker",
+      "resume-builder",
+      "video-editing",
+      "social-media",
+      "image-editing"
+    ],
+    "summary": "An easy browser-based design app with templates for slides, posters, resumes, social posts and simple videos.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "thousands of ready templates",
+      "design work without design training"
+    ],
+    "watchOutFor": [
+      "Some templates, images and tools are paid-only.",
+      "Popular templates are easy to recognise. Change them."
+    ],
+    "fitScores": {
+      "design-tool": 5,
+      "presentation-maker": 4,
+      "resume-builder": 3,
+      "video-editing": 3,
+      "social-media": 4,
+      "image-editing": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.canva.com",
+    "officialDomains": ["canva.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.canva.com",
+        "linkCheckedOn": null
+      },
+      "windows": {
+        "url": "https://www.canva.com/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.canva.com/download/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "ios": {
+        "url": "https://apps.apple.com/app/id897446215",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "drawio",
+    "name": "draw.io",
+    "providerId": "diagrams-net",
+    "jobs": ["diagramming"],
+    "summary": "A free diagram editor for flowcharts, network maps and UML, that works in the browser or as a desktop app.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "free, with no account needed",
+      "saves files to your device or common drives"
+    ],
+    "watchOutFor": [
+      "The interface looks dated.",
+      "Download desktop builds only from the official site."
+    ],
+    "fitScores": {
+      "diagramming": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.drawio.com",
+    "officialDomains": ["drawio.com", "diagrams.net", "github.com/jgraph"],
+    "getIt": {
+      "web": {
+        "url": "https://app.diagrams.net",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "excalidraw",
+    "name": "Excalidraw",
+    "providerId": "excalidraw",
+    "jobs": ["diagramming"],
+    "summary": "A free, open-source whiteboard with a hand-drawn look for quick sketches and diagrams.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "no sign-up needed to start",
+      "hand-drawn style that reads as a sketch"
+    ],
+    "watchOutFor": [
+      "Not a full diagramming suite.",
+      "Shared boards are only as private as the link."
+    ],
+    "fitScores": {
+      "diagramming": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://excalidraw.com",
+    "officialDomains": ["excalidraw.com", "github.com/excalidraw"],
+    "getIt": {
+      "web": {
+        "url": "https://excalidraw.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "figma",
+    "name": "Figma",
+    "providerId": "figma",
+    "jobs": ["design-tool", "diagramming"],
+    "summary": "A browser-based design tool for interface layouts, prototypes and graphics, with real-time sharing.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos"],
+    "worksWith": [],
+    "strengths": [
+      "shared, real-time design in the browser",
+      "a large library of community files"
+    ],
+    "watchOutFor": [
+      "It takes a while to learn.",
+      "Free plans limit files and team features."
+    ],
+    "fitScores": {
+      "design-tool": 5,
+      "diagramming": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.figma.com",
+    "officialDomains": ["figma.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.figma.com",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "windows": {
+        "url": "https://www.figma.com/downloads/",
+        "linkCheckedOn": "2026-10-10"
+      },
+      "macos": {
+        "url": "https://www.figma.com/downloads/",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "framer",
+    "name": "Framer",
+    "providerId": "framer",
+    "jobs": ["ui-templates", "design-tool", "website-builder"],
+    "summary": "A visual website builder and design tool with templates, publishing built in.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "includes": ["hosting"],
+    "strengths": [
+      "designing and publishing a site visually",
+      "built-in animation effects"
+    ],
+    "watchOutFor": [
+      "Your site lives on its platform. Check what you can export.",
+      "Custom domains may need a paid plan."
+    ],
+    "fitScores": {
+      "ui-templates": 4,
+      "design-tool": 3,
+      "website-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.framer.com",
+    "officialDomains": ["framer.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.framer.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "google-fonts",
+    "name": "Google Fonts",
+    "providerId": "google",
+    "jobs": ["stock-assets"],
+    "summary": "A free library of open-licensed typefaces you can use on websites and in print.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": ["free, open-licensed fonts", "easy to use on a website"],
+    "watchOutFor": [
+      "Loading fonts from Google can raise privacy questions. You can self-host them.",
+      "Check the licence of each family."
+    ],
+    "fitScores": {
+      "stock-assets": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://fonts.google.com",
+    "officialDomains": ["fonts.google.com", "google.com"],
+    "getIt": {
+      "web": {
+        "url": "https://fonts.google.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "inkscape",
+    "name": "Inkscape",
+    "providerId": "inkscape",
+    "jobs": ["design-tool"],
+    "summary": "A free, open-source vector graphics editor for logos, icons and illustrations.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["windows", "macos", "linux"],
+    "worksWith": [],
+    "strengths": [
+      "free vector drawing for logos and icons",
+      "exports clean SVG files"
+    ],
+    "watchOutFor": [
+      "The interface takes some learning.",
+      "Download it only from the official site."
+    ],
+    "fitScores": {
+      "design-tool": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://inkscape.org",
+    "officialDomains": ["inkscape.org"],
+    "getIt": {
+      "windows": {
+        "url": "https://inkscape.org/release/",
+        "linkCheckedOn": null
+      },
+      "macos": {
+        "url": "https://inkscape.org/release/",
+        "linkCheckedOn": null
+      },
+      "linux": {
+        "url": "https://inkscape.org/release/",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "lucide",
+    "name": "Lucide",
+    "providerId": "lucide",
+    "jobs": ["stock-assets"],
+    "summary": "A free, open-source icon set with a consistent style, available for many frameworks.",
+    "kind": "library",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": [],
+    "strengths": [
+      "one consistent icon style",
+      "packages for React, Vue and others"
+    ],
+    "watchOutFor": [
+      "Icons only, not illustrations.",
+      "Import only the icons you use to keep pages small."
+    ],
+    "fitScores": {
+      "stock-assets": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://lucide.dev",
+    "officialDomains": ["lucide.dev", "github.com/lucide-icons"],
+    "getIt": {
+      "cliInstall": "npm install lucide-react"
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "mermaid",
+    "name": "Mermaid",
+    "providerId": "mermaid",
+    "jobs": ["diagramming"],
+    "summary": "A free text-based way to write flowcharts and sequence diagrams that many docs sites and editors render for you.",
+    "kind": "library",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web", "code"],
+    "worksWith": [],
+    "strengths": [
+      "diagrams as text you can keep in Git",
+      "supported in GitHub and many editors"
+    ],
+    "watchOutFor": [
+      "You write syntax rather than drag shapes.",
+      "Complex layouts can need tweaking."
+    ],
+    "fitScores": {
+      "diagramming": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://mermaid.js.org",
+    "officialDomains": [
+      "mermaid.js.org",
+      "mermaid.live",
+      "github.com/mermaid-js"
+    ],
+    "getIt": {
+      "web": {
+        "url": "https://mermaid.live",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "miro",
+    "name": "Miro",
+    "providerId": "miro",
+    "jobs": ["diagramming", "design-tool"],
+    "summary": "An online whiteboard for brainstorming, mind maps, flowcharts and workshops with a team.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "windows", "macos", "android", "ios"],
+    "worksWith": [],
+    "strengths": [
+      "an endless shared canvas",
+      "templates for workshops and maps"
+    ],
+    "watchOutFor": [
+      "Free use limits boards. Check the current rules.",
+      "Can get cluttered. Keep boards focused."
+    ],
+    "fitScores": {
+      "diagramming": 4,
+      "design-tool": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://miro.com",
+    "officialDomains": ["miro.com"],
+    "getIt": {
+      "web": {
+        "url": "https://miro.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "penpot",
+    "name": "Penpot",
+    "providerId": "penpot",
+    "jobs": ["design-tool"],
+    "summary": "An open-source design and prototyping tool that runs in the browser.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "open-source design that runs in the browser",
+      "layouts that map to web code"
+    ],
+    "watchOutFor": [
+      "The community and plug-in library are smaller than the biggest tools.",
+      "Self-hosting means you run the server."
+    ],
+    "fitScores": {
+      "design-tool": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://penpot.app",
+    "officialDomains": ["penpot.app", "github.com/penpot"],
+    "getIt": {
+      "web": {
+        "url": "https://penpot.app",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "pexels",
+    "name": "Pexels",
+    "providerId": "pexels",
+    "jobs": ["stock-assets"],
+    "summary": "A library of free stock photos and videos under the Pexels licence.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": ["free photos and videos", "no sign-up needed to download"],
+    "watchOutFor": [
+      "Read the licence for what is allowed.",
+      "People or brands in photos may need extra care."
+    ],
+    "fitScores": {
+      "stock-assets": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.pexels.com",
+    "officialDomains": ["pexels.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.pexels.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "pixabay",
+    "name": "Pixabay",
+    "providerId": "pixabay",
+    "jobs": ["stock-assets"],
+    "summary": "A library of free images, illustrations, videos and music under the Pixabay licence.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "images, video and music in one place",
+      "free to use under its licence"
+    ],
+    "watchOutFor": [
+      "Read the licence for what is allowed.",
+      "Quality and style vary a lot."
+    ],
+    "fitScores": {
+      "stock-assets": 3
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://pixabay.com",
+    "officialDomains": ["pixabay.com"],
+    "getIt": {
+      "web": {
+        "url": "https://pixabay.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "poly-haven",
+    "name": "Poly Haven",
+    "providerId": "poly-haven",
+    "jobs": ["3d-and-design-assets"],
+    "summary": "A free library of 3D models, textures and HDRI lighting images released for anyone to use.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "free and released for any use",
+      "high-quality textures and lighting images"
+    ],
+    "watchOutFor": ["Check the licence on the site.", "Files are large."],
+    "fitScores": {
+      "3d-and-design-assets": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://polyhaven.com",
+    "officialDomains": ["polyhaven.com"],
+    "getIt": {
+      "web": {
+        "url": "https://polyhaven.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "sketchfab",
+    "name": "Sketchfab",
+    "providerId": "sketchfab",
+    "jobs": ["3d-and-design-assets"],
+    "summary": "A website for viewing, sharing and downloading 3D models, many under open licences.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a large library of 3D models",
+      "embed viewers on a web page"
+    ],
+    "watchOutFor": [
+      "Each model has its own licence. Read it before use.",
+      "Downloads may need an account."
+    ],
+    "fitScores": {
+      "3d-and-design-assets": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://sketchfab.com",
+    "officialDomains": ["sketchfab.com"],
+    "getIt": {
+      "web": {
+        "url": "https://sketchfab.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "spline",
+    "name": "Spline",
+    "providerId": "spline",
+    "jobs": ["3d-and-design-assets"],
+    "summary": "A browser-based 3D design tool for making interactive 3D scenes that you can put on a website.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web", "macos", "windows"],
+    "worksWith": [],
+    "strengths": ["design 3D in the browser", "export scenes for the web"],
+    "watchOutFor": [
+      "Heavy scenes can slow a page. Test on a phone.",
+      "Free use limits projects. Check the current rules."
+    ],
+    "fitScores": {
+      "3d-and-design-assets": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://spline.design",
+    "officialDomains": ["spline.design"],
+    "getIt": {
+      "web": {
+        "url": "https://spline.design",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "unsplash",
+    "name": "Unsplash",
+    "providerId": "unsplash",
+    "jobs": ["stock-assets"],
+    "summary": "A large library of free photos you can download and use under its own licence.",
+    "kind": "service",
+    "skillLevel": "beginner",
+    "hasFreeOption": true,
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": [
+      "a large library of free photos",
+      "no sign-up needed to download"
+    ],
+    "watchOutFor": [
+      "Read the licence. It is not the same as public domain.",
+      "People or brands in photos may need extra care."
+    ],
+    "fitScores": {
+      "stock-assets": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://unsplash.com",
+    "officialDomains": ["unsplash.com"],
+    "getIt": {
+      "web": {
+        "url": "https://unsplash.com",
+        "linkCheckedOn": null
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "webflow",
+    "name": "Webflow",
+    "providerId": "webflow",
+    "jobs": ["ui-templates", "website-builder"],
+    "summary": "A visual website builder that gives detailed control over layout without writing code.",
+    "kind": "app",
+    "skillLevel": "intermediate",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "includes": ["hosting"],
+    "strengths": [
+      "detailed layout control without code",
+      "built-in hosting and content editing"
+    ],
+    "watchOutFor": [
+      "It has a learning curve.",
+      "Hosting and site plans have limits you should check."
+    ],
+    "fitScores": {
+      "ui-templates": 4,
+      "website-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://webflow.com",
+    "officialDomains": ["webflow.com"],
+    "getIt": {
+      "web": {
+        "url": "https://webflow.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "whimsical",
+    "name": "Whimsical",
+    "providerId": "whimsical",
+    "jobs": ["diagramming"],
+    "summary": "A clean tool for flowcharts, wireframes, mind maps and docs that is quick to learn.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "strengths": ["fast, tidy flowcharts and mind maps", "simple wireframes"],
+    "watchOutFor": [
+      "Free use limits boards. Check the current rules.",
+      "Fewer drawing options than a full design tool."
+    ],
+    "fitScores": {
+      "diagramming": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://whimsical.com",
+    "officialDomains": ["whimsical.com"],
+    "getIt": {
+      "web": {
+        "url": "https://whimsical.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  },
+  {
+    "id": "wix",
+    "name": "Wix",
+    "providerId": "wix",
+    "jobs": ["ui-templates", "website-builder"],
+    "summary": "A drag-and-drop website builder with many templates and built-in hosting.",
+    "kind": "app",
+    "skillLevel": "beginner",
+    "hasFreeOption": "verify",
+    "pricing": "[verify]",
+    "platforms": ["web"],
+    "worksWith": [],
+    "includes": ["hosting"],
+    "strengths": [
+      "a drag-and-drop editor with many templates",
+      "hosting, forms and shop tools in one place"
+    ],
+    "watchOutFor": [
+      "Moving your site to another service later can be difficult.",
+      "Your own domain may need a paid plan."
+    ],
+    "fitScores": {
+      "ui-templates": 4,
+      "website-builder": 4
+    },
+    "scoreSource": "editorial-estimate",
+    "officialUrl": "https://www.wix.com",
+    "officialDomains": ["wix.com"],
+    "getIt": {
+      "web": {
+        "url": "https://www.wix.com",
+        "linkCheckedOn": "2026-10-10"
+      }
+    },
+    "verified": false,
+    "lastVerified": null
+  }
+]

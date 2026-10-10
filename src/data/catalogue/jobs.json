@@ -296,5 +296,335 @@
     "description": "A form that sends your visitors' messages to your email.",
     "category": "build",
     "keywords": ["contact form", "forms", "survey", "feedback form"]
+  },
+  {
+    "id": "run-ai-locally",
+    "name": "Run AI on your own computer",
+    "description": "Running AI models on your own computer, so your text stays on your machine and it can work offline.",
+    "category": "ai",
+    "keywords": [
+      "local ai",
+      "offline ai",
+      "run locally",
+      "on my computer",
+      "private ai",
+      "open source model",
+      "local llm",
+      "self host ai"
+    ]
+  },
+  {
+    "id": "browser-extension",
+    "name": "AI in your browser",
+    "description": "Browsers and extensions that add AI help to the pages you read and the forms you fill.",
+    "category": "ai",
+    "keywords": [
+      "browser extension",
+      "chrome extension",
+      "summarise page",
+      "summarize page",
+      "browser assistant",
+      "ai browser"
+    ]
+  },
+  {
+    "id": "code-editor",
+    "name": "Code editor",
+    "description": "The program you write code in, with search, a terminal and extensions.",
+    "category": "build",
+    "keywords": ["code editor", "ide", "text editor for code", "vs code"]
+  },
+  {
+    "id": "version-control",
+    "name": "Version control",
+    "description": "Tracking changes to your code and sharing it with other people, usually with Git.",
+    "category": "build",
+    "keywords": [
+      "version control",
+      "source control",
+      "repository",
+      "git hosting"
+    ]
+  },
+  {
+    "id": "website-builder",
+    "name": "Website builder",
+    "description": "A visual tool that makes and hosts a website without writing code.",
+    "category": "build",
+    "keywords": [
+      "website builder",
+      "no code website",
+      "site builder",
+      "drag and drop website"
+    ]
+  },
+  {
+    "id": "chatbot-builder",
+    "name": "Chatbot builder",
+    "description": "Tools for making a chatbot or assistant for your own site, shop or documents.",
+    "category": "build",
+    "keywords": [
+      "build a chatbot",
+      "chatbot for my website",
+      "customer support bot",
+      "whatsapp bot",
+      "support chatbot"
+    ]
+  },
+  {
+    "id": "payments-global",
+    "name": "Payments (global)",
+    "description": "Taking card payments and subscriptions from customers in many countries.",
+    "category": "build",
+    "keywords": [
+      "international payments",
+      "accept cards",
+      "subscription billing",
+      "sell online internationally",
+      "checkout page"
+    ]
+  },
+  {
+    "id": "automation-and-workflows",
+    "name": "Automation and workflows",
+    "description": "Connecting apps so that one action starts another, without writing code.",
+    "category": "productivity",
+    "keywords": ["automate", "automation", "workflow", "connect apps", "zapier"]
+  },
+  {
+    "id": "meeting-notes-and-transcription",
+    "name": "Meeting notes and transcription",
+    "description": "Turning recordings and calls into text, summaries and action items.",
+    "category": "productivity",
+    "keywords": [
+      "meeting notes",
+      "transcribe",
+      "transcription",
+      "transcript",
+      "minutes of meeting",
+      "speech to text"
+    ]
+  },
+  {
+    "id": "translation",
+    "name": "Translation",
+    "description": "Translating text, documents and speech between languages.",
+    "category": "productivity",
+    "keywords": [
+      "translation",
+      "translator",
+      "translate document",
+      "language translation",
+      "hindi translation"
+    ]
+  },
+  {
+    "id": "email-writing",
+    "name": "Email and inbox",
+    "description": "Writing, replying to and sorting email faster.",
+    "category": "productivity",
+    "keywords": ["email", "emails", "write email", "inbox", "cold email"]
+  },
+  {
+    "id": "spreadsheet-ai",
+    "name": "Spreadsheets",
+    "description": "Spreadsheets with formula help and AI, for tables, budgets and quick analysis.",
+    "category": "productivity",
+    "keywords": ["spreadsheet", "excel", "google sheets", "formulas", "formula"]
+  },
+  {
+    "id": "task-and-project-management",
+    "name": "Tasks and projects",
+    "description": "Keeping track of to-dos, deadlines and projects, alone or with a team.",
+    "category": "productivity",
+    "keywords": [
+      "to-do",
+      "todo",
+      "task manager",
+      "project management",
+      "kanban",
+      "project board",
+      "planner"
+    ]
+  },
+  {
+    "id": "seo",
+    "name": "Search visibility (SEO)",
+    "description": "Finding out how a site shows up in search and what to change.",
+    "category": "productivity",
+    "keywords": [
+      "seo",
+      "search ranking",
+      "keyword research",
+      "rank on google",
+      "search engine optimisation",
+      "search engine optimization"
+    ]
+  },
+  {
+    "id": "data-analysis",
+    "name": "Data analysis",
+    "description": "Exploring a table of data, making charts and finding patterns.",
+    "category": "research",
+    "keywords": [
+      "data analysis",
+      "analyse data",
+      "analyze data",
+      "charts",
+      "dashboard",
+      "visualise data",
+      "visualize data",
+      "csv"
+    ]
+  },
+  {
+    "id": "pdf-and-document-chat",
+    "name": "Chat with documents",
+    "description": "Asking questions of a PDF or a set of documents and getting answers with page references.",
+    "category": "research",
+    "keywords": [
+      "chat with pdf",
+      "pdf chat",
+      "ask a document",
+      "document questions",
+      "summarise pdf",
+      "summarize pdf"
+    ]
+  },
+  {
+    "id": "music-generation",
+    "name": "Music generation",
+    "description": "Making songs, background music and sound beds from a text description or a few settings.",
+    "category": "media",
+    "keywords": [
+      "music",
+      "song",
+      "ai music",
+      "background music",
+      "jingle",
+      "soundtrack"
+    ]
+  },
+  {
+    "id": "social-media",
+    "name": "Social media",
+    "description": "Planning, scheduling and repurposing posts for social platforms.",
+    "category": "media",
+    "keywords": [
+      "social media",
+      "instagram",
+      "linkedin posts",
+      "schedule posts",
+      "reels",
+      "content calendar"
+    ]
+  },
+  {
+    "id": "image-editing",
+    "name": "Photo and image editing",
+    "description": "Fixing, retouching, resizing and cutting out parts of photos and images.",
+    "category": "media",
+    "keywords": [
+      "edit photo",
+      "photo editing",
+      "remove background",
+      "background remover",
+      "retouch",
+      "upscale image",
+      "photo editor"
+    ]
+  },
+  {
+    "id": "screen-recording",
+    "name": "Screen recording",
+    "description": "Recording your screen and voice for tutorials, demos and walkthroughs.",
+    "category": "media",
+    "keywords": [
+      "screen recording",
+      "record screen",
+      "screencast",
+      "record my screen",
+      "tutorial video"
+    ]
+  },
+  {
+    "id": "3d-and-design-assets",
+    "name": "3D and models",
+    "description": "Making or finding 3D models and scenes for sites, games and product mock-ups.",
+    "category": "design",
+    "keywords": [
+      "3d",
+      "3d model",
+      "3d modelling",
+      "blender",
+      "mockup",
+      "3d asset"
+    ]
+  },
+  {
+    "id": "stock-assets",
+    "name": "Stock photos, icons and fonts",
+    "description": "Free and licensed pictures, icon sets and typefaces to use in your own designs.",
+    "category": "design",
+    "keywords": [
+      "stock photo",
+      "stock photos",
+      "icons",
+      "fonts",
+      "free images",
+      "illustrations",
+      "icon set"
+    ]
+  },
+  {
+    "id": "diagramming",
+    "name": "Diagrams and whiteboards",
+    "description": "Drawing flowcharts, mind maps and sketches to think or explain.",
+    "category": "design",
+    "keywords": ["diagram", "flowchart", "mind map", "whiteboard"]
+  },
+  {
+    "id": "online-courses",
+    "name": "Online courses",
+    "description": "Structured courses and lessons you can follow at your own pace.",
+    "category": "learning",
+    "keywords": [
+      "course",
+      "courses",
+      "learn online",
+      "certificate",
+      "mooc",
+      "tutorial",
+      "learn to code"
+    ]
+  },
+  {
+    "id": "study-help-and-math",
+    "name": "Study help and maths",
+    "description": "Working through maths and science problems step by step, and graphing them.",
+    "category": "learning",
+    "keywords": [
+      "math",
+      "maths homework",
+      "solve equation",
+      "homework help",
+      "calculator",
+      "graphing",
+      "algebra"
+    ]
+  },
+  {
+    "id": "language-learning",
+    "name": "Language learning",
+    "description": "Practising a new language with lessons, vocabulary and conversation.",
+    "category": "learning",
+    "keywords": [
+      "learn a language",
+      "learn english",
+      "learn french",
+      "language learning",
+      "vocabulary",
+      "spoken english"
+    ]
   }
 ]
