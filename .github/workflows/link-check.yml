@@ -1,7 +1,8 @@
 name: Catalogue links
 
-# Weekly check of every address in the tool catalogue. When something is broken
-# it opens one issue, or updates the open one. It never changes the data.
+# Weekly check of every address in the tool catalogue and of every news feed.
+# When something is broken it opens one issue, or updates the open one, with a
+# section for each. It never changes the data.
 on:
   schedule:
     - cron: "23 4 * * 1"
@@ -23,26 +24,57 @@ jobs:
         with:
           node-version-file: .nvmrc
 
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
       - name: Check links
-        id: check
+        id: links
         run: |
           set +e
           node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-links.ts > report.txt
           echo "status=$?" >> "$GITHUB_OUTPUT"
 
+      - name: Check news sources
+        id: news
+        run: |
+          set +e
+          node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-news.ts > news.txt
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+
       - name: Open, update or close the issue
         env:
           TITLE: Broken catalogue links
-          STATUS: ${{ steps.check.outputs.status }}
+          LINKS_STATUS: ${{ steps.links.outputs.status }}
+          NEWS_STATUS: ${{ steps.news.outputs.status }}
         run: |
           number=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number // empty')
-          if [ "$STATUS" != "0" ]; then
+          if [ "$LINKS_STATUS" != "0" ] || [ "$NEWS_STATUS" != "0" ]; then
             {
-              echo "The weekly link check found problems. Fix the address in \`src/data/catalogue/tools/\`, or remove the link if you cannot confirm the official one. Do not set \`verified\`; see docs/VERIFYING-DATA.md."
+              echo "The weekly check found problems. It never changes the data."
               echo
-              echo '```text'
-              head -c 60000 report.txt
-              echo '```'
+              echo "## Catalogue links"
+              echo
+              if [ "$LINKS_STATUS" != "0" ]; then
+                echo "Fix the address in \`src/data/catalogue/tools/\`, or remove the link if you cannot confirm the official one. Do not set \`verified\`; see docs/VERIFYING-DATA.md."
+                echo
+                echo '```text'
+                head -c 40000 report.txt
+                echo '```'
+              else
+                echo "No broken links."
+              fi
+              echo
+              echo "## News sources"
+              echo
+              if [ "$NEWS_STATUS" != "0" ]; then
+                echo "Fix or remove the source in \`src/data/news/sources.json\`; see docs/NEWS-SOURCES.md."
+                echo
+                echo '```text'
+                head -c 15000 news.txt
+                echo '```'
+              else
+                echo "All news sources are healthy."
+              fi
               echo
               echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
             } > issue.md
@@ -52,5 +84,5 @@ jobs:
               gh issue create --title "$TITLE" --body-file issue.md
             fi
           elif [ -n "$number" ]; then
-            gh issue close "$number" --comment "The weekly link check found no broken links."
+            gh issue close "$number" --comment "The weekly check found no broken links and no unhealthy news sources."
           fi
