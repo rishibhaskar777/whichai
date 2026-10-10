@@ -1,3 +1,4 @@
+import { readBlock, writeBlock } from "./hidden-block.ts";
 import { z } from "zod";
 import type { Admission } from "./admission.ts";
 import { starGrowth } from "./admission.ts";
@@ -198,21 +199,15 @@ export function encodeWatchlist(watchlist: Watchlist): string {
       q: entry.keys.slice(0, 2),
       u: entry.until,
     })),
-  })
-    .replace(/</g, "\\u003c")
-    .replace(/>/g, "\\u003e")
-    .replace(/--/g, "-\\u002d");
-  return `<!-- ${MARKER} ${json} -->`;
+  });
+  return writeBlock(MARKER, json);
 }
 
 /** The last block in a body, validated again. Null when it cannot be read. */
 export function decodeWatchlist(body: string): Watchlist | null {
-  const start = body.lastIndexOf(`<!-- ${MARKER} `);
-  if (start < 0) return null;
-  const end = body.indexOf(" -->", start);
-  if (end < 0) return null;
+  const json = readBlock(body, MARKER);
+  if (json === null) return null;
   try {
-    const json = body.slice(start + `<!-- ${MARKER} `.length, end);
     const parsed = watchlistSchema.safeParse(JSON.parse(json));
     if (!parsed.success) return null;
     return {

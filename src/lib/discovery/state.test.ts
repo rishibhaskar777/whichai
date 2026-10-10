@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { countOccurrences, hasTagStart, removeBetween } from "./hidden-block";
 import { evaluateAdmission } from "./admission";
 import { cleanCandidate } from "./clean";
 import configJson from "@/data/discovery/config.json";
@@ -53,11 +54,12 @@ function view(candidate: CandidateState) {
 
 /** The body with code spans, code blocks and the hidden block removed. */
 function outsideCode(body: string): string {
-  return body
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(/```[\s\S]*?```/g, "")
-    .replace(/`[^`\n]*`/g, "")
-    .replace(/<https:\/\/[^>\s]*>/g, "");
+  const fence = "```";
+  const tick = "`";
+  const withoutBlock = removeBetween(body, "<!--", "-->");
+  const withoutFences = removeBetween(withoutBlock, fence, fence);
+  const withoutSpans = removeBetween(withoutFences, tick, tick);
+  return removeBetween(withoutSpans, "<https://", ">");
 }
 
 describe("the hidden state block", () => {
@@ -180,14 +182,14 @@ describe("a body made from hostile data", () => {
     expect(visible).not.toMatch(/@\w/);
     expect(visible).not.toMatch(/#\d/);
     expect(visible).not.toMatch(/\]\(/);
-    expect(visible).not.toMatch(/<\w/);
+    expect(hasTagStart(visible)).toBe(false);
     expect(visible).not.toMatch(/https?:\/\//);
   });
 
   it("contains no raw script, no control character and one state block", () => {
     expect(body).not.toContain("<script");
     expect(body).not.toMatch(/[\u0000-\u0008\u000b\u000c\u000e-\u001f‮]/);
-    expect(body.match(/<!-- whichai-candidate /g)).toHaveLength(1);
+    expect(countOccurrences(body, "<!-- whichai-candidate ")).toBe(1);
     expect(decodeState(body)?.name).toBe(candidate.name);
   });
 

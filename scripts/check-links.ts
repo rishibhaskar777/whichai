@@ -128,8 +128,22 @@ async function readTitle(response: Response): Promise<string | null> {
   }
   await reader.cancel().catch(() => undefined);
   const text = Buffer.concat(chunks).toString("utf8");
-  const match = /<title[^>]*>([^<]*)<\/title>/i.exec(text);
-  return match?.[1]?.replace(/\s+/g, " ").trim() ?? null;
+  return titleOf(text);
+}
+
+/** The text of the first `<title>` element, found without a pattern. */
+function titleOf(html: string): string | null {
+  const lower = html.toLowerCase();
+  const open = lower.indexOf("<title");
+  if (open < 0) return null;
+  const next = lower[open + "<title".length];
+  if (next !== ">" && (next === undefined || next.trim() !== "")) return null;
+  const start = lower.indexOf(">", open);
+  const end = start < 0 ? -1 : lower.indexOf("</title>", start);
+  if (end < 0) return null;
+  const inner = html.slice(start + 1, end);
+  if (inner.includes("<")) return null;
+  return inner.replace(/\s+/g, " ").trim();
 }
 
 async function request(url: string, method: "HEAD" | "GET"): Promise<Fetched> {

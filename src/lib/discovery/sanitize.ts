@@ -21,7 +21,8 @@ export function cleanText(input: unknown, max: number): string {
     .slice(0, max * 4)
     .normalize("NFKC")
     .replace(INVISIBLE_ALL, " ")
-    .replace(/[<>]/g, " ")
+    .replaceAll("<", " ")
+    .replaceAll(">", " ")
     .replace(/`/g, "'")
     .replace(/\s+/g, " ")
     .trim();
@@ -79,8 +80,8 @@ export function safeHttpsUrl(input: unknown): string | null {
     .replace(/`/g, "%60")
     .replace(/\(/g, "%28")
     .replace(/\)/g, "%29")
-    .replace(/</g, "%3C")
-    .replace(/>/g, "%3E");
+    .replaceAll("<", "%3C")
+    .replaceAll(">", "%3E");
   return href.length > URL_LENGTH ? null : href;
 }
 

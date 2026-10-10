@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { removeBetween } from "./hidden-block";
 import configJson from "@/data/discovery/config.json";
 import { parseConfig } from "./config";
 import type { WatchEntry, Watchlist } from "./types";
@@ -150,9 +151,7 @@ describe("the visible part", () => {
       list([entry(1, { name: "@octocat #12 [x](https://evil.example)" })]),
       view,
     );
-    const visible = body
-      .replace(/<!--[\s\S]*?-->/g, "")
-      .replace(/`[^`\n]*`/g, "");
+    const visible = removeBetween(removeBetween(body, "<!--", "-->"), "`", "`");
     expect(visible).not.toMatch(/@\w/);
     expect(visible).not.toMatch(/#\d/);
     expect(visible).not.toMatch(/\]\(/);

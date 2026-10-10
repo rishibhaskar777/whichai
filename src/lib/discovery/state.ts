@@ -1,3 +1,4 @@
+import { readBlock, writeBlock } from "./hidden-block.ts";
 import { z } from "zod";
 import type { Admission } from "./admission.ts";
 import { starGrowth } from "./admission.ts";
@@ -82,11 +83,7 @@ const stateSchema = z.strictObject({
  * unicode escapes so no text inside it can end the comment.
  */
 export function encodeState(state: CandidateState): string {
-  const json = JSON.stringify(state)
-    .replace(/</g, "\\u003c")
-    .replace(/>/g, "\\u003e")
-    .replace(/--/g, "-\\u002d");
-  return `<!-- ${MARKER} ${json} -->`;
+  return writeBlock(MARKER, JSON.stringify(state));
 }
 
 /**
@@ -94,11 +91,8 @@ export function encodeState(state: CandidateState): string {
  * validated again, so an edited or hostile body gives null, not a crash.
  */
 export function decodeState(body: string): CandidateState | null {
-  const start = body.lastIndexOf(`<!-- ${MARKER} `);
-  if (start < 0) return null;
-  const end = body.indexOf(" -->", start);
-  if (end < 0) return null;
-  const json = body.slice(start + `<!-- ${MARKER} `.length, end);
+  const json = readBlock(body, MARKER);
+  if (json === null) return null;
   try {
     const parsed = stateSchema.safeParse(JSON.parse(json));
     return parsed.success ? (parsed.data as CandidateState) : null;
