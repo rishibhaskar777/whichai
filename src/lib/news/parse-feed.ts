@@ -267,6 +267,24 @@ function readEntry(
   };
 }
 
+/** True when the text opens an `rss`, `feed` or `rdf:RDF` element. */
+function startsLikeFeed(head: string): boolean {
+  const lower = head.toLowerCase();
+  for (const tag of ["<rss", "<feed", "<rdf:rdf"]) {
+    for (
+      let at = lower.indexOf(tag);
+      at >= 0;
+      at = lower.indexOf(tag, at + 1)
+    ) {
+      const next = lower[at + tag.length];
+      if (next === ">" || (next !== undefined && next.trim() === "")) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 /**
  * Items from one feed, newest first, or null when the text is not a feed at
  * all (an HTML error page, a login wall). An empty feed is an empty array.
@@ -277,7 +295,7 @@ export function parseFeed(
   options: ParseOptions,
 ): NewsItem[] | null {
   const text = stripDoctype(xml.slice(0, MAX_FEED_CHARS));
-  if (!/<(rss|feed|rdf:RDF)[\s>]/i.test(text.slice(0, 20_000))) return null;
+  if (!startsLikeFeed(text.slice(0, 20_000))) return null;
 
   const parsed = parseWithRepair(text);
   const root = parsed === null ? null : rootOf(parsed);

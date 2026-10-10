@@ -1,0 +1,152 @@
+{
+  "minAgeDays": 30,
+  "maxNewIssuesPerRun": 5,
+  "maxSignalAgeDays": 21,
+  "maxRefreshLookups": 30,
+  "moderate": {
+    "githubStars": 300,
+    "githubStarGrowth": 100,
+    "hfLikes": 100,
+    "hfDownloads": 5000,
+    "hnPoints": 50,
+    "independentSources": 2
+  },
+  "strong": {
+    "githubStars": 1000,
+    "githubStarGrowth": 500,
+    "hfLikes": 500,
+    "hfDownloads": 50000,
+    "hnPoints": 150
+  },
+  "required": {
+    "strongSignals": 1,
+    "moderateSignals": 2
+  },
+  "watchlist": {
+    "maxTracked": 100,
+    "maxBodyChars": 60000,
+    "expireAfterDays": 90,
+    "reAddAfterDays": 180,
+    "summaryRows": 20
+  },
+  "github": {
+    "topics": ["ai", "llm", "generative-ai", "ai-agents", "chatgpt"],
+    "createdWithinDays": 120,
+    "perQuery": 30,
+    "minStars": 500,
+    "minStarsPerDay": 5,
+    "toolWords": [
+      "app",
+      "tool",
+      "assistant",
+      "editor",
+      "extension",
+      "plugin",
+      "cli",
+      "desktop",
+      "platform",
+      "studio",
+      "agent",
+      "client",
+      "ide",
+      "browser",
+      "generator",
+      "dashboard",
+      "chatbot",
+      "copilot",
+      "workspace",
+      "sdk"
+    ],
+    "excludeWords": [
+      "awesome",
+      "tutorial",
+      "tutorials",
+      "course",
+      "courses",
+      "book",
+      "books",
+      "handbook",
+      "cookbook",
+      "guide",
+      "guides",
+      "learning",
+      "resources",
+      "roadmap",
+      "cheatsheet",
+      "cheat-sheet",
+      "interview",
+      "leetcode",
+      "dotfiles",
+      "paper",
+      "papers",
+      "arxiv",
+      "survey",
+      "dataset",
+      "datasets",
+      "benchmark",
+      "benchmarks",
+      "prompts",
+      "workshop",
+      "notes",
+      "list",
+      "collection"
+    ]
+  },
+  "huggingface": {
+    "createdWithinDays": 120,
+    "perList": 100,
+    "minLikes": 200,
+    "minDownloads": 10000,
+    "keepTop": 15,
+    "individualMinLikes": 1000,
+    "maxOrganisationLookups": 30,
+    "derivativeTagPrefixes": [
+      "base_model:finetune:",
+      "base_model:quantized:",
+      "base_model:merge:",
+      "base_model:adapter:",
+      "base_model:"
+    ],
+    "derivativeTags": [
+      "gguf",
+      "merge",
+      "mergekit",
+      "lora",
+      "adapter",
+      "peft",
+      "awq",
+      "gptq",
+      "quantized",
+      "4-bit",
+      "8-bit",
+      "bitsandbytes"
+    ],
+    "derivativeNameWords": [
+      "gguf",
+      "awq",
+      "gptq",
+      "lora",
+      "merge",
+      "merged",
+      "finetune",
+      "finetuned",
+      "ft",
+      "quantized",
+      "fp8",
+      "int4",
+      "int8",
+      "uncensored",
+      "abliterated"
+    ]
+  },
+  "hackernews": {
+    "queries": ["AI", "LLM", "GPT", "agent"],
+    "withinDays": 60,
+    "perQuery": 30,
+    "minPoints": 100,
+    "minComments": 20
+  },
+  "news": {
+    "withinDays": 45
+  }
+}

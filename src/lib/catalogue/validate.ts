@@ -5,13 +5,13 @@ import {
   isOnToolDomain,
   isShortener,
   toolLinks,
-} from "./links";
+} from "./links.ts";
 import {
   GOAL_IDS,
   MODEL_CLASS_IDS,
   type Catalogue,
   type Tool,
-} from "@/lib/schemas/catalogue";
+} from "../schemas/catalogue.ts";
 
 const CONCRETE_PRICE =
   /(?:₹|\$|€|£|\brs\.?|\binr|\busd)\s*\d|\b\d[\d,.]*\s*(?:rupees|dollars|usd|inr|\/\s*(?:mo|month|year|yr))\b/i;
@@ -50,11 +50,16 @@ function duplicates(ids: readonly string[]): string[] {
 
 /**
  * An official link is a root page, so it cannot go stale when a path moves.
- * A few hosts have no root page that shows a tool: GitHub and GitHub Pages
- * hold many projects, and Google's search tools live under one host. Those may
- * use a path.
+ * A few hosts have no root page that shows a tool: GitHub, GitHub Pages and
+ * Hugging Face hold many projects, and Google's search tools live under one
+ * host. Those may use a path, for a tool's link and for a provider's homepage.
  */
-const SHARED_HOSTS = ["github.com", "github.io", "search.google.com"];
+const SHARED_HOSTS = [
+  "github.com",
+  "github.io",
+  "huggingface.co",
+  "search.google.com",
+];
 
 function isRootPageOrProjectPage(url: string): boolean {
   const { hostname, pathname } = new URL(url);
@@ -175,7 +180,7 @@ export function findProblems(catalogue: Catalogue): string[] {
     if (!usedProviders.has(provider.id)) {
       problems.push(`provider ${provider.id}: no tool uses it`);
     }
-    if (new URL(provider.homepage).pathname !== "/") {
+    if (!isRootPageOrProjectPage(provider.homepage)) {
       problems.push(`provider ${provider.id}: homepage must be a root page`);
     }
   }

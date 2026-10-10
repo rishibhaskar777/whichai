@@ -1,0 +1,77 @@
+{
+  "hits": [
+    {
+      "objectID": "50018817",
+      "title": "Show HN: Let your AI agents paint big arrows, boxes and text on your screen",
+      "url": "https://github.com/franzenzenhofer/big-arrow-on-the-screen",
+      "points": 404,
+      "num_comments": 184,
+      "author": "franze"
+    },
+    {
+      "objectID": "50030001",
+      "title": "Show HN: Notefox – turn meeting notes into slides",
+      "url": "https://notefox.app/",
+      "points": 120,
+      "num_comments": 31,
+      "author": "maker1"
+    },
+    {
+      "objectID": "50030002",
+      "title": "Show HN: A study of agent loops",
+      "url": "https://arxiv.org/abs/2609.15369",
+      "points": 190,
+      "num_comments": 40,
+      "author": "researcher"
+    },
+    {
+      "objectID": "50030003",
+      "title": "Show HN: Ask me anything",
+      "url": null,
+      "points": 160,
+      "num_comments": 60,
+      "author": "someone"
+    },
+    {
+      "objectID": "50030004",
+      "title": "Ask HN: What AI tools do you use?",
+      "url": "https://example.org/ask",
+      "points": 300,
+      "num_comments": 200,
+      "author": "asker"
+    },
+    {
+      "objectID": "50030005",
+      "title": "Show HN: Quiet – a note app",
+      "url": "https://quiet.example.dev/",
+      "points": 60,
+      "num_comments": 50,
+      "author": "maker2"
+    },
+    {
+      "objectID": "50030006",
+      "title": "Show HN: Lonely – a note app",
+      "url": "https://lonely.example.dev/",
+      "points": 200,
+      "num_comments": 2,
+      "author": "maker3"
+    },
+    {
+      "objectID": "50030007",
+      "title": "Show HN: Insecure – a note app",
+      "url": "http://insecure.example.dev/",
+      "points": 200,
+      "num_comments": 50,
+      "author": "maker4"
+    },
+    {
+      "objectID": "50030008",
+      "title": "Show HN: Discussion – a note app",
+      "url": "https://news.ycombinator.com/item?id=1",
+      "points": 200,
+      "num_comments": 50,
+      "author": "maker5"
+    },
+    { "objectID": "not-a-number", "title": "Show HN: Broken", "points": 99 }
+  ]
+}
