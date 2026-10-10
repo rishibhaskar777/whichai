@@ -13,7 +13,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "format": "prettier --write .",
-    "data:report": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/data-report.ts"
+    "data:report": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/data-report.ts",
+    "data:version": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/catalogue-version.ts"
   },
   "dependencies": {
     "arctic": "^3.7.0",
