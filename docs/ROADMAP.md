@@ -84,6 +84,17 @@ Every phase follows the [zero-cost rule](decisions/0006-zero-cost.md): local cod
 - `npm run discover:dry-run` for local use. How it works and the review checklist: [TOOL-DISCOVERY.md](TOOL-DISCOVERY.md)
 - Nothing is added to the catalogue without a person; download links are never filled in
 
+## Phase 6: Pricing preview and legal pages (done, [0014](decisions/0014-pricing-preview.md))
+
+- Plan data in `src/data/pricing/plans.json` (Free, Plus, Pro, Ultra, Institution; rupees; English and Hindi), edited as described in [PRICING.md](PRICING.md)
+- `/pricing` with a monthly and yearly switch, plan cards, a comparison table and a FAQ; `/checkout` as a preview whose Pay button opens a "payments are coming" dialog
+- A Subscription section in Settings, a plan label and Upgrade plan item in the sidebar, and draft Terms, Refund policy and Contact pages
+- Everyone is on Free. No gateway, webhook, database or payment details; paid features are planned and labelled as such
+
+## Phase 7: Payments (not started)
+
+Needs a decision on cost first ([0006](decisions/0006-zero-cost.md)). The list of what it must add is in [0014](decisions/0014-pricing-preview.md): a gateway, webhooks, a database for subscriptions, GST and invoices, server-side enforcement of paid features, and a legal review of the draft pages.
+
 ## Later
 
-Test results pages, pricing, institution features, a way to flag records older than a set age.
+Test results pages, institution features, a way to flag records older than a set age.

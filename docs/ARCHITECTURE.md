@@ -18,6 +18,7 @@ app/                 routes, layouts, server components
   +--> lib/engine/   rules engine that chooses tools and builds the plan
   +--> lib/schemas/  Zod schemas: goal input, plan contract, catalogue
   +--> lib/news/     feed reader, cache, tags, "Affects your plans"
+  +--> lib/pricing/  plan data helpers, current plan, checkout query
   +--> data/         JSON catalogue; news sources in data/news/
 
 scripts/discover*.ts   weekly tool discovery (GitHub Actions), not part of the site
@@ -38,6 +39,8 @@ src/
     tools/, tools/[id]/ Tool Library and one page per tool (server-rendered)
     compare/           side-by-side comparison, selection in the URL
     what-changed/      news list with filters, server-rendered
+    pricing/, checkout/ plans and the checkout preview (no payment)
+    terms/, refund-policy/, contact/  draft legal pages
     tool-library/, compare-plans/   redirect to /tools and /compare
   components/          UI components, one folder per component
     app-shell/         three-region layout, drawer, panel state
@@ -55,6 +58,7 @@ src/
     local-data/        provider over the storage layer, plan actions, storage notice
     projects/, searches/, settings/, plan-route/   the pages' interface
     tools/             library, tool card and page, Get it block, compare view
+    pricing/           plan cards, comparison table, checkout summary, "not open yet" dialog
     toast/, dialog/, shortcuts/, state-page/, content/   shared interface pieces
     theme-control/, wordmark/, icons/
   lib/
@@ -70,6 +74,7 @@ src/
     library/           library query, filter and sort, compare selection, tool details
     plan/              goal interpreter, text matching, chip helpers
     news/              feed fetch, parse, cache, tagging, tool matching, query (server) and plan matching (browser)
+    pricing/           plan schema, plan data helpers, price format, current plan, checkout query
     engine/            tool selection, plan assembly, text for cards
     discovery/         finding new tools: sources, admission rules, issue state, draft records (used by scripts only)
     catalogue/         cross-file data checks and the data report
@@ -84,6 +89,7 @@ src/
                        tools/ with one file per job category
     news/              sources.json: the official feeds
     discovery/         config.json (thresholds) and rejected.json (names and domains turned down for good)
+    pricing/           plans.json: plans, prices in rupees, features and limits in English and Hindi
     suggestions.ts     suggestion chips and placeholder examples
 scripts/
   data-report.ts       prints verification status of the catalogue
@@ -224,6 +230,24 @@ sources (GitHub, Hugging Face, Hacker News, news feeds)
 - `state.ts` writes and reads the body of a candidate's own issue. Candidate text appears only in code spans and blocks, and the hidden JSON block is escaped and validated on read.
 - Everything under `src/lib/discovery/` runs under Node without a build, like the link and news checkers. It reuses `plan/text-match.ts` (edit distance), `news/fetch-feed.ts` and `news/parse-feed.ts`, and the catalogue schema and checks.
 - The weekly job writes issues only. `discover:import` is the one piece that writes catalogue files, and it runs locally.
+
+## Pricing preview
+
+Plans are data, and nothing is charged ([0014](decisions/0014-pricing-preview.md), [PRICING.md](PRICING.md)).
+
+```
+data/pricing/plans.json --pricingSchema--> PLANS (parsed when the module loads)
+                                              |
+        getCurrentPlan() ("free" for everyone)|
+              |                               v
+   sidebar label, Settings, /pricing   planFeatures, yearlySavings, buildComparison
+```
+
+- `src/lib/pricing/schema.ts` is the Zod schema with the cross-checks (both languages, both prices or neither, yearly not above twelve months, unique ids, `includes` earlier in the list, one highlight, Free costs 0).
+- `plans.ts` resolves inherited features, computes the yearly saving from the prices and builds the comparison table. `format.ts` formats rupees with `Intl` (`en-IN`, `hi-IN`). `query.ts` parses the pricing switch (unknown falls back to monthly) and the checkout query (anything invalid returns null, and the page redirects to `/pricing`).
+- `/pricing` and `/checkout` are server pages that pass parsed values to client components. The billing switch is a pair of links, so the period is in the URL and the page works without JavaScript.
+- `/checkout` has no form and makes no request. The Pay button and "Manage subscription" open the same dialog.
+- `getCurrentPlan()` is the only place that decides the plan. A later phase reads a stored subscription there.
 
 ## Sign-in
 

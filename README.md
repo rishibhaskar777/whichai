@@ -17,6 +17,7 @@ Early development. See [docs/ROADMAP.md](docs/ROADMAP.md) for the phases.
 | 5a    | Tool catalogue, Get it links, library       | Done        |
 | 5b    | News from official feeds, What Changed      | Done        |
 | 5c    | Weekly discovery of new tools, reviewed     | Done        |
+| 6     | Pricing, checkout preview, legal pages      | Done        |
 
 The project follows a [zero-cost rule](docs/decisions/0006-zero-cost.md): no paid APIs, no AI APIs, no hosted databases, no trackers.
 
@@ -57,7 +58,7 @@ The site runs at http://localhost:3000. Sign-in is optional and needs free Googl
 
 ## Project layout
 
-Next.js App Router with a `src/` directory: `app/` for routes, `components/` for UI, `lib/` for validation and security helpers, `styles/` for design tokens, `data/catalogue/` for the tool catalogue (JSON), `lib/engine/` for the rules engine, `lib/plan/` for the goal interpreter, `lib/news/` and `data/news/` for the news feeds, `lib/discovery/` and `data/discovery/` for tool discovery. `src/proxy.ts` sets the CSP nonce and security headers on every request. Details are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Next.js App Router with a `src/` directory: `app/` for routes, `components/` for UI, `lib/` for validation and security helpers, `styles/` for design tokens, `data/catalogue/` for the tool catalogue (JSON), `lib/engine/` for the rules engine, `lib/plan/` for the goal interpreter, `lib/news/` and `data/news/` for the news feeds, `lib/discovery/` and `data/discovery/` for tool discovery, `lib/pricing/` and `data/pricing/` for plans and prices. `src/proxy.ts` sets the CSP nonce and security headers on every request. Details are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## What works now
 
@@ -78,6 +79,7 @@ Next.js App Router with a `src/` directory: `app/` for routes, `components/` for
 - A plain-language privacy page at `/privacy` that says what stays on your device and how to delete it.
 - **AI news** from official sources. The server reads about 30 public RSS and Atom feeds (company blogs, changelogs, GitHub releases of official repositories), at most every 30 minutes, and keeps the last good result if a feed fails. The panel shows the six newest headlines with source, age, tag and a New badge. **What Changed** at `/what-changed` lists everything from the last 60 days with search, tag and source filters and pages, all in the URL, and each tool page shows its recent news. A headline gets an "Affects your plans" badge when a plan saved on your device uses that tool; that check never leaves your device. Headlines stay in their original language and link to the source. See [0012](docs/decisions/0012-news-from-official-feeds.md) and [docs/NEWS-SOURCES.md](docs/NEWS-SOURCES.md).
 - **Tool discovery.** A weekly GitHub Actions job looks for new AI tools on GitHub, Hugging Face, Hacker News and our own news feeds, and follows what it finds in one watchlist issue. A candidate gets an issue of its own, with the evidence and the closest listed tools, only when it passes every admission rule. Nothing enters the catalogue without a person approving it: the `approved` label posts a draft record, and `npm run discover:import` adds it locally for you to verify and commit. See [docs/TOOL-DISCOVERY.md](docs/TOOL-DISCOVERY.md) and [0013](docs/decisions/0013-tool-discovery.md).
+- **Plans and pricing.** `/pricing` shows Free, Plus, Pro, Ultra and Institution in rupees, with a monthly and yearly switch kept in the URL, a comparison table and a FAQ. Everyone is on Free and paid plans are not open: `/checkout` is a preview whose Pay button only opens a dialog saying payments are coming in an upcoming update. No payment details are asked for and nothing is sent. Settings has a Subscription section, the sidebar shows a quiet "Free plan" label, and draft Terms, Refund policy and Contact pages exist. Plans and prices are edited in `src/data/pricing/plans.json`; see [docs/PRICING.md](docs/PRICING.md) and [0014](docs/decisions/0014-pricing-preview.md).
 
 ## Security
 
