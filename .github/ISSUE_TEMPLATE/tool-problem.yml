@@ -1,0 +1,35 @@
+name: Tool problem
+description: A tool's details, link or download address look wrong or out of date.
+title: "Tool problem: "
+labels: ["tool-data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the catalogue honest. Issues in this repository are public, so please do not include passwords, personal details or anything private.
+  - type: input
+    id: tool
+    attributes:
+      label: Tool id
+      description: Filled in for you when you come from a tool page.
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: What is wrong?
+      options:
+        - A download or official link is broken
+        - A download link goes to the wrong place
+        - The tool no longer exists or was renamed
+        - A detail (summary, free option, platforms) is wrong
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What did you see?
+      description: Include the address you expected, if you know it. Use the tool's own site as the source.
+    validations:
+      required: true

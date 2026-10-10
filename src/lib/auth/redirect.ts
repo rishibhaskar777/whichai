@@ -7,8 +7,10 @@ export const REDIRECT_ALLOWLIST: readonly string[] = [
   "/",
   "/projects",
   "/searches",
+  "/tools",
   "/tool-library",
   "/what-changed",
+  "/compare",
   "/compare-plans",
   "/privacy",
 ];

@@ -38,9 +38,9 @@ const NAV_ITEMS: readonly NavItem[] = [
   { href: "/", label: "nav.home", Icon: HomeIcon },
   { href: "/projects", label: "nav.projects", Icon: FolderIcon },
   { href: "/searches", label: "nav.searches", Icon: SearchIcon },
-  { href: "/tool-library", label: "nav.toolLibrary", Icon: LibraryIcon },
+  { href: "/tools", label: "nav.toolLibrary", Icon: LibraryIcon },
   { href: "/what-changed", label: "nav.whatChanged", Icon: ChangesIcon },
-  { href: "/compare-plans", label: "nav.comparePlans", Icon: CompareIcon },
+  { href: "/compare", label: "nav.compare", Icon: CompareIcon },
 ];
 
 interface SidebarContentProps {

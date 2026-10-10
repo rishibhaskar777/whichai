@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { MenuIcon } from "@/components/icons";
 import { LocalDataProvider } from "@/components/local-data/LocalDataProvider";
@@ -18,6 +19,9 @@ import type { NewsItem } from "@/data/sample/news";
 import { useMediaQuery } from "@/lib/use-media-query";
 import styles from "./AppShell.module.css";
 
+/** Pages with grids and tables that need more room than a reading column. */
+const WIDE_PAGES = ["/tools", "/compare"];
+
 interface AppShellProps {
   news: readonly NewsItem[];
   initialTheme: ThemeChoice;
@@ -34,6 +38,10 @@ export function AppShell({
   children,
 }: AppShellProps) {
   const { t } = useI18n();
+  const pathname = usePathname();
+  const wide = WIDE_PAGES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
   const [railMode, setRailMode] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [newsChoice, setNewsChoice] = useState<NewsChoice>("auto");
@@ -129,7 +137,12 @@ export function AppShell({
               </dialog>
 
               <main id="main" tabIndex={-1} className={styles.main}>
-                <div className={styles.content}>{children}</div>
+                <div
+                  className={styles.content}
+                  data-wide={wide ? "true" : undefined}
+                >
+                  {children}
+                </div>
               </main>
 
               <NewsPanel
