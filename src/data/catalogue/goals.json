@@ -1,6 +1,7 @@
 [
   {
     "id": "portfolio-website",
+    "group": "sites-and-apps",
     "title": "Portfolio website",
     "headline": "Your portfolio website plan",
     "example": "Build a portfolio website to show my work",
@@ -276,6 +277,7 @@
   },
   {
     "id": "study-plan",
+    "group": "study",
     "title": "Study plan",
     "headline": "Your 60-day study plan",
     "example": "Make a study plan for my upcoming exams",
@@ -529,6 +531,7 @@
   },
   {
     "id": "resume-and-job-search",
+    "group": "work",
     "title": "Resume and job search",
     "headline": "Your resume and job search plan",
     "example": "Improve my resume for a job application",
@@ -767,6 +770,7 @@
   },
   {
     "id": "make-a-video",
+    "group": "create",
     "title": "Make a video",
     "headline": "Your video plan",
     "example": "Make a short video from my own footage",
@@ -1029,6 +1033,7 @@
   },
   {
     "id": "build-an-app",
+    "group": "sites-and-apps",
     "title": "Build an app",
     "headline": "Your app plan",
     "example": "Build a simple app without much coding",
@@ -1319,6 +1324,7 @@
   },
   {
     "id": "research-and-reading",
+    "group": "study",
     "title": "Research and reading",
     "headline": "Your research and reading plan",
     "example": "Research ancient Indian stories and read the originals",
@@ -1585,6 +1591,7 @@
   },
   {
     "id": "business-website",
+    "group": "sites-and-apps",
     "title": "Business website",
     "headline": "Your business website plan",
     "example": "Build a website for my small business",
@@ -1866,6 +1873,7 @@
   },
   {
     "id": "presentation",
+    "group": "create",
     "title": "Presentation",
     "headline": "Your presentation plan",
     "example": "Make a presentation for my project",
@@ -2126,6 +2134,7 @@
   },
   {
     "id": "pick-an-ai",
+    "group": "ai",
     "title": "Pick the right AI for a task",
     "headline": "Your AI tool picks",
     "example": "Which AI should I use to summarise a PDF?",
@@ -2414,6 +2423,7 @@
   },
   {
     "id": "mobile-app",
+    "group": "sites-and-apps",
     "title": "Mobile app",
     "headline": "Your mobile app plan",
     "example": "I want to build a mobile app for Android and iPhone",
@@ -2673,6 +2683,7 @@
   },
   {
     "id": "ecommerce-store",
+    "group": "sites-and-apps",
     "title": "Online store",
     "headline": "Your online store plan",
     "example": "I want to start an online store to sell products",
@@ -2927,6 +2938,7 @@
   },
   {
     "id": "blog",
+    "group": "sites-and-apps",
     "title": "Blog",
     "headline": "Your blog plan",
     "example": "I want to start a blog and write regularly",
@@ -3168,6 +3180,7 @@
   },
   {
     "id": "landing-page",
+    "group": "sites-and-apps",
     "title": "Landing page",
     "headline": "Your landing page plan",
     "example": "I need a landing page for my product launch",
@@ -3398,6 +3411,7 @@
   },
   {
     "id": "saas-app",
+    "group": "sites-and-apps",
     "title": "SaaS product",
     "headline": "Your SaaS plan",
     "example": "I want to build a SaaS product with subscriptions",
@@ -3646,6 +3660,7 @@
   },
   {
     "id": "website-chatbot",
+    "group": "sites-and-apps",
     "title": "Chatbot for my website",
     "headline": "Your website chatbot plan",
     "example": "I want a chatbot on my website to answer customer questions",
@@ -3880,6 +3895,7 @@
   },
   {
     "id": "build-browser-extension",
+    "group": "sites-and-apps",
     "title": "Browser extension",
     "headline": "Your browser extension plan",
     "example": "I want to build a Chrome extension",
@@ -4100,6 +4116,7 @@
   },
   {
     "id": "game",
+    "group": "sites-and-apps",
     "title": "Game",
     "headline": "Your game plan",
     "example": "I want to make a simple game",
@@ -4338,6 +4355,7 @@
   },
   {
     "id": "data-dashboard",
+    "group": "sites-and-apps",
     "title": "Data dashboard",
     "headline": "Your dashboard plan",
     "example": "I want to build a dashboard to show my data in charts",
@@ -4564,6 +4582,7 @@
   },
   {
     "id": "task-automation",
+    "group": "work",
     "title": "Automate repetitive tasks",
     "headline": "Your automation plan",
     "example": "I want to automate repetitive tasks at work",
@@ -4796,6 +4815,7 @@
   },
   {
     "id": "youtube-channel",
+    "group": "create",
     "title": "YouTube channel",
     "headline": "Your YouTube channel plan",
     "example": "I want to start a YouTube channel",
@@ -5039,6 +5059,7 @@
   },
   {
     "id": "podcast",
+    "group": "create",
     "title": "Podcast",
     "headline": "Your podcast plan",
     "example": "I want to start a podcast",
@@ -5263,6 +5284,7 @@
   },
   {
     "id": "social-media-content",
+    "group": "create",
     "title": "Social media content",
     "headline": "Your social media content plan",
     "example": "I want to create content for Instagram and LinkedIn regularly",
@@ -5501,6 +5523,7 @@
   },
   {
     "id": "logo-and-branding",
+    "group": "create",
     "title": "Logo and branding",
     "headline": "Your branding plan",
     "example": "I need a logo and brand colours for my business",
@@ -5726,6 +5749,7 @@
   },
   {
     "id": "ui-design",
+    "group": "create",
     "title": "UI design",
     "headline": "Your UI design plan",
     "example": "I want to design the screens of an app in Figma",
@@ -5954,6 +5978,7 @@
   },
   {
     "id": "research-paper",
+    "group": "study",
     "title": "Research paper",
     "headline": "Your research paper plan",
     "example": "I need to write a research paper with proper citations",
@@ -6200,6 +6225,7 @@
   },
   {
     "id": "thesis",
+    "group": "study",
     "title": "Thesis or dissertation",
     "headline": "Your thesis plan",
     "example": "I need to write my thesis and manage references",
@@ -6261,7 +6287,7 @@
       "simple": {
         "summary": "Break it into chapters with dates, and write a little every day. Use AI for planning and checking structure only.",
         "estimatedTime": "Weeks to months (rough estimate)",
-        "jobs": ["ai-assistant", "note-taking", "writing-and-editing"],
+        "jobs": ["ai-assistant", "writing-and-editing", "note-taking"],
         "steps": [
           {
             "title": "List the chapters",
@@ -6425,6 +6451,7 @@
   },
   {
     "id": "essay-writing",
+    "group": "study",
     "title": "Essay writing",
     "headline": "Your essay plan",
     "example": "I need to write an essay for my class",
@@ -6642,6 +6669,7 @@
   },
   {
     "id": "exam-preparation",
+    "group": "study",
     "title": "Exam preparation",
     "headline": "Your exam preparation plan",
     "example": "I need to prepare for my exams in two months",
@@ -6879,6 +6907,7 @@
   },
   {
     "id": "learn-to-code",
+    "group": "study",
     "title": "Learn to code",
     "headline": "Your learning-to-code plan",
     "example": "I want to learn programming from scratch",
@@ -7115,6 +7144,7 @@
   },
   {
     "id": "language-learning",
+    "group": "study",
     "title": "Learn a language",
     "headline": "Your language learning plan",
     "example": "I want to learn Spanish and speak it in six months",
@@ -7347,6 +7377,7 @@
   },
   {
     "id": "interview-preparation",
+    "group": "work",
     "title": "Interview preparation",
     "headline": "Your interview preparation plan",
     "example": "I have a job interview next week and need to prepare",
@@ -7580,6 +7611,7 @@
   },
   {
     "id": "freelancing-setup",
+    "group": "work",
     "title": "Start freelancing",
     "headline": "Your freelancing setup plan",
     "example": "I want to start freelancing and find clients",
@@ -7810,6 +7842,7 @@
   },
   {
     "id": "small-business-marketing",
+    "group": "work",
     "title": "Small business marketing",
     "headline": "Your marketing plan",
     "example": "I want to market my small business and get more customers",
@@ -8045,6 +8078,7 @@
   },
   {
     "id": "email-newsletter",
+    "group": "work",
     "title": "Email newsletter",
     "headline": "Your newsletter plan",
     "example": "I want to start an email newsletter",
@@ -8271,6 +8305,7 @@
   },
   {
     "id": "translate-documents",
+    "group": "ai",
     "title": "Translate documents",
     "headline": "Your translation plan",
     "example": "I need to translate my documents from English to Hindi",
@@ -8492,6 +8527,7 @@
   },
   {
     "id": "summarise-pdfs",
+    "group": "ai",
     "title": "Summarise PDFs",
     "headline": "Your PDF summary plan",
     "example": "I want to summarise long PDFs and ask questions about them",
@@ -8719,6 +8755,7 @@
   },
   {
     "id": "meeting-notes",
+    "group": "work",
     "title": "Meeting notes",
     "headline": "Your meeting notes plan",
     "example": "I want AI to take notes in my meetings and list action items",
@@ -8948,6 +8985,7 @@
   },
   {
     "id": "personal-productivity",
+    "group": "work",
     "title": "Personal productivity",
     "headline": "Your productivity plan",
     "example": "I want to organise my work and be more productive every day",
@@ -9179,6 +9217,7 @@
   },
   {
     "id": "music-creation",
+    "group": "create",
     "title": "Music creation",
     "headline": "Your music plan",
     "example": "I want to make a song or background music",
@@ -9406,6 +9445,7 @@
   },
   {
     "id": "edit-a-video",
+    "group": "create",
     "title": "Edit a video",
     "headline": "Your video editing plan",
     "example": "I have raw footage and want to edit it into a good video",
@@ -9638,6 +9678,7 @@
   },
   {
     "id": "edit-images",
+    "group": "create",
     "title": "Edit photos and images",
     "headline": "Your image editing plan",
     "example": "I want to edit photos and remove the background",
@@ -9870,6 +9911,7 @@
   },
   {
     "id": "3d-models",
+    "group": "create",
     "title": "3D models",
     "headline": "Your 3D plan",
     "example": "I want to create a 3D model for printing or a website",
@@ -10098,6 +10140,7 @@
   },
   {
     "id": "spreadsheet-analysis",
+    "group": "work",
     "title": "Analyse data in spreadsheets",
     "headline": "Your spreadsheet analysis plan",
     "example": "I want to analyse my data in Excel or Google Sheets",
@@ -10327,6 +10370,7 @@
   },
   {
     "id": "ai-agent",
+    "group": "ai",
     "title": "Build an AI agent",
     "headline": "Your AI agent plan",
     "example": "I want to build an AI agent that can do tasks for me",
@@ -10573,6 +10617,7 @@
   },
   {
     "id": "local-private-ai",
+    "group": "ai",
     "title": "Local private AI",
     "headline": "Your private AI plan",
     "example": "I want to run AI on my own computer without sending data online",
@@ -10806,6 +10851,7 @@
   },
   {
     "id": "custom-plan",
+    "group": "ai",
     "title": "Plan built from your parts",
     "headline": "Your custom plan",
     "example": "A plan built from the parts I describe",

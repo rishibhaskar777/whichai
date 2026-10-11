@@ -2,7 +2,6 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
-import { catalogue } from "@/data/catalogue";
 import { panelNewsFixture } from "@/test/news";
 import { headingViolations, seriousViolations } from "@/test/axe";
 import { HomeFlow } from "./HomeFlow";
@@ -200,7 +199,7 @@ describe("a goal we do not cover", () => {
       within(screen.getByRole("list", { name: "Goals we cover" })).getAllByRole(
         "button",
       ),
-    ).toHaveLength(catalogue.goals.length - 1);
+    ).toHaveLength(8);
     expect(screen.queryByRole("heading", { name: /plan$/ })).toBeNull();
   });
 

@@ -170,12 +170,16 @@ describe("goals that were not understood", () => {
     expect(await backend.get("misses")).toBeNull();
   });
 
-  it("offers the goals it covers when nothing matched", async () => {
+  it("offers the common goals, a search and all goals when nothing matched", async () => {
     const { user } = await renderHome();
 
     await submit(user, "What is the weather in Delhi today");
 
     const list = screen.getByRole("list", { name: "Goals we cover" });
-    expect(within(list).getAllByRole("button").length).toBeGreaterThan(40);
+    expect(within(list).getAllByRole("button")).toHaveLength(8);
+    expect(screen.getByLabelText("Search all goals")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "See all goals" }),
+    ).toBeInTheDocument();
   });
 });

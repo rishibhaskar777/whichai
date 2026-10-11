@@ -880,4 +880,19 @@ export const hi: Record<MessageKey, string> = {
   "settings.improve.cleared": "छूटे हुए लक्ष्यों की सूची मिटा दी गई।",
   "privacy.device.item4":
     "जो लक्ष्य हम नहीं समझ पाए: अधिकतम 50, केवल तब तक जब तक खोज इतिहास चालू है। जब तक आप सेटिंग से GitHub इश्यू खोलकर जमा नहीं करते, ये कहीं नहीं भेजे जाते। आप इन्हें वहीं मिटा सकते हैं।",
+
+  // No-match card
+  "noMatch.search": "सभी लक्ष्यों में खोजें",
+  "noMatch.searchResults": "मेल खाते लक्ष्य",
+  "noMatch.results.one": "{count} लक्ष्य मेल खाता है",
+  "noMatch.results.other": "{count} लक्ष्य मेल खाते हैं",
+  "noMatch.noResults":
+    "इससे कोई लक्ष्य मेल नहीं खाता। कोई और शब्द आज़माइए, या ऊपर अपने शब्दों में बताइए।",
+  "noMatch.seeAll": "सभी लक्ष्य देखें",
+  "noMatch.hideAll": "कम लक्ष्य दिखाएँ",
+  "goalGroup.sites-and-apps": "वेबसाइट और ऐप",
+  "goalGroup.create": "बनाना",
+  "goalGroup.study": "पढ़ाई",
+  "goalGroup.work": "काम और व्यापार",
+  "goalGroup.ai": "AI टूल",
 };

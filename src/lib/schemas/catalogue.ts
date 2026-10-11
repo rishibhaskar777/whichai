@@ -349,8 +349,20 @@ export const goalFeatureSchema = z.object({
 });
 export type GoalFeature = z.infer<typeof goalFeatureSchema>;
 
+/** How the "all goals" list is grouped. */
+export const GOAL_GROUPS = [
+  "sites-and-apps",
+  "create",
+  "study",
+  "work",
+  "ai",
+] as const;
+export const goalGroupSchema = z.enum(GOAL_GROUPS);
+export type GoalGroup = z.infer<typeof goalGroupSchema>;
+
 export const goalTemplateSchema = z.object({
   id: goalIdSchema,
+  group: goalGroupSchema,
   title: text(60),
   headline: text(100),
   example: text(120),

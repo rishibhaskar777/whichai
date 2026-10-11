@@ -877,6 +877,21 @@ export const en = {
   "settings.improve.cleared": "The list of missed goals was cleared.",
   "privacy.device.item4":
     "Goals we did not understand: up to 50, kept only while search history is on. They are never sent anywhere unless you open the GitHub issue from Settings and submit it. You can clear them there.",
+
+  // No-match card
+  "noMatch.search": "Search all goals",
+  "noMatch.searchResults": "Matching goals",
+  "noMatch.results.one": "{count} goal matches",
+  "noMatch.results.other": "{count} goals match",
+  "noMatch.noResults":
+    "No goal matches that. Try another word, or describe it above in your own words.",
+  "noMatch.seeAll": "See all goals",
+  "noMatch.hideAll": "Show fewer goals",
+  "goalGroup.sites-and-apps": "Websites and apps",
+  "goalGroup.create": "Create",
+  "goalGroup.study": "Study",
+  "goalGroup.work": "Work and business",
+  "goalGroup.ai": "AI tools",
 } as const satisfies Record<string, string>;
 
 export type MessageKey = keyof typeof en;
