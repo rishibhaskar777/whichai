@@ -68,14 +68,19 @@ export function buildGetMore(
 ): GetMore | null {
   if (tool.kind !== "ai-tool") return null;
 
-  const classIds = guidance?.steps.map((step) => step.modelClass) ?? [];
-  const classAdvice = guidance
-    ? [
-        ...new Map(
-          guidance.steps.map((step) => [step.modelClass, step.useFor]),
-        ),
-      ].map(([modelClass, useFor]) => ({ modelClass, useFor }))
-    : [];
+  // Without goal-specific guidance, give the plain advice for planning and drafts.
+  const classIds: ModelClassId[] = guidance
+    ? guidance.steps.map((step) => step.modelClass)
+    : ["deep-reasoning", "fast-and-cheap"];
+  const uses = new Map<ModelClassId, string>(
+    guidance
+      ? guidance.steps.map((step) => [step.modelClass, step.useFor])
+      : data.modelClasses.map((c) => [c.id, c.useFor]),
+  );
+  const classAdvice = [...new Set(classIds)].flatMap((modelClass) => {
+    const useFor = uses.get(modelClass);
+    return useFor ? [{ modelClass, useFor }] : [];
+  });
 
   const getMore: GetMore = {
     models: namedModels(tool, classIds),

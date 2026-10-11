@@ -449,9 +449,18 @@ describe("model guidance", () => {
   });
 
   it("names only classes, never model versions", () => {
-    const text = collectStrings(
-      GOAL_IDS.map((id) => buildPlan(goalOf(id), NO_OPTIONS)),
-    ).join(" ");
+    // Names that a tool's own page gave, with the day they were read, may
+    // appear in "Get more". Everywhere else only classes are named.
+    const plans = GOAL_IDS.map((id) => buildPlan(goalOf(id), NO_OPTIONS));
+    const withoutNamedModels = plans.map((plan) =>
+      LEVELS.map((level) =>
+        plan.levels[level].jobs.map((job) => ({
+          ...job,
+          getMore: job.getMore && { ...job.getMore, models: null },
+        })),
+      ),
+    );
+    const text = collectStrings(withoutNamedModels).join(" ");
     // GPT4All is a product name, not a model version.
     expect(text).not.toMatch(/\bgpt-?\d(?!all)|opus \d|sonnet \d|haiku \d/i);
   });

@@ -182,7 +182,7 @@ export function slotFor(goalLevel: GoalLevel, job: Job): Slot {
   return goalLevel.slots[job.id] ?? job.defaultSlot;
 }
 
-function strengthsFor(
+export function strengthsFor(
   tool: Tool,
   slot: Slot,
   template: GoalTemplate,
@@ -330,6 +330,7 @@ function buildLevel(
 
   return {
     summary: fill(goalLevel.summary),
+    goodFor: goalLevel.goodFor,
     estimatedCost: costText(
       picked.map(({ selection }) => selection.pick),
       options.budget,

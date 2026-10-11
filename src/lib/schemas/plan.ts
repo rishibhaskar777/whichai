@@ -186,6 +186,8 @@ export type WorkflowStep = z.infer<typeof workflowStepSchema>;
 
 export const planLevelSchema = z.object({
   summary: text(400),
+  /** Who this level suits, in one line. */
+  goodFor: text(140),
   estimatedCost: text(120),
   estimatedTime: text(120),
   jobs: z.array(jobRecommendationSchema).min(1).max(12),
