@@ -36,6 +36,13 @@ Both themes use `blur(24px) saturate(180%)` and an inset top highlight. The 1px 
 
 The glow layer is fixed behind the page. It has three large blobs made from radial gradients in the blue family only: accent blue, sky blue and deep indigo-blue. Each drifts and scales on its own loop (16s, 22s and 28s, ease-in-out, alternate) by about 6 to 10 percent of the viewport and a scale of 0.9 to 1.15. Only `transform` and `opacity` are animated. A radial mask fades the layer out towards the edges so the sidebar and news panel stay clean. When the search field is focused the layer brightens by about 20 percent over 400ms. The layer is `aria-hidden`, ignores pointer events and causes no layout shift. Under `prefers-reduced-motion` the blobs stay still and the glow is static.
 
+## Sidebar footer
+
+- One row at the bottom. Signed out: a full-width secondary "Sign in" button and a small settings icon button. Signed in: avatar with initials, the name, the plan as a quiet second line and a chevron, which opens the account menu.
+- The account menu holds Settings, Upgrade plan, Help, Theme, Language and, after a divider, Sign out. It is a real menu: arrow keys, Home and End move, Escape closes and returns focus to the row.
+- The collapsed rail shows only the avatar (or the sign-in and settings icons). The menu is positioned against the viewport because the sidebar clips its contents.
+- Legal links are not in the sidebar. They are in Settings under "About & legal" and at the bottom of `/pricing` and `/checkout`, where payment pages need them.
+
 ## Motion
 
 - Use motion to show cause and effect: opening, closing, moving, loading.
