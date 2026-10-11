@@ -13,6 +13,9 @@ export function Overview({ level }: { level: PlanLevel }) {
         {t("plan.overview")}
       </h2>
       <p className={styles.summary}>{level.summary}</p>
+      <p className={styles.goodFor}>
+        {t("plan.goodFor", { text: level.goodFor })}
+      </p>
       <dl className={styles.overviewFacts}>
         <div>
           <dt>{t("plan.estimatedCost")}</dt>

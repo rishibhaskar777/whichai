@@ -211,6 +211,22 @@ export const hi: Record<MessageKey, string> = {
   "models.note":
     "मॉडल के नाम बदलते रहते हैं। टूल का मॉडल चुनने वाला मेन्यू देखिए और सबसे मिलता-जुलता चुनिए।",
   "models.explain": "इनका मतलब क्या है?",
+  "job.headline": "{tool} से यह करें: {task}",
+  "job.about": "{tool} के बारे में: {summary}",
+  "plan.goodFor": "किसके लिए: {text}",
+  "getMore.toggle": "{tool} से और पाएँ",
+  "getMore.model": "इस लक्ष्य के लिए सबसे अच्छा मॉडल",
+  "getMore.modelsAsOf": "{date} तक, टूल के अपने पेज पर दिए नामों के अनुसार:",
+  "getMore.modelsSource": "स्रोत",
+  "getMore.classesOnly":
+    "इस टूल के मॉडल नाम दर्ज नहीं हैं। अपनी ज़रूरत के हिसाब से चुनें:",
+  "getMore.tips": "काम की सेटिंग",
+  "getMore.tipsChecked": "{date} को दस्तावेज़ों से मिलाया गया।",
+  "getMore.tipSource": "स्रोत",
+  "getMore.addOns": "ऐड-ऑन",
+  "getMore.freePlan": "मुफ़्त सीमा में रहने के लिए",
+  "getMore.prompt": "इस लक्ष्य के लिए शुरुआती प्रॉम्प्ट",
+  "getMore.copyPrompt": "{tool} के लिए शुरुआती प्रॉम्प्ट कॉपी करें",
 
   // Accuracy card
   "accuracy.title": "इसे और सटीक बनाएँ",
@@ -688,7 +704,8 @@ export const hi: Record<MessageKey, string> = {
   "privacy.signout.text":
     "साइडबार में नीचे अपना नाम चुनिए, फिर “साइन आउट करें”। इससे कुकी मिट जाती है। WhichAI की पहुँच भी हटानी हो तो उसे अपने Google खाते की सुरक्षा सेटिंग में, या GitHub में Settings, Applications के अंतर्गत रद्द कर दीजिए।",
   "privacy.contact.title": "संपर्क",
-  "privacy.contact.text": "सवाल या चिंता: संपर्क पेज इस्तेमाल करें, जो GitHub पर एक इश्यू खोलता है। सुरक्षा की समस्याएँ प्रोजेक्ट के GitHub रिपॉज़िटरी के Security टैब से निजी तौर पर बताई जा सकती हैं।",
+  "privacy.contact.text":
+    "सवाल या चिंता: संपर्क पेज इस्तेमाल करें, जो GitHub पर एक इश्यू खोलता है। सुरक्षा की समस्याएँ प्रोजेक्ट के GitHub रिपॉज़िटरी के Security टैब से निजी तौर पर बताई जा सकती हैं।",
   "privacy.contact.email": "आप {email} पर भी लिख सकते हैं।",
   "account.menu": "खाता मेन्यू",
 
@@ -830,17 +847,21 @@ export const hi: Record<MessageKey, string> = {
   "refund.how.text":
     "संपर्क पेज का उपयोग करें और बताएँ कि कौन-सा प्लान और कौन-सा भुगतान। कार्ड, UPI या बैंक की जानकारी ईमेल से न भेजें।",
   "contact.title": "संपर्क",
-  "contact.lede": "WhichAI एक छोटा प्रोजेक्ट है जिसे एक व्यक्ति चलाता है। सब कुछ GitHub के ज़रिए होता है, और जवाब आने में कुछ दिन लग सकते हैं।",
+  "contact.lede":
+    "WhichAI एक छोटा प्रोजेक्ट है जिसे एक व्यक्ति चलाता है। सब कुछ GitHub के ज़रिए होता है, और जवाब आने में कुछ दिन लग सकते हैं।",
   "contact.email.title": "ईमेल",
   "contact.email.text": "प्लान, कीमत या आपके डेटा के बारे में सवालों के लिए:",
   "contact.feedback.title": "सवाल और फ़ीडबैक",
-  "contact.feedback.text": "सवाल, टूल के गलत रिकॉर्ड, बग या किसी विचार के लिए GitHub पर इश्यू खोलें। यह सार्वजनिक है, इसलिए निजी जानकारी न लिखें।",
+  "contact.feedback.text":
+    "सवाल, टूल के गलत रिकॉर्ड, बग या किसी विचार के लिए GitHub पर इश्यू खोलें। यह सार्वजनिक है, इसलिए निजी जानकारी न लिखें।",
   "contact.feedback.link": "फ़ीडबैक भेजें",
   "contact.security.title": "सुरक्षा की समस्याएँ",
-  "contact.security.text": "इन्हें GitHub के ज़रिए निजी तौर पर बताएँ। सार्वजनिक इश्यू न खोलें।",
+  "contact.security.text":
+    "इन्हें GitHub के ज़रिए निजी तौर पर बताएँ। सार्वजनिक इश्यू न खोलें।",
   "contact.security.link": "सुरक्षा समस्या की रिपोर्ट करें",
   "contact.institution.title": "कॉलेज और संस्थान",
-  "contact.institution.text": "एक इश्यू खोलें और अपने संस्थान का नाम तथा लगभग कितने छात्र हैं, बताएँ।",
+  "contact.institution.text":
+    "एक इश्यू खोलें और अपने संस्थान का नाम तथा लगभग कितने छात्र हैं, बताएँ।",
   "contact.institution.link": "संस्थान प्लान के बारे में पूछें",
 
   // Parts and missed goals

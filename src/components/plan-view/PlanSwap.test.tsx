@@ -232,7 +232,7 @@ describe("clickable alternatives", () => {
       expect(
         within(card(alternative.toolName)).getByRole("heading", {
           level: 3,
-          name: alternative.toolName,
+          name: new RegExp(`^Use ${alternative.toolName} to `),
         }),
       ).toHaveFocus(),
     );
