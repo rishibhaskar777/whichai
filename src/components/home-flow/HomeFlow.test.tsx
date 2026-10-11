@@ -239,7 +239,7 @@ describe("showing the plan", () => {
     expect(headline).toHaveTextContent("Your portfolio website plan");
     expect(headline).toHaveFocus();
     expect(screen.getByText("Plan ready")).toBeInTheDocument();
-    expect(screen.getByText(/Sample data, not verified:/)).toBeInTheDocument();
+    expect(screen.queryByText(/Sample data, not verified/)).toBeNull();
     expect(screen.queryByText("Here's what we understood")).toBeNull();
   });
 
@@ -370,15 +370,20 @@ describe("privacy", () => {
   it("keeps the goal text out of cookies, session storage and the URL", async () => {
     const user = userEvent.setup();
     const cookiesBefore = document.cookie;
-    const urlBefore = window.location.href;
     renderHome();
 
     await submit(user, PORTFOLIO_GOAL);
     await confirm(user);
 
-    expect(window.sessionStorage).toHaveLength(0);
+    // The goal text may stay in this tab's session storage so Back can restore
+    // it, but nowhere else.
+    expect(window.sessionStorage.getItem("whichai:goal")).toBe(PORTFOLIO_GOAL);
     expect(document.cookie).toBe(cookiesBefore);
-    expect(window.location.href).toBe(urlBefore);
+    const address = decodeURIComponent(window.location.href);
+    expect(address).not.toContain(PORTFOLIO_GOAL);
+    expect(
+      atob(window.location.hash.slice(1).replace(/-/g, "+").replace(/_/g, "/")),
+    ).not.toContain(PORTFOLIO_GOAL);
   });
 
   it("does not write the goal text to the console", async () => {

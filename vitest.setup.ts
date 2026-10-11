@@ -27,4 +27,9 @@ beforeAll(() => {
   };
 });
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  if (typeof window === "undefined") return;
+  window.history.replaceState(null, "", "/");
+  window.sessionStorage.clear();
+});
