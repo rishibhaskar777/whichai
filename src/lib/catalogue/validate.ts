@@ -71,6 +71,39 @@ function isRootPageOrProjectPage(url: string): boolean {
   return pathname === "/" || shared;
 }
 
+/** Notes continue a sentence after the tool's name, so they are phrases. */
+function findGuidanceProblems(tool: Tool, toolIds: ReadonlySet<string>) {
+  const problems: string[] = [];
+  const label = `tool ${tool.id}`;
+
+  const notes = [
+    ...Object.values(tool.strengthNotes),
+    ...Object.values(tool.categoryNotes).map((note) => note.text),
+  ];
+  for (const note of notes) {
+    if (/^[A-Z]/.test(note) || /[.!?]$/.test(note)) {
+      problems.push(`${label}: note "${note}" must be a lowercase phrase`);
+    }
+  }
+  for (const entry of tool.enhancedBy) {
+    if (entry.toolId === tool.id) {
+      problems.push(`${label}: enhancedBy lists itself`);
+    } else if (!toolIds.has(entry.toolId)) {
+      problems.push(`${label}: enhancedBy unknown tool ${entry.toolId}`);
+    }
+  }
+  const sources = [
+    tool.modelsUrl,
+    ...tool.tips.map((tip) => tip.sourceUrl),
+  ].filter((url): url is string => url !== undefined);
+  for (const url of sources) {
+    if (!isOnToolDomain(url, tool.officialDomains)) {
+      problems.push(`${label}: ${url} is not on its officialDomains`);
+    }
+  }
+  return problems;
+}
+
 function findLinkProblems(tool: Tool): string[] {
   const problems: string[] = [];
   const label = `tool ${tool.id}`;
@@ -184,6 +217,7 @@ export function findProblems(catalogue: Catalogue): string[] {
       problems.push(`tool ${tool.id}: officialUrl must be a root page`);
     }
     problems.push(...findLinkProblems(tool));
+    problems.push(...findGuidanceProblems(tool, toolIds));
   }
   for (const provider of catalogue.providers) {
     if (!usedProviders.has(provider.id)) {
@@ -214,6 +248,16 @@ export function findProblems(catalogue: Catalogue): string[] {
       for (const match of text.matchAll(TOOL_PLACEHOLDER)) {
         if (!jobIds.has(match[1] ?? "")) {
           problems.push(`goal ${goal.id}: unknown placeholder ${match[0]}`);
+        }
+      }
+    }
+    // Slot text is shown beside a tool's own name, so it names no tool slot.
+    for (const level of Object.values(goal.levels)) {
+      for (const slot of Object.values(level.slots)) {
+        for (const text of [slot.task, slot.starterPrompt]) {
+          if (text.includes("{job:")) {
+            problems.push(`goal ${goal.id}: slot text has a placeholder`);
+          }
         }
       }
     }

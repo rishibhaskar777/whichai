@@ -8,6 +8,7 @@ import {
   type GoalLevel,
   type GoalTemplate,
   type Job,
+  type Slot,
   type Tool,
 } from "@/lib/schemas/catalogue";
 import type {
@@ -24,14 +25,18 @@ import type {
 } from "@/lib/schemas/plan";
 import { LEVELS } from "@/lib/schemas/plan";
 import {
+  categoryNote,
   compatibilityNote,
   costText,
   coverText,
   fillToolNames,
+  matchingNotes,
   toAlternative,
   watchOutText,
   whyText,
+  type Strengths,
 } from "./describe";
+import { buildGetMore } from "./get-more";
 import { isCompatible, selectForJob, type Selection } from "./select-tools";
 
 /** The plan view and the plan schema both hold up to 12 jobs. */
@@ -172,22 +177,46 @@ function modelGuidanceFor(
   };
 }
 
+/** The goal's own text for a job, or the job's general text for a part. */
+export function slotFor(goalLevel: GoalLevel, job: Job): Slot {
+  return goalLevel.slots[job.id] ?? job.defaultSlot;
+}
+
+function strengthsFor(
+  tool: Tool,
+  slot: Slot,
+  template: GoalTemplate,
+): Strengths {
+  return {
+    categoryNote: categoryNote(tool, template.category),
+    notes: matchingNotes(tool, slot.tags),
+  };
+}
+
 function recommend(
   { job, selection, covers }: Picked,
   buildPeers: readonly Tool[],
   goalLevel: GoalLevel,
-  options: BuildOptions,
+  template: GoalTemplate,
   data: Catalogue,
 ): JobRecommendation {
   const { pick, tag, outscored, alternatives, autoPick, levelStretched } =
     selection;
+  const slot = slotFor(goalLevel, job);
+  const modelGuidance = modelGuidanceFor(goalLevel, job, pick, data);
   return {
     jobId: job.id,
     jobName: job.name,
     toolId: pick.id,
     toolName: pick.name,
     kind: pick.kind,
-    why: whyText(pick, tag, outscored) + coverText(covers),
+    task: slot.task,
+    why:
+      whyText(pick, tag, outscored, strengthsFor(pick, slot, template)) +
+      coverText(covers),
+    about: pick.summary,
+    starterPrompt: slot.starterPrompt,
+    getMore: buildGetMore(pick, modelGuidance, template.category, data),
     tag,
     freeOption: pick.hasFreeOption,
     pricing: pricingInfo(pick),
@@ -198,12 +227,14 @@ function recommend(
     lastVerified: pick.lastVerified,
     officialUrl: pick.officialUrl,
     getIt: pick.getIt ?? null,
-    modelGuidance: modelGuidanceFor(goalLevel, job, pick, data),
+    modelGuidance,
     compatibilityNote:
       job.category === "build"
         ? compatibilityNote(pick, buildPeers, isCompatible)
         : null,
-    alternatives: alternatives.map(toAlternative),
+    alternatives: alternatives.map((alternative) =>
+      toAlternative(alternative, strengthsFor(alternative, slot, template)),
+    ),
     autoPick: autoPick
       ? { toolId: autoPick.id, toolName: autoPick.name }
       : null,
@@ -305,7 +336,7 @@ function buildLevel(
     ),
     estimatedTime: goalLevel.estimatedTime,
     jobs: picked.map((item) =>
-      recommend(item, buildPeers, goalLevel, options, data),
+      recommend(item, buildPeers, goalLevel, template, data),
     ),
     toolkit: toolkitFor(picked),
     tiers: null,

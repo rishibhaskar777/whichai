@@ -1,19 +1,64 @@
-import type { Job, Tool } from "@/lib/schemas/catalogue";
+import type {
+  GoalCategory,
+  Job,
+  StrengthTag,
+  Tool,
+} from "@/lib/schemas/catalogue";
 import type { Alternative, Budget, JobTag } from "@/lib/schemas/plan";
 
 const LEVEL_STRETCH_NOTE = "More technical than the rest of this level.";
 const MAX_NAMES = 3;
+const MAX_NOTES = 2;
 
+/** The strength notes of a tool for the tags a job slot cares about. */
+export function matchingNotes(
+  tool: Tool,
+  tags: readonly StrengthTag[],
+): string[] {
+  const notes = tags.flatMap((tag) => tool.strengthNotes[tag] ?? []);
+  return [...new Set(notes)].slice(0, MAX_NOTES);
+}
+
+export function categoryNote(
+  tool: Tool,
+  category: GoalCategory | null,
+): string | null {
+  return category ? (tool.categoryNotes[category]?.text ?? null) : null;
+}
+
+export interface Strengths {
+  /** Editorial note for the goal's category, for general assistants. */
+  categoryNote: string | null;
+  /** Notes for the slot's tags, at most two. */
+  notes: readonly string[];
+}
+
+/**
+ * Two lines about why this tool suits the slot: what it is good at for the
+ * goal's kind, then what matches the slot's tags. A tool with no matching
+ * notes falls back to its first general strength.
+ */
 export function whyText(
   tool: Tool,
   tag: JobTag,
   outscored: Tool | null,
+  strengths: Strengths,
 ): string {
-  if (tag === "keep") return `You already use it. ${tool.summary}`;
-  if (tag === "better" && outscored) {
-    return `${tool.summary} It scores higher than ${outscored.name} for this job (editorial estimate).`;
+  const { categoryNote: category, notes } = strengths;
+  let body: string;
+  if (category) {
+    body = `${tool.name} ${category}.`;
+    if (notes[0]) body += ` It also ${notes[0]}.`;
+  } else if (notes.length > 0) {
+    body = `${tool.name} ${notes.join(" and ")}.`;
+  } else {
+    body = `${tool.name} is known for ${tool.strengths[0] ?? "its range"}.`;
   }
-  return tool.summary;
+  if (tag === "keep") return `You already use it. ${body}`;
+  if (tag === "better" && outscored) {
+    return `${body} It scores higher than ${outscored.name} for this job (editorial estimate).`;
+  }
+  return body;
 }
 
 /** Tells the reader which separate tools they can skip because of this one. */
@@ -28,11 +73,18 @@ export function watchOutText(tool: Tool, levelStretched: boolean): string {
   return (levelStretched ? [LEVEL_STRETCH_NOTE, ...notes] : notes).join(" ");
 }
 
-export function toAlternative(tool: Tool): Alternative {
+export function toAlternative(
+  tool: Tool,
+  strengths: Strengths = { categoryNote: null, notes: [] },
+): Alternative {
+  const note = strengths.categoryNote ?? strengths.notes[0];
+  const reason = note
+    ? `you want a tool that ${note}`
+    : `you want ${tool.strengths[0] ?? "a different approach"}`;
   return {
     toolId: tool.id,
     toolName: tool.name,
-    chooseIf: `you want ${tool.strengths[0] ?? "a different approach"}`,
+    chooseIf: reason,
     paidOnly: tool.hasFreeOption === false,
   };
 }

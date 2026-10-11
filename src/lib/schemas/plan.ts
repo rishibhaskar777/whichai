@@ -87,13 +87,61 @@ export const pricingSchema = z.object({
 });
 export type Pricing = z.infer<typeof pricingSchema>;
 
+/** A capability class with the model names a tool's own page gives for it. */
+export const namedModelsSchema = z.object({
+  modelClass: modelClassIdSchema,
+  names: z.array(text(60)).min(1).max(8),
+});
+export type NamedModels = z.infer<typeof namedModelsSchema>;
+
+/**
+ * The expandable "Get more from <tool>" content for one card. Every part is
+ * recorded data; a part with no data is left empty and not shown.
+ */
+export const getMoreSchema = z.object({
+  /** Model names as the tool's own page gives them, with the day they were read. */
+  models: z
+    .object({
+      classes: z.array(namedModelsSchema).min(1),
+      checkedOn: z.iso.date(),
+      url: httpsUrl,
+    })
+    .nullable(),
+  /** The capability classes the goal calls for, with what each is for. */
+  classAdvice: z.array(
+    z.object({ modelClass: modelClassIdSchema, useFor: text(240) }),
+  ),
+  tips: z.array(z.object({ text: text(200), sourceUrl: httpsUrl.nullable() })),
+  tipsCheckedOn: z.iso.date().nullable(),
+  addOns: z.array(
+    z.object({
+      toolId: text(60),
+      toolName: text(60),
+      kind: toolKindSchema,
+      officialUrl: httpsUrl,
+      getIt: getItSchema.nullable(),
+    }),
+  ),
+  freePlanTips: z.array(text(200)),
+});
+export type GetMore = z.infer<typeof getMoreSchema>;
+
 export const jobRecommendationSchema = z.object({
   jobId: text(60),
   jobName: text(60),
   toolId: text(60),
   toolName: text(60),
   kind: toolKindSchema,
+  /** What to do with the tool in this job, continuing "Use <tool> to ...". */
+  task: text(130),
+  /** What the tool is good at for this goal, built from the task's tags. */
   why: text(400),
+  /** The tool's general summary, shown as "About <tool>". */
+  about: text(180),
+  /** A ready prompt for this goal and job. */
+  starterPrompt: text(320),
+  /** Set only for AI tools that have recorded tips, add-ons or models. */
+  getMore: getMoreSchema.nullable(),
   tag: tagSchema,
   freeOption: z.union([z.boolean(), z.literal("verify")]),
   pricing: pricingSchema,

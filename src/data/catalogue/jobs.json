@@ -4,6 +4,12 @@
     "name": "AI assistant",
     "description": "A general chat assistant for drafting, explaining, planning and brainstorming.",
     "category": "ai",
+    "stage": "idea",
+    "defaultSlot": {
+      "tags": ["reasoning", "beginner-friendly"],
+      "task": "plan this part, draft the first version and answer questions as you go",
+      "starterPrompt": "Help me with this part of my project: [describe it]. Ask me what you need to know, then suggest a plan and a first draft."
+    },
     "keywords": [
       "chatbot",
       "brainstorm",
@@ -39,14 +45,19 @@
       "which ai",
       "best ai",
       "ask chatgpt"
-    ],
-    "stage": "idea"
+    ]
   },
   {
     "id": "coding-assistant",
     "name": "Coding assistant",
     "description": "An AI helper that writes, explains and fixes code.",
     "category": "ai",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["coding", "reasoning"],
+      "task": "write and explain the code for this part, one piece at a time",
+      "starterPrompt": "Write the code for this part of my project: [describe it], using [language or framework]. Explain each piece and how to test it."
+    },
     "keywords": [
       "coding",
       "code",
@@ -83,14 +94,19 @@
       "pair programming",
       "unit tests",
       "write function"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "research-with-sources",
     "name": "Research with sources",
     "description": "Finding answers and papers while keeping track of where each claim came from.",
     "category": "research",
+    "stage": "idea",
+    "defaultSlot": {
+      "tags": ["citations", "web-search"],
+      "task": "find answers for this part with sources you can open and check",
+      "starterPrompt": "What do credible sources say about [question]? Give the main points and a link for each."
+    },
     "keywords": [
       "research",
       "sources",
@@ -124,14 +140,19 @@
       "peer reviewed",
       "research help",
       "reading research"
-    ],
-    "stage": "idea"
+    ]
   },
   {
     "id": "source-library",
     "name": "Books and primary sources",
     "description": "Free libraries of books, manuscripts and original texts you can read yourself.",
     "category": "research",
+    "stage": "idea",
+    "defaultSlot": {
+      "tags": ["free-tier-generous"],
+      "task": "read original texts for this part instead of relying on summaries",
+      "starterPrompt": "Which free libraries or archives hold original sources on [topic]? Say what each is best for."
+    },
     "keywords": [
       "book",
       "ebooks",
@@ -166,14 +187,19 @@
       "archives",
       "e-library",
       "book pdf"
-    ],
-    "stage": "idea"
+    ]
   },
   {
     "id": "image-generation",
     "name": "Image generation",
     "description": "Making pictures, illustrations and artwork from a text description.",
     "category": "media",
+    "stage": "design",
+    "defaultSlot": {
+      "tags": ["images", "design-polish"],
+      "task": "make the pictures this part needs from a text description",
+      "starterPrompt": "Write an image prompt for [subject] in [style], with the composition and colours described."
+    },
     "keywords": [
       "image",
       "picture",
@@ -207,14 +233,19 @@
       "sticker",
       "poster",
       "logo"
-    ],
-    "stage": "design"
+    ]
   },
   {
     "id": "video-generation",
     "name": "Video generation",
     "description": "Creating video clips or presenter videos from text or images.",
     "category": "media",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["video"],
+      "task": "generate short clips for this part when you cannot film them",
+      "starterPrompt": "Write a video prompt for a [number]-second clip of [scene], with camera movement and style."
+    },
     "keywords": [
       "ai video",
       "video generation",
@@ -246,14 +277,19 @@
       "animated explainer",
       "cartoon video",
       "ai generated video"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "video-editing",
     "name": "Video editing",
     "description": "Cutting, arranging and finishing video footage.",
     "category": "media",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "speed"],
+      "task": "cut, order and finish the footage for this part",
+      "starterPrompt": "Give me an editing checklist for a [length] video: trim, order, audio, captions and export."
+    },
     "keywords": [
       "edit video",
       "video editing",
@@ -288,14 +324,19 @@
       "edit reels",
       "edit shorts",
       "edit my video"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "voice-and-audio",
     "name": "Voice and audio",
     "description": "Voiceovers, speech to text, recording and cleaning up sound.",
     "category": "media",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["voice", "multilingual"],
+      "task": "record, clean or generate the voice and sound for this part",
+      "starterPrompt": "Give me tips to record clean voice audio and a checklist to clean it up before I publish."
+    },
     "keywords": [
       "voice",
       "voiceover",
@@ -331,14 +372,19 @@
       "podcast editing",
       "podcast recording",
       "mic recording"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "presentation-maker",
     "name": "Presentation maker",
     "description": "Building slide decks, with or without AI help.",
     "category": "productivity",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["templates", "beginner-friendly"],
+      "task": "build the slides for this part with short text and one idea per slide",
+      "starterPrompt": "Outline [number] slides for [topic] for [audience], with a title and one key message for each."
+    },
     "keywords": [
       "presentation",
       "slides",
@@ -371,14 +417,19 @@
       "slide show",
       "presenting",
       "ppt for"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "writing-and-editing",
     "name": "Writing and editing",
     "description": "Checking grammar, improving clarity and rewriting text.",
     "category": "productivity",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["beginner-friendly"],
+      "task": "check and improve the text for this part for clarity and tone",
+      "starterPrompt": "Edit this text for clarity and a [tone] tone without changing my meaning: [paste]."
+    },
     "keywords": [
       "write",
       "writing",
@@ -414,14 +465,19 @@
       "speech writing",
       "ai writer",
       "writing help"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "note-taking",
     "name": "Note-taking",
     "description": "Keeping and organising notes, with search and links between them.",
     "category": "productivity",
+    "stage": "idea",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "free-tier-generous"],
+      "task": "keep what you collect for this part in one searchable place",
+      "starterPrompt": "Suggest a simple note structure for [project] with sections for ideas, sources and next steps."
+    },
     "keywords": [
       "notes",
       "note taking",
@@ -454,14 +510,19 @@
       "notes banao",
       "notes making",
       "diary"
-    ],
-    "stage": "idea"
+    ]
   },
   {
     "id": "resume-builder",
     "name": "Resume builder",
     "description": "Laying out a resume or CV and checking it reads well.",
     "category": "productivity",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["templates", "beginner-friendly"],
+      "task": "lay out the resume for this part from a clean template",
+      "starterPrompt": "What sections should my resume have for a [role], and in what order? I have [years] of experience."
+    },
     "keywords": [
       "resume",
       "cv",
@@ -495,14 +556,19 @@
       "one page resume",
       "naukri profile",
       "resume writing"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "flashcards-and-quizzes",
     "name": "Flashcards and quizzes",
     "description": "Practice tools for remembering what you study, including spaced repetition.",
     "category": "learning",
+    "stage": "idea",
+    "defaultSlot": {
+      "tags": ["free-tier-generous", "beginner-friendly"],
+      "task": "turn what you study for this part into cards you review on a schedule",
+      "starterPrompt": "Make 15 question-and-answer cards from this material, one fact per card: [paste]."
+    },
     "keywords": [
       "flashcard",
       "quiz",
@@ -537,14 +603,19 @@
       "ncert questions",
       "mcqs",
       "anki deck"
-    ],
-    "stage": "idea"
+    ]
   },
   {
     "id": "ui-templates",
     "name": "UI templates",
     "description": "Ready-made page layouts and themes you fill with your own content.",
     "category": "design",
+    "stage": "design",
+    "defaultSlot": {
+      "tags": ["templates", "beginner-friendly"],
+      "task": "start this part from a ready layout and replace the content",
+      "starterPrompt": "Which pages and sections does a [type of site] need? Give one line on what each must contain."
+    },
     "keywords": [
       "template",
       "templates",
@@ -576,14 +647,19 @@
       "theme for website",
       "landing page",
       "layout ideas"
-    ],
-    "stage": "design"
+    ]
   },
   {
     "id": "design-tool",
     "name": "Design tool",
     "description": "Drawing layouts, logos, graphics and mock-ups.",
     "category": "design",
+    "stage": "design",
+    "defaultSlot": {
+      "tags": ["design-polish", "templates"],
+      "task": "design the visuals for this part before you build or publish them",
+      "starterPrompt": "Suggest a layout, colours and type choices for [item] aimed at [audience]."
+    },
     "keywords": [
       "design",
       "logo",
@@ -623,14 +699,19 @@
       "instagram post design",
       "carousel design",
       "mockups"
-    ],
-    "stage": "design"
+    ]
   },
   {
     "id": "component-library",
     "name": "UI components",
     "description": "Pre-built buttons, forms, menus and other interface parts.",
     "category": "build",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["coding", "design-polish"],
+      "task": "reuse ready-made, accessible interface parts for this part",
+      "starterPrompt": "List the interface components I need for [project] and the states each should handle."
+    },
     "keywords": [
       "components",
       "ui kit",
@@ -664,14 +745,19 @@
       "pre-built components",
       "styled components",
       "css styling"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "animation-library",
     "name": "Animation library",
     "description": "Code libraries that add motion to a web page.",
     "category": "build",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["design-polish"],
+      "task": "add small, purposeful motion to this part",
+      "starterPrompt": "Suggest three restrained animations for [project] and how to respect reduced-motion settings."
+    },
     "keywords": [
       "animation",
       "motion",
@@ -704,14 +790,19 @@
       "animejs",
       "cool effects",
       "interactive effects"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "framework",
     "name": "Framework",
     "description": "The base that organises your site or app: pages, routing and structure.",
     "category": "build",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["coding"],
+      "task": "give this part a standard structure for pages, routes and shared code",
+      "starterPrompt": "Show a folder structure for a [type of site or app] built with [framework]."
+    },
     "keywords": [
       "framework",
       "react",
@@ -753,14 +844,19 @@
       "static site generator",
       "vite",
       "tech stack"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "content-management",
     "name": "Content management",
     "description": "A place to write and edit posts and pages without touching code.",
     "category": "build",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "templates"],
+      "task": "edit the content for this part without touching code",
+      "starterPrompt": "Which content on my site should be editable by me, and how should it be organised?"
+    },
     "keywords": [
       "cms",
       "content management",
@@ -795,14 +891,19 @@
       "add blog",
       "blog posts",
       "blog site"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "database",
     "name": "Database",
     "description": "Where your app stores its data.",
     "category": "build",
+    "stage": "data",
+    "defaultSlot": {
+      "tags": ["coding"],
+      "task": "store the data for this part in clearly designed tables",
+      "starterPrompt": "Design tables for [project] and explain the relationships between them."
+    },
     "keywords": [
       "database",
       "store data",
@@ -836,14 +937,19 @@
       "save orders",
       "inventory data",
       "data tables"
-    ],
-    "stage": "data"
+    ]
   },
   {
     "id": "authentication",
     "name": "Authentication",
     "description": "Sign-up, sign-in and password handling for your users.",
     "category": "build",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["integrations", "coding"],
+      "task": "add sign-up and sign-in for this part with a maintained provider",
+      "starterPrompt": "What should I decide before adding sign-in to [project]: methods, roles and password reset?"
+    },
     "keywords": [
       "login",
       "sign in",
@@ -879,14 +985,19 @@
       "secure login",
       "otp verification",
       "login page"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "payments-india",
     "name": "Payments (India)",
     "description": "Taking payments from customers in India, including UPI.",
     "category": "build",
+    "stage": "payments",
+    "defaultSlot": {
+      "tags": ["india-payments", "beginner-friendly"],
+      "task": "take payments in rupees, including UPI, for this part",
+      "starterPrompt": "How do I add payments in rupees with UPI to [project] and test them before going live?"
+    },
     "keywords": [
       "payment",
       "upi",
@@ -928,14 +1039,19 @@
       "orders",
       "donate",
       "pay now"
-    ],
-    "stage": "payments"
+    ]
   },
   {
     "id": "hosting",
     "name": "Hosting",
     "description": "Putting your site or app online at a public address.",
     "category": "build",
+    "stage": "launch",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "free-tier-generous"],
+      "task": "put this part online at a public address and update it easily",
+      "starterPrompt": "Give me the steps to publish [project] and check it on a phone before I share the link."
+    },
     "keywords": [
       "hosting",
       "deploy",
@@ -974,14 +1090,19 @@
       "publish my site",
       "cdn",
       "dns"
-    ],
-    "stage": "launch"
+    ]
   },
   {
     "id": "analytics",
     "name": "Analytics",
     "description": "Counting visitors and seeing which pages they read.",
     "category": "build",
+    "stage": "grow",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "integrations"],
+      "task": "see how many people visit this part and what they do",
+      "starterPrompt": "Which three numbers should I watch for [project], and what would each one tell me to change?"
+    },
     "keywords": [
       "analytics",
       "visitors",
@@ -1014,14 +1135,19 @@
       "who visits",
       "audience insights",
       "performance tracking"
-    ],
-    "stage": "grow"
+    ]
   },
   {
     "id": "contact-form",
     "name": "Contact form",
     "description": "A form that sends your visitors' messages to your email.",
     "category": "build",
+    "stage": "grow",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "free-tier-generous"],
+      "task": "collect messages from visitors and send them to your email",
+      "starterPrompt": "Which fields should my contact form have for [purpose], and what should the confirmation say?"
+    },
     "keywords": [
       "contact form",
       "forms",
@@ -1057,14 +1183,19 @@
       "receive messages",
       "waitlist form",
       "waitlist"
-    ],
-    "stage": "grow"
+    ]
   },
   {
     "id": "run-ai-locally",
     "name": "Run AI on your own computer",
     "description": "Running AI models on your own computer, so your text stays on your machine and it can work offline.",
     "category": "ai",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["local-private"],
+      "task": "run models on your own computer so your text stays with you",
+      "starterPrompt": "What size of model can my computer run? I have [RAM] and [GPU or none]. Suggest where to start."
+    },
     "keywords": [
       "local ai",
       "offline ai",
@@ -1102,14 +1233,19 @@
       "ai on my pc",
       "gguf",
       "hugging face"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "browser-extension",
     "name": "AI in your browser",
     "description": "Browsers and extensions that add AI help to the pages you read and the forms you fill.",
     "category": "ai",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["integrations", "beginner-friendly"],
+      "task": "bring AI help into the pages you already use in your browser",
+      "starterPrompt": "Which tasks in my daily browsing could an AI extension help with, and what permissions should I be careful about?"
+    },
     "keywords": [
       "browser extension",
       "chrome extension",
@@ -1141,14 +1277,19 @@
       "highlight and explain",
       "explain this page",
       "article summary"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "code-editor",
     "name": "Code editor",
     "description": "The program you write code in, with search, a terminal and extensions.",
     "category": "build",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["coding", "beginner-friendly"],
+      "task": "write, search and run your code in one program",
+      "starterPrompt": "Which editor settings and extensions help for [language] projects?"
+    },
     "keywords": [
       "code editor",
       "ide",
@@ -1183,14 +1324,19 @@
       "development environment",
       "dev environment",
       "coding setup"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "version-control",
     "name": "Version control",
     "description": "Tracking changes to your code and sharing it with other people, usually with Git.",
     "category": "build",
+    "stage": "launch",
+    "defaultSlot": {
+      "tags": ["integrations", "coding"],
+      "task": "save every change so you can go back and share the work",
+      "starterPrompt": "Explain the five Git commands I will use daily, and a simple routine for a solo project."
+    },
     "keywords": [
       "version control",
       "source control",
@@ -1221,14 +1367,19 @@
       "git push",
       "git clone",
       "git add"
-    ],
-    "stage": "launch"
+    ]
   },
   {
     "id": "website-builder",
     "name": "Website builder",
     "description": "A visual tool that makes and hosts a website without writing code.",
     "category": "build",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "templates"],
+      "task": "make and host the site without writing code",
+      "starterPrompt": "List the pages and sections for a [type of site] and what to write in each."
+    },
     "keywords": [
       "website builder",
       "no code website",
@@ -1263,14 +1414,19 @@
       "link in bio",
       "personal site",
       "quick website"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "chatbot-builder",
     "name": "Chatbot builder",
     "description": "Tools for making a chatbot or assistant for your own site, shop or documents.",
     "category": "build",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "integrations"],
+      "task": "give visitors a chatbot that answers from your own content",
+      "starterPrompt": "What should I put in a chatbot's knowledge base first, and what should it say when it does not know?"
+    },
     "keywords": [
       "build a chatbot",
       "chatbot for my website",
@@ -1310,14 +1466,19 @@
       "whatsapp orders",
       "order on whatsapp",
       "whatsapp business"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "payments-global",
     "name": "Payments (global)",
     "description": "Taking card payments and subscriptions from customers in many countries.",
     "category": "build",
+    "stage": "payments",
+    "defaultSlot": {
+      "tags": ["integrations", "multilingual"],
+      "task": "take card payments and subscriptions from customers in many countries",
+      "starterPrompt": "What do I need to set up subscriptions and one-off payments for [project], including taxes and refunds?"
+    },
     "keywords": [
       "international payments",
       "accept cards",
@@ -1352,14 +1513,19 @@
       "worldwide payments",
       "multi currency",
       "currency conversion"
-    ],
-    "stage": "payments"
+    ]
   },
   {
     "id": "automation-and-workflows",
     "name": "Automation and workflows",
     "description": "Connecting apps so that one action starts another, without writing code.",
     "category": "productivity",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["integrations", "beginner-friendly"],
+      "task": "connect apps so one action triggers the next without manual steps",
+      "starterPrompt": "Walk me through an automation that, when [trigger], does [action]. Include how to test it."
+    },
     "keywords": [
       "automate",
       "automation",
@@ -1396,14 +1562,19 @@
       "robotic process",
       "apps script",
       "google apps script"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "meeting-notes-and-transcription",
     "name": "Meeting notes and transcription",
     "description": "Turning recordings and calls into text, summaries and action items.",
     "category": "productivity",
+    "stage": "data",
+    "defaultSlot": {
+      "tags": ["voice", "multilingual"],
+      "task": "turn recordings into a transcript, a summary and action items",
+      "starterPrompt": "From this transcript, list the decisions, action items with owners and open questions: [paste]."
+    },
     "keywords": [
       "meeting notes",
       "transcribe",
@@ -1436,14 +1607,19 @@
       "meeting recap",
       "notes from call",
       "class recording notes"
-    ],
-    "stage": "data"
+    ]
   },
   {
     "id": "translation",
     "name": "Translation",
     "description": "Translating text, documents and speech between languages.",
     "category": "productivity",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["multilingual"],
+      "task": "translate text for this part and keep names and numbers intact",
+      "starterPrompt": "Translate this from [language] to [language], keeping names and numbers unchanged: [paste]."
+    },
     "keywords": [
       "translation",
       "translator",
@@ -1481,14 +1657,19 @@
       "translate documents",
       "in hindi",
       "anuvad"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "email-writing",
     "name": "Email and inbox",
     "description": "Writing, replying to and sorting email faster.",
     "category": "productivity",
+    "stage": "grow",
+    "defaultSlot": {
+      "tags": ["beginner-friendly"],
+      "task": "write and reply to email for this part quickly and clearly",
+      "starterPrompt": "Write a short email to [person] about [topic], with one clear request and a friendly tone."
+    },
     "keywords": [
       "email",
       "emails",
@@ -1525,14 +1706,19 @@
       "inbox zero",
       "email management",
       "email signature"
-    ],
-    "stage": "grow"
+    ]
   },
   {
     "id": "spreadsheet-ai",
     "name": "Spreadsheets",
     "description": "Spreadsheets with formula help and AI, for tables, budgets and quick analysis.",
     "category": "productivity",
+    "stage": "data",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "free-tier-generous"],
+      "task": "organise the numbers for this part with formulas and simple charts",
+      "starterPrompt": "Write a formula to calculate [measure] from columns [list], and explain how it works."
+    },
     "keywords": [
       "spreadsheet",
       "excel",
@@ -1564,14 +1750,19 @@
       "excel sheets",
       "spreadsheets",
       "excel file"
-    ],
-    "stage": "data"
+    ]
   },
   {
     "id": "task-and-project-management",
     "name": "Tasks and projects",
     "description": "Keeping track of to-dos, deadlines and projects, alone or with a team.",
     "category": "productivity",
+    "stage": "idea",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "free-tier-generous"],
+      "task": "track what needs doing for this part, with owners and dates",
+      "starterPrompt": "Turn this list into tasks with an owner and due date for each: [paste]."
+    },
     "keywords": [
       "to-do",
       "todo",
@@ -1611,14 +1802,19 @@
       "manage projects",
       "team tasks",
       "productivity app"
-    ],
-    "stage": "idea"
+    ]
   },
   {
     "id": "seo",
     "name": "Search visibility (SEO)",
     "description": "Finding out how a site shows up in search and what to change.",
     "category": "productivity",
+    "stage": "grow",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "web-search"],
+      "task": "help the pages for this part show up in search",
+      "starterPrompt": "Write a search title and description for a page about [topic], using words a visitor would search."
+    },
     "keywords": [
       "seo",
       "search ranking",
@@ -1654,14 +1850,19 @@
       "google business profile",
       "local seo",
       "domain authority"
-    ],
-    "stage": "grow"
+    ]
   },
   {
     "id": "data-analysis",
     "name": "Data analysis",
     "description": "Exploring a table of data, making charts and finding patterns.",
     "category": "research",
+    "stage": "data",
+    "defaultSlot": {
+      "tags": ["reasoning", "integrations"],
+      "task": "explore the data for this part and find patterns worth acting on",
+      "starterPrompt": "Look at this data and tell me what stands out: trends, outliers and gaps to check: [paste sample]."
+    },
     "keywords": [
       "data analysis",
       "analyse data",
@@ -1699,14 +1900,19 @@
       "line chart",
       "business intelligence",
       "bi tool"
-    ],
-    "stage": "data"
+    ]
   },
   {
     "id": "pdf-and-document-chat",
     "name": "Chat with documents",
     "description": "Asking questions of a PDF or a set of documents and getting answers with page references.",
     "category": "research",
+    "stage": "data",
+    "defaultSlot": {
+      "tags": ["documents", "citations", "long-context"],
+      "task": "ask questions of your documents and get answers with page references",
+      "starterPrompt": "Summarise this document in ten bullet points with the page for each, then answer my questions."
+    },
     "keywords": [
       "chat with pdf",
       "pdf chat",
@@ -1740,14 +1946,19 @@
       "document analysis",
       "summarize report",
       "read pdf"
-    ],
-    "stage": "data"
+    ]
   },
   {
     "id": "music-generation",
     "name": "Music generation",
     "description": "Making songs, background music and sound beds from a text description or a few settings.",
     "category": "media",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["music", "beginner-friendly"],
+      "task": "make music for this part from a description of mood and instruments",
+      "starterPrompt": "Write a music prompt for a [length] [genre] track with [mood], using [instruments] and no vocals."
+    },
     "keywords": [
       "music",
       "song",
@@ -1787,14 +1998,19 @@
       "fl studio",
       "garageband",
       "produce music"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "social-media",
     "name": "Social media",
     "description": "Planning, scheduling and repurposing posts for social platforms.",
     "category": "media",
+    "stage": "grow",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "integrations"],
+      "task": "plan, schedule and adapt posts for this part across platforms",
+      "starterPrompt": "Plan seven posts for [platform] about [topic], each with a caption and a call to action."
+    },
     "keywords": [
       "social media",
       "instagram",
@@ -1836,14 +2052,19 @@
       "threads",
       "whatsapp status",
       "pinterest"
-    ],
-    "stage": "grow"
+    ]
   },
   {
     "id": "image-editing",
     "name": "Photo and image editing",
     "description": "Fixing, retouching, resizing and cutting out parts of photos and images.",
     "category": "media",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["images", "beginner-friendly"],
+      "task": "fix, crop and clean up the photos for this part",
+      "starterPrompt": "Give me the steps to remove the background from a photo and export it for [use]."
+    },
     "keywords": [
       "edit photo",
       "photo editing",
@@ -1880,14 +2101,19 @@
       "bg remove",
       "image resizer",
       "image converter"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "screen-recording",
     "name": "Screen recording",
     "description": "Recording your screen and voice for tutorials, demos and walkthroughs.",
     "category": "media",
+    "stage": "build",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "free-tier-generous"],
+      "task": "record your screen and voice to show how something works",
+      "starterPrompt": "Give me tips for recording a clear screen demo: resolution, cursor, pacing and audio."
+    },
     "keywords": [
       "screen recording",
       "record screen",
@@ -1918,14 +2144,19 @@
       "explainer screen",
       "app walkthrough",
       "screen record"
-    ],
-    "stage": "build"
+    ]
   },
   {
     "id": "3d-and-design-assets",
     "name": "3D and models",
     "description": "Making or finding 3D models and scenes for sites, games and product mock-ups.",
     "category": "design",
+    "stage": "design",
+    "defaultSlot": {
+      "tags": ["design-polish"],
+      "task": "make or find 3D models and scenes for this part",
+      "starterPrompt": "What does a 3D model need before [use] accepts it: size, polygon count and file format?"
+    },
     "keywords": [
       "3d",
       "3d model",
@@ -1963,14 +2194,19 @@
       "3d scan",
       "spline",
       "meshy"
-    ],
-    "stage": "design"
+    ]
   },
   {
     "id": "stock-assets",
     "name": "Stock photos, icons and fonts",
     "description": "Free and licensed pictures, icon sets and typefaces to use in your own designs.",
     "category": "design",
+    "stage": "design",
+    "defaultSlot": {
+      "tags": ["free-tier-generous"],
+      "task": "find licensed pictures, icons and fonts for this part",
+      "starterPrompt": "What licences should I check before using free images, icons and fonts in [project]?"
+    },
     "keywords": [
       "stock photo",
       "stock photos",
@@ -2004,14 +2240,19 @@
       "free backgrounds",
       "free wallpapers",
       "icons for website"
-    ],
-    "stage": "design"
+    ]
   },
   {
     "id": "diagramming",
     "name": "Diagrams and whiteboards",
     "description": "Drawing flowcharts, mind maps and sketches to think or explain.",
     "category": "design",
+    "stage": "idea",
+    "defaultSlot": {
+      "tags": ["beginner-friendly"],
+      "task": "draw the flow or the structure for this part to think and explain",
+      "starterPrompt": "Describe a simple diagram of [process] with at most six boxes and labelled arrows."
+    },
     "keywords": [
       "diagram",
       "flowchart",
@@ -2046,14 +2287,19 @@
       "timeline chart",
       "gantt chart",
       "gantt"
-    ],
-    "stage": "idea"
+    ]
   },
   {
     "id": "online-courses",
     "name": "Online courses",
     "description": "Structured courses and lessons you can follow at your own pace.",
     "category": "learning",
+    "stage": "idea",
+    "defaultSlot": {
+      "tags": ["beginner-friendly", "free-tier-generous"],
+      "task": "follow a structured course for this part at your own pace",
+      "starterPrompt": "Suggest a course path for learning [topic] from basics to a first project, with how long each stage takes."
+    },
     "keywords": [
       "course",
       "courses",
@@ -2093,14 +2339,19 @@
       "free certification",
       "google certificate",
       "learning platform"
-    ],
-    "stage": "idea"
+    ]
   },
   {
     "id": "study-help-and-math",
     "name": "Study help and maths",
     "description": "Working through maths and science problems step by step, and graphing them.",
     "category": "learning",
+    "stage": "idea",
+    "defaultSlot": {
+      "tags": ["reasoning", "beginner-friendly"],
+      "task": "work through problems for this part step by step",
+      "starterPrompt": "Show the steps to solve this problem and explain why each step is used: [paste problem]."
+    },
     "keywords": [
       "math",
       "maths homework",
@@ -2141,14 +2392,19 @@
       "assignment solution",
       "explain concept",
       "explain topic"
-    ],
-    "stage": "idea"
+    ]
   },
   {
     "id": "language-learning",
     "name": "Language learning",
     "description": "Practising a new language with lessons, vocabulary and conversation.",
     "category": "learning",
+    "stage": "idea",
+    "defaultSlot": {
+      "tags": ["multilingual", "beginner-friendly"],
+      "task": "practise the language for this part with short daily lessons",
+      "starterPrompt": "What does a good daily 20-minute routine look like for a beginner learning [language]?"
+    },
     "keywords": [
       "learn a language",
       "learn english",
@@ -2185,7 +2441,6 @@
       "foreign language",
       "english bolna",
       "english seekhna"
-    ],
-    "stage": "idea"
+    ]
   }
 ]
