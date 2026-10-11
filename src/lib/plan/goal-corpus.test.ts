@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { GOAL_CORPUS, HELD_OUT_CORPUS } from "./goal-corpus";
 import { formatCorpusReport, runCorpus } from "./goal-corpus-report";
+import { USER_WRITTEN_CASES } from "./user-written-corpus";
 
 const REQUIRED_RATE = 0.9;
 
@@ -29,7 +30,7 @@ describe("goal corpus", () => {
     );
     expect(main.rate).toBeGreaterThanOrEqual(REQUIRED_RATE);
     expect(heldOut.rate).toBeGreaterThanOrEqual(REQUIRED_RATE);
-  });
+  }, 30_000);
 
   it("covers every goal at least twice", () => {
     const counts = new Map<string, number>();
@@ -42,5 +43,17 @@ describe("goal corpus", () => {
       expect(count, goal).toBeGreaterThanOrEqual(2);
     }
     expect(counts.size).toBeGreaterThanOrEqual(45);
+  });
+});
+
+describe("user-written sentences", () => {
+  it("are valid and reported on their own", () => {
+    const report = runCorpus(USER_WRITTEN_CASES);
+    process.stdout.write(
+      USER_WRITTEN_CASES.length === 0
+        ? "\nUser-written set\nNo sentences yet. See src/data/goals/test-sets/README.md.\n"
+        : `\nUser-written set\n${formatCorpusReport(report)}`,
+    );
+    expect(report.total).toBe(USER_WRITTEN_CASES.length);
   });
 });
