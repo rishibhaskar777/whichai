@@ -1,7 +1,15 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { parseTheme, type ThemeChoice } from "@/lib/theme";
+import { parseTheme, type Theme } from "@/lib/theme";
+
+const DARK_QUERY = "(prefers-color-scheme: dark)";
+
+function systemMedia(): MediaQueryList | null {
+  return typeof window.matchMedia === "function"
+    ? window.matchMedia(DARK_QUERY)
+    : null;
+}
 
 function subscribe(onChange: () => void) {
   const observer = new MutationObserver(onChange);
@@ -9,14 +17,26 @@ function subscribe(onChange: () => void) {
     attributes: true,
     attributeFilter: ["data-theme"],
   });
-  return () => observer.disconnect();
+  const media = systemMedia();
+  media?.addEventListener("change", onChange);
+  return () => {
+    observer.disconnect();
+    media?.removeEventListener("change", onChange);
+  };
 }
 
-function readChoice(): ThemeChoice {
-  return parseTheme(document.documentElement.dataset.theme) ?? "system";
+function readShown(): Theme {
+  const explicit = parseTheme(document.documentElement.dataset.theme);
+  if (explicit) return explicit;
+  return systemMedia()?.matches ? "dark" : "light";
 }
 
-/** The theme choice on the page, following changes made anywhere. */
-export function useThemeChoice(initialChoice: ThemeChoice): ThemeChoice {
-  return useSyncExternalStore(subscribe, readChoice, () => initialChoice);
+/**
+ * The theme the page is showing right now, whether it was chosen or comes
+ * from the system. The server only knows an explicit choice.
+ */
+export function useShownTheme(initialChoice: Theme | "system"): Theme {
+  return useSyncExternalStore(subscribe, readShown, () =>
+    initialChoice === "dark" ? "dark" : "light",
+  );
 }

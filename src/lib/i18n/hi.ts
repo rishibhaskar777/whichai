@@ -410,6 +410,12 @@ export const hi: Record<MessageKey, string> = {
   "toast.dismiss": "हटा दें",
   "confirm.typeToConfirm": "पुष्टि के लिए {text} लिखें",
   "nav.settings": "सेटिंग",
+  "nav.more": "और",
+  "nav.plansPricing": "प्लान और कीमतें",
+  "nav.section.work": "आपका काम",
+  "nav.section.explore": "खोजें",
+  "theme.switchToDark": "डार्क मोड पर जाएँ",
+  "theme.switchToLight": "लाइट मोड पर जाएँ",
   "nav.help": "मदद",
   "storage.limit":
     "आप अधिकतम {max} योजनाएँ सहेज सकते हैं। नई योजना सहेजने के लिए कोई एक हटाइए।",

@@ -45,14 +45,20 @@ function renderSidebar(
 const trigger = () => screen.getByRole("button", { name: /Ada Lovelace/ });
 
 describe("sidebar footer, signed out", () => {
-  it("shows a Sign in button and a settings link, and no Guest label", () => {
+  it("shows Sign in, the theme toggle and More, and no settings icon or Guest label", () => {
     renderSidebar(null);
 
     expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Settings" })).toHaveAttribute(
-      "href",
-      "/settings",
+    expect(
+      screen.getByRole("button", { name: "Switch to dark mode" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "More" })).toHaveAttribute(
+      "aria-haspopup",
+      "menu",
     );
+    expect(
+      screen.queryByRole("link", { name: "Settings" }),
+    ).not.toBeInTheDocument();
     expect(screen.queryByText("Guest")).not.toBeInTheDocument();
   });
 
@@ -67,11 +73,58 @@ describe("sidebar footer, signed out", () => {
     expect(dialog.showModal).toHaveBeenCalled();
   });
 
-  it("keeps only icon buttons in the collapsed rail", () => {
+  it("opens More with Settings, Help, Plans & pricing and Language", async () => {
+    const user = userEvent.setup();
+    renderSidebar(null);
+
+    await user.click(screen.getByRole("button", { name: "More" }));
+
+    const menu = screen.getByRole("menu", { name: "More" });
+    expect(
+      within(menu)
+        .getAllByRole("menuitem")
+        .map((item) => item.textContent),
+    ).toEqual(["Settings", "Help", "Plans & pricing"]);
+    expect(
+      within(menu).getByRole("menuitem", { name: "Plans & pricing" }),
+    ).toHaveAttribute("href", "/pricing");
+    expect(
+      within(menu).getByRole("menuitemradio", { name: "English" }),
+    ).toBeChecked();
+    expect(
+      within(menu).queryByRole("menuitemradio", { name: "Dark" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("closes More with Escape and returns focus; arrows move", async () => {
+    const user = userEvent.setup();
+    renderSidebar(null);
+    const more = screen.getByRole("button", { name: "More" });
+    more.focus();
+
+    await user.keyboard("{Enter}");
+    const menu = screen.getByRole("menu");
+    expect(
+      within(menu).getByRole("menuitem", { name: "Settings" }),
+    ).toHaveFocus();
+    await user.keyboard("{ArrowDown}");
+    expect(within(menu).getByRole("menuitem", { name: "Help" })).toHaveFocus();
+    await user.keyboard("{ArrowUp}{ArrowUp}");
+    expect(
+      within(menu).getByRole("menuitemradio", { name: "हिन्दी" }),
+    ).toHaveFocus();
+
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    expect(more).toHaveFocus();
+  });
+
+  it("stacks sign in, theme and More as icon buttons on the rail", () => {
     renderSidebar(null, { collapsed: true });
 
-    expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Settings" })).toBeInTheDocument();
+    for (const name of ["Sign in", "Switch to dark mode", "More"]) {
+      expect(screen.getByRole("button", { name })).toBeInTheDocument();
+    }
     expect(screen.queryByText("Sign in")).not.toBeInTheDocument();
   });
 
@@ -95,6 +148,9 @@ describe("sidebar footer, signed in", () => {
       expect(screen.queryByRole("link", { name })).not.toBeInTheDocument();
     }
     expect(screen.queryByRole("radio")).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Switch to dark mode" }),
+    ).toBeInTheDocument();
   });
 
   it("opens with the mouse and closes on a click outside", async () => {
@@ -110,6 +166,9 @@ describe("sidebar footer, signed in", () => {
         .getAllByRole("menuitem")
         .map((item) => item.textContent),
     ).toEqual(["Settings", "Upgrade plan", "Help", "Sign out"]);
+    expect(
+      within(menu).queryByRole("menuitemradio", { name: "Dark" }),
+    ).not.toBeInTheDocument();
     const hrefs = Object.fromEntries(
       within(menu)
         .getAllByRole("menuitem")
@@ -153,24 +212,6 @@ describe("sidebar footer, signed in", () => {
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("menu")).not.toBeInTheDocument();
     expect(trigger()).toHaveFocus();
-  });
-
-  it("changes the theme from the menu", async () => {
-    const user = userEvent.setup();
-    renderSidebar(VIEWER);
-    await user.click(trigger());
-    const menu = screen.getByRole("menu");
-
-    expect(
-      within(menu).getByRole("menuitemradio", { name: "System" }),
-    ).toBeChecked();
-    await user.click(within(menu).getByRole("menuitemradio", { name: "Dark" }));
-
-    expect(document.documentElement.dataset.theme).toBe("dark");
-    expect(document.cookie).toContain("theme=dark");
-    expect(
-      within(menu).getByRole("menuitemradio", { name: "Dark" }),
-    ).toBeChecked();
   });
 
   it("changes the language from the menu", async () => {

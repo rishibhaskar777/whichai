@@ -36,11 +36,13 @@ Both themes use `blur(24px) saturate(180%)` and an inset top highlight. The 1px 
 
 The glow layer is fixed behind the page. It has three large blobs made from radial gradients in the blue family only: accent blue, sky blue and deep indigo-blue. Each drifts and scales on its own loop (16s, 22s and 28s, ease-in-out, alternate) by about 6 to 10 percent of the viewport and a scale of 0.9 to 1.15. Only `transform` and `opacity` are animated. A radial mask fades the layer out towards the edges so the sidebar and news panel stay clean. When the search field is focused the layer brightens by about 20 percent over 400ms. The layer is `aria-hidden`, ignores pointer events and causes no layout shift. Under `prefers-reduced-motion` the blobs stay still and the glow is static.
 
-## Sidebar footer
+## Sidebar
 
-- One row at the bottom. Signed out: a full-width secondary "Sign in" button and a small settings icon button. Signed in: avatar with initials, the name, the plan as a quiet second line and a chevron, which opens the account menu.
-- The account menu holds Settings, Upgrade plan, Help, Theme, Language and, after a divider, Sign out. It is a real menu: arrow keys, Home and End move, Escape closes and returns focus to the row.
-- The collapsed rail shows only the avatar (or the sign-in and settings icons). The menu is positioned against the viewport because the sidebar clips its contents.
+- Navigation is grouped under two quiet labels (11px, uppercase, muted): "Your work" (Projects with up to five recent plans, Searches) and "Explore" (Tool Library, What Changed, Compare tools). Home sits at the top under New plan, which shows its keyboard shortcut on hover and focus. Rows are 36px with 18px icons and a 10px gap. The current page has a soft surface and a 2px accent bar on the left.
+- The bottom area sits under a thin divider and respects the safe area on phones. Signed out it is one row: a "Sign in" button that fills the width, the theme toggle and a "More" button. Signed in it is the account button (avatar, name, plan, chevron) and the theme toggle.
+- The theme toggle switches light and dark in one click and its icon shows the mode you will switch to. The icons rotate and fade over 250ms using `transform` and `opacity`; reduced motion keeps a crossfade. The System choice lives in Settings.
+- The account menu holds Settings, Upgrade plan, Help, Language and, after a divider, Sign out. The More menu holds Settings, Help, Plans & pricing and Language. Both are real menus: arrow keys, Home and End move, Escape closes and returns focus.
+- On the rail the avatar (or sign-in icon), the toggle and More stack and centre. Menus and tooltips are positioned against the viewport because the sidebar clips its contents.
 - Legal links are not in the sidebar. They are in Settings under "About & legal" and at the bottom of `/pricing` and `/checkout`, where payment pages need them.
 
 ## Motion
@@ -72,6 +74,8 @@ The glow layer is fixed behind the page. It has three large blobs made from radi
 | Accent      | 5.3   | 7.4  |
 
 Motion exception: collapsing the sidebar or the news panel animates the grid column width, which is a layout property, because the page must reflow. It is switched off under `prefers-reduced-motion`.
+
+Theme toggle exception: the toggle in the sidebar reveals the new theme with a View Transition, a circle growing from the button over 400ms with ease-out (`src/lib/theme-transition.ts`). The circle is animated with the Web Animations API, so no inline style is needed. It is skipped, and the theme changes at once, when the browser lacks `document.startViewTransition` or reduced motion is on. Changes made in Settings do not use it, and there is no colour transition on every element.
 
 Second motion exception: when a goal is submitted, the greeting collapses (a grid row going from `1fr` to `0fr`) and the search moves to the bottom (`flex-grow` on the spacers and the thread) in 350ms. A single layout transition moves everything together, so no script measures positions. The level switch indicator, the card reveals and the fade-in of plan content after a level change use `transform` and `opacity` only. Disclosures expand with a grid row transition. All of it is removed under `prefers-reduced-motion`, leaving fades.
 
