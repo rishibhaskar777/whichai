@@ -50,6 +50,7 @@ export const DEFAULT_SETTINGS = {
   language: "en",
   theme: "system",
   reduceMotion: "system",
+  animatedBackground: true,
   defaultLevel: "auto",
   defaultBudget: null,
   currencyDisplay: "₹",
@@ -61,6 +62,7 @@ export const settingsSchema = z.object({
   language: z.enum(LOCALES).catch(DEFAULT_SETTINGS.language),
   theme: themeChoiceSchema.catch(DEFAULT_SETTINGS.theme),
   reduceMotion: motionChoiceSchema.catch(DEFAULT_SETTINGS.reduceMotion),
+  animatedBackground: z.boolean().catch(DEFAULT_SETTINGS.animatedBackground),
   defaultLevel: z
     .enum(["auto", ...levelSchema.options])
     .catch(DEFAULT_SETTINGS.defaultLevel),

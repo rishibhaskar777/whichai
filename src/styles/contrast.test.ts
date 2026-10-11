@@ -122,6 +122,35 @@ describe.each([
     ).toBeGreaterThanOrEqual(3);
   });
 
+  // The aurora gives its three glows one budget per pixel, so the worst case
+  // is a single glow at full strength. The fallback blobs can all overlap, at
+  // the strength set by --glow-fallback.
+  const glows = ["glow-1", "glow-2", "glow-3"];
+  const pageText = ["text", "text-muted", "text-subtle", "accent"];
+
+  it.each(glows.flatMap((glow) => pageText.map((fg) => [glow, fg])))(
+    "under %s at full strength, %s on the page background meets AA",
+    (glow, fg) => {
+      const backdrop = over(token(palette, glow), token(palette, "bg"));
+      expect(ratio(token(palette, fg), backdrop)).toBeGreaterThanOrEqual(4.5);
+    },
+  );
+
+  it.each(pageText)(
+    "%s on the page background under the overlapping fallback glow meets AA",
+    (fg) => {
+      const strength = Number(light["glow-fallback"]);
+      const backdrop = glows.reduce(
+        (under, name) => {
+          const [r, g, b, a] = token(palette, name);
+          return over([r, g, b, a * strength], under);
+        },
+        token(palette, "bg"),
+      );
+      expect(ratio(token(palette, fg), backdrop)).toBeGreaterThanOrEqual(4.5);
+    },
+  );
+
   it.each(["text", "text-on-glass"])(
     "%s on the glass search surface over all three glows at full strength meets AA",
     (fg) => {

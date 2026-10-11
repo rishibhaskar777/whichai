@@ -101,6 +101,7 @@ describe("settings: structure", () => {
       "Language",
       "Theme",
       "Reduce motion",
+      "Animated background",
       "Default plan level",
       "Default budget",
       "Currency display",
@@ -204,6 +205,43 @@ describe("settings: persistence", () => {
 
     await user.click(within(group).getByRole("radio", { name: "System" }));
     expect(document.documentElement.dataset.motion).toBeUndefined();
+  });
+
+  it("turns the animated background on by default and stores Off", async () => {
+    const user = userEvent.setup();
+    const { backend } = renderSettings();
+    await ready();
+    const group = screen.getByRole("radiogroup", {
+      name: "Animated background",
+    });
+
+    expect(within(group).getByRole("radio", { name: "On" })).toBeChecked();
+
+    await user.click(within(group).getByRole("radio", { name: "Off" }));
+    await waitFor(async () => {
+      const saved = await stored(backend);
+      expect(saved.settings.animatedBackground).toBe(false);
+    });
+    expect(within(group).getByRole("radio", { name: "Off" })).toBeChecked();
+
+    await user.click(within(group).getByRole("radio", { name: "On" }));
+    await waitFor(async () => {
+      const saved = await stored(backend);
+      expect(saved.settings.animatedBackground).toBe(true);
+    });
+  });
+
+  it("restores a saved Off choice for the animated background", async () => {
+    const backend = createMemoryBackend();
+    await seed(backend, {
+      settings: { ...DEFAULT_SETTINGS, animatedBackground: false },
+    });
+    renderSettings(backend);
+    await ready();
+    const group = screen.getByRole("radiogroup", {
+      name: "Animated background",
+    });
+    expect(within(group).getByRole("radio", { name: "Off" })).toBeChecked();
   });
 
   it("stores the default level and budget", async () => {

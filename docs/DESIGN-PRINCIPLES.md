@@ -34,7 +34,14 @@ Glass is used on the search field only.
 
 Both themes use `blur(24px) saturate(180%)` and an inset top highlight. The 1px gradient edge is drawn by a masked pseudo-element, so the markup stays unchanged. On focus a 45% accent edge fades in over the gradient, a 4px soft ring appears and the box lifts 2px. The solid fill is used when `backdrop-filter` is unsupported or reduced transparency is requested. Placeholder text and the counter use `--text-on-glass`, a stronger tone than muted text, because the translucent fill sits on top of the glow. The contrast tests check the text on the glass over all three glows at full strength. Do not apply glass to cards, sidebar or news panel.
 
-The glow layer is fixed behind the page. It has three large blobs made from radial gradients in the blue family only: accent blue, sky blue and deep indigo-blue. Each drifts and scales on its own loop (16s, 22s and 28s, ease-in-out, alternate) by about 6 to 10 percent of the viewport and a scale of 0.9 to 1.15. Only `transform` and `opacity` are animated. A radial mask fades the layer out towards the edges so the sidebar and news panel stay clean. When the search field is focused the layer brightens by about 20 percent over 400ms. The layer is `aria-hidden`, ignores pointer events and causes no layout shift. Under `prefers-reduced-motion` the blobs stay still and the glow is static.
+The glow layer is fixed behind the page and is an aurora: soft bands and blobs in the blue family only (accent blue, sky blue and deep indigo-blue) that slowly flow, bend and change brightness, like light under water. It is drawn on one full-screen canvas at 72 pixels wide, scaled up by the browser with a 20px blur, at no more than 15 frames per second (`src/components/aurora/`). The colours are the `--glow-1` to `--glow-3` tokens, read from the page, so both themes share the same feel. The centre, behind the search, moves about a third as much as the edges. On a mouse the light drifts up to 3.5 percent of the screen towards the pointer, eased, with the far layers moving least; touch input is ignored.
+
+- The three families share one brightness budget per pixel (they add up to at most 1), so the strongest a pixel can be is one glow token at full strength. Because of that budget the contrast test only has to check each glow on its own against every text colour.
+- The canvas starts after the page has loaded and the browser is idle. Until then, and whenever a 2D canvas is unavailable, the three CSS blobs from the previous design are shown, at `--glow-fallback` strength so that all three overlapping still pass.
+- Drawing pauses while the tab is hidden or the canvas is off-screen.
+- Settings, General, "Animated background" (On by default) turns the movement off. Off, Reduce motion on, and save-data mode all show one still frame of the same aurora instead. Reduce motion set to Off keeps the movement, as it does for other animation.
+- When the search field is focused the layer brightens by about 20 percent over 400ms. The layer is `aria-hidden`, ignores pointer events, causes no layout shift and is hidden in print.
+- Only `transform` and `opacity` are animated in CSS; the canvas content is redrawn by script and needs no inline style, so the CSP is unchanged.
 
 ## Sidebar
 
@@ -64,14 +71,14 @@ The glow layer is fixed behind the page. It has three large blobs made from radi
 
 ## Contrast checks
 
-`src/styles/contrast.test.ts` reads `tokens.css` and checks every text colour against every surface it can appear on, in the light theme and in both dark selectors. Text needs 4.5:1, the accent as a control needs 3:1, and the search text is checked on the glass over all three glows at full strength. Ratios on the page background:
+`src/styles/contrast.test.ts` reads `tokens.css` and checks every text colour against every surface it can appear on, in the light theme and in both dark selectors. Text needs 4.5:1, the accent as a control needs 3:1, the search text is checked on the glass over all three glows at full strength, and every text colour is checked on the page background under each glow at full strength and under the overlapping fallback blobs. Ratios on the plain page background:
 
 | Pair        | Light | Dark |
 | ----------- | ----- | ---- |
 | Text        | 18.1  | 16.9 |
-| Muted text  | 6.1   | 7.7  |
-| Subtle text | 5.1   | 5.2  |
-| Accent      | 5.3   | 7.4  |
+| Muted text  | 7.4   | 7.7  |
+| Subtle text | 6.1   | 5.8  |
+| Accent      | 6.1   | 7.4  |
 
 Motion exception: collapsing the sidebar or the news panel animates the grid column width, which is a layout property, because the page must reflow. It is switched off under `prefers-reduced-motion`.
 
