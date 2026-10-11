@@ -86,21 +86,42 @@ type View = ReturnType<typeof within>;
 
 /*
  * Hashing is fast in tests, so the busy state would be over before it could be
- * looked at. This holds every derivation until release() is called.
+ * looked at. A gate holds every derivation while closed. Closing it before a
+ * click makes "Logging in…" observable on any machine, which also proves that
+ * the attempt really started, whatever message was left on screen before it.
  */
-function holdHashing() {
+function hashingGate() {
   const derive = crypto.subtle.deriveBits.bind(crypto.subtle);
-  let release!: () => void;
-  const gate = new Promise<void>((resolve) => {
-    release = resolve;
-  });
+  let open = true;
+  let waiting: (() => void)[] = [];
   vi.spyOn(crypto.subtle, "deriveBits").mockImplementation(
     async (...args: Parameters<typeof derive>) => {
-      await gate;
+      if (!open) await new Promise<void>((resolve) => waiting.push(resolve));
       return derive(...args);
     },
   );
-  return release;
+  return {
+    close() {
+      open = false;
+    },
+    release() {
+      open = true;
+      for (const resume of waiting) resume();
+      waiting = [];
+    },
+  };
+}
+
+/** Waits until a login attempt has really finished, not just until some text shows. */
+async function attemptFinished(view: View, message: string) {
+  await waitFor(
+    () => {
+      expect(view.getByRole("button", { name: "Log in" })).toBeEnabled();
+      expect(view.getByText(message)).toBeInTheDocument();
+      expect(view.getByLabelText("Password")).toHaveValue("");
+    },
+    { timeout: SLOW },
+  );
 }
 
 async function register(
@@ -128,7 +149,9 @@ async function createAccountAndReturnToLogin(
 ) {
   await user.click(view.getByRole("button", { name: "Register" }));
   await register(user, view);
-  await view.findByText("Account created. Log in to continue.");
+  await view.findByText("Account created. Log in to continue.", undefined, {
+    timeout: SLOW,
+  });
 }
 
 describe("login view", () => {
@@ -542,7 +565,8 @@ describe("dialog polish", () => {
     renderPanel();
     await user.type(host().getByLabelText("Email"), "nobody@example.org");
     await user.type(host().getByLabelText("Password"), PASSWORD);
-    const release = holdHashing();
+    const gate = hashingGate();
+    gate.close();
 
     await user.click(host().getByRole("button", { name: "Log in" }));
 
@@ -550,7 +574,7 @@ describe("dialog polish", () => {
     expect(busy).toBeDisabled();
     expect(busy).toHaveAttribute("data-loading", "true");
 
-    release();
+    gate.release();
     await waitFor(() =>
       expect(host().getByRole("button", { name: "Log in" })).toBeEnabled(),
     );
@@ -560,7 +584,8 @@ describe("dialog polish", () => {
     const user = userEvent.setup();
     renderPanel();
     await user.click(host().getByRole("button", { name: "Register" }));
-    const release = holdHashing();
+    const gate = hashingGate();
+    gate.close();
 
     await register(user, host(), { email: "busy@example.org" });
 
@@ -568,7 +593,7 @@ describe("dialog polish", () => {
       host().getByRole("button", { name: "Creating account…" }),
     ).toBeDisabled();
 
-    release();
+    gate.release();
     await host().findByText("Account created. Log in to continue.");
   }, 20_000);
 
@@ -723,10 +748,7 @@ describe("accounts in the popup", () => {
     await user.type(view.getByLabelText("Password"), "not the password");
     await user.click(view.getByRole("button", { name: "Log in" }));
 
-    expect(
-      await view.findByText("Email or password is incorrect."),
-    ).toBeInTheDocument();
-    expect(view.getByLabelText("Password")).toHaveValue("");
+    await attemptFinished(view, "Email or password is incorrect.");
   }, 20_000);
 
   it("gives the same message for an email that has no account", async () => {
@@ -738,9 +760,7 @@ describe("accounts in the popup", () => {
 
     await user.click(view.getByRole("button", { name: "Log in" }));
 
-    expect(
-      await view.findByText("Email or password is incorrect."),
-    ).toBeInTheDocument();
+    await attemptFinished(view, "Email or password is incorrect.");
   }, 20_000);
 
   it("makes the person wait after five failed attempts, then lets them try again", async () => {
@@ -748,36 +768,35 @@ describe("accounts in the popup", () => {
     renderShell();
     const view = await openDialog(user);
     await user.type(view.getByLabelText("Email"), "nobody@example.org");
+    const gate = hashingGate();
+    const wrong = "Email or password is incorrect.";
 
-    // Each attempt is awaited before the next, so a slow runner cannot stack them.
-    for (let attempt = 0; attempt < 5; attempt += 1) {
+    async function attempt(message: string, hashes: boolean) {
+      if (hashes) gate.close();
       await user.type(view.getByLabelText("Password"), "wrong password");
       await user.click(view.getByRole("button", { name: "Log in" }));
-      await view.findByText("Email or password is incorrect.", undefined, {
-        timeout: SLOW,
-      });
+      if (hashes) {
+        // Busy proves this attempt began, and its predecessor's message is gone.
+        await view.findByRole(
+          "button",
+          { name: "Logging in…" },
+          { timeout: SLOW },
+        );
+        expect(view.queryByText(message)).toBeNull();
+        gate.release();
+      }
+      await attemptFinished(view, message);
     }
-    await user.type(view.getByLabelText("Password"), "wrong password");
-    await user.click(view.getByRole("button", { name: "Log in" }));
-    expect(
-      await view.findByText(
-        "Too many attempts. Try again in 30 seconds.",
-        undefined,
-        { timeout: SLOW },
-      ),
-    ).toBeInTheDocument();
+
+    for (let count = 0; count < 5; count += 1) await attempt(wrong, true);
+    // The lockout answers without hashing.
+    await attempt("Too many attempts. Try again in 30 seconds.", false);
 
     // Only the clock moves; nobody waits half a minute.
     vi.useFakeTimers({ toFake: ["Date"] });
     vi.setSystemTime(Date.now() + 31_000);
-    await user.type(view.getByLabelText("Password"), "wrong password");
-    await user.click(view.getByRole("button", { name: "Log in" }));
-    expect(
-      await view.findByText("Email or password is incorrect.", undefined, {
-        timeout: SLOW,
-      }),
-    ).toBeInTheDocument();
-  }, 30_000);
+    await attempt(wrong, true);
+  }, 60_000);
 
   it("refuses a second account with the same email", async () => {
     const user = userEvent.setup();
@@ -791,6 +810,8 @@ describe("accounts in the popup", () => {
     expect(
       await view.findByText(
         "An account with this email already exists in this browser. Log in instead.",
+        undefined,
+        { timeout: SLOW },
       ),
     ).toBeInTheDocument();
   }, 20_000);

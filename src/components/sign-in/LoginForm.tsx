@@ -67,6 +67,11 @@ export function LoginForm({
     event.preventDefault();
     if (submitting || disabled) return;
 
+    // Whatever the last attempt said is gone the moment a new one starts, so
+    // the next message is announced again and cannot be mistaken for it.
+    setFormError(null);
+    setErrors({});
+
     const parsed = loginSchema.safeParse({ email, password });
     if (!parsed.success) {
       showProblems(firstIssues<Field>(parsed.error), null);

@@ -33,6 +33,19 @@ beforeAll(() => {
   };
 });
 
+/*
+ * TEST_HASH_DELAY_MS slows every key derivation, to check that tests do not
+ * depend on hashing being fast. Unset, hashing runs at full speed.
+ */
+const hashDelay = Number(process.env.TEST_HASH_DELAY_MS ?? 0);
+if (hashDelay > 0 && typeof crypto !== "undefined") {
+  const derive = crypto.subtle.deriveBits.bind(crypto.subtle);
+  crypto.subtle.deriveBits = async (...args: Parameters<typeof derive>) => {
+    await new Promise((resolve) => setTimeout(resolve, hashDelay));
+    return derive(...args);
+  };
+}
+
 afterEach(() => {
   cleanup();
   resetDocumentLoad();
