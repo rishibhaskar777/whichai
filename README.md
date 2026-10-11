@@ -30,8 +30,8 @@ TypeScript throughout. Next.js (App Router), React, CSS Modules with CSS custom 
 Requirements: Node.js 24 (see `.nvmrc`) and npm. The first build downloads the font files once, so it needs network access.
 
 ```bash
-git clone https://github.com/rishibhaskar777/whichai-1.git
-cd whichai-1
+git clone https://github.com/rishibhaskar777/whichai.git
+cd whichai
 npm ci
 cp .env.example .env.local
 npm run dev
