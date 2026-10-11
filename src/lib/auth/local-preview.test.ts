@@ -6,7 +6,9 @@ import {
   createLocalPreviewService,
   type AccountService,
 } from "./local-preview";
-import { PBKDF2_ITERATIONS, constantTimeEqual } from "./password-hash";
+import { constantTimeEqual } from "./password-hash";
+
+const TEST_ITERATIONS = 1_000;
 import { registerSchema } from "./preview-schemas";
 
 const PASSWORD = "correct horse battery";
@@ -31,6 +33,7 @@ beforeEach(() => {
   service = createLocalPreviewService(kv, {
     now: () => clock,
     randomId: () => `id-${String(++counter).padStart(8, "0")}`,
+    iterations: TEST_ITERATIONS,
   });
 });
 
@@ -122,7 +125,7 @@ describe("what is stored", () => {
       };
     }[];
     expect(first?.password.algorithm).toBe("PBKDF2-SHA-256");
-    expect(first?.password.iterations).toBe(PBKDF2_ITERATIONS);
+    expect(first?.password.iterations).toBe(TEST_ITERATIONS);
     expect(atob(first?.password.salt ?? "")).toHaveLength(16);
     expect(first?.password.salt).not.toBe(second?.password.salt);
     expect(first?.password.hash).not.toBe(second?.password.hash);

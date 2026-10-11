@@ -4,6 +4,22 @@
  * recommendation for PBKDF2-HMAC-SHA256. Each hash has its own random salt.
  */
 export const PBKDF2_ITERATIONS = 600_000;
+
+let defaultIterations = PBKDF2_ITERATIONS;
+
+/** The iteration count a new hash uses unless the caller names one. */
+export function getPasswordIterations(): number {
+  return defaultIterations;
+}
+
+/*
+ * Lets tests hash quickly. Pass null to restore the production value. It does
+ * nothing in a production build, so the count there is always 600,000.
+ */
+export function setPasswordIterations(count: number | null): void {
+  if (process.env.NODE_ENV === "production") return;
+  defaultIterations = count ?? PBKDF2_ITERATIONS;
+}
 const SALT_BYTES = 16;
 const HASH_BITS = 256;
 
@@ -71,7 +87,7 @@ export function constantTimeEqual(a: Uint8Array, b: Uint8Array): boolean {
 
 export async function hashPassword(
   password: string,
-  iterations: number = PBKDF2_ITERATIONS,
+  iterations: number = defaultIterations,
 ): Promise<PasswordHash> {
   const salt = crypto.getRandomValues(new Uint8Array(SALT_BYTES));
   const derived = await derive(password, salt, iterations);

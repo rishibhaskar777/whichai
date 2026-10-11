@@ -68,6 +68,8 @@ const accountsSchema = z.array(z.unknown());
 interface Dependencies {
   now?: () => number;
   randomId?: () => string;
+  /** PBKDF2 rounds for new hashes. Defaults to 600,000; tests pass fewer. */
+  iterations?: number;
 }
 
 function toUser(record: AccountRecord): AccountUser {
@@ -80,7 +82,11 @@ function toUser(record: AccountRecord): AccountUser {
 
 export function createLocalPreviewService(
   kv: KvBackend,
-  { now = Date.now, randomId = () => crypto.randomUUID() }: Dependencies = {},
+  {
+    now = () => Date.now(),
+    randomId = () => crypto.randomUUID(),
+    iterations,
+  }: Dependencies = {},
 ): AccountService {
   // Reads then writes, so two quick submits must not interleave.
   let queue: Promise<unknown> = Promise.resolve();
@@ -135,7 +141,7 @@ export function createLocalPreviewService(
   // reject as a wrong password.
   let decoy: Promise<PasswordHash> | null = null;
   function decoyHash(): Promise<PasswordHash> {
-    decoy ??= hashPassword(randomId());
+    decoy ??= hashPassword(randomId(), iterations);
     return decoy;
   }
 
@@ -163,7 +169,7 @@ export function createLocalPreviewService(
       email,
       firstName,
       lastName,
-      password: await hashPassword(password),
+      password: await hashPassword(password, iterations),
       createdAt: new Date(now()).toISOString(),
     };
     const saved = await write(KEYS.accounts, [...accounts, record]);

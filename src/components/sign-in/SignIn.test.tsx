@@ -8,6 +8,7 @@ import {
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
+import { getPasswordIterations } from "@/lib/auth/password-hash";
 import { panelNewsFixture } from "@/test/news";
 import type { Viewer } from "@/lib/auth/get-session";
 import { seriousViolations } from "@/test/axe";
@@ -23,12 +24,15 @@ const none = { google: false, github: false };
 
 const PASSWORD = "violet lantern ocean";
 const ACCOUNT_KEY = "whichai:preview-accounts";
+/* A slow CI runner needs more than the 1 second findBy default. */
+const SLOW = 10_000;
 
 beforeEach(() => {
   window.localStorage.clear();
 });
 
 afterEach(() => {
+  vi.useRealTimers();
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
@@ -79,6 +83,25 @@ async function openDialog(user: ReturnType<typeof userEvent.setup>) {
 }
 
 type View = ReturnType<typeof within>;
+
+/*
+ * Hashing is fast in tests, so the busy state would be over before it could be
+ * looked at. This holds every derivation until release() is called.
+ */
+function holdHashing() {
+  const derive = crypto.subtle.deriveBits.bind(crypto.subtle);
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  vi.spyOn(crypto.subtle, "deriveBits").mockImplementation(
+    async (...args: Parameters<typeof derive>) => {
+      await gate;
+      return derive(...args);
+    },
+  );
+  return release;
+}
 
 async function register(
   user: ReturnType<typeof userEvent.setup>,
@@ -519,12 +542,15 @@ describe("dialog polish", () => {
     renderPanel();
     await user.type(host().getByLabelText("Email"), "nobody@example.org");
     await user.type(host().getByLabelText("Password"), PASSWORD);
+    const release = holdHashing();
 
     await user.click(host().getByRole("button", { name: "Log in" }));
 
     const busy = host().getByRole("button", { name: "Logging in…" });
     expect(busy).toBeDisabled();
     expect(busy).toHaveAttribute("data-loading", "true");
+
+    release();
     await waitFor(() =>
       expect(host().getByRole("button", { name: "Log in" })).toBeEnabled(),
     );
@@ -534,11 +560,15 @@ describe("dialog polish", () => {
     const user = userEvent.setup();
     renderPanel();
     await user.click(host().getByRole("button", { name: "Register" }));
+    const release = holdHashing();
+
     await register(user, host(), { email: "busy@example.org" });
 
     expect(
       host().getByRole("button", { name: "Creating account…" }),
     ).toBeDisabled();
+
+    release();
     await host().findByText("Account created. Log in to continue.");
   }, 20_000);
 
@@ -713,22 +743,39 @@ describe("accounts in the popup", () => {
     ).toBeInTheDocument();
   }, 20_000);
 
-  it("makes the person wait after five failed attempts", async () => {
+  it("makes the person wait after five failed attempts, then lets them try again", async () => {
     const user = userEvent.setup();
     renderShell();
     const view = await openDialog(user);
     await user.type(view.getByLabelText("Email"), "nobody@example.org");
 
+    // Each attempt is awaited before the next, so a slow runner cannot stack them.
     for (let attempt = 0; attempt < 5; attempt += 1) {
       await user.type(view.getByLabelText("Password"), "wrong password");
       await user.click(view.getByRole("button", { name: "Log in" }));
-      await view.findByText("Email or password is incorrect.");
+      await view.findByText("Email or password is incorrect.", undefined, {
+        timeout: SLOW,
+      });
     }
     await user.type(view.getByLabelText("Password"), "wrong password");
     await user.click(view.getByRole("button", { name: "Log in" }));
-
     expect(
-      await view.findByText("Too many attempts. Try again in 30 seconds."),
+      await view.findByText(
+        "Too many attempts. Try again in 30 seconds.",
+        undefined,
+        { timeout: SLOW },
+      ),
+    ).toBeInTheDocument();
+
+    // Only the clock moves; nobody waits half a minute.
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(Date.now() + 31_000);
+    await user.type(view.getByLabelText("Password"), "wrong password");
+    await user.click(view.getByRole("button", { name: "Log in" }));
+    expect(
+      await view.findByText("Email or password is incorrect.", undefined, {
+        timeout: SLOW,
+      }),
     ).toBeInTheDocument();
   }, 30_000);
 
@@ -757,7 +804,7 @@ describe("accounts in the popup", () => {
     const stored = window.localStorage.getItem(ACCOUNT_KEY) as string;
     expect(stored).not.toContain(PASSWORD);
     expect(stored).toContain("PBKDF2-SHA-256");
-    expect(stored).toContain("600000");
+    expect(stored).toContain(String(getPasswordIterations()));
   }, 20_000);
 
   it("never logs the email or password", async () => {
