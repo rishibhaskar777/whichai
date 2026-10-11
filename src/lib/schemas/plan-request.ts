@@ -11,6 +11,11 @@ import { z } from "./zod";
  * never stored or shared, so a rebuilt plan always uses the current data.
  * Strict, because it is also parsed from share links and imported files.
  */
+/** Longest list of jobs added to or taken out of a plan by hand. */
+export const MAX_PART_EDITS = 12;
+
+const jobIdList = z.array(z.string().min(1).max(60)).max(MAX_PART_EDITS);
+
 export const planRequestSchema = z.strictObject({
   goal: z.strictObject({
     goalType: goalTypeSchema,
@@ -34,5 +39,9 @@ export const planRequestSchema = z.strictObject({
     .record(z.string().min(1).max(60), z.string().min(1).max(60))
     .refine((chosen) => Object.keys(chosen).length <= 12)
     .default({}),
+  /** Parts (jobs) the person added from the full list. */
+  addedJobs: jobIdList.default([]),
+  /** Parts (jobs) the person took out of the plan. */
+  removedJobs: jobIdList.default([]),
 });
 export type PlanRequest = z.infer<typeof planRequestSchema>;

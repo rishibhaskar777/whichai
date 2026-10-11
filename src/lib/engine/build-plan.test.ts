@@ -9,6 +9,7 @@ import {
   planSchema,
   type Chip,
   type GoalType,
+  type Level,
   type UnderstoodGoal,
 } from "@/lib/schemas/plan";
 import { buildPlan, jobIdsFor, type BuildOptions } from "./build-plan";
@@ -353,14 +354,28 @@ describe("tools that bundle another job", () => {
   });
 
   it("does not skip a job that came earlier in the plan", () => {
-    const earlier = goalOf("pick-an-ai", [
-      taskChip("hosting", "Hosting"),
-      taskChip("ui-templates", "UI templates"),
-    ]);
-    const jobs = buildPlan(earlier, {
-      ...NO_OPTIONS,
-      toolsUsed: new Set(["wix"]),
-    }).levels.simple.jobs;
+    const hostingFirst: Catalogue = {
+      ...catalogue,
+      goals: catalogue.goals.map((entry) =>
+        entry.id === "pick-an-ai"
+          ? {
+              ...entry,
+              levels: {
+                ...entry.levels,
+                simple: {
+                  ...entry.levels.simple,
+                  jobs: ["hosting", "ui-templates"],
+                },
+              },
+            }
+          : entry,
+      ),
+    };
+    const jobs = buildPlan(
+      goalOf("pick-an-ai"),
+      { ...NO_OPTIONS, toolsUsed: new Set(["wix"]) },
+      hostingFirst,
+    ).levels.simple.jobs;
 
     expect(jobs.map((job) => job.jobId)).toEqual(["hosting", "ui-templates"]);
   });
@@ -437,7 +452,8 @@ describe("model guidance", () => {
     const text = collectStrings(
       GOAL_IDS.map((id) => buildPlan(goalOf(id), NO_OPTIONS)),
     ).join(" ");
-    expect(text).not.toMatch(/\bgpt-?\d|opus \d|sonnet \d|haiku \d/i);
+    // GPT4All is a product name, not a model version.
+    expect(text).not.toMatch(/\bgpt-?\d(?!all)|opus \d|sonnet \d|haiku \d/i);
   });
 });
 
@@ -563,4 +579,133 @@ describe("get it links in a plan", () => {
       expect(checked).toBeGreaterThan(0);
     },
   );
+});
+
+describe("parts added and removed by hand", () => {
+  const ids = (plan: ReturnType<typeof buildPlan>, level: Level = "simple") =>
+    plan.levels[level].jobs.map((job) => job.jobId);
+
+  it("adds an extra job after the goal's own and gives it a pick", () => {
+    const plan = buildPlan(goalOf("portfolio-website"), {
+      ...NO_OPTIONS,
+      addedJobs: ["payments-india"],
+    });
+
+    expect(ids(plan).at(-1)).toBe("payments-india");
+    const card = plan.levels.simple.jobs.find(
+      (job) => job.jobId === "payments-india",
+    );
+    expect(card?.toolId).toBeTruthy();
+  });
+
+  it("adds the part to every level", () => {
+    const plan = buildPlan(goalOf("portfolio-website"), {
+      ...NO_OPTIONS,
+      addedJobs: ["seo"],
+    });
+
+    for (const level of LEVELS) expect(ids(plan, level)).toContain("seo");
+  });
+
+  it("puts added parts in project order, not the order they were added", () => {
+    const plan = buildPlan(goalOf("portfolio-website"), {
+      ...NO_OPTIONS,
+      addedJobs: ["analytics", "payments-india", "database"],
+    });
+
+    const added = ids(plan).filter((id) =>
+      ["analytics", "payments-india", "database"].includes(id),
+    );
+    expect(added).toEqual(["database", "payments-india", "analytics"]);
+  });
+
+  it("takes a removed job out of every level", () => {
+    const plan = buildPlan(goalOf("portfolio-website"), {
+      ...NO_OPTIONS,
+      removedJobs: ["ai-assistant"],
+    });
+
+    for (const level of LEVELS) {
+      expect(ids(plan, level)).not.toContain("ai-assistant");
+    }
+  });
+
+  it("lets a removal win over a part from the sentence", () => {
+    const plan = buildPlan(
+      goalOf("portfolio-website", [taskChip("seo", "SEO")]),
+      { ...NO_OPTIONS, removedJobs: ["seo"] },
+    );
+
+    expect(ids(plan)).not.toContain("seo");
+  });
+
+  it("never returns an empty plan", () => {
+    const template = catalogue.goals.find((g) => g.id === "portfolio-website")!;
+    const everything = template.levels.simple.jobs;
+
+    const plan = buildPlan(goalOf("portfolio-website"), {
+      ...NO_OPTIONS,
+      removedJobs: [...everything, "hosting"],
+    });
+
+    expect(ids(plan).length).toBeGreaterThan(0);
+  });
+
+  it("writes a workflow step for each extra part, and none for the goal's own", () => {
+    const without = buildPlan(goalOf("portfolio-website"), NO_OPTIONS);
+    const withPart = buildPlan(goalOf("portfolio-website"), {
+      ...NO_OPTIONS,
+      addedJobs: ["payments-india"],
+    });
+
+    expect(withPart.levels.simple.workflow.length).toBe(
+      without.levels.simple.workflow.length + 1,
+    );
+    const step = withPart.levels.simple.workflow.at(-1)!;
+    expect(step.title).toBe("Your part: Payments (India)");
+    expect(step.detail).not.toMatch(/\{job:/);
+  });
+
+  it("orders a plan made only from parts by stage", () => {
+    const plan = buildPlan(
+      goalOf("custom-plan", [
+        taskChip("hosting", "Hosting"),
+        taskChip("payments-india", "Payments (India)"),
+        taskChip("ai-assistant", "AI assistant"),
+        taskChip("database", "Database"),
+      ]),
+      NO_OPTIONS,
+    );
+
+    expect(ids(plan)).toEqual([
+      "ai-assistant",
+      "database",
+      "payments-india",
+      "hosting",
+    ]);
+  });
+
+  it("keeps the twelve job limit when many parts are added", () => {
+    const plan = buildPlan(goalOf("build-an-app"), {
+      ...NO_OPTIONS,
+      level: "advanced",
+      addedJobs: catalogue.jobs.slice(0, 12).map((job) => job.id),
+    });
+
+    for (const level of LEVELS) {
+      expect(ids(plan, level).length).toBeLessThanOrEqual(12);
+    }
+    expect(planSchema.safeParse(plan).success).toBe(true);
+  });
+
+  it("builds a valid plan for a goal with every kind of change", () => {
+    const plan = buildPlan(goalOf("blog"), {
+      ...NO_OPTIONS,
+      addedJobs: ["payments-global", "chatbot-builder"],
+      removedJobs: ["analytics"],
+      toolsUsed: new Set(["chatgpt"]),
+    });
+
+    expect(planSchema.safeParse(plan).success).toBe(true);
+  });
 });

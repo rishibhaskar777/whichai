@@ -33,6 +33,8 @@ const REQUEST: PlanRequest = {
   budget: null,
   toolsUsed: [],
   chosenTools: {},
+  addedJobs: [],
+  removedJobs: [],
 };
 
 function samplePlan(title = "My portfolio"): SavedPlan {

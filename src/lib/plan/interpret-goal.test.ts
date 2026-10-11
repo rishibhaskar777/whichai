@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { catalogue } from "@/data/catalogue";
 import { buildPlan } from "@/lib/engine/build-plan";
-import { GOAL_IDS } from "@/lib/schemas/catalogue";
+import { GOAL_IDS, JOB_STAGES } from "@/lib/schemas/catalogue";
+import type { GoalType } from "@/lib/schemas/plan";
 import { planSchema, understoodGoalSchema } from "@/lib/schemas/plan";
 import { taskJobIdOf } from "./chips";
 import {
@@ -9,6 +10,9 @@ import {
   coveredGoals,
   inferLevel,
   interpretGoal,
+  listParts,
+  understandAs,
+  understandGoal,
 } from "./interpret-goal";
 
 function labels(goal: ReturnType<typeof interpretGoal>) {
@@ -53,7 +57,7 @@ describe("interpretGoal: portfolio and study goals", () => {
     expect(interpretGoal("pOrTfOlIo WeBsItE")?.goalType).toBe(
       "portfolio-website",
     );
-    expect(interpretGoal("...EXAMS?!...")?.goalType).toBe("study-plan");
+    expect(interpretGoal("...EXAMS?!...")?.goalType).toBe("exam-preparation");
   });
 
   it("prefers the goal with more matching keywords", () => {
@@ -63,7 +67,7 @@ describe("interpretGoal: portfolio and study goals", () => {
   });
 
   it("breaks a tie by the keyword mentioned first", () => {
-    expect(interpretGoal("exams portfolio")?.goalType).toBe("study-plan");
+    expect(interpretGoal("exams portfolio")?.goalType).toBe("exam-preparation");
     expect(interpretGoal("portfolio exams")?.goalType).toBe(
       "portfolio-website",
     );
@@ -80,13 +84,14 @@ describe("interpretGoal: every goal in the catalogue", () => {
     ["Improve my resume for a job application", "resume-and-job-search"],
     ["Write a cover letter for an internship", "resume-and-job-search"],
     ["Make a short video from my own footage", "make-a-video"],
-    ["I want to start a YouTube channel", "make-a-video"],
+    ["I want to start a YouTube channel", "youtube-channel"],
+    ["Make a YouTube video about my trip", "make-a-video"],
     ["Build a todo app with login", "build-an-app"],
     ["Build a simple app without much coding", "build-an-app"],
     ["Research ancient Indian stories", "research-and-reading"],
     ["Read and write stories with AI help", "research-and-reading"],
     ["Build a website for my small business", "business-website"],
-    ["I want an online store for my shop", "business-website"],
+    ["I want an online store for my shop", "ecommerce-store"],
     ["Make a presentation for my project", "presentation"],
     ["I need a pitch deck", "presentation"],
     ["Which AI should I use to summarise a PDF?", "pick-an-ai"],
@@ -104,7 +109,7 @@ describe("interpretGoal: every goal in the catalogue", () => {
 
   it("lists every goal it covers", () => {
     expect(coveredGoals.map((goal) => goal.goalType).sort()).toEqual(
-      [...GOAL_IDS].sort(),
+      GOAL_IDS.filter((id) => id !== "custom-plan").sort(),
     );
     expect(coveredGoals.map((goal) => goal.title)).toContain(
       "Portfolio website",
@@ -136,8 +141,8 @@ describe("interpretGoal: synonyms", () => {
   it.each([
     ["my curriculum vitae", "resume-and-job-search"],
     ["help me get hired", "resume-and-job-search"],
-    ["prepare for the board exams", "study-plan"],
-    ["JEE preparation", "study-plan"],
+    ["prepare for the board exams", "exam-preparation"],
+    ["JEE preparation", "exam-preparation"],
     ["make a reel", "make-a-video"],
     ["explainer video", "make-a-video"],
     ["a side project idea", "build-an-app"],
@@ -169,62 +174,67 @@ describe("interpretGoal: typos", () => {
   });
 });
 
-describe("interpretGoal: tasks without a goal", () => {
+describe("interpretGoal: parts without a goal", () => {
   it.each([
-    ["make a logo", ["image-generation", "design-tool"]],
-    [
-      "summarise a pdf",
-      ["research-with-sources", "ai-assistant", "pdf-and-document-chat"],
-    ],
-    ["edit a video", ["video-editing"]],
-    [
-      "transcribe my lecture audio",
-      ["voice-and-audio", "meeting-notes-and-transcription"],
-    ],
-    ["fix a bug in my script", ["coding-assistant"]],
+    ["fix a bug in my python script", ["coding-assistant"]],
     ["design a poster", ["design-tool", "image-generation"]],
+    [
+      "razorpay payments with login and a database",
+      ["payments-india", "authentication", "database"],
+    ],
+    ["need hosting and a custom domain", ["hosting"]],
   ])("%s", (text, jobs) => {
     const goal = interpretGoal(text);
-    expect(goal?.goalType).toBe("pick-an-ai");
-    expect(goal?.title).toBe("Pick the right AI for a task");
+    expect(goal?.goalType).toBe("custom-plan");
+    expect(goal?.title).toBe("Plan built from your parts");
     expect([...(tasks(goal) ?? [])].sort()).toEqual([...jobs].sort());
   });
 
-  it("names the task chips after the jobs", () => {
-    expect(labels(interpretGoal("edit a video"))).toEqual([
-      "Pick the right AI for a task",
-      "Video editing",
+  it("names the part chips after the jobs", () => {
+    expect(labels(interpretGoal("need hosting and a custom domain"))).toEqual([
+      "Plan built from your parts",
+      "Hosting",
     ]);
   });
 
-  it("tolerates typos in task words", () => {
-    expect(tasks(interpretGoal("find citatons for my essay"))).toContain(
-      "research-with-sources",
-    );
-    expect(interpretGoal("edit a vidio")?.goalType).toBe("pick-an-ai");
-  });
-
-  it("limits how many tasks it takes from a long wish list", () => {
+  it("orders the parts as a project goes: idea, design, build, data, payments, launch", () => {
     const goal = interpretGoal(
-      "logo video editing voiceover slides resume quiz database hosting analytics",
+      "hosting and razorpay payments with a database and a poster design",
     );
-    expect(tasks(goal)?.length).toBeLessThanOrEqual(4);
+    const order = tasks(goal) ?? [];
+    const rank = (id: string) =>
+      JOB_STAGES.indexOf(catalogue.jobs.find((job) => job.id === id)!.stage);
+    expect(order.length).toBeGreaterThanOrEqual(3);
+    expect(order.map(rank)).toEqual([...order.map(rank)].sort((x, y) => x - y));
   });
 
-  it("adds the tasks it hears to an explicit request for tool help", () => {
+  it("tolerates typos in part words", () => {
+    expect(tasks(interpretGoal("need hosting and a custum domain"))).toContain(
+      "hosting",
+    );
+  });
+
+  it("limits how many parts it takes from a long wish list", () => {
+    const goal = interpretGoal(
+      "razorpay supabase vercel figma zapier otter canva stripe mixpanel notion",
+    );
+    expect(tasks(goal)?.length).toBeLessThanOrEqual(6);
+  });
+
+  it("adds the parts it hears to an explicit request for tool help", () => {
     const goal = interpretGoal("which ai is best to make a logo");
     expect(goal?.goalType).toBe("pick-an-ai");
     expect(tasks(goal)).toContain("design-tool");
   });
 
-  it("returns the generic goal with no tasks when only the request is understood", () => {
+  it("returns the generic goal with no parts when only the request is understood", () => {
     const goal = interpretGoal("which ai should I use");
     expect(goal?.goalType).toBe("pick-an-ai");
     expect(tasks(goal)).toEqual([]);
   });
 
-  it("builds a plan from the tasks", () => {
-    const goal = interpretGoal("make a logo")!;
+  it("builds a plan from the parts", () => {
+    const goal = interpretGoal("design a poster")!;
     const plan = buildPlan(goal, {
       level: "simple",
       budget: null,
@@ -234,6 +244,81 @@ describe("interpretGoal: tasks without a goal", () => {
       "design-tool",
       "image-generation",
     ]);
+  });
+});
+
+describe("interpretGoal: a goal plus parts it does not provide", () => {
+  it("keeps the goal and adds the extra part", () => {
+    const goal = interpretGoal("portfolio website with a chatbot");
+    expect(goal?.goalType).toBe("portfolio-website");
+    expect(tasks(goal)).toEqual(["chatbot-builder"]);
+  });
+
+  it("does not repeat a part the goal already provides", () => {
+    const goal = interpretGoal("portfolio website with a contact form");
+    expect(goal?.goalType).toBe("portfolio-website");
+    expect(tasks(goal)).toEqual([]);
+    expect(labels(goal)).toContain("Contact form");
+  });
+
+  it("builds a plan that includes the extra part", () => {
+    const goal = interpretGoal("build an app with stripe payments")!;
+    const plan = buildPlan(goal, {
+      level: "simple",
+      budget: null,
+      toolsUsed: new Set(),
+    });
+    const ids = plan.levels.simple.jobs.map((job) => job.jobId);
+    expect(goal.goalType).toBe("build-an-app");
+    expect(ids).toContain("payments-global");
+    expect(
+      plan.levels.simple.workflow.some((step) =>
+        step.title.startsWith("Your part:"),
+      ),
+    ).toBe(true);
+  });
+});
+
+describe("understandGoal: confidence", () => {
+  it("is high when one goal clearly fits", () => {
+    const result = understandGoal("I want to start a youtube channel");
+    expect(result?.confidence).toBe("high");
+    expect(result?.suggestions).toEqual([]);
+  });
+
+  it("is low when a shared word fits several goals, and offers up to three", () => {
+    const result = understandGoal("a website");
+    expect(result?.confidence).toBe("low");
+    expect(result?.suggestions.length).toBeGreaterThanOrEqual(2);
+    expect(result?.suggestions.length).toBeLessThanOrEqual(3);
+    expect(result?.suggestions.map((s) => s.goalType)).toContain(
+      "portfolio-website",
+    );
+  });
+
+  it("offers a plan from parts when the text also names parts", () => {
+    const result = understandGoal("host my site on vercel");
+    expect(result?.goal.goalType).toBe("custom-plan");
+    expect(result?.partsGoal?.goalType).toBe("custom-plan");
+    expect(result?.suggestions.length).toBeGreaterThan(0);
+  });
+
+  it("can read the same text as a goal the person picks", () => {
+    const goal = understandAs(
+      "a website for my food truck",
+      "business-website",
+    );
+    expect(goal?.goalType).toBe("business-website");
+    expect(understandAs("anything", "not-a-goal" as GoalType)).toBeNull();
+  });
+});
+
+describe("listParts", () => {
+  it("lists every job once, with words to search on", () => {
+    const parts = listParts();
+    expect(parts).toHaveLength(catalogue.jobs.length);
+    const hosting = parts.find((part) => part.id === "hosting");
+    expect(hosting?.searchText).toContain("vercel");
   });
 });
 
@@ -329,7 +414,7 @@ describe("interpretGoal: features", () => {
   });
 
   it("marks feature chips with the feature kind and unique ids", () => {
-    const goal = interpretGoal("site with a blog and animation");
+    const goal = interpretGoal("portfolio site with a blog and animation");
     const features = goal?.chips.filter((chip) => chip.kind === "feature");
     expect(features).toHaveLength(2);
     expect(new Set(goal?.chips.map((chip) => chip.id)).size).toBe(
@@ -348,10 +433,9 @@ describe("interpretGoal: features", () => {
     ]);
   });
 
-  it("offers the tasks themselves for the generic goal, without build jobs", () => {
-    const options = addableChips("pick-an-ai");
-    expect(options.map((chip) => chip.label)).toContain("Design tool");
-    expect(options.map((chip) => chip.label)).not.toContain("Hosting");
+  it("offers no features for goals without any, and leaves parts to the list", () => {
+    expect(addableChips("pick-an-ai")).toEqual([]);
+    expect(addableChips("custom-plan")).toEqual([]);
   });
 
   it("every addable chip can be built into a plan", () => {
