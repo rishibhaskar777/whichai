@@ -1,10 +1,11 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
 import { panelNewsFixture } from "@/test/news";
 import type { Viewer } from "@/lib/auth/get-session";
 import { seriousViolations } from "@/test/axe";
+import { AppProviders } from "@/test/wrappers";
 import { SignInPanel } from "./SignInPanel";
 
 vi.mock("next/navigation", async () =>
@@ -14,186 +15,39 @@ vi.mock("next/navigation", async () =>
 const both = { google: true, github: true };
 const none = { google: false, github: false };
 
+const PASSWORD = "violet lantern ocean";
+const ACCOUNT_KEY = "whichai:preview-accounts";
+
+beforeEach(() => {
+  window.localStorage.clear();
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.restoreAllMocks();
+});
+
 function renderPanel(
   overrides: Partial<React.ComponentProps<typeof SignInPanel>> = {},
 ) {
   return render(
-    <SignInPanel
-      providers={both}
-      next="/"
-      headingLevel="h1"
-      titleId="title"
-      {...overrides}
-    />,
+    <AppProviders>
+      <div data-testid="host">
+        <SignInPanel
+          providers={both}
+          next="/"
+          headingLevel="h1"
+          titleId="title"
+          {...overrides}
+        />
+      </div>
+    </AppProviders>,
   );
 }
 
-describe("SignInPanel", () => {
-  it("shows the title, the short line and the small print", () => {
-    renderPanel();
-    expect(
-      screen.getByRole("heading", { name: "Sign in to WhichAI" }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Sign in to keep your plans. For now your plans stay in this browser.",
-      ),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/We only receive your name from Google or GitHub/),
-    ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Privacy" })).toHaveAttribute(
-      "href",
-      "/privacy",
-    );
-  });
+const host = () => within(screen.getByTestId("host"));
 
-  it("offers both providers as plain links that carry the return path", () => {
-    renderPanel({ next: "/projects" });
-    expect(
-      screen.getByRole("link", { name: "Continue with Google" }),
-    ).toHaveAttribute("href", "/api/auth/sign-in/google?next=%2Fprojects");
-    expect(
-      screen.getByRole("link", { name: "Continue with GitHub" }),
-    ).toHaveAttribute("href", "/api/auth/sign-in/github?next=%2Fprojects");
-  });
-
-  it("always lists every option in order, with an or divider", () => {
-    renderPanel({ providers: none });
-    const labels = [...document.querySelectorAll("a, button")]
-      .map((element) => element.textContent)
-      .filter((text) => text?.startsWith("Continue with "));
-    expect(labels).toEqual([
-      "Continue with Google",
-      "Continue with GitHub",
-      "Continue with Microsoft",
-      "Continue with Apple",
-      "Continue with email",
-      "Continue with phone number",
-    ]);
-    expect(screen.getByText("or")).toBeInTheDocument();
-  });
-
-  it("never shows a configuration error in the popup", () => {
-    renderPanel({ providers: none, error: "not-configured" });
-    expect(screen.queryByText(/not configured/i)).toBeNull();
-    expect(screen.queryByRole("alert")).toBeNull();
-  });
-
-  it("shows coming soon for Google and GitHub when they are not configured", async () => {
-    const user = userEvent.setup();
-    renderPanel({ providers: none });
-    expect(
-      screen.queryByRole("link", { name: /Continue with (Google|GitHub)/ }),
-    ).toBeNull();
-
-    await user.click(
-      screen.getByRole("button", { name: "Continue with Google" }),
-    );
-    expect(
-      screen.getByText("Google sign-in is coming in an upcoming update."),
-    ).toBeInTheDocument();
-
-    await user.click(
-      screen.getByRole("button", { name: "Continue with GitHub" }),
-    );
-    expect(
-      screen.getByText("GitHub sign-in is coming in an upcoming update."),
-    ).toBeInTheDocument();
-  });
-
-  it("starts OAuth for Google and GitHub when they are configured", () => {
-    renderPanel({ providers: both });
-    expect(
-      screen.getByRole("link", { name: "Continue with Google" }),
-    ).toHaveAttribute("href", "/api/auth/sign-in/google?next=%2F");
-    expect(
-      screen.getByRole("link", { name: "Continue with GitHub" }),
-    ).toHaveAttribute("href", "/api/auth/sign-in/github?next=%2F");
-  });
-
-  it.each([
-    [
-      "Continue with Microsoft",
-      "Microsoft sign-in is coming in an upcoming update.",
-    ],
-    ["Continue with Apple", "Apple sign-in is coming in an upcoming update."],
-    ["Continue with email", "Email sign-in is coming in an upcoming update."],
-    [
-      "Continue with phone number",
-      "Phone number sign-in is coming in an upcoming update.",
-    ],
-  ])(
-    "%s shows its message and makes no network request",
-    async (name, message) => {
-      const user = userEvent.setup();
-      const fetchMock = vi.fn();
-      vi.stubGlobal("fetch", fetchMock);
-      renderPanel();
-
-      await user.click(screen.getByRole("button", { name }));
-
-      expect(screen.getByText(message)).toBeInTheDocument();
-      expect(fetchMock).not.toHaveBeenCalled();
-      expect(document.querySelector("input")).toBeNull();
-      vi.unstubAllGlobals();
-    },
-  );
-
-  it("announces the message politely and replaces the previous one", async () => {
-    const user = userEvent.setup();
-    renderPanel();
-
-    await user.click(
-      screen.getByRole("button", { name: "Continue with Microsoft" }),
-    );
-    const live = screen
-      .getByText(/Microsoft sign-in is coming/)
-      .closest("[aria-live]");
-    expect(live).toHaveAttribute("aria-live", "polite");
-
-    await user.click(
-      screen.getByRole("button", { name: "Continue with Apple" }),
-    );
-    expect(screen.queryByText(/Microsoft sign-in is coming/)).toBeNull();
-    expect(screen.getAllByText(/is coming in an upcoming update/)).toHaveLength(
-      1,
-    );
-  });
-
-  it("shows a friendly error", () => {
-    renderPanel({ error: "failed" });
-    expect(screen.getByRole("alert")).toHaveTextContent(
-      "We couldn't sign you in. Please try again.",
-    );
-  });
-
-  it("disables both buttons while one is loading", async () => {
-    const user = userEvent.setup();
-    renderPanel();
-    const google = screen.getByRole("link", { name: "Continue with Google" });
-    const github = screen.getByRole("link", { name: "Continue with GitHub" });
-    // The browser would navigate; jsdom only logs it, so stop the click here.
-    google.addEventListener("click", (event) => event.preventDefault());
-
-    await user.click(google);
-
-    expect(google).toHaveAttribute("aria-disabled", "true");
-    expect(google).toHaveAttribute("data-loading", "true");
-    expect(github).toHaveAttribute("aria-disabled", "true");
-    expect(
-      screen.getByRole("button", { name: "Continue with Microsoft" }),
-    ).toHaveAttribute("aria-disabled", "true");
-    expect(screen.getByText("Opening Google sign-in")).toBeInTheDocument();
-  });
-
-  it("has no serious accessibility violations", async () => {
-    const { container } = renderPanel();
-    expect(await seriousViolations(container)).toEqual([]);
-  });
-});
-
-function renderShell(viewer: Viewer | null) {
+function renderShell(viewer: Viewer | null = null) {
   return render(
     <AppShell
       news={panelNewsFixture}
@@ -212,10 +66,618 @@ function signInDialog() {
   ) as HTMLDialogElement;
 }
 
-describe("sign-in popup", () => {
+async function openDialog(user: ReturnType<typeof userEvent.setup>) {
+  const [signIn] = screen.getAllByRole("button", { name: "Sign in" });
+  await user.click(signIn as HTMLElement);
+  return within(signInDialog());
+}
+
+type View = ReturnType<typeof within>;
+
+async function register(
+  user: ReturnType<typeof userEvent.setup>,
+  view: View,
+  details: { email?: string; password?: string } = {},
+) {
+  await user.type(
+    view.getByLabelText("Email"),
+    details.email ?? "ada@example.org",
+  );
+  await user.type(
+    view.getByLabelText("Password"),
+    details.password ?? PASSWORD,
+  );
+  await user.type(view.getByLabelText("First name"), "Ada");
+  await user.type(view.getByLabelText("Last name"), "Lovelace");
+  await user.click(view.getByRole("checkbox"));
+  await user.click(view.getByRole("button", { name: "Register now" }));
+}
+
+async function createAccountAndReturnToLogin(
+  user: ReturnType<typeof userEvent.setup>,
+  view: View,
+) {
+  await user.click(view.getByRole("button", { name: "Register" }));
+  await register(user, view);
+  await view.findByText("Account created. Log in to continue.");
+}
+
+describe("login view", () => {
+  it("shows the title, Google, an or divider, the fields and the footer", () => {
+    renderPanel();
+    const view = host();
+
+    expect(
+      view.getByRole("heading", { level: 1, name: "Log in to WhichAI" }),
+    ).toBeInTheDocument();
+    expect(
+      view.getByRole("link", { name: "Continue with Google" }),
+    ).toHaveAttribute("href", "/api/auth/sign-in/google?next=%2F");
+    expect(view.getByText("or")).toBeInTheDocument();
+    expect(view.getByLabelText("Email")).toHaveAttribute("type", "email");
+    expect(view.getByLabelText("Email")).toHaveAttribute(
+      "autocomplete",
+      "email",
+    );
+    expect(view.getByLabelText("Password")).toHaveAttribute(
+      "autocomplete",
+      "current-password",
+    );
+    expect(
+      view.getByRole("button", { name: "Forgot password?" }),
+    ).toBeInTheDocument();
+    expect(view.getByRole("button", { name: "Log in" })).toBeInTheDocument();
+    expect(view.getByText(/New to WhichAI\?/)).toBeInTheDocument();
+    expect(
+      view.getByRole("button", { name: "Continue without signing in" }),
+    ).toBeInTheDocument();
+    expect(
+      view.getByText(
+        "Preview: accounts are saved only in this browser until online accounts launch.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("no longer offers GitHub, Microsoft, Apple, email or phone", () => {
+    renderPanel();
+
+    for (const name of [
+      /GitHub/,
+      /Microsoft/,
+      /Apple/,
+      /Continue with email/,
+      /phone/i,
+    ]) {
+      expect(host().queryByRole("link", { name })).toBeNull();
+      expect(host().queryByRole("button", { name })).toBeNull();
+    }
+  });
+
+  it("keeps Google's behaviour: a link when configured, a notice when not", async () => {
+    const user = userEvent.setup();
+    const { unmount } = renderPanel({ providers: both, next: "/projects" });
+    expect(
+      host().getByRole("link", { name: "Continue with Google" }),
+    ).toHaveAttribute("href", "/api/auth/sign-in/google?next=%2Fprojects");
+    unmount();
+
+    renderPanel({ providers: none });
+    expect(host().queryByRole("link", { name: /Google/ })).toBeNull();
+    await user.click(
+      host().getByRole("button", { name: "Continue with Google" }),
+    );
+    expect(
+      host().getByText("Google sign-in is coming in an upcoming update."),
+    ).toBeInTheDocument();
+  });
+
+  it("disables Google and the Log in button while Google is opening", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    const google = host().getByRole("link", { name: "Continue with Google" });
+    // The browser would navigate; jsdom only logs it, so stop the click here.
+    google.addEventListener("click", (event) => event.preventDefault());
+
+    await user.click(google);
+
+    expect(google).toHaveAttribute("aria-disabled", "true");
+    expect(google).toHaveAttribute("data-loading", "true");
+    expect(host().getByRole("button", { name: "Log in" })).toBeDisabled();
+    expect(host().getByText("Opening Google sign-in")).toBeInTheDocument();
+  });
+
+  it("shows a friendly sign-in error from the server, but not a setup error", () => {
+    const { unmount } = renderPanel({ error: "failed" });
+    expect(host().getByRole("alert")).toHaveTextContent(
+      "We couldn't sign you in. Please try again.",
+    );
+    unmount();
+
+    renderPanel({ error: "not-configured" });
+    expect(host().queryByRole("alert")).toBeNull();
+  });
+
+  it("reveals and hides the password with a labelled button", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    const password = host().getByLabelText("Password");
+    expect(password).toHaveAttribute("type", "password");
+
+    await user.click(host().getByRole("button", { name: "Show password" }));
+    expect(password).toHaveAttribute("type", "text");
+
+    await user.click(host().getByRole("button", { name: "Hide password" }));
+    expect(password).toHaveAttribute("type", "password");
+  });
+
+  it("explains that password reset is coming", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+
+    await user.click(host().getByRole("button", { name: "Forgot password?" }));
+
+    expect(
+      host().getByText(
+        "Password reset arrives with accounts in an upcoming update.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("explains each empty field and focuses the summary", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+
+    await user.click(host().getByRole("button", { name: "Log in" }));
+
+    const summary = host().getByRole("alert");
+    await waitFor(() => expect(summary).toHaveFocus());
+    expect(
+      within(summary).getByRole("link", { name: "Email" }),
+    ).toBeInTheDocument();
+    expect(
+      within(summary).getByRole("link", { name: "Password" }),
+    ).toBeInTheDocument();
+    const email = host().getByLabelText("Email");
+    expect(email).toHaveAttribute("aria-invalid", "true");
+    const describedBy = email.getAttribute("aria-describedby") as string;
+    expect(document.getElementById(describedBy)).toHaveTextContent(
+      "Enter your email address.",
+    );
+  });
+
+  it("moves focus to a field when its summary link is chosen", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    await user.click(host().getByRole("button", { name: "Log in" }));
+
+    await user.click(host().getByRole("link", { name: "Password" }));
+
+    expect(host().getByLabelText("Password")).toHaveFocus();
+  });
+
+  it("rejects an invalid email before anything is checked", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    await user.type(host().getByLabelText("Email"), "not-an-email");
+    await user.type(host().getByLabelText("Password"), "whatever1");
+
+    await user.click(host().getByRole("button", { name: "Log in" }));
+
+    expect(
+      host().getAllByText("Enter a valid email address, like name@example.com.")
+        .length,
+    ).toBeGreaterThan(0);
+  });
+});
+
+describe("register view", () => {
+  async function openRegister() {
+    const user = userEvent.setup();
+    renderPanel();
+    await user.click(host().getByRole("button", { name: "Register" }));
+    return user;
+  }
+
+  it("shows every field with the right autocomplete values", async () => {
+    await openRegister();
+    const view = host();
+
+    expect(
+      view.getByRole("heading", { name: "Create your WhichAI account" }),
+    ).toBeInTheDocument();
+    expect(
+      view.getByRole("link", { name: "Register with Google" }),
+    ).toBeInTheDocument();
+    expect(view.getByText("or")).toBeInTheDocument();
+    expect(view.getByLabelText("Email")).toHaveAttribute(
+      "autocomplete",
+      "email",
+    );
+    expect(view.getByLabelText("Password")).toHaveAttribute(
+      "autocomplete",
+      "new-password",
+    );
+    expect(view.getByLabelText("First name")).toHaveAttribute(
+      "autocomplete",
+      "given-name",
+    );
+    expect(view.getByLabelText("Last name")).toHaveAttribute(
+      "autocomplete",
+      "family-name",
+    );
+    expect(view.getByText(/Already on WhichAI\?/)).toBeInTheDocument();
+    expect(
+      view.getByText(
+        "Preview: accounts are saved only in this browser until online accounts launch.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("links the Terms and Privacy Policy, each in a new tab", async () => {
+    await openRegister();
+
+    const terms = host().getByRole("link", { name: /Terms of Service/ });
+    const privacy = host().getByRole("link", { name: /Privacy Policy/ });
+    expect(terms).toHaveAttribute("href", "/terms");
+    expect(privacy).toHaveAttribute("href", "/privacy");
+    for (const link of [terms, privacy]) {
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    }
+  });
+
+  it("keeps Register disabled until the terms are ticked", async () => {
+    const user = await openRegister();
+    const submit = host().getByRole("button", { name: "Register now" });
+    expect(submit).toBeDisabled();
+
+    await user.click(host().getByRole("checkbox"));
+    expect(submit).toBeEnabled();
+
+    await user.click(host().getByRole("checkbox"));
+    expect(submit).toBeDisabled();
+  });
+
+  it("updates the password hint as you type", async () => {
+    const user = await openRegister();
+    const password = host().getByLabelText("Password");
+    expect(
+      host().getByText("At least 8 characters, up to 128. No symbol rules."),
+    ).toBeInTheDocument();
+
+    await user.type(password, "abc");
+    expect(
+      host().getByText(/5 more needed\. Up to 128 characters/),
+    ).toBeInTheDocument();
+
+    await user.type(password, "defghij");
+    expect(
+      host().getByText("Long enough. Up to 128 characters."),
+    ).toBeInTheDocument();
+  });
+
+  it("lists every problem in a summary and ties each to its field", async () => {
+    const user = await openRegister();
+    await user.type(host().getByLabelText("Email"), "ada@example.org");
+    await user.type(host().getByLabelText("Password"), "short");
+    await user.type(host().getByLabelText("First name"), "Ada1");
+    await user.click(host().getByRole("checkbox"));
+
+    await user.click(host().getByRole("button", { name: "Register now" }));
+
+    const summary = host().getByRole("alert");
+    await waitFor(() => expect(summary).toHaveFocus());
+    for (const name of ["Password", "First name", "Last name"]) {
+      expect(within(summary).getByRole("link", { name })).toBeInTheDocument();
+    }
+    expect(within(summary).queryByRole("link", { name: "Email" })).toBeNull();
+    const password = host().getByLabelText("Password");
+    expect(password).toHaveAttribute("aria-invalid", "true");
+    const ids = (password.getAttribute("aria-describedby") ?? "").split(" ");
+    expect(
+      ids.map((id) => document.getElementById(id)?.textContent).join(" "),
+    ).toContain("Use at least 8 characters.");
+  });
+
+  it("rejects a common password", async () => {
+    const user = await openRegister();
+    await register(user, host(), { password: "Password123" });
+
+    expect(
+      await host().findByText(
+        "That password is too common. Choose a different one.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("accepts a Hindi name", async () => {
+    const user = await openRegister();
+    await user.type(host().getByLabelText("Email"), "rishi@example.org");
+    await user.type(host().getByLabelText("Password"), PASSWORD);
+    await user.type(host().getByLabelText("First name"), "ऋषि");
+    await user.type(host().getByLabelText("Last name"), "भास्कर");
+    await user.click(host().getByRole("checkbox"));
+
+    await user.click(host().getByRole("button", { name: "Register now" }));
+
+    expect(
+      await host().findByText("Account created. Log in to continue."),
+    ).toBeInTheDocument();
+  });
+});
+
+describe("switching views", () => {
+  it("moves between login and register and puts focus on the new title", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+
+    await user.click(host().getByRole("button", { name: "Register" }));
+    const registerTitle = host().getByRole("heading", {
+      name: "Create your WhichAI account",
+    });
+    expect(registerTitle).toHaveFocus();
+    expect(
+      host().queryByRole("heading", { name: "Log in to WhichAI" }),
+    ).toBeNull();
+
+    await user.click(host().getByRole("button", { name: "Log in" }));
+    expect(
+      host().getByRole("heading", { name: "Log in to WhichAI" }),
+    ).toHaveFocus();
+  });
+
+  describe("height animation", () => {
+    function stubHeights() {
+      vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockImplementation(
+        function (this: HTMLElement) {
+          return this.textContent?.includes("Create your WhichAI account")
+            ? 560
+            : 380;
+        },
+      );
+    }
+
+    it("animates the height and fades the new view in", async () => {
+      stubHeights();
+      const user = userEvent.setup();
+      const { container } = renderPanel();
+
+      await user.click(host().getByRole("button", { name: "Register" }));
+
+      const viewport = container.querySelector(
+        '[class*="viewport"]',
+      ) as HTMLElement;
+      expect(viewport.style.height).toBe("560px");
+      expect(container.querySelector('[data-fade="true"]')).not.toBeNull();
+    });
+
+    it("does not animate under reduced motion", async () => {
+      stubHeights();
+      vi.stubGlobal("matchMedia", (query: string) => ({
+        matches: query.includes("prefers-reduced-motion"),
+        media: query,
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        addListener: () => {},
+        removeListener: () => {},
+        dispatchEvent: () => false,
+        onchange: null,
+      }));
+      const user = userEvent.setup();
+      const { container } = renderPanel();
+
+      await user.click(host().getByRole("button", { name: "Register" }));
+
+      const viewport = container.querySelector(
+        '[class*="viewport"]',
+      ) as HTMLElement;
+      expect(viewport.style.height).toBe("");
+      expect(
+        host().getByRole("heading", { name: "Create your WhichAI account" }),
+      ).toHaveFocus();
+    });
+  });
+});
+
+describe("accounts in the popup", () => {
+  it("registers, shows the success message, prefills the email and does not log in", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+
+    await createAccountAndReturnToLogin(user, view);
+
+    expect(
+      view.getByRole("heading", { name: "Log in to WhichAI" }),
+    ).toBeInTheDocument();
+    expect(view.getByLabelText("Email")).toHaveValue("ada@example.org");
+    expect(signInDialog()).toHaveAttribute("open");
+    expect(
+      screen.queryByRole("button", { name: /Ada/ }),
+    ).not.toBeInTheDocument();
+  }, 20_000);
+
+  it("logs in with the same details, closes, and shows the first name and Free plan", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await createAccountAndReturnToLogin(user, view);
+
+    await user.type(view.getByLabelText("Password"), PASSWORD);
+    await user.click(view.getByRole("button", { name: "Log in" }));
+
+    await waitFor(() => expect(signInDialog()).not.toHaveAttribute("open"));
+    const [account] = await screen.findAllByRole("button", { name: /Ada/ });
+    expect(account).toHaveTextContent("AL");
+    expect(account).toHaveTextContent("Free plan");
+    expect(account).not.toHaveTextContent("Lovelace");
+  }, 20_000);
+
+  it("gives one generic message for a wrong password", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await createAccountAndReturnToLogin(user, view);
+
+    await user.type(view.getByLabelText("Password"), "not the password");
+    await user.click(view.getByRole("button", { name: "Log in" }));
+
+    expect(
+      await view.findByText("Email or password is incorrect."),
+    ).toBeInTheDocument();
+    expect(view.getByLabelText("Password")).toHaveValue("");
+  }, 20_000);
+
+  it("gives the same message for an email that has no account", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await user.type(view.getByLabelText("Email"), "nobody@example.org");
+    await user.type(view.getByLabelText("Password"), PASSWORD);
+
+    await user.click(view.getByRole("button", { name: "Log in" }));
+
+    expect(
+      await view.findByText("Email or password is incorrect."),
+    ).toBeInTheDocument();
+  }, 20_000);
+
+  it("makes the person wait after five failed attempts", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await user.type(view.getByLabelText("Email"), "nobody@example.org");
+
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      await user.type(view.getByLabelText("Password"), "wrong password");
+      await user.click(view.getByRole("button", { name: "Log in" }));
+      await view.findByText("Email or password is incorrect.");
+    }
+    await user.type(view.getByLabelText("Password"), "wrong password");
+    await user.click(view.getByRole("button", { name: "Log in" }));
+
+    expect(
+      await view.findByText("Too many attempts. Try again in 30 seconds."),
+    ).toBeInTheDocument();
+  }, 30_000);
+
+  it("refuses a second account with the same email", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await createAccountAndReturnToLogin(user, view);
+
+    await user.click(view.getByRole("button", { name: "Register" }));
+    await register(user, view, { email: "ADA@example.org" });
+
+    expect(
+      await view.findByText(
+        "An account with this email already exists in this browser. Log in instead.",
+      ),
+    ).toBeInTheDocument();
+  }, 20_000);
+
+  it("stores a hash and never the password or the email in plain view of the session", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await createAccountAndReturnToLogin(user, view);
+
+    const stored = window.localStorage.getItem(ACCOUNT_KEY) as string;
+    expect(stored).not.toContain(PASSWORD);
+    expect(stored).toContain("PBKDF2-SHA-256");
+    expect(stored).toContain("600000");
+  }, 20_000);
+
+  it("never logs the email or password", async () => {
+    const spies = (["log", "info", "warn", "error", "debug"] as const).map(
+      (method) => vi.spyOn(console, method).mockImplementation(() => {}),
+    );
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await createAccountAndReturnToLogin(user, view);
+
+    for (const spy of spies) {
+      expect(JSON.stringify(spy.mock.calls)).not.toContain(PASSWORD);
+      expect(JSON.stringify(spy.mock.calls)).not.toContain("ada@example.org");
+    }
+  }, 20_000);
+
+  it("makes no network request from the forms", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+
+    await createAccountAndReturnToLogin(user, view);
+
+    expect(fetchMock).not.toHaveBeenCalled();
+  }, 20_000);
+
+  it("logs out and keeps the account", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await createAccountAndReturnToLogin(user, view);
+    await user.type(view.getByLabelText("Password"), PASSWORD);
+    await user.click(view.getByRole("button", { name: "Log in" }));
+    const [account] = await screen.findAllByRole("button", { name: /Ada/ });
+
+    await user.click(account as HTMLElement);
+    await user.click(screen.getByRole("menuitem", { name: "Sign out" }));
+
+    await waitFor(() =>
+      expect(
+        screen.getAllByRole("button", { name: "Sign in" }).length,
+      ).toBeGreaterThan(0),
+    );
+    expect(window.localStorage.getItem(ACCOUNT_KEY)).toContain(
+      "ada@example.org",
+    );
+  }, 20_000);
+});
+
+describe("guest", () => {
+  it("Continue without signing in makes a guest profile, closes and shows Guest", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+
+    await user.click(
+      view.getByRole("button", { name: "Continue without signing in" }),
+    );
+
+    await waitFor(() => expect(signInDialog()).not.toHaveAttribute("open"));
+    const [guest] = await screen.findAllByRole("button", { name: /Guest/ });
+    expect(guest).toHaveTextContent("Free plan");
+    const profile = JSON.parse(
+      window.localStorage.getItem("whichai:preview-guest") as string,
+    ) as Record<string, unknown>;
+    expect(Object.keys(profile).sort()).toEqual(["createdAt", "id"]);
+  });
+
+  it("offers Sign in from the guest menu", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await user.click(
+      view.getByRole("button", { name: "Continue without signing in" }),
+    );
+    const [guest] = await screen.findAllByRole("button", { name: /Guest/ });
+
+    await user.click(guest as HTMLElement);
+    await user.click(screen.getByRole("menuitem", { name: "Sign in" }));
+
+    expect(signInDialog()).toHaveAttribute("open");
+  });
+});
+
+describe("popup", () => {
   it("opens from the sidebar and returns focus to the button on close", async () => {
     const user = userEvent.setup();
-    renderShell(null);
+    renderShell();
     expect(signInDialog()).not.toHaveAttribute("open");
 
     const [signIn] = screen.getAllByRole("button", { name: "Sign in" });
@@ -229,25 +691,9 @@ describe("sign-in popup", () => {
     expect(signIn).toHaveFocus();
   });
 
-  it("Continue without signing in closes the popup and returns focus", async () => {
-    const user = userEvent.setup();
-    renderShell(null);
-    const [signIn] = screen.getAllByRole("button", { name: "Sign in" });
-    await user.click(signIn as HTMLElement);
-
-    await user.click(
-      within(signInDialog()).getByRole("button", {
-        name: "Continue without signing in",
-      }),
-    );
-
-    expect(signInDialog()).not.toHaveAttribute("open");
-    expect(signIn).toHaveFocus();
-  });
-
   it("closes when the backdrop is clicked", async () => {
     const user = userEvent.setup();
-    renderShell(null);
+    renderShell();
     await user.click(
       screen.getAllByRole("button", { name: "Sign in" })[0] as HTMLElement,
     );
@@ -257,32 +703,77 @@ describe("sign-in popup", () => {
     expect(signInDialog()).not.toHaveAttribute("open");
   });
 
-  it("returns to the current page after sign-in", async () => {
+  it("returns to the current page after Google sign-in", async () => {
     const user = userEvent.setup();
-    renderShell(null);
+    renderShell();
     await user.click(
       screen.getAllByRole("button", { name: "Sign in" })[0] as HTMLElement,
     );
 
     expect(
       within(signInDialog()).getByRole("link", {
-        name: "Continue with GitHub",
+        name: "Continue with Google",
       }),
-    ).toHaveAttribute("href", "/api/auth/sign-in/github?next=%2Fprojects");
+    ).toHaveAttribute("href", "/api/auth/sign-in/google?next=%2Fprojects");
   });
 
-  it("has no serious accessibility violations when open", async () => {
+  it.each([
+    ["login", "Log in to WhichAI"],
+    ["register", "Create your WhichAI account"],
+  ])(
+    "opens in the %s view for ?auth=%s and cleans the address",
+    async (view, title) => {
+      window.history.replaceState(null, "", `/?auth=${view}&keep=1#top`);
+      renderShell();
+
+      await waitFor(() => expect(signInDialog()).toHaveAttribute("open"));
+      expect(
+        within(signInDialog()).getByRole("heading", { name: title }),
+      ).toBeInTheDocument();
+      expect(window.location.search).toBe("?keep=1");
+      expect(window.location.hash).toBe("#top");
+    },
+  );
+
+  it("ignores an unknown ?auth value", () => {
+    window.history.replaceState(null, "", "/?auth=admin");
+    renderShell();
+
+    expect(signInDialog()).not.toHaveAttribute("open");
+    expect(window.location.search).toBe("?auth=admin");
+  });
+
+  it("has no serious accessibility violations in the login view", async () => {
     const user = userEvent.setup();
-    renderShell(null);
-    await user.click(
-      screen.getAllByRole("button", { name: "Sign in" })[0] as HTMLElement,
-    );
+    renderShell();
+    await openDialog(user);
+
+    expect(await seriousViolations(signInDialog())).toEqual([]);
+  });
+
+  it("has no serious accessibility violations in the register view", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await user.click(view.getByRole("button", { name: "Register" }));
+
+    expect(await seriousViolations(signInDialog())).toEqual([]);
+  });
+
+  it("has no serious accessibility violations with errors showing", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+    await user.click(view.getByRole("button", { name: "Register" }));
+    await user.click(view.getByRole("checkbox"));
+    await user.click(view.getByRole("button", { name: "Register now" }));
+    await view.findByRole("alert");
 
     expect(await seriousViolations(signInDialog())).toEqual([]);
   });
 });
 
-describe("account menu", () => {
+describe("account menu for a Google sign-in", () => {
   const viewer: Viewer = {
     name: "Ada Lovelace",
     provider: "github",

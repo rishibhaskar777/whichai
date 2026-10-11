@@ -239,20 +239,69 @@ export const en = {
   "budget.more": "More",
 
   // Sign-in
+  "signin.login.title": "Log in to WhichAI",
+  "signin.login.lede": "Welcome back. Log in to pick up where you left off.",
+  "signin.register.title": "Create your WhichAI account",
+  "signin.registerWith": "Register with {method}",
+  "signin.login.submit": "Log in",
+  "signin.login.submitting": "Logging in",
+  "signin.register.submit": "Register now",
+  "signin.register.submitting": "Creating your account",
+  "signin.login.new": "New to WhichAI?",
+  "signin.login.registerLink": "Register",
+  "signin.register.existing": "Already on WhichAI?",
+  "signin.register.loginLink": "Log in",
+  "signin.register.success": "Account created. Log in to continue.",
+  "signin.forgot": "Forgot password?",
+  "signin.forgot.note":
+    "Password reset arrives with accounts in an upcoming update.",
+  "signin.preview":
+    "Preview: accounts are saved only in this browser until online accounts launch.",
+  "signin.password.show": "Show password",
+  "signin.password.hide": "Hide password",
+  "auth.field.email": "Email",
+  "auth.field.password": "Password",
+  "auth.field.firstName": "First name",
+  "auth.field.lastName": "Last name",
+  "auth.password.hint": "At least 8 characters, up to 128. No symbol rules.",
+  "auth.password.hint.more":
+    "{count} more needed. Up to 128 characters, no symbol rules.",
+  "auth.password.hint.ok": "Long enough. Up to 128 characters.",
+  "auth.password.hint.over": "That is over 128 characters. Please shorten it.",
+  "auth.terms.label": "I agree to the {terms} and {privacy}",
+  "auth.terms.privacy": "Privacy Policy",
+  "auth.error.summary": "Please fix these to continue:",
+  "auth.error.email.required": "Enter your email address.",
+  "auth.error.email.invalid":
+    "Enter a valid email address, like name@example.com.",
+  "auth.error.password.required": "Enter your password.",
+  "auth.error.password.short": "Use at least 8 characters.",
+  "auth.error.password.long": "Use 128 characters or fewer.",
+  "auth.error.password.common":
+    "That password is too common. Choose a different one.",
+  "auth.error.firstName.required": "Enter your first name.",
+  "auth.error.firstName.invalid":
+    "Letters, spaces, hyphens and apostrophes only.",
+  "auth.error.firstName.long": "Use 50 characters or fewer.",
+  "auth.error.lastName.required": "Enter your last name.",
+  "auth.error.lastName.invalid":
+    "Letters, spaces, hyphens and apostrophes only.",
+  "auth.error.lastName.long": "Use 50 characters or fewer.",
+  "auth.error.terms.required":
+    "Agree to the Terms of Service and Privacy Policy to register.",
+  "auth.error.credentials": "Email or password is incorrect.",
+  "auth.error.duplicate":
+    "An account with this email already exists in this browser. Log in instead.",
+  "auth.error.locked": "Too many attempts. Try again in {seconds} seconds.",
+  "auth.error.storage":
+    "This browser would not save your details. Check that site storage is allowed and try again.",
+  "auth.error.invalid": "Please check your details and try again.",
   "account.guest": "Guest",
-  "signin.title": "Sign in to WhichAI",
-  "signin.lede":
-    "Sign in to keep your plans. For now your plans stay in this browser.",
   "signin.continueWith": "Continue with {method}",
-  "signin.method.email": "email",
-  "signin.method.phone": "phone number",
   "signin.or": "or",
   "signin.comingSoon": "{name} sign-in is coming in an upcoming update.",
   "signin.opening": "Opening {name} sign-in",
   "signin.dismiss": "Continue without signing in",
-  "signin.fine":
-    "We only receive your name from Google or GitHub. We never see your password.",
-  "signin.privacy": "Privacy",
   "signin.close": "Close sign-in",
   "auth.error.not-configured": "Sign-in is not configured on this server.",
   "auth.error.failed": "We couldn't sign you in. Please try again.",

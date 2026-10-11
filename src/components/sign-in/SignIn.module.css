@@ -152,19 +152,46 @@
   opacity: 1;
 }
 
-/* Short screens: the title already names the product, so drop the wordmark. */
-@media (max-height: 720px) {
-  .dialog .brand {
-    display: none;
-  }
+/* The title already names the product, so the popup drops the wordmark. */
+.dialog .brand {
+  display: none;
+}
+
+/* Clear of the close button, which overlaps the panel padding by a little. */
+.dialog .title {
+  padding-right: var(--space-6);
 }
 
 .panel {
+  padding: var(--space-4) var(--space-8);
+}
+
+/*
+ * The height is animated from script when the view changes. The side padding
+ * keeps focus rings from being clipped by overflow.
+ */
+.viewport {
+  margin-inline: calc(var(--space-1) * -1);
+  padding-inline: var(--space-1);
+  overflow: hidden;
+  transition: height var(--duration-base) var(--ease-out);
+}
+
+.view {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-2);
-  padding: var(--space-4) var(--space-8);
+}
+
+.view[data-fade="true"] {
+  animation: view-in var(--duration-base) var(--ease-out);
+}
+
+@keyframes view-in {
+  from {
+    opacity: 0;
+  }
 }
 
 .brand {
@@ -172,8 +199,15 @@
 }
 
 .title {
-  font-size: 1.75rem;
+  margin-bottom: var(--space-1);
+  font-size: 1.375rem;
   letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* Focused from script only, so it shows no ring: the new heading is the cue. */
+.title:focus {
+  outline: none;
 }
 
 .lede {
@@ -243,6 +277,7 @@
 
 .divider {
   display: flex;
+  width: 100%;
   margin-block: var(--space-1);
   align-items: center;
   gap: var(--space-3);
@@ -294,6 +329,15 @@
   .dismiss {
     min-height: 2.75rem;
   }
+
+  .input {
+    min-height: 2.75rem;
+  }
+
+  .linkButton,
+  .forgot {
+    min-height: 2.75rem;
+  }
 }
 
 .dismiss:hover {
@@ -323,12 +367,6 @@
   color: var(--status-danger);
 }
 
-.fine {
-  color: var(--text-on-glass);
-  font-size: var(--text-nav);
-  line-height: 1.45;
-}
-
 .close {
   position: absolute;
   top: var(--space-3);
@@ -349,6 +387,226 @@
 .close:hover {
   background: var(--surface-2);
   color: var(--text);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.label {
+  color: var(--text);
+  font-size: var(--text-nav);
+  font-weight: var(--weight-medium);
+}
+
+.input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--text-subtle);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-base);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--status-danger);
+}
+
+.passwordWrap {
+  position: relative;
+}
+
+.passwordInput {
+  padding-right: 2.75rem;
+}
+
+.reveal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 100%;
+  border: 0;
+  border-radius: 0 12px 12px 0;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.reveal:hover {
+  color: var(--text);
+}
+
+.hint {
+  color: var(--text-on-glass);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.fieldError {
+  color: var(--status-danger);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.summary {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--status-danger);
+  border-radius: var(--radius-md);
+  color: var(--status-danger);
+  font-size: var(--text-nav);
+  line-height: 1.4;
+}
+
+.summary:focus {
+  outline: none;
+}
+
+.summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.summary a {
+  color: inherit;
+}
+
+.summaryList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-3);
+  margin-top: var(--space-1);
+  font-weight: var(--weight-medium);
+}
+
+.passwordBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Right-aligned under the password, as a link-looking button. */
+.forgot {
+  align-self: flex-end;
+  min-height: 1.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.nameRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.checkRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.checkbox {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.125rem;
+  accent-color: var(--accent);
+}
+
+.checkLabel {
+  font-size: var(--text-nav);
+  line-height: 1.45;
+}
+
+/* The accent fill takes its text colour from --on-accent in both themes. */
+.submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: var(--text-nav);
+  font-weight: var(--weight-medium);
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.submit:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submit[data-loading="true"] {
+  cursor: progress;
+  opacity: 1;
+}
+
+.switchLine {
+  align-self: center;
+  color: var(--text);
+  font-size: var(--text-nav);
+  text-align: center;
+}
+
+.linkButton {
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.preview {
+  color: var(--text-on-glass);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  text-align: center;
+}
+
+.success {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--status-success);
+  border-radius: var(--radius-md);
+  color: var(--status-success);
+  font-size: var(--text-nav);
 }
 
 .srOnly {
@@ -376,10 +634,6 @@
     }
   }
 
-  .title {
-    font-size: 1.5rem;
-  }
-
   .dialog .panel {
     max-height: calc(100dvh - 1rem);
     border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
@@ -395,7 +649,21 @@
   }
 }
 
+@media (max-width: 419px) {
+  .nameRow {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .viewport {
+    transition: none;
+  }
+
+  .view[data-fade="true"] {
+    animation: none;
+  }
+
   .dialog,
   .dialog[open] {
     transform: none;

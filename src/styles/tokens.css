@@ -12,6 +12,7 @@
   --text-subtle: #5f5f67;
   --text-on-glass: #4a4a52;
   --accent: #4651cc;
+  --on-accent: #ffffff;
   --accent-soft: rgb(70 81 204 / 0.12);
   --backdrop: rgb(17 17 20 / 0.4);
   --status-success: #15803d;
@@ -48,6 +49,7 @@
     --text-subtle: #8a8a94;
     --text-on-glass: #bcbcc6;
     --accent: #8b96ff;
+    --on-accent: #0a0a0c;
     --accent-soft: rgb(139 150 255 / 0.14);
     --backdrop: rgb(0 0 0 / 0.6);
     --status-success: #4ade80;
@@ -83,6 +85,7 @@
   --text-subtle: #8a8a94;
   --text-on-glass: #bcbcc6;
   --accent: #8b96ff;
+  --on-accent: #0a0a0c;
   --accent-soft: rgb(139 150 255 / 0.14);
   --backdrop: rgb(0 0 0 / 0.6);
   --status-success: #4ade80;

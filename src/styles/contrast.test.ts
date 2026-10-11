@@ -96,6 +96,7 @@ const textPairs: [string, string][] = [
     "status-info",
   ].flatMap((fg) => ["bg", "surface"].map((bg): [string, string] => [fg, bg])),
   ["bg", "text"],
+  ["on-accent", "accent"],
   ["text", "glass-solid"],
   ["text-muted", "glass-solid"],
 ];
