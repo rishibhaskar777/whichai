@@ -14,7 +14,7 @@ proxy.ts             security headers, CSP nonce
 app/                 routes, layouts, server components
   |
   +--> components/   presentational and interactive UI
-  +--> lib/plan/     goal interpreter (keywords, typos, tasks)
+  +--> lib/plan/     goal interpreter (keywords, typos, parts, confidence)
   +--> lib/engine/   rules engine that chooses tools and builds the plan
   +--> lib/schemas/  Zod schemas: goal input, plan contract, catalogue
   +--> lib/news/     feed reader, cache, tags, "Affects your plans"
@@ -50,7 +50,8 @@ src/
     news/              news entry, What Changed page, tag label, plan-tool provider and badge
     home-flow/         home page state: empty, understanding, no match, plan
     goal-form/         search input (full and compact), suggestions
-    understanding-card/ editable chips, confirm and edit
+    understanding-card/ editable chips, "Did you mean", add a part, confirm and edit
+    part-picker/       searchable list of every job, grouped by category
     no-match-card/     honest "no plan yet" state
     plan-view/         level switch, toolkit, job cards, model guidance,
                        workflow, accuracy card
@@ -72,7 +73,8 @@ src/
     new-plan-signal.tsx lets the sidebar reset the home flow
     platform.ts        visitor system and browser from client hints or user agent
     library/           library query, filter and sort, compare selection, tool details
-    plan/              goal interpreter, text matching, chip helpers
+    plan/              goal interpreter, text matching, chip helpers, the goal corpus and its report
+    misses/            the prefilled GitHub issue for goals that were not understood
     news/              feed fetch, parse, cache, tagging, tool matching, query (server) and plan matching (browser)
     pricing/           plan schema, plan data helpers, price format, current plan, checkout query
     engine/            tool selection, plan assembly, text for cards
@@ -115,14 +117,14 @@ JSON files in `src/data/catalogue/`, described by `src/lib/schemas/catalogue.ts`
 | File                    | Holds                                                                                                                                                                                                                                                                                                                                              |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `providers.json`        | Company or project id, name and homepage                                                                                                                                                                                                                                                                                                           |
-| `jobs.json`             | The roles a tool can play (AI assistant, hosting, flashcards ...) with a category and keywords for matching tasks                                                                                                                                                                                                                                  |
+| `jobs.json`             | The roles a tool can play (AI assistant, hosting, flashcards ...) with a category, a stage of a project (idea, design, build, data, payments, launch, grow) and 20 to 40 trigger words and phrases for matching parts                                                                                                                              |
 | `tools/<category>.json` | Each tool: provider, jobs, plain summary, kind (`ai-tool`, `library`, `service`, `app`, `template-source`, `model`, `extension`, `cli`), skill level, free-option flag, strengths, cautions, per-job fit score, compatible tools, official link and domains, optional `getIt` links, status. A tool lives in the file for its first job's category |
 | `model-classes.json`    | Capability classes with plain "use it for" and effort advice. No model names                                                                                                                                                                                                                                                                       |
 | `goals.json`            | Goal templates: keywords, synonyms, features and, for each of the three levels, the jobs, workflow, mistakes, upgrade advice and model guidance                                                                                                                                                                                                    |
 
 `src/data/catalogue/index.ts` parses the files with the schemas and runs `findProblems` from `src/lib/catalogue/validate.ts` when the module loads on the server. A test runs the same checks, so a bad reference, a duplicate id, a non-https link, a link off a tool's official domains or a stray price fails both the tests and the build.
 
-`version.ts` holds the catalogue version, a hash of every catalogue file, written by `npm run data:version` and checked by a test. `goal-titles.ts` holds the nine goal titles for pages that must not load the whole catalogue. Every tool is unverified. Prices are recorded only where an official pricing page was read, with its address and date ([0015](decisions/0015-plan-polish.md)).
+`version.ts` holds the catalogue version, a hash of every catalogue file, written by `npm run data:version` and checked by a test. `goal-titles.ts` holds the goal titles for pages that must not load the whole catalogue. Every tool is unverified. Prices are recorded only where an official pricing page was read, with its address and date ([0015](decisions/0015-plan-polish.md)).
 
 ## Plan data flow
 
@@ -137,9 +139,9 @@ empty -> understanding -> plan
 
 1. The person submits a goal. `goalSchema` trims and validates it (1 to 500 characters).
 2. `interpretGoal(text)` runs in the browser and returns an `UnderstoodGoal` or `null`. It reads keywords from the catalogue and makes no request.
-3. On a match, the understanding card shows the chips. Feature, task and skill chips can be removed. The chips that can be added come from the matched goal (`addableChips`). The goal chip is fixed.
+3. On a match, the understanding card shows the chips: the goal, its features, the parts the sentence names beyond the goal, and skills. All but the goal chip can be removed. Features of the goal can be added (`addableChips`) and any job can be added from the searchable list ("Add a part"). When the sentence fits several goals or one only weakly, the card also offers "Did you mean" with the best three goals and, when the sentence names parts, "Build from the parts I described".
 4. "Yes, show my plan" recomputes the level from the chips that remain (`inferLevel`) and renders `PlanView` with the understood goal.
-5. `PlanView` calls `buildPlan(goal, { level, budget, toolsUsed })` and shows one `PlanLevel` at a time. The level, the tools the person already uses and the monthly budget are component state. Changing the budget or the tools used rebuilds the plan. Nothing is sent to a server. The request (without the goal text) is kept in the address fragment so Back, Forward and reload work, and the goal text stays in `sessionStorage` for the tab until "New plan" is pressed ([0015](decisions/0015-plan-polish.md)). A tool can be swapped into a card; the choice is part of the request (`chosenTools`).
+5. `PlanView` calls `buildPlan(goal, { level, budget, toolsUsed })` and shows one `PlanLevel` at a time. The level, the tools the person already uses and the monthly budget are component state. Changing the budget or the tools used rebuilds the plan. Nothing is sent to a server. The request (without the goal text) is kept in the address fragment so Back, Forward and reload work, and the goal text stays in `sessionStorage` for the tab until "New plan" is pressed ([0015](decisions/0015-plan-polish.md)). A tool can be swapped into a card; the choice is part of the request (`chosenTools`). Parts added from the full list and parts taken out are part of it too (`addedJobs`, `removedJobs`), so saved plans, share links and the address carry them.
 
 ```
 text --interpretGoal--> UnderstoodGoal --buildPlan--> Plan --PlanView--> cards
@@ -160,13 +162,17 @@ Loading: the interpreter (`lib/plan/interpret-goal.ts`), the catalogue it reads 
 
 `src/lib/plan/interpret-goal.ts` is a pure function over the goal templates and job keywords in the catalogue:
 
-- **Goals**: each goal lists keywords and synonyms. A phrase scores its word count divided by the number of goals that list it. The highest score wins; a tie goes to the phrase mentioned first.
-- **Typos**: `text-match.ts` lowercases, drops filler words and compares words by exact match, plural, or a small edit distance (words under 5 letters must match exactly and the first letter must agree).
+- **Goals**: each goal lists 15 to 30 keywords and synonyms, including short forms and Hindi words in English letters. A phrase scores its word count divided by the number of goals that list it. Words that sit apart (up to two between) count three quarters. Goals within half a point of the best are a toss-up, and the one named first leads.
+- **Typos**: `text-match.ts` lowercases, drops filler words (English and Hinglish) and compares words by exact match, plural, or a small edit distance (words under 5 letters must match exactly and the first letter must agree).
 - **Features**: each goal lists feature words. A feature chip appears only when the feature is mentioned, and it adds that feature's jobs to the plan.
-- **Tasks**: when no goal matches but the text names a task ("make a logo"), the generic `pick-an-ai` goal is returned with a chip for each matching job.
+- **Parts**: every job lists 20 to 40 trigger words and phrases. Jobs the sentence names that the goal does not provide become part chips (up to six). Longer phrases claim their words first, words the goal or a feature already used are not read again, and skill words (React, Git) are left to the level. Once a goal has matched, a single loose word ("visitors", "design") is not enough to add a part (`loose-words.ts`).
+- **No fitting goal**: the parts alone make a `custom-plan`, in the order idea, design, build, data, payments, launch, grow (the job's `stage`). A goal that only shares a word gives way to parts the text really names.
+- **Confidence**: high when a goal scores at least one and leads the next by half a point; otherwise low, and the top three goals are offered. A request that asks outright which AI to use (`pick-an-ai`) is always taken as it is.
 - **Skills**: one pattern and a level per skill (React, Next.js, API, Git, deploying). The inferred level is the highest level among the skill chips present, and `simple` when there are none.
 
-Goal understanding never calls an AI service ([0006](decisions/0006-zero-cost.md)). No match is returned only when nothing is recognised.
+Goal understanding never calls an AI service ([0006](decisions/0006-zero-cost.md)). No match is returned only when nothing is recognised. `goal-corpus.ts` holds over 300 sentences with the goal or parts each should lead to, and `npm run goals:report` prints the match rate and every miss ([0016](decisions/0016-more-goals-and-parts.md)).
+
+Goals that were not understood (no match, parts only, or low confidence) are kept in a small list on the device when search history is on. Settings lists them, and "Open a GitHub issue" opens a prefilled issue only when the person chooses to. The list is not part of a backup and is cleared with everything else.
 
 ### The rules engine
 
@@ -174,7 +180,7 @@ Goal understanding never calls an AI service ([0006](decisions/0006-zero-cost.md
 
 - `select-tools.ts`: level and budget filters, ranking (fit score, provider variety, compatibility, rotating tie-break), keep, better and new tags, and the choice of up to two alternatives.
 - `describe.ts`: the text on a card (why, pricing placeholder, cautions, "Choose X if ..."), the cost line, compatibility notes and `{job:id}` filling.
-- `build-plan.ts`: `buildPlan`, which picks tools for each job at each level, skips jobs a chosen tool already covers, attaches model guidance to AI tools, groups the chosen tools into the toolkit and assembles a `Plan`.
+- `build-plan.ts`: `buildPlan`, which picks tools for each job at each level, skips jobs a chosen tool already covers, attaches model guidance to AI tools, groups the chosen tools into the toolkit and assembles a `Plan`. Jobs are the goal's own for the level, then the parts (from chips and `addedJobs`, in stage order), minus `removedJobs`; each part gets a workflow step.
 
 The engine imports no component, and no component imports a ranking rule.
 
@@ -287,6 +293,8 @@ A saved plan holds the plan request (`src/lib/schemas/plan-request.ts`), not the
 ## Share links
 
 `/plan#<base64url JSON>` holds a plan request. The fragment is never sent to a server. `decodePlanRequest` rejects anything over 4 KB, any character outside base64url, invalid UTF-8 or JSON, and anything that fails the strict request schema. `/plan?id=<id>` opens a saved plan. Both rebuild with `buildPlan`.
+
+On these pages, a swapped tool, a level change or an added or removed part replaces the fragment (`history.replaceState`, never a new entry), so Back from a tool page returns to the plan as it was left. A fragment on a saved plan's address wins over the saved copy, which stays unchanged until "Update saved plan". The hash the page was opened with is kept in the history entry so the plan view keeps its identity while the fragment changes.
 
 ## Internationalisation
 

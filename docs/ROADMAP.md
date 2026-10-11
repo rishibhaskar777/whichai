@@ -27,7 +27,7 @@ Every phase follows the [zero-cost rule](decisions/0006-zero-cost.md): local cod
 ### 3a: Catalogue and engine (done, [0007](decisions/0007-catalogue-and-engine.md))
 
 - Tool, job, provider, model-class and goal-template data as JSON files in `src/data/catalogue/`, validated by Zod schemas and a cross-file check in tests and at build time
-- Nine goal templates (portfolio website, study plan, resume and job search, make a video, build an app, research and reading, business website, presentation and a generic "pick the right AI" goal), each at three levels
+- Goal templates, each at three levels. Nine at first (portfolio website, study plan, resume and job search, make a video, build an app, research and reading, business website, presentation and a generic "pick the right AI" goal); 45 now, with a plan built from parts for anything else ([0016](decisions/0016-more-goals-and-parts.md))
 - Rules engine that selects tools per job by level, budget, editorial fit score, provider variety and compatibility, and builds the plan with a toolkit summary and model guidance
 - Goal understanding stays rule-based and local: keywords, synonyms, typo tolerance and task detection, no AI API
 - Every record is unverified and uses placeholders. The interface shows no placeholders; the About page explains how data is checked
