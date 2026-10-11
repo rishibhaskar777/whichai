@@ -26,6 +26,14 @@ Nine goal templates left most sentences with "no plan yet". People describe what
 
 A goal is a clear match when it scores at least one (a distinctive word or a two-word phrase) and leads the runner-up by half a point. Otherwise the understanding card says so, offers the three best goals and, when the sentence names parts, a plan built from them. A goal that only shares a word ("website") gives way to parts the sentence really names.
 
+### Close goals: what is being made
+
+Two goals can both fit ("business website with whatsapp chatbot and seo"). Scores alone cannot say which is the thing being made, so the words around a phrase decide. A phrase after "for", "with" or "and" names a subject or an add-on, and one after "into" names the result. When goals score within 2.5 points, both having a phrase of their own, the goal that is not an add-on or subject leads, and the other lends its first distinctive job as a part. A goal that only shares a word never decides. This reads English connectors only.
+
+### The "no plan yet" card
+
+Forty-five goals as buttons is too long. The card shows eight common goals (an editorial pick in `common-goals.ts`, not usage data), a search box that filters all goals by title, example and keywords, and a "See all goals" toggle that expands the goals grouped by category (each goal has a `group`). "Build from the parts I described" stays on the understanding card, because a sentence that names parts never reaches the "no plan yet" card: it gets a plan built from parts.
+
 ### Parts are part of the plan request
 
 `addedJobs` and `removedJobs` join the plan request, so saved plans, share links, the address fragment and the news matching all carry them. Both default to empty, so older plans and links still open. Empty lists are left out of share links.

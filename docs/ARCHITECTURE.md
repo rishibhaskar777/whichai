@@ -52,7 +52,7 @@ src/
     goal-form/         search input (full and compact), suggestions
     understanding-card/ editable chips, "Did you mean", add a part, confirm and edit
     part-picker/       searchable list of every job, grouped by category
-    no-match-card/     honest "no plan yet" state
+    no-match-card/     honest "no plan yet" state: eight common goals, a search over all goals and an expandable list grouped by category
     plan-view/         level switch, toolkit, job cards, model guidance,
                        workflow, accuracy card
     copy-button/       clipboard copy with visible success and failure states
@@ -167,10 +167,11 @@ Loading: the interpreter (`lib/plan/interpret-goal.ts`), the catalogue it reads 
 - **Features**: each goal lists feature words. A feature chip appears only when the feature is mentioned, and it adds that feature's jobs to the plan.
 - **Parts**: every job lists 20 to 40 trigger words and phrases. Jobs the sentence names that the goal does not provide become part chips (up to six). Longer phrases claim their words first, words the goal or a feature already used are not read again, and skill words (React, Git) are left to the level. Once a goal has matched, a single loose word ("visitors", "design") is not enough to add a part (`loose-words.ts`).
 - **No fitting goal**: the parts alone make a `custom-plan`, in the order idea, design, build, data, payments, launch, grow (the job's `stage`). A goal that only shares a word gives way to parts the text really names.
+- **Close goals**: when two goals score within 2.5 points and both have a phrase of their own, the one that is the main thing being made leads. Words after "for", "with" or "and" (up to two words) name a subject or an add-on, and words after "into" name the result (`tokenCues` in `text-match.ts`). The goal that is not the main thing lends its own first job as a part when it has a phrase of its own. A result word promotes a goal only within one point of the best. Without cue words, a toss-up goes to the goal named first.
 - **Confidence**: high when a goal scores at least one and leads the next by half a point; otherwise low, and the top three goals are offered. A request that asks outright which AI to use (`pick-an-ai`) is always taken as it is.
 - **Skills**: one pattern and a level per skill (React, Next.js, API, Git, deploying). The inferred level is the highest level among the skill chips present, and `simple` when there are none.
 
-Goal understanding never calls an AI service ([0006](decisions/0006-zero-cost.md)). No match is returned only when nothing is recognised. `goal-corpus.ts` holds over 300 sentences with the goal or parts each should lead to, and `npm run goals:report` prints the match rate and every miss ([0016](decisions/0016-more-goals-and-parts.md)).
+Goal understanding never calls an AI service ([0006](decisions/0006-zero-cost.md)). No match is returned only when nothing is recognised. `goal-corpus.ts` holds over 300 sentences with the goal or parts each should lead to, `src/data/goals/test-sets/user-written.json` holds sentences written by a real user and is reported on its own, and `npm run goals:report` prints the match rate and every miss for each set ([0016](decisions/0016-more-goals-and-parts.md)).
 
 Goals that were not understood (no match, parts only, or low confidence) are kept in a small list on the device when search history is on. Settings lists them, and "Open a GitHub issue" opens a prefilled issue only when the person chooses to. The list is not part of a backup and is cleared with everything else.
 
