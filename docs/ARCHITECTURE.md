@@ -45,7 +45,8 @@ src/
   components/          UI components, one folder per component
     app-shell/         three-region layout, drawer, panel state
     sidebar/           navigation and one footer row: sign in, or the account menu
-    sign-in/           glass sign-in popup (native dialog), shared panel, provider marks
+    account/           provider for preview accounts and the guest profile (useAccount)
+    sign-in/           glass popup (native dialog): Log in and Register views, fields, Google button
     news-panel/        AI news panel in the shell
     news/              news entry, What Changed page, tag label, plan-tool provider and badge
     home-flow/         home page state: empty, understanding, no match, plan
@@ -64,7 +65,9 @@ src/
     theme-control/, wordmark/, icons/
   lib/
     env.ts             validated environment variables (sign-in variables are optional)
-    auth/              sessions, OAuth flow, CSRF, redirect allowlist, rate limiter
+    auth/              sessions, OAuth flow, CSRF, redirect allowlist, rate limiter;
+                       local-preview.ts, password-hash.ts, preview-schemas.ts and
+                       common-passwords.ts for browser-only preview accounts
     theme.ts           theme cookie name and parsing
     preferences.ts     writes the theme and language cookies, motion attribute
     i18n/              typed English and Hindi dictionaries, translator, provider
@@ -282,6 +285,26 @@ Sign in button --> /api/auth/sign-in/{provider}   state (+ PKCE for Google) in a
 - `get-session.ts` exports `getSession()` for server components and route handlers, and `getViewer()` for the layout. The layout passes the viewer and the available providers to `AppShell`, which shows the popup or the account menu.
 - `config.ts` returns `null` when sign-in is not set up, and every caller then shows the "coming soon" message.
 
+### Preview accounts and guests
+
+The popup has a Log in and a Register view ([0019](decisions/0019-preview-accounts.md)). Email accounts are preview accounts that exist only in the browser:
+
+```
+SignInPanel (views, Google, focus, height animation)
+   LoginForm / RegisterForm   Zod on submit, error summary, aria-describedby
+        |
+   useAccount()  <-- AccountProvider (components/account)
+        |
+   AccountService (lib/auth/local-preview.ts)   register, login, logout, currentUser, guest
+        |
+   KvBackend (IndexedDB, then localStorage, then memory)
+```
+
+- Passwords are hashed with PBKDF2-SHA-256 (600,000 iterations, 16-byte random salt) in `password-hash.ts` and compared in constant time. The plain password is never stored or logged.
+- `preview-schemas.ts` holds the Zod schemas for the forms and for what is stored. Issue messages are interface message keys, so the forms show them in the visitor's language.
+- A Google session (`Viewer`, from the server) wins over a preview account, which wins over a guest. The sidebar and Settings read this through `useAccount()` and the `viewer` prop.
+- The service is the only thing a hosted backend has to replace. The steps are in the decision record.
+
 ## Local data
 
 Saved plans, search history and settings live in the browser ([0009](decisions/0009-local-first-data.md)). `src/lib/storage/`:
@@ -291,6 +314,7 @@ Saved plans, search history and settings live in the browser ([0009](decisions/0
 - `schemas.ts`: Zod schemas for `SavedPlan`, `HistoryEntry`, `Settings` and the backup file. Items are validated one by one on read and invalid ones are dropped. Each setting falls back to its default on its own.
 - `store.ts`: loads and saves the three collections, never throws, reports `full` or `unavailable`, and refuses writes past a total size limit.
 - `operations.ts`: pure functions for add, rename, duplicate, remove, restore, history grouping, backup parsing and merge or replace.
+- Preview accounts, the session, the guest profile and the login pause use the same backend under their own keys (`preview-*`). They are not part of a backup and "Clear all data" leaves them; Settings has "Delete local account and data" for those.
 - `catalogue-version.ts`: a hash of the catalogue data. A saved plan stores the version it was saved with; a different version shows the "Updated tools" badge.
 
 A saved plan holds the plan request (`src/lib/schemas/plan-request.ts`), not the plan, so `buildPlan` always uses current data. Limits: 100 plans, 200 history entries, 1.5 million characters in total, 1 MB for an imported file.

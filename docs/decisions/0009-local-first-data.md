@@ -17,6 +17,7 @@ Everything a person saves stays on their device.
 - **Catalogue version:** a hash of the catalogue data. A plan saved under another version shows "Updated tools" until it is saved again.
 - **Leaving:** Export writes one JSON file; Import validates it as untrusted input and offers Merge or Replace; Clear all data needs `CLEAR` typed.
 - **Cookies:** only theme and language, one word each, so the server can render them without a flash.
+- **Preview accounts and the guest profile** ([0019](0019-preview-accounts.md)) use the same backend under separate keys. They are not exported, imported or cleared with the three collections above.
 - **Share links** carry the plan request in the URL fragment, which browsers never send to a server.
 
 ## Consequences

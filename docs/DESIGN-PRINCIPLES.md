@@ -50,7 +50,17 @@ The glow layer is fixed behind the page and is an aurora: soft bands and blobs i
 - The theme toggle switches light and dark in one click and its icon shows the mode you will switch to. The icons rotate and fade over 250ms using `transform` and `opacity`; reduced motion keeps a crossfade. The System choice lives in Settings.
 - The account menu holds Settings, Upgrade plan, Help, Language and, after a divider, Sign out. The More menu holds Settings, Help, Plans & pricing and Language. Both are real menus: arrow keys, Home and End move, Escape closes and returns focus.
 - On the rail the avatar (or sign-in icon), the toggle and More stack and centre. Menus and tooltips are positioned against the viewport because the sidebar clips its contents.
+- A guest sees "Guest" and the Free plan badge in the same account button, and the menu ends with "Sign in". A logged-in preview account shows the first name and two initials, and the menu ends with "Sign out", which clears the session and keeps the account.
 - Legal links are not in the sidebar. They are in Settings under "About & legal" and at the bottom of `/pricing` and `/checkout`, where payment pages need them.
+
+## Sign-in popup
+
+- Two views in one dialog, Log in and Register, switched with a short fade and a height animation (none under reduced motion). Focus moves to the new title. The popup has no scrollbar at 1366x768 or 360x740; on shorter screens it still scrolls by touch with the bar hidden and a fade at the bottom edge.
+- The wordmark is dropped inside the popup because the title already names the product. Titles are 22px.
+- Fields are 40px tall (44px on touch), with a visible label above, a hint or error below, and a 1px border dark enough to meet 3:1 as a control boundary. Names sit side by side and stack below 420px.
+- The one primary action uses the accent fill with `--on-accent` text. This is the only filled-accent button; elsewhere primary buttons stay filled with the text colour.
+- Errors are shown under the field and as a short summary of field names that takes focus. A message about the whole form (a wrong password) replaces the list.
+- The line "Preview: accounts are saved only in this browser until online accounts launch." stays visible in both views, in the on-glass text colour.
 
 ## Motion
 

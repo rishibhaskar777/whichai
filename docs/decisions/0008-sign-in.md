@@ -1,6 +1,6 @@
 # 0008: Sign-in with Google and GitHub
 
-Status: accepted
+Status: accepted. The popup it describes was replaced by a Log in and Register design in [0019](0019-preview-accounts.md); the OAuth flow and cookie below are unchanged.
 
 ## Context
 

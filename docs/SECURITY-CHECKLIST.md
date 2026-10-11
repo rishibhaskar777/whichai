@@ -36,6 +36,9 @@ Apply to every release and re-check when a phase adds a new input, route or depe
 - [ ] Local data limits are enforced (100 plans, 200 history entries, total size) and a clear message is shown when full
 - [ ] "Clear all data" needs the word CLEAR typed and also removes the theme and language cookies
 - [ ] Only theme and language are stored in cookies, as one word each, with `SameSite=Lax` and no personal data
+- [ ] Preview accounts: passwords are hashed with PBKDF2-SHA-256 (600,000 iterations, random 16-byte salt) and compared in constant time; the plain password is never stored, logged or sent; the forms make no network request; a wrong email or password gives one message; five failures pause logging in for 30 seconds
+- [ ] Preview accounts: every stored record is validated with Zod on read, names and email are rendered as text only, and "Delete local account and data" needs `DELETE` typed
+- [ ] The guest profile holds only a random id and a date
 
 ## Contact data
 
