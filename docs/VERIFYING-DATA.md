@@ -88,3 +88,25 @@ Do this for each `getIt` link you add or review:
 The checker reports broken addresses, redirects that leave the official domains, store pages whose title does not name the tool, and moves. A weekly workflow runs it and keeps one issue titled "Broken catalogue links" up to date.
 
 Products are renamed and domains move. When a tool's own site shows a new name, change `name` and `summary`, keep the `id` so saved plans keep working, and mention it in the commit.
+
+## Check model names, tips and add-ons
+
+The "Get more from <tool>" section on an AI tool's card shows only what a record carries. None of it sets `verified`.
+
+**Model names.** Record names only when an official page for the product clearly names its current models.
+
+1. Open the product's own pricing, plans or help page, on one of the tool's `officialDomains`. API reference pages describe the developer API, not the chat product, so a name there is not enough.
+2. Copy each name exactly as the page writes it. Do not add a version the page does not give.
+3. Put each name in `models` with the capability class it belongs to (`fast-and-cheap`, `balanced-everyday`, `deep-reasoning`, `long-documents`, `coding`, `image`). Use the page's own description of the model to choose the class. If the page does not say what a model is for, leave the name out.
+4. Set `modelsUrl` to that page and `modelsCheckedOn` to the day you read it. The schema rejects names without both, and the card says "As of <date>" with a link.
+5. If the page is unclear, or blocks you, record nothing. The card then shows capability-class advice without names.
+
+Names go out of date quickly. Re-read the page when you touch the record, and always before a release.
+
+**Tips.** `tips` are short settings or habits that the tool's own documentation describes (projects, custom instructions, rules files). Add `sourceUrl` for the page, on the tool's `officialDomains`, and set `tipsCheckedOn`. A tip with no source must be general advice that you are certain is true for the product.
+
+**Free-plan tips.** `freePlanTips` are general habits that make limits last. Write no numbers and no promises about what a plan includes; point to the pricing page for limits.
+
+**Add-ons.** `enhancedBy` lists catalogue tools that extend this one, each with the goal categories it helps (`websites-and-apps`, `games`, `writing`, `study`, `research-and-reading`, `media`, `business`, `data`). The id must exist in the catalogue.
+
+**Strength notes.** `strengthTags` and `strengthNotes` are editorial. Write each note as a lowercase phrase that follows the tool's name ("keeps long documents in one conversation"), about something that stays true across plans and versions. `categoryNotes` for the general assistants are marked `source: "editorial"` and are never test results.

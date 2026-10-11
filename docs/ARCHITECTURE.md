@@ -53,8 +53,8 @@ src/
     understanding-card/ editable chips, "Did you mean", add a part, confirm and edit
     part-picker/       searchable list of every job, grouped by category
     no-match-card/     honest "no plan yet" state: eight common goals, a search over all goals and an expandable list grouped by category
-    plan-view/         level switch, toolkit, job cards, model guidance,
-                       workflow, accuracy card
+    plan-view/         level switch, toolkit, job cards, Get more disclosure,
+                       model guidance, workflow, accuracy card
     copy-button/       clipboard copy with visible success and failure states
     local-data/        provider over the storage layer, plan actions, storage notice
     projects/, searches/, settings/, plan-route/   the pages' interface
@@ -120,7 +120,7 @@ JSON files in `src/data/catalogue/`, described by `src/lib/schemas/catalogue.ts`
 | `jobs.json`             | The roles a tool can play (AI assistant, hosting, flashcards ...) with a category, a stage of a project (idea, design, build, data, payments, launch, grow) and 20 to 40 trigger words and phrases for matching parts                                                                                                                              |
 | `tools/<category>.json` | Each tool: provider, jobs, plain summary, kind (`ai-tool`, `library`, `service`, `app`, `template-source`, `model`, `extension`, `cli`), skill level, free-option flag, strengths, cautions, per-job fit score, compatible tools, official link and domains, optional `getIt` links, status. A tool lives in the file for its first job's category |
 | `model-classes.json`    | Capability classes with plain "use it for" and effort advice. No model names                                                                                                                                                                                                                                                                       |
-| `goals.json`            | Goal templates: keywords, synonyms, features and, for each of the three levels, the jobs, workflow, mistakes, upgrade advice and model guidance                                                                                                                                                                                                    |
+| `goals.json`            | Goal templates: keywords, synonyms, features and, for each of the three levels, who it suits (goodFor), the jobs, a slot per job (task, tags, starter prompt), workflow, mistakes, upgrade advice and model guidance                                                                                                                               |
 
 `src/data/catalogue/index.ts` parses the files with the schemas and runs `findProblems` from `src/lib/catalogue/validate.ts` when the module loads on the server. A test runs the same checks, so a bad reference, a duplicate id, a non-https link, a link off a tool's official domains or a stray price fails both the tests and the build.
 
@@ -174,6 +174,12 @@ Loading: the interpreter (`lib/plan/interpret-goal.ts`), the catalogue it reads 
 Goal understanding never calls an AI service ([0006](decisions/0006-zero-cost.md)). No match is returned only when nothing is recognised. `goal-corpus.ts` holds over 300 sentences with the goal or parts each should lead to, `src/data/goals/test-sets/user-written.json` holds sentences written by a real user and is reported on its own, and `npm run goals:report` prints the match rate and every miss for each set ([0016](decisions/0016-more-goals-and-parts.md)).
 
 Goals that were not understood (no match, parts only, or low confidence) are kept in a small list on the device when search history is on. Settings lists them, and "Open a GitHub issue" opens a prefilled issue only when the person chooses to. The list is not part of a backup and is cleared with everything else.
+
+### Goal-specific text and Get more
+
+Card text is data ([0017](decisions/0017-goal-specific-recommendations.md)). slotFor in build-plan.ts picks the goal level slot for a job, or the job defaultSlot. whyText in describe.ts joins the goal category note and the tool strength notes whose tags the slot lists. The card shows Use <tool> to <task>, two lines of explanation and a small About <tool> line.
+
+get-more.ts builds JobRecommendation.getMore for AI tools: model names (only with modelsUrl and modelsCheckedOn), capability-class advice, tips, add-ons from enhancedBy for the goal category and free-plan tips. It returns null when the tool has recorded none of these, and the card then shows no section. GetMore.tsx renders it as a collapsed disclosure that also holds the starter prompt with a copy button.
 
 ### The rules engine
 
