@@ -319,7 +319,7 @@ export const en = {
     "Because the account lives in this browser, it does not follow you to another browser or device, and clearing this site's data removes it. After five wrong passwords, logging in pauses for 30 seconds; that check also happens only in your browser. Online accounts are planned, and preview accounts may not carry over to them.",
   "privacy.guest.title": "Guest profile",
   "privacy.guest.text":
-    "If you choose Continue without signing in, this browser saves a random identifier and the date, so the sidebar can say Guest. It holds no name, email address or other personal detail.",
+    "If you choose Continue without signing in, this browser saves a random identifier and the date, so the sidebar can say Guest. It holds no name, email address or other personal detail. The browser also keeps a count of the plans made today under that profile, to apply the daily limit; the count starts again each day and is never sent to us.",
   "privacy.cookies.title": "Cookies",
   "privacy.cookies.text1":
     "We use only the cookies the site needs, and no analytics or advertising cookies.",

@@ -66,6 +66,10 @@ First and last name are 1 to 50 characters: any letter in any script, combining 
 
 Settings, Account, "Delete local account and data" (the word `DELETE` must be typed) removes the four keys and also clears plans, history and settings.
 
+### Later changes
+
+The popup layout was reworked and plan limits were added in [0020](0020-entitlements.md). The footer line is now "Accounts are saved only in this browser for now." with a "Preview" badge, and a guest's plan count moves to their account when they log in.
+
 ## Replacing it with a real backend
 
 1. Write a class that implements `AccountService` against the new backend, for example `createHostedService(fetch)`. `register` and `login` keep their result types, and `retryAfterSeconds` comes from the server's own rate limiting.

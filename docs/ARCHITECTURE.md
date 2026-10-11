@@ -265,6 +265,14 @@ data/pricing/plans.json --pricingSchema--> PLANS (parsed when the module loads)
 - `/checkout` has no form and makes no request. The Pay button and "Manage subscription" open the same dialog.
 - `getCurrentPlan()` is the only place that decides the plan. A later phase reads a stored subscription there.
 
+## Entitlements
+
+What a guest, a free account and a paid plan may do lives in `src/lib/plans/entitlements.ts` ([0020](decisions/0020-entitlements.md)). `src/lib/plans/usage.ts` keeps today's plan count per profile in the key-value backend. `EntitlementsProvider` (`src/components/entitlements/`) works out the tier from the account and exposes `useEntitlements()`; `HomeFlow` calls `consumePlan()` when a plan is made from a new goal. `LockedControl` is the lock shown on a feature the tier does not have, and `LimitCard` replaces the plan at the daily limit.
+
+These limits are enforced in the browser only, until server accounts exist. They can be bypassed by clearing site data, so they are a product boundary and not a security control.
+
+In development, `DeveloperTools` (Settings) and `DevAccountSeed` (AppShell) are loaded behind `process.env.NODE_ENV === "development"` and are not in production builds. `src/lib/production-bundle.test.ts` checks the build output for them.
+
 ## Sign-in
 
 Optional and stateless ([0008](decisions/0008-sign-in.md)). `src/lib/auth/` holds the logic and the routes under `src/app/api/auth/` are thin:
