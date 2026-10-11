@@ -144,6 +144,8 @@ export function RegisterForm({
         label={t("auth.field.email")}
         type="email"
         autoComplete="email"
+        placeholder={t("auth.placeholder.email")}
+        autoFocus
         value={email}
         onChange={(value) => {
           setEmail(value);
@@ -156,6 +158,7 @@ export function RegisterForm({
         inputId={ids.password}
         label={t("auth.field.password")}
         autoComplete="new-password"
+        placeholder={t("auth.placeholder.newPassword")}
         value={password}
         onChange={(value) => {
           setPassword(value);
@@ -250,8 +253,6 @@ export function RegisterForm({
           {t("signin.register.loginLink")}
         </button>
       </p>
-
-      <p className={styles.preview}>{t("signin.preview")}</p>
     </form>
   );
 }

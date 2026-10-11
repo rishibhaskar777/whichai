@@ -1,6 +1,12 @@
 "use client";
 
-import { useId, useState, type ReactNode, type Ref } from "react";
+import {
+  useId,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+  type Ref,
+} from "react";
 import { useI18n } from "@/lib/i18n/provider";
 import { isMessageKey } from "@/lib/i18n/keys";
 import styles from "./SignIn.module.css";
@@ -26,6 +32,8 @@ interface TextFieldProps {
   disabled?: boolean;
   /** Passes the generated ids up so the error summary can link to the field. */
   inputId?: string;
+  placeholder?: string;
+  autoFocus?: boolean;
 }
 
 export function TextField({
@@ -39,6 +47,8 @@ export function TextField({
   inputRef,
   disabled,
   inputId,
+  placeholder,
+  autoFocus,
 }: TextFieldProps) {
   const generated = useId();
   const id = inputId ?? generated;
@@ -60,6 +70,8 @@ export function TextField({
         autoComplete={autoComplete}
         autoCapitalize={type === "email" ? "none" : undefined}
         spellCheck={false}
+        placeholder={placeholder}
+        autoFocus={autoFocus}
         value={value}
         disabled={disabled}
         aria-invalid={error ? true : undefined}
@@ -82,6 +94,8 @@ export function TextField({
 
 interface PasswordFieldProps extends Omit<TextFieldProps, "type"> {
   autoComplete: "current-password" | "new-password";
+  /** Sits at the right end of the label row, such as "Forgot password?". */
+  labelAction?: ReactNode;
 }
 
 /** A password input with a show and hide button that has its own label. */
@@ -95,21 +109,39 @@ export function PasswordField({
   inputRef,
   disabled,
   inputId,
+  placeholder,
+  labelAction,
 }: PasswordFieldProps) {
   const { t } = useI18n();
   const generated = useId();
   const id = inputId ?? generated;
   const errorId = `${id}-error`;
   const hintId = `${id}-hint`;
+  const capsId = `${id}-caps`;
   const [shown, setShown] = useState(false);
+  const [capsOn, setCapsOn] = useState(false);
+  // The Caps Lock notice takes the hint line, so the field never grows.
+  const showHint = Boolean(hint) && !capsOn;
   const describedBy =
-    [hint ? hintId : null, error ? errorId : null].filter(Boolean).join(" ") ||
-    undefined;
+    [capsOn ? capsId : null, showHint ? hintId : null, error ? errorId : null]
+      .filter(Boolean)
+      .join(" ") || undefined;
+
+  // A key event reports whether Caps Lock is on at the moment of the press.
+  const readCaps = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (typeof event.getModifierState === "function") {
+      setCapsOn(event.getModifierState("CapsLock"));
+    }
+  };
+
   return (
     <div className={styles.field}>
-      <label htmlFor={id} className={styles.label}>
-        {label}
-      </label>
+      <div className={styles.labelRow}>
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
+        {labelAction}
+      </div>
       <div className={styles.passwordWrap}>
         <input
           ref={inputRef}
@@ -119,11 +151,15 @@ export function PasswordField({
           autoComplete={autoComplete}
           autoCapitalize="none"
           spellCheck={false}
+          placeholder={placeholder}
           value={value}
           disabled={disabled}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
           onChange={(event) => onChange(event.target.value)}
+          onKeyDown={readCaps}
+          onKeyUp={readCaps}
+          onBlur={() => setCapsOn(false)}
         />
         <button
           type="button"
@@ -137,7 +173,10 @@ export function PasswordField({
           <EyeIcon off={shown} />
         </button>
       </div>
-      {hint ? (
+      <p id={capsId} role="status" className={styles.capsHint}>
+        {capsOn ? t("auth.capsLock") : ""}
+      </p>
+      {showHint ? (
         <p id={hintId} className={styles.hint}>
           {hint}
         </p>

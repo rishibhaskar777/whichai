@@ -9,10 +9,12 @@ import {
   useState,
 } from "react";
 import { useAccount } from "@/components/account/AccountProvider";
+import { InfoIcon } from "@/components/icons";
 import { Wordmark } from "@/components/wordmark/Wordmark";
 import type { AuthErrorCode } from "@/lib/auth/errors";
 import type { ProviderAvailability } from "@/lib/auth/config";
 import { useI18n } from "@/lib/i18n/provider";
+import { entitlementsFor, GUEST_TIER } from "@/lib/plans/entitlements";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { GoogleButton } from "./GoogleButton";
 import { LoginForm } from "./LoginForm";
@@ -55,7 +57,7 @@ export function SignInPanel({
   viewRequest,
   onDone,
 }: SignInPanelProps) {
-  const { t } = useI18n();
+  const { t, formatNumber } = useI18n();
   const router = useRouter();
   const { continueAsGuest } = useAccount();
   const reducedMotion = useReducedMotion();
@@ -185,15 +187,17 @@ export function SignInPanel({
           className={styles.view}
           data-fade={switched ? "true" : undefined}
         >
-          <div className={styles.brand}>
-            <Wordmark />
+          <div className={styles.header}>
+            <span className={styles.logo} aria-hidden="true">
+              <Wordmark showName={false} />
+            </span>
+            <Heading id={titleId} ref={titleRef} className={styles.title}>
+              {login ? t("signin.login.title") : t("signin.register.title")}
+            </Heading>
+            <p className={styles.lede}>
+              {login ? t("signin.login.lede") : t("signin.register.lede")}
+            </p>
           </div>
-          <Heading id={titleId} ref={titleRef} className={styles.title}>
-            {login ? t("signin.login.title") : t("signin.register.title")}
-          </Heading>
-          {login ? (
-            <p className={styles.lede}>{t("signin.login.lede")}</p>
-          ) : null}
 
           {login && created ? (
             <p role="status" className={styles.success}>
@@ -230,7 +234,9 @@ export function SignInPanel({
           </div>
 
           <div className={styles.divider}>
-            <span>{t("signin.or")}</span>
+            <span className={styles.rule} aria-hidden="true" />
+            <span className={styles.dividerText}>{t("signin.or")}</span>
+            <span className={styles.rule} aria-hidden="true" />
           </div>
 
           {login ? (
@@ -242,7 +248,6 @@ export function SignInPanel({
                 setCreated(false);
                 switchTo("register");
               }}
-              onGuest={() => void startGuest()}
             />
           ) : (
             <RegisterForm
@@ -255,6 +260,35 @@ export function SignInPanel({
               onLogin={() => switchTo("login")}
             />
           )}
+
+          <div className={styles.footer}>
+            <p className={styles.preview}>
+              <span className={styles.badge}>
+                <InfoIcon width="14" height="14" />
+                {t("signin.preview.badge")}
+              </span>
+              <span>{t("signin.preview")}</span>
+            </p>
+            {login ? (
+              <div className={styles.guest}>
+                <button
+                  type="button"
+                  className={styles.dismiss}
+                  disabled={googleLoading || guestPending}
+                  onClick={() => void startGuest()}
+                >
+                  {t("signin.dismiss")}
+                </button>
+                <p className={styles.guestLimit}>
+                  {t("signin.guestLimit", {
+                    count: formatNumber(
+                      entitlementsFor(GUEST_TIER).dailyPlans ?? 0,
+                    ),
+                  })}
+                </p>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

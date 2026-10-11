@@ -1,4 +1,10 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
@@ -132,9 +138,7 @@ describe("login view", () => {
       view.getByRole("button", { name: "Continue without signing in" }),
     ).toBeInTheDocument();
     expect(
-      view.getByText(
-        "Preview: accounts are saved only in this browser until online accounts launch.",
-      ),
+      view.getByText("Accounts are saved only in this browser for now."),
     ).toBeInTheDocument();
   });
 
@@ -307,9 +311,7 @@ describe("register view", () => {
     );
     expect(view.getByText(/Already on WhichAI\?/)).toBeInTheDocument();
     expect(
-      view.getByText(
-        "Preview: accounts are saved only in this browser until online accounts launch.",
-      ),
+      view.getByText("Accounts are saved only in this browser for now."),
     ).toBeInTheDocument();
   });
 
@@ -403,6 +405,175 @@ describe("register view", () => {
     expect(
       await host().findByText("Account created. Log in to continue."),
     ).toBeInTheDocument();
+  });
+});
+
+describe("dialog polish", () => {
+  it.each([
+    ["login", "Log in to WhichAI", "Welcome back. Pick up where you left off."],
+    [
+      "register",
+      "Create your WhichAI account",
+      "Free forever. No card needed.",
+    ],
+  ])(
+    "centres a header of logo mark, title and subtitle in the %s view",
+    async (view, title, subtitle) => {
+      const user = userEvent.setup();
+      renderPanel();
+      if (view === "register") {
+        await user.click(host().getByRole("button", { name: "Register" }));
+      }
+
+      const heading = host().getByRole("heading", { name: title });
+      const header = heading.parentElement as HTMLElement;
+      expect(header.className).toMatch(/header/);
+      const parts = Array.from(header.children);
+      expect(parts).toHaveLength(3);
+      expect(parts[0]?.querySelector("svg")).not.toBeNull();
+      expect(parts[0]).toHaveAttribute("aria-hidden", "true");
+      expect(parts[1]).toBe(heading);
+      expect(parts[2]).toHaveTextContent(subtitle);
+    },
+  );
+
+  it.each(["login", "register"])(
+    'draws a line on both sides of a centred "or" in the %s view',
+    async (view) => {
+      const user = userEvent.setup();
+      renderPanel();
+      if (view === "register") {
+        await user.click(host().getByRole("button", { name: "Register" }));
+      }
+
+      const divider = host().getByText("or").parentElement as HTMLElement;
+      const parts = Array.from(divider.children);
+      expect(parts).toHaveLength(3);
+      expect(parts[0]?.className).toMatch(/rule/);
+      expect(parts[1]).toHaveTextContent("or");
+      expect(parts[2]?.className).toMatch(/rule/);
+    },
+  );
+
+  it("shows the placeholders and focuses the email field", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    expect(host().getByLabelText("Email")).toHaveAttribute(
+      "placeholder",
+      "you@example.com",
+    );
+    expect(host().getByLabelText("Password")).toHaveAttribute(
+      "placeholder",
+      "Your password",
+    );
+    expect(host().getByLabelText("Email")).toHaveFocus();
+
+    await user.click(host().getByRole("button", { name: "Register" }));
+    expect(host().getByLabelText("Password")).toHaveAttribute(
+      "placeholder",
+      "At least 8 characters",
+    );
+  });
+
+  it("focuses the email field when the popup opens", async () => {
+    const user = userEvent.setup();
+    renderShell();
+    const view = await openDialog(user);
+
+    expect(view.getByLabelText("Email")).toHaveFocus();
+  });
+
+  it("warns that Caps Lock is on, and stops when it is off or the field is left", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    const password = host().getByLabelText("Password");
+    await user.click(password);
+    expect(host().queryByText("Caps Lock is on")).toBeNull();
+
+    fireEvent.keyDown(password, { key: "a", modifierCapsLock: true });
+    expect(host().getByText("Caps Lock is on")).toBeInTheDocument();
+
+    fireEvent.keyUp(password, { key: "a", modifierCapsLock: false });
+    expect(host().queryByText("Caps Lock is on")).toBeNull();
+
+    fireEvent.keyDown(password, { key: "a", modifierCapsLock: true });
+    fireEvent.blur(password);
+    expect(host().queryByText("Caps Lock is on")).toBeNull();
+  });
+
+  it("shows the Caps Lock hint on the register password too", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    await user.click(host().getByRole("button", { name: "Register" }));
+
+    fireEvent.keyDown(host().getByLabelText("Password"), {
+      key: "a",
+      modifierCapsLock: true,
+    });
+
+    expect(host().getByText("Caps Lock is on")).toBeInTheDocument();
+  });
+
+  it("shows a spinner and Logging in… while the login is busy", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    await user.type(host().getByLabelText("Email"), "nobody@example.org");
+    await user.type(host().getByLabelText("Password"), PASSWORD);
+
+    await user.click(host().getByRole("button", { name: "Log in" }));
+
+    const busy = host().getByRole("button", { name: "Logging in…" });
+    expect(busy).toBeDisabled();
+    expect(busy).toHaveAttribute("data-loading", "true");
+    await waitFor(() =>
+      expect(host().getByRole("button", { name: "Log in" })).toBeEnabled(),
+    );
+  }, 20_000);
+
+  it("shows Creating account… while registering", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    await user.click(host().getByRole("button", { name: "Register" }));
+    await register(user, host(), { email: "busy@example.org" });
+
+    expect(
+      host().getByRole("button", { name: "Creating account…" }),
+    ).toBeDisabled();
+    await host().findByText("Account created. Log in to continue.");
+  }, 20_000);
+
+  it("ends the login view with the Preview badge, Continue without signing in and its limit", () => {
+    renderPanel();
+
+    expect(host().getByText("Preview")).toBeInTheDocument();
+    const guest = host().getByRole("button", {
+      name: "Continue without signing in",
+    });
+    expect(guest.nextElementSibling).toHaveTextContent(
+      "Limited to 5 plans a day",
+    );
+    const all = Array.from(
+      screen.getByTestId("host").querySelectorAll("button"),
+    );
+    expect(all[all.length - 1]).toBe(guest);
+  });
+
+  it("keeps the same footer note but no guest link in the register view", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    await user.click(host().getByRole("button", { name: "Register" }));
+
+    expect(host().getByText("Preview")).toBeInTheDocument();
+    expect(
+      host().queryByRole("button", { name: "Continue without signing in" }),
+    ).toBeNull();
+  });
+
+  it("styles Forgot password? as a small link-like button", () => {
+    renderPanel();
+    expect(
+      host().getByRole("button", { name: "Forgot password?" }).className,
+    ).toMatch(/forgot/);
   });
 });
 

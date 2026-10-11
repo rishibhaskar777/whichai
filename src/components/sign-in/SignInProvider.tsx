@@ -66,6 +66,8 @@ export function SignInProvider({ providers, children }: SignInProviderProps) {
       openerRef.current = opener;
       setRequest((current) => ({ view, id: current.id + 1 }));
       dialog.showModal();
+      // The email field is where nearly everyone starts.
+      dialog.querySelector<HTMLInputElement>('input[type="email"]')?.focus();
     },
     [],
   );

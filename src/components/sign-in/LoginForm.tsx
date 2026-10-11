@@ -27,7 +27,6 @@ interface LoginFormProps {
   disabled: boolean;
   onSignedIn: () => void;
   onRegister: () => void;
-  onGuest: () => void;
 }
 
 export function LoginForm({
@@ -35,7 +34,6 @@ export function LoginForm({
   disabled,
   onSignedIn,
   onRegister,
-  onGuest,
 }: LoginFormProps) {
   const { t } = useI18n();
   const { login } = useAccount();
@@ -109,6 +107,8 @@ export function LoginForm({
         label={t("auth.field.email")}
         type="email"
         autoComplete="email"
+        placeholder={t("auth.placeholder.email")}
+        autoFocus
         value={email}
         onChange={(value) => {
           setEmail(value);
@@ -117,28 +117,29 @@ export function LoginForm({
         error={issueText(errors.email)}
       />
 
-      <div className={styles.passwordBlock}>
-        <PasswordField
-          inputId={ids.password}
-          label={t("auth.field.password")}
-          autoComplete="current-password"
-          value={password}
-          onChange={(value) => {
-            setPassword(value);
-            setErrors((current) => ({ ...current, password: undefined }));
-          }}
-          error={issueText(errors.password)}
-        />
-        <button
-          type="button"
-          className={styles.forgot}
-          aria-expanded={forgot}
-          aria-controls={`${ids.password}-forgot`}
-          onClick={() => setForgot((current) => !current)}
-        >
-          {t("signin.forgot")}
-        </button>
-      </div>
+      <PasswordField
+        inputId={ids.password}
+        label={t("auth.field.password")}
+        autoComplete="current-password"
+        placeholder={t("auth.placeholder.password")}
+        value={password}
+        onChange={(value) => {
+          setPassword(value);
+          setErrors((current) => ({ ...current, password: undefined }));
+        }}
+        error={issueText(errors.password)}
+        labelAction={
+          <button
+            type="button"
+            className={styles.forgot}
+            aria-expanded={forgot}
+            aria-controls={`${ids.password}-forgot`}
+            onClick={() => setForgot((current) => !current)}
+          >
+            {t("signin.forgot")}
+          </button>
+        }
+      />
       <div id={`${ids.password}-forgot`} role="status">
         {forgot ? (
           <p className={styles.notice}>{t("signin.forgot.note")}</p>
@@ -169,12 +170,6 @@ export function LoginForm({
           {t("signin.login.registerLink")}
         </button>
       </p>
-
-      <p className={styles.preview}>{t("signin.preview")}</p>
-
-      <button type="button" className={styles.dismiss} onClick={onGuest}>
-        {t("signin.dismiss")}
-      </button>
     </form>
   );
 }
