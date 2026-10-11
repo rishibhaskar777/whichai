@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GoalForm } from "@/components/goal-form/GoalForm";
 import { NoMatchCard } from "@/components/no-match-card/NoMatchCard";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
@@ -12,10 +12,12 @@ import {
   replaceHomeStep,
   type HomeStep,
 } from "@/lib/plan/home-history";
+import type { GoalSuggestion, Understanding } from "@/lib/plan/interpret-goal";
 import { loadInterpreter, type Interpreter } from "@/lib/plan/load-interpreter";
 import { readSessionGoal, writeSessionGoal } from "@/lib/plan/session-goal";
 import { useI18n } from "@/lib/i18n/provider";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
+import { CUSTOM_GOAL_ID } from "@/lib/schemas/catalogue";
 import type { Chip, UnderstoodGoal } from "@/lib/schemas/plan";
 import type { PlanRequest } from "@/lib/schemas/plan-request";
 import controls from "@/styles/controls.module.css";
@@ -27,9 +29,15 @@ const PlanView = dynamic(
   { loading: () => <p role="status">…</p> },
 );
 
+/** What is on offer when the sentence did not point to one goal. */
+interface Doubt {
+  suggestions: GoalSuggestion[];
+  partsGoal: UnderstoodGoal | null;
+}
+
 type Stage =
   | { kind: "empty" }
-  | { kind: "understanding"; goal: UnderstoodGoal }
+  | { kind: "understanding"; goal: UnderstoodGoal; doubt: Doubt | null }
   | { kind: "no-match" }
   | { kind: "editing" }
   | { kind: "plan"; request: PlanRequest; key: number };
@@ -42,6 +50,16 @@ function understandingRequest(goal: UnderstoodGoal): PlanRequest {
     budget: null,
     toolsUsed: [],
     chosenTools: {},
+    addedJobs: [],
+    removedJobs: [],
+  };
+}
+
+function doubtOf(understanding: Understanding | null): Doubt | null {
+  if (!understanding || understanding.confidence === "high") return null;
+  return {
+    suggestions: understanding.suggestions,
+    partsGoal: understanding.partsGoal,
   };
 }
 
@@ -53,7 +71,7 @@ const ANNOUNCEMENT_KEYS = {
 
 export function HomeFlow() {
   const { t, locale } = useI18n();
-  const { settings, recordGoal } = useLocalData();
+  const { settings, recordGoal, recordMiss } = useLocalData();
   const [stage, setStage] = useState<Stage>({ kind: "empty" });
   const [submittedGoal, setSubmittedGoal] = useState("");
   const [draft, setDraft] = useState("");
@@ -107,7 +125,11 @@ export function HomeFlow() {
       setStage(
         target.step === "no-match"
           ? { kind: "no-match" }
-          : { kind: "understanding", goal: target.request.goal },
+          : {
+              kind: "understanding",
+              goal: target.request.goal,
+              doubt: doubtOf(loaded.understandGoal(goalText)),
+            },
       );
     },
     [planStage],
@@ -130,7 +152,8 @@ export function HomeFlow() {
 
   async function showGoal(goalText: string) {
     const loaded = await loadInterpreter();
-    const goal = loaded.interpretGoal(goalText);
+    const understanding = loaded.understandGoal(goalText);
+    const goal = understanding?.goal ?? null;
     navigation.current.token += 1;
     writeSessionGoal(goalText);
     setInterpreter(loaded);
@@ -141,18 +164,37 @@ export function HomeFlow() {
         step: "understanding",
         request: understandingRequest(goal),
       });
-      setStage({ kind: "understanding", goal });
+      setStage({
+        kind: "understanding",
+        goal,
+        doubt: doubtOf(understanding),
+      });
     } else {
       pushHomeStep({ step: "no-match" });
       setStage({ kind: "no-match" });
     }
-    return goal;
+    return understanding;
   }
 
+  /** Remembers, on this device only, a goal that no template matched well. */
+  const noteMiss = useCallback(
+    (goalText: string, understanding: Understanding | null) => {
+      if (!understanding) return void recordMiss(goalText, "no-match");
+      if (understanding.goal.goalType === CUSTOM_GOAL_ID) {
+        return void recordMiss(goalText, "parts-only");
+      }
+      if (understanding.confidence === "low") {
+        void recordMiss(goalText, "unsure");
+      }
+    },
+    [recordMiss],
+  );
+
   function submitGoal(goalText: string) {
-    void showGoal(goalText).then((goal) =>
-      recordGoal(goalText, goal?.goalType ?? null),
-    );
+    void showGoal(goalText).then((understanding) => {
+      void recordGoal(goalText, understanding?.goal.goalType ?? null);
+      noteMiss(goalText, understanding);
+    });
   }
 
   // A goal re-run from the Searches page arrives through the signal, not the URL.
@@ -160,10 +202,11 @@ export function HomeFlow() {
     if (!pendingGoal || pendingGoal.token === handledGoalToken.current) return;
     handledGoalToken.current = pendingGoal.token;
     consumeGoal();
-    void showGoal(pendingGoal.text).then((goal) =>
-      recordGoal(pendingGoal.text, goal?.goalType ?? null),
-    );
-  }, [pendingGoal, consumeGoal, recordGoal]);
+    void showGoal(pendingGoal.text).then((understanding) => {
+      void recordGoal(pendingGoal.text, understanding?.goal.goalType ?? null);
+      noteMiss(pendingGoal.text, understanding);
+    });
+  }, [pendingGoal, consumeGoal, recordGoal, noteMiss]);
 
   function updateChips(update: (chips: readonly Chip[]) => Chip[]) {
     if (stage.kind !== "understanding") return;
@@ -172,7 +215,20 @@ export function HomeFlow() {
       step: "understanding",
       request: understandingRequest(goal),
     });
-    setStage({ kind: "understanding", goal });
+    setStage({ kind: "understanding", goal, doubt: stage.doubt });
+  }
+
+  function replaceGoal(goal: UnderstoodGoal | null) {
+    if (stage.kind !== "understanding" || !goal) return;
+    replaceHomeStep({
+      step: "understanding",
+      request: understandingRequest(goal),
+    });
+    setStage({ kind: "understanding", goal, doubt: stage.doubt });
+  }
+
+  function chooseGoal(goalType: GoalSuggestion["goalType"]) {
+    replaceGoal(interpreter?.understandAs(submittedGoal, goalType) ?? null);
   }
 
   function confirm() {
@@ -190,6 +246,8 @@ export function HomeFlow() {
       budget: settings.defaultBudget,
       toolsUsed: [],
       chosenTools: {},
+      addedJobs: [],
+      removedJobs: [],
     };
     pushHomeStep({ step: "plan", request });
     setStage(planStage(request));
@@ -205,6 +263,7 @@ export function HomeFlow() {
     setStage({ kind: "editing" });
   }
 
+  const parts = useMemo(() => interpreter?.listParts() ?? [], [interpreter]);
   const started = stage.kind !== "empty";
   const showsGoalEcho =
     started && stage.kind !== "editing" && submittedGoal !== "";
@@ -242,6 +301,14 @@ export function HomeFlow() {
           <UnderstandingCard
             chips={stage.goal.chips}
             options={interpreter.addableChips(stage.goal.goalType)}
+            parts={parts}
+            suggestions={stage.doubt?.suggestions ?? []}
+            onChooseGoal={chooseGoal}
+            onBuildFromParts={
+              stage.doubt?.partsGoal && stage.goal.goalType !== CUSTOM_GOAL_ID
+                ? () => replaceGoal(stage.doubt?.partsGoal ?? null)
+                : undefined
+            }
             onRemoveChip={(id) =>
               updateChips((chips) => chips.filter((chip) => chip.id !== id))
             }
@@ -263,6 +330,8 @@ export function HomeFlow() {
             initialBudget={stage.request.budget}
             initialToolsUsed={stage.request.toolsUsed}
             initialChosenTools={stage.request.chosenTools}
+            initialAddedJobs={stage.request.addedJobs}
+            initialRemovedJobs={stage.request.removedJobs}
             onRequestChange={keepPlanInAddress}
           />
         ) : null}

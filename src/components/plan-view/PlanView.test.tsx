@@ -680,12 +680,12 @@ describe("make this more accurate", () => {
   });
 });
 
-describe("pick-an-ai plans", () => {
+describe("plans built from parts", () => {
   it("builds cards from the tasks that were understood", () => {
-    renderPlan(understand("make a logo"), "simple");
+    renderPlan(understand("fix a bug and design a poster"), "simple");
 
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Your AI tool picks",
+      "Your custom plan",
     );
     const headings = screen
       .getAllByRole("heading", { level: 3 })

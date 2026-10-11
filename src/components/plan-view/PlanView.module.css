@@ -333,3 +333,16 @@
     animation: none;
   }
 }
+
+.addPart {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.addPartHelp {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}

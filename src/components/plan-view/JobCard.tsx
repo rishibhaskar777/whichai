@@ -25,9 +25,11 @@ interface JobCardProps {
   job: JobRecommendation;
   /** Swaps a tool into this card. The previous pick joins the alternatives. */
   onSwap: (jobId: string, toolId: string) => void;
+  /** Takes the part out of the plan. Left out when it is the only one. */
+  onRemove?: ((jobId: string, jobName: string) => void) | undefined;
 }
 
-export function JobCard({ job, onSwap }: JobCardProps) {
+export function JobCard({ job, onSwap, onRemove }: JobCardProps) {
   const i18n = useI18n();
   const { t, rich, formatDate } = i18n;
   const titleId = useId();
@@ -89,6 +91,17 @@ export function JobCard({ job, onSwap }: JobCardProps) {
             {t(`tag.${job.tag}`)}
           </span>
         </header>
+        {onRemove ? (
+          <button
+            type="button"
+            className={styles.removePart}
+            data-print-hide=""
+            aria-label={t("job.removePart", { job: job.jobName })}
+            onClick={() => onRemove(job.jobId, job.jobName)}
+          >
+            {t("job.removePartShort")}
+          </button>
+        ) : null}
 
         <p className={styles.why}>{job.why}</p>
 

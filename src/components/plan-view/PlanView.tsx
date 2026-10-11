@@ -14,9 +14,11 @@ import {
   BookmarkIcon,
   CheckIcon,
   DownloadIcon,
+  PlusIcon,
   ShareIcon,
 } from "@/components/icons";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
+import { PartPicker } from "@/components/part-picker/PartPicker";
 import { useToast } from "@/components/toast/ToastProvider";
 import { buildPlan } from "@/lib/engine/build-plan";
 import { useI18n } from "@/lib/i18n/provider";
@@ -26,7 +28,9 @@ import type {
   Level,
   UnderstoodGoal,
 } from "@/lib/schemas/plan";
-import type { PlanRequest } from "@/lib/schemas/plan-request";
+import { listParts, type PartOption } from "@/lib/plan/interpret-goal";
+import { requestKeyOf } from "@/lib/plan/request-key";
+import { MAX_PART_EDITS, type PlanRequest } from "@/lib/schemas/plan-request";
 import { takeReturnCard } from "@/lib/plan-return";
 import { buildShareUrl } from "@/lib/share/share-link";
 import { prefersReducedMotion } from "@/lib/use-reduced-motion";
@@ -54,6 +58,14 @@ export interface PlanViewProps {
   initialToolsUsed?: readonly string[];
   /** Tools picked by hand instead of the engine's choice, by job id. */
   initialChosenTools?: Readonly<Record<string, string>> | undefined;
+  /** Parts added from the full list, and parts taken out, by job id. */
+  initialAddedJobs?: readonly string[] | undefined;
+  initialRemovedJobs?: readonly string[] | undefined;
+  /**
+   * The request as it was saved, when the plan was opened with changes on top
+   * of it (an address fragment). Without it the opened plan counts as saved.
+   */
+  savedRequest?: PlanRequest | undefined;
   /** Set when the plan was opened from Projects. */
   savedPlanId?: string;
   /** Shown above the headline, for example "opened from a shared link". */
@@ -105,6 +117,9 @@ export function PlanView({
   initialBudget = null,
   initialToolsUsed,
   initialChosenTools,
+  initialAddedJobs,
+  initialRemovedJobs,
+  savedRequest,
   savedPlanId,
   notice,
   onRequestChange,
@@ -124,6 +139,18 @@ export function PlanView({
     Readonly<Record<string, string>>
   >(() => initialChosenTools ?? {});
   const [swapNotice, setSwapNotice] = useState("");
+  const [addedJobs, setAddedJobs] = useState<readonly string[]>(
+    () => initialAddedJobs ?? [],
+  );
+  const [removedJobs, setRemovedJobs] = useState<readonly string[]>(
+    () => initialRemovedJobs ?? [],
+  );
+  const [pickingPart, setPickingPart] = useState(false);
+  const [partNotice, setPartNotice] = useState("");
+  const [focusJob, setFocusJob] = useState<{
+    part: PartOption;
+    level: Level;
+  } | null>(null);
   const [savedId, setSavedId] = useState(savedPlanId ?? null);
 
   const request = useMemo<PlanRequest>(
@@ -133,12 +160,14 @@ export function PlanView({
       budget,
       toolsUsed: [...usedTools].sort(),
       chosenTools,
+      addedJobs: [...addedJobs].sort(),
+      removedJobs: [...removedJobs].sort(),
     }),
-    [goal, level, budget, usedTools, chosenTools],
+    [goal, level, budget, usedTools, chosenTools, addedJobs, removedJobs],
   );
-  const requestKey = JSON.stringify(request);
-  const [savedKey, setSavedKey] = useState<string | null>(
-    savedPlanId ? requestKey : null,
+  const requestKey = requestKeyOf(request);
+  const [savedKey, setSavedKey] = useState<string | null>(() =>
+    savedPlanId ? requestKeyOf(savedRequest ?? request) : null,
   );
 
   // Coming back from a tool page, return to the card the reader left.
@@ -165,8 +194,18 @@ export function PlanView({
         budget,
         toolsUsed: usedTools,
         chosenTools,
+        addedJobs,
+        removedJobs,
       }),
-    [goal, initialLevel, budget, usedTools, chosenTools],
+    [
+      goal,
+      initialLevel,
+      budget,
+      usedTools,
+      chosenTools,
+      addedJobs,
+      removedJobs,
+    ],
   );
   const choices = useMemo(
     () =>
@@ -175,11 +214,30 @@ export function PlanView({
           level: initialLevel,
           budget: null,
           toolsUsed: NO_TOOLS,
+          addedJobs,
+          removedJobs,
         }).levels[level].jobs,
       ),
-    [goal, initialLevel, level],
+    [goal, initialLevel, level, addedJobs, removedJobs],
   );
   const content = plan.levels[level];
+  const parts = useMemo(() => listParts(), []);
+  const jobIdsInPlan = useMemo(
+    () => new Set(content.jobs.map((job) => job.jobId)),
+    [content],
+  );
+
+  // After a part is added, bring its card into view.
+  useEffect(() => {
+    if (focusJob) showCard(focusJob.part.id);
+  }, [focusJob]);
+  // A part another tool already covers gets no card of its own.
+  const coveredPart =
+    focusJob !== null &&
+    focusJob.level === level &&
+    !jobIdsInPlan.has(focusJob.part.id)
+      ? focusJob.part
+      : null;
 
   function changeLevel(next: Level) {
     setLevel(next);
@@ -202,6 +260,37 @@ export function PlanView({
     if (name) {
       setSwapNotice(t("job.swapped", { tool: name, job: job.jobName }));
     }
+  }
+
+  function addPart(part: PartOption) {
+    setPickingPart(false);
+    setRemovedJobs((current) => current.filter((id) => id !== part.id));
+    setAddedJobs((current) =>
+      current.includes(part.id)
+        ? current
+        : [...current, part.id].slice(-MAX_PART_EDITS),
+    );
+    setPartNotice(t("plan.partAdded", { job: part.name }));
+    setFocusJob({ part, level });
+  }
+
+  function removePart(jobId: string, jobName: string) {
+    const before = { added: addedJobs, removed: removedJobs };
+    setAddedJobs((current) => current.filter((id) => id !== jobId));
+    setRemovedJobs((current) =>
+      current.includes(jobId)
+        ? current
+        : [...current, jobId].slice(-MAX_PART_EDITS),
+    );
+    setPartNotice(t("plan.partRemoved", { job: jobName }));
+    show({
+      message: t("plan.partRemoved", { job: jobName }),
+      actionLabel: t("common.undo"),
+      onAction: () => {
+        setAddedJobs(before.added);
+        setRemovedJobs(before.removed);
+      },
+    });
   }
 
   function toggleTool(toolId: string) {
@@ -287,6 +376,11 @@ export function PlanView({
       <p role="status" className={controls.srOnly}>
         {swapNotice}
       </p>
+      <p role="status" className={controls.srOnly}>
+        {coveredPart
+          ? t("plan.partCovered", { job: coveredPart.name })
+          : partNotice}
+      </p>
 
       <div key={level} className={styles.body}>
         <Overview level={content} />
@@ -299,10 +393,26 @@ export function PlanView({
           <ul className={styles.jobs}>
             {content.jobs.map((job) => (
               <li key={job.jobId}>
-                <JobCard job={job} onSwap={swapTool} />
+                <JobCard
+                  job={job}
+                  onSwap={swapTool}
+                  onRemove={content.jobs.length > 1 ? removePart : undefined}
+                />
               </li>
             ))}
           </ul>
+          <div className={styles.addPart} data-print-hide="">
+            <button
+              type="button"
+              className={controls.button}
+              aria-haspopup="dialog"
+              onClick={() => setPickingPart(true)}
+            >
+              <PlusIcon />
+              {t("plan.addPart")}
+            </button>
+            <p className={styles.addPartHelp}>{t("plan.addPartHelp")}</p>
+          </div>
         </section>
 
         {content.tiers ? <TierBlock tiers={content.tiers} /> : null}
@@ -363,6 +473,14 @@ export function PlanView({
         budget={budget}
         onBudgetChange={setBudget}
         currency={settings.currencyDisplay}
+      />
+
+      <PartPicker
+        open={pickingPart}
+        parts={parts}
+        chosen={jobIdsInPlan}
+        onPick={addPart}
+        onClose={() => setPickingPart(false)}
       />
 
       <p className={styles.dataNote}>

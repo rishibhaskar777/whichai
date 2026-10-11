@@ -200,7 +200,7 @@ describe("a goal we do not cover", () => {
       within(screen.getByRole("list", { name: "Goals we cover" })).getAllByRole(
         "button",
       ),
-    ).toHaveLength(catalogue.goals.length);
+    ).toHaveLength(catalogue.goals.length - 1);
     expect(screen.queryByRole("heading", { name: /plan$/ })).toBeNull();
   });
 
