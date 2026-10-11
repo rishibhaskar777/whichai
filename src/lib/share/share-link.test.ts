@@ -58,6 +58,7 @@ describe("share links", () => {
     const json = atob(encoded.replace(/-/g, "+").replace(/_/g, "/"));
     expect(Object.keys(JSON.parse(json)).sort()).toEqual([
       "budget",
+      "chosenTools",
       "goal",
       "level",
       "toolsUsed",

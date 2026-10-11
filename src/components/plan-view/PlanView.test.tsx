@@ -64,13 +64,11 @@ afterEach(() => {
 });
 
 describe("PlanView basics", () => {
-  it("opens with the sample notice, then the headline", () => {
+  it("opens with the headline and no notice above it", () => {
     renderPlan();
 
-    expect(screen.getByText(/Sample data, not verified:/)).toBeInTheDocument();
-    expect(
-      screen.getByText(/prices, limits and dates are placeholders/),
-    ).toBeInTheDocument();
+    expect(screen.queryByText(/Sample data/)).toBeNull();
+    expect(screen.queryByText(/placeholders/)).toBeNull();
     expect(
       screen.getByRole("heading", {
         level: 1,
@@ -91,7 +89,7 @@ describe("PlanView basics", () => {
 
     expect(screen.getByText("Estimated cost")).toBeInTheDocument();
     expect(screen.getByText("Estimated time")).toBeInTheDocument();
-    expect(screen.getByText(/Free options may cover this/)).toBeInTheDocument();
+    expect(screen.getByText(/Free plans may cover this/)).toBeInTheDocument();
   });
 
   it("ends with the price warning and the actions", () => {
@@ -267,11 +265,12 @@ describe("job cards", () => {
       view.getByText(/^(AI tool|Library|Service|App|Template source)$/),
     ).toBeInTheDocument();
     expect(view.getByText("Pricing")).toBeInTheDocument();
-    expect(view.getByText(/\[verify\]/)).toBeInTheDocument();
+    expect(view.getByText("Free option")).toBeInTheDocument();
+    expect(view.getByRole("link", { name: /See pricing/ })).toBeInTheDocument();
     expect(view.getByText("Watch out for")).toBeInTheDocument();
     expect(view.getByText(/of 5 \(editorial estimate/)).toBeInTheDocument();
-    expect(view.getByText("Source: Sample data")).toBeInTheDocument();
-    expect(view.getByText("Last verified: Not verified")).toBeInTheDocument();
+    expect(view.queryByText(/Not verified/i)).toBeNull();
+    expect(view.queryByText(/Sample data/)).toBeNull();
     expect(view.getByText("New")).toBeInTheDocument();
   });
 
@@ -651,7 +650,7 @@ describe("make this more accurate", () => {
   it("filters the plan to free options at ₹0 and says so", async () => {
     const user = userEvent.setup();
     renderPlan(understand("make a video for youtube"), "advanced");
-    expect(screen.queryByText(/Free options only/)).toBeNull();
+    expect(screen.queryByText(/Free plans only/)).toBeNull();
 
     await user.click(screen.getByRole("radio", { name: "₹0" }));
 
@@ -665,7 +664,7 @@ describe("make this more accurate", () => {
     expect(
       screen.getByText(/Showing only tools with a free option/),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Free options only/)).toBeInTheDocument();
+    expect(screen.getByText(/Free plans only/)).toBeInTheDocument();
   });
 
   it("brings paid options back for other budgets", async () => {
@@ -677,7 +676,7 @@ describe("make this more accurate", () => {
     expect(
       screen.queryByText(/Showing only tools with a free option/),
     ).toBeNull();
-    expect(screen.queryByText(/Free options only/)).toBeNull();
+    expect(screen.queryByText(/Free plans only/)).toBeNull();
   });
 });
 

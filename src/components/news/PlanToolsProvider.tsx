@@ -52,12 +52,14 @@ export function PlanToolsProvider({ children }: { children: ReactNode }) {
       const { buildPlan } = await import("@/lib/engine/build-plan");
       if (cancelled) return;
       const tools = plans.flatMap((saved) => {
-        const { goal, level, budget, toolsUsed } = saved.planRequest;
+        const { goal, level, budget, toolsUsed, chosenTools } =
+          saved.planRequest;
         try {
           const plan = buildPlan(goal, {
             level,
             budget,
             toolsUsed: new Set(toolsUsed),
+            chosenTools,
           });
           return [
             {

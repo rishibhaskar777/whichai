@@ -78,6 +78,15 @@ export const modelGuidanceSchema = z.object({
 });
 export type ModelGuidance = z.infer<typeof modelGuidanceSchema>;
 
+export const pricingSchema = z.object({
+  /** A summary from the official pricing page. Null until one is recorded. */
+  text: text(200).nullable(),
+  checkedOn: z.iso.date().nullable(),
+  /** The pricing page, or the official site when the tool has no such page. */
+  url: httpsUrl,
+});
+export type Pricing = z.infer<typeof pricingSchema>;
+
 export const jobRecommendationSchema = z.object({
   jobId: text(60),
   jobName: text(60),
@@ -86,7 +95,8 @@ export const jobRecommendationSchema = z.object({
   kind: toolKindSchema,
   why: text(400),
   tag: tagSchema,
-  pricing: text(200),
+  freeOption: z.union([z.boolean(), z.literal("verify")]),
+  pricing: pricingSchema,
   watchOutFor: text(300),
   fitScore: z.number().int().min(1).max(5),
   verified: z.boolean(),
@@ -97,6 +107,8 @@ export const jobRecommendationSchema = z.object({
   modelGuidance: modelGuidanceSchema.nullable(),
   compatibilityNote: text(240).nullable(),
   alternatives: z.array(alternativeSchema).max(5),
+  /** The tool the engine would pick on its own, set only after a swap. */
+  autoPick: z.object({ toolId: text(60), toolName: text(60) }).nullable(),
 });
 export type JobRecommendation = z.infer<typeof jobRecommendationSchema>;
 

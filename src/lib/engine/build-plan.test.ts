@@ -288,14 +288,14 @@ describe("level and budget in a real plan", () => {
     }
   });
 
-  it("says when a free option is not confirmed", () => {
+  it("keeps paid-only tools out at a zero budget", () => {
     const plan = buildPlan(goalOf("study-plan"), {
       ...NO_OPTIONS,
       budget: "zero",
     });
-    const texts = plan.levels.simple.jobs.map((job) => job.pricing).join(" ");
-    expect(texts).toMatch(/Not confirmed as free yet|Has a free option/);
-    expect(plan.levels.simple.estimatedCost).toMatch(/Free options only/);
+    const freeOptions = plan.levels.simple.jobs.map((job) => job.freeOption);
+    expect(freeOptions).not.toContain(false);
+    expect(plan.levels.simple.estimatedCost).toMatch(/Free plans only/);
   });
 
   it("marks a paid-only alternative as such", () => {

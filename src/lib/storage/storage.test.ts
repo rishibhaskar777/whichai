@@ -32,6 +32,7 @@ const REQUEST: PlanRequest = {
   level: "simple",
   budget: null,
   toolsUsed: [],
+  chosenTools: {},
 };
 
 function samplePlan(title = "My portfolio"): SavedPlan {

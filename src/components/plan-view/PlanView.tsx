@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   useEffect,
   useId,
@@ -26,6 +27,7 @@ import type {
   UnderstoodGoal,
 } from "@/lib/schemas/plan";
 import type { PlanRequest } from "@/lib/schemas/plan-request";
+import { takeReturnCard } from "@/lib/plan-return";
 import { buildShareUrl } from "@/lib/share/share-link";
 import { prefersReducedMotion } from "@/lib/use-reduced-motion";
 import controls from "@/styles/controls.module.css";
@@ -50,10 +52,14 @@ export interface PlanViewProps {
   initialLevel: Level;
   initialBudget?: Budget | null;
   initialToolsUsed?: readonly string[];
+  /** Tools picked by hand instead of the engine's choice, by job id. */
+  initialChosenTools?: Readonly<Record<string, string>> | undefined;
   /** Set when the plan was opened from Projects. */
   savedPlanId?: string;
   /** Shown above the headline, for example "opened from a shared link". */
   notice?: ReactNode;
+  /** Called after the person changes the level, budget, tools or a pick. */
+  onRequestChange?: ((request: PlanRequest) => void) | undefined;
 }
 
 /** Every tool the plan names for this level, with its alternatives. */
@@ -71,11 +77,11 @@ function toolOptions(jobs: readonly JobRecommendation[]): ToolOption[] {
   return [...options.values()];
 }
 
-function showCard(jobId: string) {
+function showCard(jobId: string, instant = false) {
   const card = document.getElementById(jobCardId(jobId));
   if (!card) return;
   card.scrollIntoView?.({
-    behavior: prefersReducedMotion() ? "auto" : "smooth",
+    behavior: instant || prefersReducedMotion() ? "auto" : "smooth",
     block: "start",
   });
   card.focus({ preventScroll: true });
@@ -98,8 +104,10 @@ export function PlanView({
   initialLevel,
   initialBudget = null,
   initialToolsUsed,
+  initialChosenTools,
   savedPlanId,
   notice,
+  onRequestChange,
 }: PlanViewProps) {
   const { t, locale } = useI18n();
   const { settings, savePlan, updatePlan, deletePlan } = useLocalData();
@@ -112,6 +120,10 @@ export function PlanView({
     () => new Set(initialToolsUsed ?? NO_TOOLS),
   );
   const [budget, setBudget] = useState<Budget | null>(initialBudget);
+  const [chosenTools, setChosenTools] = useState<
+    Readonly<Record<string, string>>
+  >(() => initialChosenTools ?? {});
+  const [swapNotice, setSwapNotice] = useState("");
   const [savedId, setSavedId] = useState(savedPlanId ?? null);
 
   const request = useMemo<PlanRequest>(
@@ -120,22 +132,41 @@ export function PlanView({
       level,
       budget,
       toolsUsed: [...usedTools].sort(),
+      chosenTools,
     }),
-    [goal, level, budget, usedTools],
+    [goal, level, budget, usedTools, chosenTools],
   );
   const requestKey = JSON.stringify(request);
   const [savedKey, setSavedKey] = useState<string | null>(
     savedPlanId ? requestKey : null,
   );
 
+  // Coming back from a tool page, return to the card the reader left.
   useEffect(() => {
-    headlineRef.current?.focus();
+    const card = takeReturnCard();
+    if (card && document.getElementById(jobCardId(card))) {
+      showCard(card, true);
+    } else {
+      headlineRef.current?.focus();
+    }
   }, []);
+
+  const reportedKey = useRef(requestKey);
+  useEffect(() => {
+    if (reportedKey.current === requestKey) return;
+    reportedKey.current = requestKey;
+    onRequestChange?.(request);
+  }, [request, requestKey, onRequestChange]);
 
   const plan = useMemo(
     () =>
-      buildPlan(goal, { level: initialLevel, budget, toolsUsed: usedTools }),
-    [goal, initialLevel, budget, usedTools],
+      buildPlan(goal, {
+        level: initialLevel,
+        budget,
+        toolsUsed: usedTools,
+        chosenTools,
+      }),
+    [goal, initialLevel, budget, usedTools, chosenTools],
   );
   const choices = useMemo(
     () =>
@@ -153,6 +184,24 @@ export function PlanView({
   function changeLevel(next: Level) {
     setLevel(next);
     setLevelNotice(t("plan.showingLevel", { level: t(`level.${next}`) }));
+  }
+
+  function swapTool(jobId: string, toolId: string) {
+    const job = content.jobs.find((candidate) => candidate.jobId === jobId);
+    if (!job) return;
+    const name =
+      job.alternatives.find((alternative) => alternative.toolId === toolId)
+        ?.toolName ?? job.autoPick?.toolName;
+    setChosenTools((current) => {
+      const next = { ...current };
+      // Picking the engine's own choice again clears the hand-made pick.
+      if (toolId === job.autoPick?.toolId) delete next[jobId];
+      else next[jobId] = toolId;
+      return next;
+    });
+    if (name) {
+      setSwapNotice(t("job.swapped", { tool: name, job: job.jobName }));
+    }
   }
 
   function toggleTool(toolId: string) {
@@ -213,13 +262,6 @@ export function PlanView({
     <article className={styles.plan} aria-labelledby="plan-headline">
       {notice ? <div className={styles.banner}>{notice}</div> : null}
 
-      {plan.isSample ? (
-        <p className={styles.notice}>
-          <strong>{t("plan.sampleNotice.strong")}</strong>{" "}
-          {t("plan.sampleNotice.rest")}
-        </p>
-      ) : null}
-
       {locale === "hi" ? (
         <p className={styles.langNote}>{t("plan.englishDetails")}</p>
       ) : null}
@@ -242,6 +284,9 @@ export function PlanView({
       <p role="status" className={controls.srOnly}>
         {levelNotice}
       </p>
+      <p role="status" className={controls.srOnly}>
+        {swapNotice}
+      </p>
 
       <div key={level} className={styles.body}>
         <Overview level={content} />
@@ -254,7 +299,7 @@ export function PlanView({
           <ul className={styles.jobs}>
             {content.jobs.map((job) => (
               <li key={job.jobId}>
-                <JobCard job={job} />
+                <JobCard job={job} onSwap={swapTool} />
               </li>
             ))}
           </ul>
@@ -319,6 +364,11 @@ export function PlanView({
         onBudgetChange={setBudget}
         currency={settings.currencyDisplay}
       />
+
+      <p className={styles.dataNote}>
+        {t("plan.dataNote")}{" "}
+        <Link href="/about#data">{t("plan.dataNote.link")}</Link>
+      </p>
     </article>
   );
 }

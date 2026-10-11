@@ -16,6 +16,7 @@ export function requestFor(
     level: goal.inferredLevel,
     budget: null,
     toolsUsed: [],
+    chosenTools: {},
     ...overrides,
   };
 }
