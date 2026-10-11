@@ -32,6 +32,22 @@ export const JOB_CATEGORIES = [
 export const jobCategorySchema = z.enum(JOB_CATEGORIES);
 export type JobCategory = z.infer<typeof jobCategorySchema>;
 
+/**
+ * Where a job sits in the life of a project. A plan built from parts lists its
+ * jobs in this order.
+ */
+export const JOB_STAGES = [
+  "idea",
+  "design",
+  "build",
+  "data",
+  "payments",
+  "launch",
+  "grow",
+] as const;
+export const jobStageSchema = z.enum(JOB_STAGES);
+export type JobStage = z.infer<typeof jobStageSchema>;
+
 export const providerSchema = z.object({
   id: slug,
   name: text(60),
@@ -44,7 +60,9 @@ export const jobSchema = z.object({
   name: text(60),
   description: text(200),
   category: jobCategorySchema,
-  keywords: z.array(text(40)),
+  stage: jobStageSchema,
+  /** Words and phrases that show a person wants this job done. */
+  keywords: z.array(text(40)).min(20).max(40),
 });
 export type Job = z.infer<typeof jobSchema>;
 
@@ -247,12 +265,52 @@ export const GOAL_IDS = [
   "business-website",
   "presentation",
   "pick-an-ai",
+  "mobile-app",
+  "ecommerce-store",
+  "blog",
+  "landing-page",
+  "saas-app",
+  "website-chatbot",
+  "build-browser-extension",
+  "game",
+  "data-dashboard",
+  "task-automation",
+  "youtube-channel",
+  "podcast",
+  "social-media-content",
+  "logo-and-branding",
+  "ui-design",
+  "research-paper",
+  "thesis",
+  "essay-writing",
+  "exam-preparation",
+  "learn-to-code",
+  "language-learning",
+  "interview-preparation",
+  "freelancing-setup",
+  "small-business-marketing",
+  "email-newsletter",
+  "translate-documents",
+  "summarise-pdfs",
+  "meeting-notes",
+  "personal-productivity",
+  "music-creation",
+  "edit-a-video",
+  "edit-images",
+  "3d-models",
+  "spreadsheet-analysis",
+  "ai-agent",
+  "local-private-ai",
+  "custom-plan",
 ] as const;
 export const goalIdSchema = z.enum(GOAL_IDS);
 export type GoalId = z.infer<typeof goalIdSchema>;
 
-/** The goal used when a task is recognised but no full goal matches. */
+/** The goal used when a person asks which AI to use for a task. */
 export const FALLBACK_GOAL_ID: GoalId = "pick-an-ai";
+
+/** The goal for a plan built only from the parts a person described. */
+export const CUSTOM_GOAL_ID: GoalId = "custom-plan";
 
 const workflowStepSchema = z.object({
   title: text(80),
