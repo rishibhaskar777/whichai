@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
+import { useAccount } from "@/components/account/AccountProvider";
 import { ConfirmDialog } from "@/components/dialog/ConfirmDialog";
 import { CheckIcon, DownloadIcon, ExternalLinkIcon } from "@/components/icons";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
@@ -84,7 +85,9 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
     misses,
     clearMisses,
   } = useLocalData();
+  const { identity, logout, deleteLocalAccount } = useAccount();
   const [confirmingClear, setConfirmingClear] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [managingSubscription, setManagingSubscription] = useState(false);
   const plan = getPlan(getCurrentPlan());
   const titleId = useId();
@@ -94,6 +97,15 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
     const result = await clearAll();
     if (!result.ok) return;
     show({ message: t("settings.cleared") });
+    router.refresh();
+  }
+
+  async function deleteLocalEverything() {
+    setConfirmingDelete(false);
+    await deleteLocalAccount();
+    const result = await clearAll();
+    if (!result.ok) return;
+    show({ message: t("settings.account.deleteLocal.done") });
     router.refresh();
   }
 
@@ -350,7 +362,13 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
                     name: viewer.name,
                     provider: PROVIDER_NAMES[viewer.provider],
                   })
-                : t("settings.account.signedOut")}
+                : identity.kind === "preview"
+                  ? t("settings.account.signedInLocal", {
+                      name: identity.name,
+                    })
+                  : identity.kind === "guest"
+                    ? t("settings.account.guest")
+                    : t("settings.account.signedOut")}
             </p>
           </div>
           <div className={styles.rowControl}>
@@ -361,6 +379,14 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
                   {t("nav.signOut")}
                 </button>
               </form>
+            ) : identity.kind === "preview" ? (
+              <button
+                type="button"
+                className={controls.button}
+                onClick={() => void logout()}
+              >
+                {t("nav.signOut")}
+              </button>
             ) : (
               <button
                 type="button"
@@ -373,6 +399,21 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
             )}
           </div>
         </div>
+        <SettingRow
+          label={t("settings.account.deleteLocal")}
+          help={t("settings.account.deleteLocal.help")}
+        >
+          {() => (
+            <button
+              type="button"
+              className={`${controls.button} ${styles.danger}`}
+              aria-haspopup="dialog"
+              onClick={() => setConfirmingDelete(true)}
+            >
+              {t("settings.account.deleteLocal")}
+            </button>
+          )}
+        </SettingRow>
       </Panel>
 
       <Panel title={t("settings.about")}>
@@ -438,6 +479,17 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
         danger
         onCancel={() => setConfirmingClear(false)}
         onConfirm={() => void clearEverything()}
+      />
+
+      <ConfirmDialog
+        open={confirmingDelete}
+        title={t("settings.account.deleteLocal.title")}
+        description={t("settings.account.deleteLocal.help")}
+        confirmLabel={t("settings.account.deleteLocal.confirm")}
+        requireText="DELETE"
+        danger
+        onCancel={() => setConfirmingDelete(false)}
+        onConfirm={() => void deleteLocalEverything()}
       />
     </div>
   );

@@ -297,6 +297,16 @@ export const en = {
     "This browser would not save your details. Check that site storage is allowed and try again.",
   "auth.error.invalid": "Please check your details and try again.",
   "account.guest": "Guest",
+  "settings.account.signedInLocal":
+    "Logged in as {name}. This account is saved only in this browser.",
+  "settings.account.guest":
+    "You are using WhichAI as a guest. You can use everything without an account.",
+  "settings.account.deleteLocal": "Delete local account and data",
+  "settings.account.deleteLocal.help":
+    "Removes preview accounts, your login and any guest profile from this browser, along with saved plans, search history and settings. This cannot be undone.",
+  "settings.account.deleteLocal.title": "Delete local account and data?",
+  "settings.account.deleteLocal.confirm": "Delete",
+  "settings.account.deleteLocal.done": "Local account and data deleted.",
   "signin.continueWith": "Continue with {method}",
   "signin.or": "or",
   "signin.comingSoon": "{name} sign-in is coming in an upcoming update.",

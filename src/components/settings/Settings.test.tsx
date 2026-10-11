@@ -2,6 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Viewer } from "@/lib/auth/get-session";
+import { createLocalPreviewService } from "@/lib/auth/local-preview";
 import { REPOSITORY_URL } from "@/lib/links";
 import { MAX_IMPORT_BYTES } from "@/lib/storage/limits";
 import { createMemoryBackend, type KvBackend } from "@/lib/storage/backend";
@@ -372,6 +373,96 @@ describe("settings: account", () => {
       within(form).getByRole("button", { name: "Sign out" }),
     ).toBeInTheDocument();
   });
+});
+
+describe("settings: preview account and guest", () => {
+  const details = {
+    email: "ada@example.org",
+    password: "violet lantern ocean",
+    firstName: "Ada",
+    lastName: "Lovelace",
+    terms: true,
+  };
+
+  it("says a guest is a guest and still offers Sign in", async () => {
+    const backend = createMemoryBackend();
+    await createLocalPreviewService(backend).startGuest();
+    renderSettings(backend);
+    await ready();
+
+    expect(
+      await screen.findByText(/You are using WhichAI as a guest/),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
+  });
+
+  it("shows a logged-in preview account and logs it out locally", async () => {
+    const user = userEvent.setup();
+    const backend = createMemoryBackend();
+    const accounts = createLocalPreviewService(backend);
+    await accounts.register(details);
+    await accounts.login({
+      email: details.email,
+      password: details.password,
+    });
+    renderSettings(backend);
+    await ready();
+
+    expect(
+      await screen.findByText(
+        "Logged in as Ada. This account is saved only in this browser.",
+      ),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Sign out" }));
+
+    expect(
+      await screen.findByRole("button", { name: "Sign in" }),
+    ).toBeVisible();
+    expect(await accounts.currentUser()).toBeNull();
+    expect(await backend.get("preview-accounts")).not.toBeNull();
+  }, 20_000);
+
+  it("deletes accounts, the session, the guest profile and local data after DELETE is typed", async () => {
+    const user = userEvent.setup();
+    const backend = createMemoryBackend();
+    const accounts = createLocalPreviewService(backend);
+    await accounts.register(details);
+    await accounts.startGuest();
+    await seed(backend, { plans: [planNamed("Keep me")] });
+    renderSettings(backend);
+    await ready();
+
+    await user.click(
+      screen.getByRole("button", { name: "Delete local account and data" }),
+    );
+    const confirm = screen.getByRole("button", { name: "Delete" });
+    expect(confirm).toBeDisabled();
+    await user.type(screen.getByLabelText(/Type DELETE to confirm/), "DELETE");
+    await user.click(confirm);
+
+    expect(
+      await screen.findByText("Local account and data deleted."),
+    ).toBeInTheDocument();
+    expect(await backend.get("preview-accounts")).toBeNull();
+    expect(await backend.get("preview-guest")).toBeNull();
+    expect((await stored(backend)).plans).toEqual([]);
+  }, 20_000);
+
+  it("keeps everything when the deletion is cancelled", async () => {
+    const user = userEvent.setup();
+    const backend = createMemoryBackend();
+    await createLocalPreviewService(backend).register(details);
+    renderSettings(backend);
+    await ready();
+
+    await user.click(
+      screen.getByRole("button", { name: "Delete local account and data" }),
+    );
+    await user.click(screen.getByRole("button", { name: "Cancel" }));
+
+    expect(await backend.get("preview-accounts")).not.toBeNull();
+  }, 20_000);
 });
 
 describe("settings: export", () => {

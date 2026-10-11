@@ -299,6 +299,16 @@ export const hi: Record<MessageKey, string> = {
     "यह ब्राउज़र आपकी जानकारी सहेज नहीं सका। जाँचें कि साइट स्टोरेज की अनुमति है और फिर कोशिश करें।",
   "auth.error.invalid": "कृपया अपनी जानकारी जाँचें और फिर कोशिश करें।",
   "account.guest": "अतिथि",
+  "settings.account.signedInLocal":
+    "{name} के रूप में लॉग इन हैं। यह खाता केवल इसी ब्राउज़र में सहेजा गया है।",
+  "settings.account.guest":
+    "आप WhichAI को अतिथि के रूप में इस्तेमाल कर रहे हैं। खाते के बिना सब कुछ इस्तेमाल किया जा सकता है।",
+  "settings.account.deleteLocal": "लोकल खाता और डेटा हटाएँ",
+  "settings.account.deleteLocal.help":
+    "इस ब्राउज़र से प्रीव्यू खाते, आपका लॉग इन और अतिथि प्रोफ़ाइल, साथ ही सहेजी योजनाएँ, खोज इतिहास और सेटिंग हटा देता है। इसे वापस नहीं किया जा सकता।",
+  "settings.account.deleteLocal.title": "लोकल खाता और डेटा हटाएँ?",
+  "settings.account.deleteLocal.confirm": "हटाएँ",
+  "settings.account.deleteLocal.done": "लोकल खाता और डेटा हटा दिया गया।",
   "signin.continueWith": "{method} से जारी रखें",
   "signin.or": "या",
   "signin.comingSoon": "{name} से साइन इन अगले अपडेट में आ रहा है।",
