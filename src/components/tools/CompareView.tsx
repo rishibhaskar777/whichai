@@ -4,7 +4,9 @@ import { MAX_COMPARE } from "@/lib/library/query";
 import type { I18n } from "@/lib/i18n/translate";
 import type { Catalogue, Tool } from "@/lib/schemas/catalogue";
 import controls from "@/styles/controls.module.css";
+import { pricingInfo } from "@/lib/catalogue/pricing";
 import { GetIt } from "./GetIt";
+import { freeOptionText, PricingValue } from "./Pricing";
 import { PLATFORM_META } from "./link-meta";
 import styles from "./Compare.module.css";
 
@@ -33,12 +35,7 @@ export function CompareView({
   );
   const canAdd = tools.length < MAX_COMPARE;
 
-  const freeText = (tool: Tool) =>
-    tool.hasFreeOption === true
-      ? t("tool.free.yes")
-      : tool.hasFreeOption === false
-        ? t("tool.free.no")
-        : t("tool.free.unknown");
+  const freeText = (tool: Tool) => freeOptionText(i18n, tool.hasFreeOption);
 
   const rows: { label: string; cell: (tool: Tool) => React.ReactNode }[] = [
     { label: t("compare.row.kind"), cell: (tool) => t(`kind.${tool.kind}`) },
@@ -53,7 +50,10 @@ export function CompareView({
       ),
     },
     { label: t("compare.row.free"), cell: freeText },
-    { label: t("compare.row.pricing"), cell: (tool) => tool.pricing },
+    {
+      label: t("compare.row.pricing"),
+      cell: (tool) => <PricingValue i18n={i18n} pricing={pricingInfo(tool)} />,
+    },
     {
       label: t("compare.row.platforms"),
       cell: (tool) => (
@@ -103,13 +103,17 @@ export function CompareView({
           </ul>
         ),
     },
-    {
-      label: t("compare.row.status"),
-      cell: (tool) =>
-        tool.verified && tool.lastVerified
-          ? t("tool.verifiedOn", { date: formatDate(tool.lastVerified) })
-          : t("tool.notVerified"),
-    },
+    ...(tools.some((tool) => tool.verified && tool.lastVerified)
+      ? [
+          {
+            label: t("compare.row.status"),
+            cell: (tool: Tool) =>
+              tool.verified && tool.lastVerified
+                ? t("tool.verifiedOn", { date: formatDate(tool.lastVerified) })
+                : null,
+          },
+        ]
+      : []),
     {
       label: t("compare.row.getIt"),
       cell: (tool) => (

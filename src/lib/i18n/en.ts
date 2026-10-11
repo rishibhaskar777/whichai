@@ -121,9 +121,6 @@ export const en = {
   "noMatch.goals": "Goals we cover",
 
   // Plan view
-  "plan.sampleNotice.strong": "Sample data, not verified:",
-  "plan.sampleNotice.rest":
-    "tool picks are editorial estimates, and prices, limits and dates are placeholders until each record is checked.",
   "plan.levelGroup": "Plan level",
   "plan.showingLevel": "Showing the {level} level.",
   "level.simple": "Simple",
@@ -159,10 +156,6 @@ export const en = {
   "tag.keep": "Keep",
   "tag.better": "Better option",
   "tag.new": "New",
-  "source.tested": "Tested",
-  "source.official-docs": "Official docs",
-  "source.user-reported": "User reported",
-  "source.sample": "Sample data",
   "kind.ai-tool": "AI tool",
   "kind.library": "Library",
   "kind.service": "Service",
@@ -180,9 +173,29 @@ export const en = {
   "job.worksWith": "Works with",
   "job.fit": "Fit for this job",
   "job.fitValue": "{score} of 5 (editorial estimate, not a test result)",
-  "job.source": "Source: {source}",
-  "job.lastVerified": "Last verified: {date}",
-  "job.notVerified": "Not verified",
+  "job.verifiedOn": "Verified {date}",
+  "job.pricingChecked": "From the official pricing page, checked {date}",
+  "job.seePricing": "See pricing",
+  "job.viewDetails": "View full details",
+  "job.switchBack": "Switch back to {tool}",
+  "job.swapped": "Now showing {tool} for {job}.",
+  "getIt.officialSite": "Official site",
+  "plan.dataNote":
+    "Tool details come from official sites. Fit scores are our own estimates.",
+  "plan.dataNote.link": "How we check data",
+  "about.data.title": "How we check data",
+  "about.data.intro":
+    "Every tool record comes from the tool’s own site. These are the dates and marks you may see, and what each one means.",
+  "about.data.links":
+    "Link checked: on that date we opened the address and saw it end on the tool’s official site. Download buttons appear only for links that passed. If none did, you get one Official site button.",
+  "about.data.pricing":
+    "Pricing checked: on that date we read the tool’s official pricing page and noted whether a free plan exists and the starting paid price, in the currency the page showed. We never convert currencies. When a page was blocked, unclear or different by country, we show a See pricing link instead.",
+  "about.data.verified":
+    "Verified: a person has checked the whole record against official pages and signed it off. A record without the tick may still be right, but nobody has signed it off yet.",
+  "about.data.scores":
+    "Fit scores are editorial: our own estimates of how well a tool suits a job, used only to order the options. They are not test results, and nobody pays for a higher score.",
+  "about.data.change":
+    "Prices and limits change. Check the official page before you pay.",
   "job.officialPage": "Official page",
   "job.opensInNewTab": " (opens in a new tab)",
   "job.otherOptions": "See other options",
@@ -246,15 +259,13 @@ export const en = {
   "getIt.link.jetbrainsPlugin": "JetBrains plugin",
   "getIt.link.modelPage": "Model page",
   "getIt.checked": "Link checked {date}",
-  "getIt.notChecked": "Link not verified yet",
-  "getIt.findOnSite": "Find downloads on the official site",
   "getIt.installCommand": "Install command",
   "getIt.copyCommand": "Copy the install command for {tool}",
   "getIt.commandNote":
     "Shown as text only. Read it first, and run it yourself in a terminal only if you trust the source.",
   "getIt.moreOptions": "More ways to get it",
   "getIt.safety":
-    "Always check the address bar shows the official site before downloading.",
+    "Downloads open the official site. Check the address bar before installing.",
   "platform.web": "Web",
   "platform.windows": "Windows",
   "platform.macos": "macOS",
@@ -307,7 +318,6 @@ export const en = {
   "library.card.platforms": "Available on",
   "library.card.free": "Free option",
   "library.card.verifiedOn": "Verified {date}",
-  "library.card.notVerified": "Not verified",
   "library.card.details": "Details",
   "library.card.addCompare": "Compare",
   "library.card.removeCompare": "Remove from comparison",
@@ -321,7 +331,6 @@ export const en = {
   "tool.breadcrumb": "Breadcrumb",
   "tool.by": "From {provider}",
   "tool.verifiedOn": "Verified {date}",
-  "tool.notVerified": "Sample data, not verified",
   "tool.jobs": "What it is used for",
   "tool.fitFor": "(fit {score} of 5)",
   "tool.fitNote":
@@ -329,11 +338,10 @@ export const en = {
   "tool.strengths": "Strengths",
   "tool.watchOut": "Watch out for",
   "tool.facts": "At a glance",
-  "tool.pricingNote": "Not checked yet. See the official pricing page.",
   "tool.freeOption": "Free option",
-  "tool.free.yes": "Yes, it has a free option",
-  "tool.free.no": "No free option known",
-  "tool.free.unknown": "Not confirmed yet",
+  "tool.free.yes": "Free plan available",
+  "tool.free.no": "Paid only",
+  "tool.free.unknown": "Check the official site",
   "tool.skill": "Skill needed",
   "tool.platforms": "Platforms",
   "tool.tiers": "Plan tiers",
@@ -624,7 +632,7 @@ export const en = {
     "Fit scores are editorial estimates, not test results. Nobody pays to be included or ranked higher.",
   "about.honest.title": "Honesty",
   "about.honest.item1":
-    "A tool is marked Not verified until its record has been checked against an official page.",
+    "A tool is marked verified only after a person has checked its record against an official page.",
   "about.honest.item2":
     "If WhichAI has no plan for your goal, it says so instead of guessing.",
   "about.honest.item3":

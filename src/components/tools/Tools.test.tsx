@@ -28,12 +28,13 @@ const i18n = createI18n("en");
 
 const GET_IT: GetItData = {
   web: { url: "https://example.com", linkCheckedOn: "2026-10-10" },
-  windows: { url: "https://example.com/win", linkCheckedOn: null },
-  macos: { url: "https://example.com/mac", linkCheckedOn: null },
+  windows: { url: "https://example.com/win", linkCheckedOn: "2026-10-10" },
+  macos: { url: "https://example.com/mac", linkCheckedOn: "2026-10-10" },
   android: {
     url: "https://play.google.com/store/apps/details?id=x",
-    linkCheckedOn: null,
+    linkCheckedOn: "2026-10-10",
   },
+  linux: { url: "https://example.com/linux", linkCheckedOn: null },
   cliInstall: "npm install -g example",
 };
 
@@ -50,11 +51,31 @@ describe("GetIt", () => {
         officialUrl="https://example.com"
       />,
     );
-    const link = screen.getByRole("link", {
-      name: /Find downloads on the official site/,
-    });
+    const link = screen.getByRole("link", { name: /Official site/ });
     expect(link).toHaveAttribute("href", "https://example.com");
-    expect(screen.getByText(/check the address bar/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Downloads open the official site. Check the address bar before installing.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("shows one Official site button when no link has been checked", () => {
+    const unchecked: GetItData = {
+      web: { url: "https://example.com/app", linkCheckedOn: null },
+      windows: { url: "https://example.com/win", linkCheckedOn: null },
+    };
+    render(
+      <GetIt
+        toolName="Example"
+        getIt={unchecked}
+        officialUrl="https://example.com"
+      />,
+    );
+    const links = screen.getAllByRole("link");
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveTextContent("Official site");
+    expect(links[0]).toHaveAttribute("href", "https://example.com");
   });
 
   it("opens every link in a new tab without a referrer or opener", () => {
@@ -109,7 +130,7 @@ describe("GetIt", () => {
     expect(labels[1]).toMatch(/Windows/);
   });
 
-  it("says which links have not been checked", () => {
+  it("hides links the checker has not stamped and never says so", () => {
     render(
       <GetIt
         toolName="Example"
@@ -117,8 +138,11 @@ describe("GetIt", () => {
         officialUrl="https://example.com"
       />,
     );
-    expect(screen.getAllByText("Link not verified yet")).toHaveLength(3);
-    expect(screen.getByText(/Link checked 10 Oct 2026/)).toBeInTheDocument();
+    expect(screen.queryByText(/not verified/i)).toBeNull();
+    expect(screen.queryByRole("link", { name: /Linux/ })).toBeNull();
+    expect(
+      screen.getAllByText(/Link checked 10 Oct 2026/).length,
+    ).toBeGreaterThan(0);
   });
 
   it("shows an install command as copyable text and never runs it", () => {
@@ -165,11 +189,11 @@ describe("GetIt", () => {
       ...GET_IT,
       chromeExtension: {
         url: "https://chromewebstore.google.com/detail/x/abc",
-        linkCheckedOn: null,
+        linkCheckedOn: "2026-10-10",
       },
       firefoxAddon: {
         url: "https://addons.mozilla.org/firefox/addon/x/",
-        linkCheckedOn: null,
+        linkCheckedOn: "2026-10-10",
       },
     };
     render(
@@ -253,7 +277,7 @@ describe("Library", () => {
     renderLibrary({ q: "ollama" });
     const card = screen.getByRole("article", { name: /Ollama/ });
     expect(within(card).getByText("Free option")).toBeInTheDocument();
-    expect(within(card).getByText("Not verified")).toBeInTheDocument();
+    expect(within(card).queryByText(/not verified/i)).toBeNull();
     expect(
       within(card).getByRole("list", { name: "Available on" }),
     ).toBeInTheDocument();
@@ -297,8 +321,12 @@ describe("ToolDetail", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: "Ollama" }),
     ).toBeInTheDocument();
-    expect(screen.getByText("Sample data, not verified")).toBeInTheDocument();
-    expect(screen.getByText(/\[verify\]/)).toBeInTheDocument();
+    expect(screen.queryByText(/not verified/i)).toBeNull();
+    expect(screen.queryByText(/\[verify\]/)).toBeNull();
+    expect(screen.getByRole("link", { name: /See pricing/ })).toHaveAttribute(
+      "href",
+      expect.stringContaining("ollama"),
+    );
     expect(
       screen.getByRole("heading", { name: "Alternatives" }),
     ).toBeInTheDocument();
@@ -404,7 +432,6 @@ describe("CompareView", () => {
       "Strengths",
       "Watch out for",
       "Works with",
-      "Verification",
       "Get it",
     ]) {
       expect(

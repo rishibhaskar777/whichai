@@ -124,9 +124,6 @@ export const hi: Record<MessageKey, string> = {
   "noMatch.goals": "हमारे लक्ष्य",
 
   // Plan view
-  "plan.sampleNotice.strong": "नमूना डेटा, जाँचा हुआ नहीं:",
-  "plan.sampleNotice.rest":
-    "टूल के सुझाव संपादकीय अनुमान हैं, और कीमतें, सीमाएँ और तारीखें तब तक अस्थायी हैं जब तक हर रिकॉर्ड की जाँच नहीं हो जाती।",
   "plan.levelGroup": "योजना का स्तर",
   "plan.showingLevel": "{level} स्तर दिखाया जा रहा है।",
   "level.simple": "सरल",
@@ -162,10 +159,6 @@ export const hi: Record<MessageKey, string> = {
   "tag.keep": "रखें",
   "tag.better": "बेहतर विकल्प",
   "tag.new": "नया",
-  "source.tested": "परखा हुआ",
-  "source.official-docs": "आधिकारिक दस्तावेज़",
-  "source.user-reported": "उपयोगकर्ताओं की जानकारी",
-  "source.sample": "नमूना डेटा",
   "kind.ai-tool": "AI टूल",
   "kind.library": "लाइब्रेरी",
   "kind.service": "सेवा",
@@ -183,9 +176,29 @@ export const hi: Record<MessageKey, string> = {
   "job.worksWith": "इनके साथ चलता है",
   "job.fit": "इस काम के लिए उपयुक्तता",
   "job.fitValue": "5 में से {score} (संपादकीय अनुमान, परीक्षण का नतीजा नहीं)",
-  "job.source": "स्रोत: {source}",
-  "job.lastVerified": "आख़िरी जाँच: {date}",
-  "job.notVerified": "जाँचा नहीं गया",
+  "job.verifiedOn": "जाँचा गया: {date}",
+  "job.pricingChecked": "आधिकारिक कीमत वाले पेज से, जाँच की तारीख़: {date}",
+  "job.seePricing": "कीमत देखें",
+  "job.viewDetails": "पूरी जानकारी देखें",
+  "job.switchBack": "{tool} पर वापस जाएँ",
+  "job.swapped": "{job} के लिए अब {tool} दिख रहा है।",
+  "getIt.officialSite": "आधिकारिक साइट",
+  "plan.dataNote":
+    "टूल की जानकारी आधिकारिक साइटों से आती है। फ़िट स्कोर हमारे अपने अनुमान हैं।",
+  "plan.dataNote.link": "हम डेटा कैसे जाँचते हैं",
+  "about.data.title": "हम डेटा कैसे जाँचते हैं",
+  "about.data.intro":
+    "हर टूल का रिकॉर्ड उसकी अपनी साइट से आता है। यहाँ वे तारीख़ें और निशान हैं जो आपको दिख सकते हैं, और हर एक का मतलब।",
+  "about.data.links":
+    "लिंक की जाँच: उस तारीख़ को हमने पता खोला और देखा कि वह टूल की आधिकारिक साइट पर ही पहुँचता है। डाउनलोड बटन सिर्फ़ उन लिंक के लिए दिखते हैं जो जाँच में सही निकले। कोई सही न निकले तो एक आधिकारिक साइट बटन दिखता है।",
+  "about.data.pricing":
+    "कीमत की जाँच: उस तारीख़ को हमने टूल का आधिकारिक कीमत वाला पेज पढ़ा और नोट किया कि मुफ़्त प्लान है या नहीं और सशुल्क प्लान की शुरुआती कीमत क्या है, उसी मुद्रा में जो पेज पर थी। हम मुद्रा कभी बदलते नहीं। पेज बंद, अस्पष्ट या देश के हिसाब से अलग हो तो हम इसकी जगह कीमत देखें लिंक दिखाते हैं।",
+  "about.data.verified":
+    "सत्यापित: किसी व्यक्ति ने पूरा रिकॉर्ड आधिकारिक पेजों से जाँचकर मंज़ूर किया है। बिना निशान वाला रिकॉर्ड सही हो सकता है, पर अभी किसी ने उसे मंज़ूर नहीं किया।",
+  "about.data.scores":
+    "फ़िट स्कोर संपादकीय हैं: कोई टूल किसी काम के लिए कितना ठीक है, इसका हमारा अपना अनुमान, जो सिर्फ़ विकल्पों को क्रम देने के काम आता है। ये परीक्षण के नतीजे नहीं हैं, और ऊँचे स्कोर के लिए कोई पैसे नहीं देता।",
+  "about.data.change":
+    "कीमतें और सीमाएँ बदलती रहती हैं। भुगतान से पहले आधिकारिक पेज देखें।",
   "job.officialPage": "आधिकारिक पेज",
   "job.opensInNewTab": " (नए टैब में खुलेगा)",
   "job.otherOptions": "दूसरे विकल्प देखें",
@@ -249,15 +262,13 @@ export const hi: Record<MessageKey, string> = {
   "getIt.link.jetbrainsPlugin": "JetBrains प्लगइन",
   "getIt.link.modelPage": "मॉडल का पेज",
   "getIt.checked": "लिंक की जाँच: {date}",
-  "getIt.notChecked": "लिंक की जाँच अभी नहीं हुई",
-  "getIt.findOnSite": "आधिकारिक साइट पर डाउनलोड खोजें",
   "getIt.installCommand": "इंस्टॉल कमांड",
   "getIt.copyCommand": "{tool} की इंस्टॉल कमांड कॉपी करें",
   "getIt.commandNote":
     "यह सिर्फ़ टेक्स्ट है। पहले इसे पढ़ें, और स्रोत पर भरोसा हो तभी इसे टर्मिनल में खुद चलाएँ।",
   "getIt.moreOptions": "पाने के और तरीके",
   "getIt.safety":
-    "डाउनलोड से पहले हमेशा जाँचें कि एड्रेस बार में आधिकारिक साइट ही दिख रही है।",
+    "डाउनलोड आधिकारिक साइट पर खुलते हैं। इंस्टॉल करने से पहले एड्रेस बार जाँच लें।",
   "platform.web": "वेब",
   "platform.windows": "Windows",
   "platform.macos": "macOS",
@@ -310,7 +321,6 @@ export const hi: Record<MessageKey, string> = {
   "library.card.platforms": "इन पर उपलब्ध",
   "library.card.free": "मुफ़्त विकल्प",
   "library.card.verifiedOn": "सत्यापित: {date}",
-  "library.card.notVerified": "सत्यापित नहीं",
   "library.card.details": "ब्योरा",
   "library.card.addCompare": "तुलना करें",
   "library.card.removeCompare": "तुलना से हटाएँ",
@@ -324,7 +334,6 @@ export const hi: Record<MessageKey, string> = {
   "tool.breadcrumb": "ब्रेडक्रंब",
   "tool.by": "{provider} की ओर से",
   "tool.verifiedOn": "सत्यापित: {date}",
-  "tool.notVerified": "नमूना डेटा, सत्यापित नहीं",
   "tool.jobs": "इसका उपयोग किस काम में होता है",
   "tool.fitFor": "(उपयुक्तता {score} में से 5)",
   "tool.fitNote":
@@ -332,11 +341,10 @@ export const hi: Record<MessageKey, string> = {
   "tool.strengths": "खूबियाँ",
   "tool.watchOut": "ध्यान रखें",
   "tool.facts": "एक नज़र में",
-  "tool.pricingNote": "अभी जाँचा नहीं गया। आधिकारिक कीमत वाला पेज देखें।",
   "tool.freeOption": "मुफ़्त विकल्प",
-  "tool.free.yes": "हाँ, मुफ़्त विकल्प है",
-  "tool.free.no": "कोई मुफ़्त विकल्प पता नहीं",
-  "tool.free.unknown": "अभी पुष्टि नहीं हुई",
+  "tool.free.yes": "मुफ़्त प्लान उपलब्ध है",
+  "tool.free.no": "केवल सशुल्क",
+  "tool.free.unknown": "आधिकारिक साइट देखें",
   "tool.skill": "ज़रूरी कौशल",
   "tool.platforms": "प्लेटफ़ॉर्म",
   "tool.tiers": "प्लान के स्तर",
@@ -625,7 +633,7 @@ export const hi: Record<MessageKey, string> = {
     "उपयुक्तता के अंक संपादकीय अनुमान हैं, परीक्षण के नतीजे नहीं। शामिल होने या ऊपर दिखने के लिए कोई पैसे नहीं देता।",
   "about.honest.title": "ईमानदारी",
   "about.honest.item1":
-    "जब तक किसी टूल का रिकॉर्ड आधिकारिक पेज से मिलाकर जाँचा नहीं जाता, उस पर “जाँचा नहीं गया” लिखा रहता है।",
+    "किसी टूल को सत्यापित तभी माना जाता है जब किसी व्यक्ति ने उसका रिकॉर्ड आधिकारिक पेज से जाँच लिया हो।",
   "about.honest.item2":
     "अगर आपके लक्ष्य की योजना WhichAI के पास नहीं है, तो वह अंदाज़ा लगाने की जगह साफ़ कह देता है।",
   "about.honest.item3":
