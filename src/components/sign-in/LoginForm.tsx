@@ -22,6 +22,12 @@ const LABELS = {
 
 type Errors = Partial<Record<Field, string | undefined>>;
 
+interface FormState {
+  password: string;
+  errors: Errors;
+  formError: string | null;
+}
+
 interface LoginFormProps {
   initialEmail: string;
   disabled: boolean;
@@ -42,10 +48,20 @@ export function LoginForm({
   const summaryRef = useRef<HTMLDivElement>(null);
 
   const [email, setEmail] = useState(initialEmail);
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<Errors>({});
-  const [formError, setFormError] = useState<string | null>(null);
+  /*
+   * The password and the messages about it change together in one state
+   * object, so an attempt that fails clears the password in the same update
+   * that shows the message, and nothing touches the field after that.
+   */
+  const [form, setForm] = useState<FormState>({
+    password: "",
+    errors: {},
+    formError: null,
+  });
+  const { password, errors, formError } = form;
   const [submitting, setSubmitting] = useState(false);
+  // A ref, so a second submit in the same tick cannot slip past a stale state.
+  const inFlight = useRef(false);
   const [forgot, setForgot] = useState(false);
 
   const items: SummaryItem[] = (["email", "password"] as const).flatMap(
@@ -56,49 +72,48 @@ export function LoginForm({
     },
   );
 
-  function showProblems(next: Errors, message: string | null) {
-    setErrors(next);
-    setFormError(message);
+  function showProblems(next: FormState) {
+    setForm(next);
     // The summary mounts after this render, so focus it on the next frame.
     requestAnimationFrame(() => summaryRef.current?.focus());
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (submitting || disabled) return;
+    if (inFlight.current || disabled) return;
 
     // Whatever the last attempt said is gone the moment a new one starts, so
     // the next message is announced again and cannot be mistaken for it.
-    setFormError(null);
-    setErrors({});
+    setForm((current) => ({ ...current, errors: {}, formError: null }));
 
     const parsed = loginSchema.safeParse({ email, password });
     if (!parsed.success) {
-      showProblems(firstIssues<Field>(parsed.error), null);
+      showProblems({
+        password,
+        errors: firstIssues<Field>(parsed.error),
+        formError: null,
+      });
       return;
     }
 
-    setErrors({});
-    setFormError(null);
+    inFlight.current = true;
     setSubmitting(true);
     const result = await login(parsed.data);
+    inFlight.current = false;
     setSubmitting(false);
 
     if (result.ok) {
       onSignedIn();
       return;
     }
-    setPassword("");
-    if (result.reason === "locked") {
-      showProblems(
-        {},
-        t("auth.error.locked", { seconds: result.retryAfterSeconds }),
-      );
-    } else if (result.reason === "storage") {
-      showProblems({}, t("auth.error.storage"));
-    } else {
-      showProblems({}, t("auth.error.credentials"));
-    }
+    // One update: the password is cleared exactly here, with the message.
+    const message =
+      result.reason === "locked"
+        ? t("auth.error.locked", { seconds: result.retryAfterSeconds })
+        : result.reason === "storage"
+          ? t("auth.error.storage")
+          : t("auth.error.credentials");
+    showProblems({ password: "", errors: {}, formError: message });
   }
 
   const busy = submitting || disabled;
@@ -117,7 +132,10 @@ export function LoginForm({
         value={email}
         onChange={(value) => {
           setEmail(value);
-          setErrors((current) => ({ ...current, email: undefined }));
+          setForm((current) => ({
+            ...current,
+            errors: { ...current.errors, email: undefined },
+          }));
         }}
         error={issueText(errors.email)}
       />
@@ -129,8 +147,11 @@ export function LoginForm({
         placeholder={t("auth.placeholder.password")}
         value={password}
         onChange={(value) => {
-          setPassword(value);
-          setErrors((current) => ({ ...current, password: undefined }));
+          setForm((current) => ({
+            ...current,
+            password: value,
+            errors: { ...current.errors, password: undefined },
+          }));
         }}
         error={issueText(errors.password)}
         labelAction={

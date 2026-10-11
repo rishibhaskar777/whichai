@@ -178,6 +178,31 @@ describe("failed attempts", () => {
     ).toBe(true);
   });
 
+  it("gives the normal error again once the wait is over, and then lets the right password in", async () => {
+    await service.register(details);
+    const wrong = { email: details.email, password: "not the password" };
+    for (let attempt = 0; attempt < MAX_FAILED_ATTEMPTS; attempt += 1) {
+      await service.login(wrong);
+    }
+    expect(await service.login(wrong)).toEqual({
+      ok: false,
+      reason: "locked",
+      retryAfterSeconds: LOCKOUT_SECONDS,
+    });
+    expect(
+      await service.login({ email: details.email, password: PASSWORD }),
+    ).toMatchObject({ ok: false, reason: "locked" });
+
+    clock += 31_000;
+    expect(await service.login(wrong)).toEqual({
+      ok: false,
+      reason: "invalid",
+    });
+    expect(
+      (await service.login({ email: details.email, password: PASSWORD })).ok,
+    ).toBe(true);
+  });
+
   it("counts a success as a fresh start", async () => {
     await service.register(details);
     const wrong = { email: details.email, password: "not the password" };

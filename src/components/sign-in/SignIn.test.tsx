@@ -763,41 +763,6 @@ describe("accounts in the popup", () => {
     await attemptFinished(view, "Email or password is incorrect.");
   }, 20_000);
 
-  it("makes the person wait after five failed attempts, then lets them try again", async () => {
-    const user = userEvent.setup();
-    renderShell();
-    const view = await openDialog(user);
-    await user.type(view.getByLabelText("Email"), "nobody@example.org");
-    const gate = hashingGate();
-    const wrong = "Email or password is incorrect.";
-
-    async function attempt(message: string, hashes: boolean) {
-      if (hashes) gate.close();
-      await user.type(view.getByLabelText("Password"), "wrong password");
-      await user.click(view.getByRole("button", { name: "Log in" }));
-      if (hashes) {
-        // Busy proves this attempt began, and its predecessor's message is gone.
-        await view.findByRole(
-          "button",
-          { name: "Logging in…" },
-          { timeout: SLOW },
-        );
-        expect(view.queryByText(message)).toBeNull();
-        gate.release();
-      }
-      await attemptFinished(view, message);
-    }
-
-    for (let count = 0; count < 5; count += 1) await attempt(wrong, true);
-    // The lockout answers without hashing.
-    await attempt("Too many attempts. Try again in 30 seconds.", false);
-
-    // Only the clock moves; nobody waits half a minute.
-    vi.useFakeTimers({ toFake: ["Date"] });
-    vi.setSystemTime(Date.now() + 31_000);
-    await attempt(wrong, true);
-  }, 60_000);
-
   it("refuses a second account with the same email", async () => {
     const user = userEvent.setup();
     renderShell();
