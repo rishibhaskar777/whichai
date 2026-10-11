@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach, beforeAll } from "vitest";
+import { resetDocumentLoad } from "@/lib/plan/home-history";
 
 beforeAll(() => {
   if (typeof window === "undefined") return;
@@ -29,6 +30,7 @@ beforeAll(() => {
 
 afterEach(() => {
   cleanup();
+  resetDocumentLoad();
   if (typeof window === "undefined") return;
   window.history.replaceState(null, "", "/");
   window.sessionStorage.clear();

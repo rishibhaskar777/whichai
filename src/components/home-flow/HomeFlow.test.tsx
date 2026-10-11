@@ -366,7 +366,7 @@ describe("privacy", () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
-  it("keeps the goal text out of cookies, session storage and the URL", async () => {
+  it("keeps the goal text out of cookies, storage and the URL", async () => {
     const user = userEvent.setup();
     const cookiesBefore = document.cookie;
     renderHome();
@@ -374,9 +374,8 @@ describe("privacy", () => {
     await submit(user, PORTFOLIO_GOAL);
     await confirm(user);
 
-    // The goal text may stay in this tab's session storage so Back can restore
-    // it, but nowhere else.
-    expect(window.sessionStorage.getItem("whichai:goal")).toBe(PORTFOLIO_GOAL);
+    // The goal text lives only in the history entry's state, never in storage.
+    expect(window.sessionStorage.length).toBe(0);
     expect(document.cookie).toBe(cookiesBefore);
     const address = decodeURIComponent(window.location.href);
     expect(address).not.toContain(PORTFOLIO_GOAL);

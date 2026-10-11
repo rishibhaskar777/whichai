@@ -8,7 +8,6 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { clearSessionGoal } from "@/lib/plan/session-goal";
 
 export interface PendingGoal {
   text: string;
@@ -38,7 +37,6 @@ export function NewPlanProvider({ children }: { children: ReactNode }) {
   const [pendingGoal, setPendingGoal] = useState<PendingGoal | null>(null);
 
   const request = useCallback(() => {
-    clearSessionGoal();
     setCount((current) => current + 1);
   }, []);
   const startGoal = useCallback(
