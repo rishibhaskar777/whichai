@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { AuroraBackground } from "@/components/aurora/AuroraBackground";
 import { MenuIcon } from "@/components/icons";
 import { LocalDataProvider } from "@/components/local-data/LocalDataProvider";
 import { NewsPanel, type NewsChoice } from "@/components/news-panel/NewsPanel";
@@ -84,15 +85,7 @@ export function AppShell({
                 data-sidebar={railMode ? "rail" : "full"}
                 data-news={newsChoice}
               >
-                <div
-                  className={styles.glow}
-                  aria-hidden="true"
-                  data-print-hide=""
-                >
-                  <span className={styles.blobOne} />
-                  <span className={styles.blobTwo} />
-                  <span className={styles.blobThree} />
-                </div>
+                <AuroraBackground />
 
                 <a href="#main" className={styles.skipLink} data-print-hide="">
                   {t("shell.skipToMain")}

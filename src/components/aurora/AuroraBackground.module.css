@@ -1,0 +1,161 @@
+/*
+ * The CSS glow is the first paint and the fallback. Once the canvas aurora is
+ * running it takes over and the blobs fade out.
+ */
+.glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  opacity: 0.83;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(
+    ellipse 62% 60% at 50% 42%,
+    #000 25%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 62% 60% at 50% 42%,
+    #000 25%,
+    transparent 100%
+  );
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+/* The aurora fills more of the screen; the edges stay faintly lit. */
+.glow[data-layer="canvas"] {
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 85% at 50% 42%,
+    #000 35%,
+    rgb(0 0 0 / 0.45) 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 90% 85% at 50% 42%,
+    #000 35%,
+    rgb(0 0 0 / 0.45) 100%
+  );
+}
+
+:global(body):has(textarea:focus) .glow {
+  opacity: 1;
+}
+
+.canvas {
+  position: absolute;
+  top: -6%;
+  left: -6%;
+  width: 112%;
+  height: 112%;
+  opacity: 0;
+  filter: blur(20px);
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+.glow[data-layer="canvas"] .canvas {
+  opacity: 1;
+}
+
+.blobOne,
+.blobTwo,
+.blobThree {
+  position: absolute;
+  width: 62vmax;
+  height: 62vmax;
+  border-radius: 50%;
+  opacity: var(--glow-fallback);
+  will-change: transform;
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+.glow[data-layer="canvas"] .blobOne,
+.glow[data-layer="canvas"] .blobTwo,
+.glow[data-layer="canvas"] .blobThree {
+  opacity: 0;
+  animation: none;
+  will-change: auto;
+}
+
+.blobOne {
+  top: calc(38% - 31vmax);
+  left: calc(44% - 31vmax);
+  background: radial-gradient(closest-side, var(--glow-1), transparent);
+  animation: drift-one 16s ease-in-out infinite alternate;
+}
+
+.blobTwo {
+  top: calc(48% - 31vmax);
+  left: calc(60% - 31vmax);
+  background: radial-gradient(closest-side, var(--glow-2), transparent);
+  animation: drift-two 22s ease-in-out infinite alternate;
+}
+
+.blobThree {
+  top: calc(56% - 31vmax);
+  left: calc(38% - 31vmax);
+  background: radial-gradient(closest-side, var(--glow-3), transparent);
+  animation: drift-three 28s ease-in-out infinite alternate;
+}
+
+@keyframes drift-one {
+  from {
+    transform: translate3d(-6vw, 4vh, 0) scale(0.92);
+  }
+
+  to {
+    transform: translate3d(7vw, -5vh, 0) scale(1.15);
+  }
+}
+
+@keyframes drift-two {
+  from {
+    transform: translate3d(8vw, -4vh, 0) scale(1.12);
+  }
+
+  to {
+    transform: translate3d(-7vw, 6vh, 0) scale(0.9);
+  }
+}
+
+@keyframes drift-three {
+  from {
+    transform: translate3d(-4vw, -7vh, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(6vw, 5vh, 0) scale(1.14);
+  }
+}
+
+/* Off, reduced motion and save-data: the fallback glow stands still. */
+.glow[data-animated="false"] .blobOne,
+.glow[data-animated="false"] .blobTwo,
+.glow[data-animated="false"] .blobThree {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blobOne,
+  .blobTwo,
+  .blobThree {
+    animation: none;
+  }
+}
+
+/* Reduce motion set to Off: the device preference does not stop the light. */
+:global(html[data-motion="full"]) .glow[data-animated="true"] .blobOne {
+  animation: drift-one 16s ease-in-out infinite alternate;
+}
+
+:global(html[data-motion="full"]) .glow[data-animated="true"] .blobTwo {
+  animation: drift-two 22s ease-in-out infinite alternate;
+}
+
+:global(html[data-motion="full"]) .glow[data-animated="true"] .blobThree {
+  animation: drift-three 28s ease-in-out infinite alternate;
+}
+
+:global(html[data-motion="full"])
+  .glow[data-layer="canvas"]
+  :is(.blobOne, .blobTwo, .blobThree) {
+  animation: none;
+}
