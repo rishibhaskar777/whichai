@@ -72,7 +72,8 @@ Second motion exception: when a goal is submitted, the greeting collapses (a gri
 
 - The plan reads like a document, not a wall of cards: only the job cards and the understanding card have borders; overview, workflow, brief and lists are open sections with headings.
 - Tags (Keep, Better option, New) are words with a thin outline, not colour alone. The accent outline marks a better option; status colours are kept for warnings.
-- The sample notice ("Sample data, not verified") sits at the top of every plan that names an unverified tool and cannot be dismissed. Each card also says "Not verified" and labels its fit score as an editorial estimate.
+- There is no notice above the plan. One quiet line at the bottom says tool details come from official sites and fit scores are estimates, and links to `/about#data`. Cards label the fit score as an editorial estimate and show a "Verified <date>" tick only for verified records. No card shows a placeholder or "Not verified".
+- "Choose X if ..." alternatives are buttons that swap the tool into the card. The new tool's name takes focus and a status message announces it.
 - "Your toolkit at a glance" sits right below the overview: plain outlined chips grouped by category, each scrolling to and focusing its card. No icons, colour coding or counts.
 - Cards show the kind of tool as a small label. AI tool cards add one quiet block that names a model class and effort per step, with the note to check the tool's model picker, and never a model version.
 - "See other options" is open by default on screens 768px and wider, so the variety is visible, and collapsed on narrower ones.

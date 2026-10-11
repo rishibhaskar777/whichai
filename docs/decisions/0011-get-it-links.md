@@ -18,7 +18,7 @@ A plan names tools, and the obvious next question is where to get them. A wrong 
 
 ### A checked link is not a verified record
 
-`linkCheckedOn` says only that the address was opened and ended on an official page on that date. It does not make a record `verified`; that stays a person's decision ([VERIFYING-DATA.md](../VERIFYING-DATA.md)). The interface shows "Link not verified yet" when there is no date.
+`linkCheckedOn` says only that the address was opened and ended on an official page on that date. It does not make a record `verified`; that stays a person's decision ([VERIFYING-DATA.md](../VERIFYING-DATA.md)). Since [0015](0015-plan-polish.md) the interface shows a download button only for links with a date, and "Official site" when there is none.
 
 `npm run links:check` requests every address (HEAD, then GET), politely, and reports broken addresses, redirects that leave the official domains, store pages whose title does not name the tool, moves, and sites that refuse scripts. `--stamp` writes `linkCheckedOn` for the addresses that passed. It is run by hand. A weekly workflow runs it and opens or updates one issue, "Broken catalogue links". It has `contents: read` and `issues: write` only and its actions are pinned to commit SHAs.
 
