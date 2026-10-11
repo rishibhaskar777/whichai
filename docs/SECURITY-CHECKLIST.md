@@ -37,6 +37,13 @@ Apply to every release and re-check when a phase adds a new input, route or depe
 - [ ] "Clear all data" needs the word CLEAR typed and also removes the theme and language cookies
 - [ ] Only theme and language are stored in cookies, as one word each, with `SameSite=Lax` and no personal data
 
+## Contact data
+
+- [ ] No personal email address, phone number or personal name is used as a contact anywhere in the repository; `src/lib/contact-data.test.ts` fails on any address that is not a noreply or reserved example address
+- [ ] `CONTACT_EMAIL` in `src/lib/links.ts` is empty; a public address comes only from `NEXT_PUBLIC_CONTACT_EMAIL`, validated with Zod, and must be a project-only address
+- [ ] Questions, institution requests and security reports go through GitHub issue forms and private vulnerability reporting
+- [ ] `security.txt` points to the private vulnerability reporting page
+
 ## Download links
 
 - [ ] Every address in the catalogue is https and on the tool's `officialDomains` or on the official store allowlist; no URL shorteners and no third-party download sites (enforced by `src/lib/catalogue/links.ts` and its tests)

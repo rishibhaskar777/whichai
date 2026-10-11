@@ -585,7 +585,7 @@ export const hi: Record<MessageKey, string> = {
   "settings.account.signedOut":
     "आप साइन इन नहीं हैं। खाते के बिना भी आप सब कुछ इस्तेमाल कर सकते हैं।",
   "settings.account.signIn": "साइन इन करें",
-  "settings.about": "परिचय",
+  "settings.about": "परिचय और कानूनी",
   "settings.about.version": "संस्करण {version}",
   "settings.about.privacy": "गोपनीयता",
   "settings.about.security": "सुरक्षा नीति",
@@ -682,12 +682,12 @@ export const hi: Record<MessageKey, string> = {
   "privacy.signout.text":
     "साइडबार में नीचे अपना नाम चुनिए, फिर “साइन आउट करें”। इससे कुकी मिट जाती है। WhichAI की पहुँच भी हटानी हो तो उसे अपने Google खाते की सुरक्षा सेटिंग में, या GitHub में Settings, Applications के अंतर्गत रद्द कर दीजिए।",
   "privacy.contact.title": "संपर्क",
-  "privacy.contact.text":
-    "सवाल या चिंता: {email}। सुरक्षा की समस्याएँ प्रोजेक्ट के GitHub रिपॉज़िटरी के Security टैब से निजी तौर पर भी बताई जा सकती हैं।",
+  "privacy.contact.text": "सवाल या चिंता: संपर्क पेज इस्तेमाल करें, जो GitHub पर एक इश्यू खोलता है। सुरक्षा की समस्याएँ प्रोजेक्ट के GitHub रिपॉज़िटरी के Security टैब से निजी तौर पर बताई जा सकती हैं।",
+  "privacy.contact.email": "आप {email} पर भी लिख सकते हैं।",
+  "account.menu": "खाता मेन्यू",
 
   // Plans and pricing
   "plan.label": "{plan} प्लान",
-  "plan.guest": "अतिथि",
   "plan.upgrade": "प्लान अपग्रेड करें",
   "plan.subscription": "सब्सक्रिप्शन",
   "pricing.title": "कीमतें",
@@ -716,8 +716,6 @@ export const hi: Record<MessageKey, string> = {
   "pricing.institution.audience": "कॉलेजों और कोचिंग केंद्रों के लिए",
   "pricing.institution.priceNote": "कोई तय कीमत नहीं है। हमसे संपर्क करें।",
   "pricing.institution.subject": "हमारे संस्थान के लिए WhichAI",
-  "pricing.institution.body":
-    "नमस्ते,\n\nहम अपने संस्थान के लिए WhichAI के बारे में और जानना चाहते हैं।\n\nसंस्थान का नाम:\nछात्रों की संख्या:\nहमें क्या चाहिए:\n",
   "pricing.table.title": "प्लान की तुलना",
   "pricing.table.feature": "सुविधा",
   "pricing.table.included": "शामिल",
@@ -826,22 +824,18 @@ export const hi: Record<MessageKey, string> = {
   "refund.how.text":
     "संपर्क पेज का उपयोग करें और बताएँ कि कौन-सा प्लान और कौन-सा भुगतान। कार्ड, UPI या बैंक की जानकारी ईमेल से न भेजें।",
   "contact.title": "संपर्क",
-  "contact.lede":
-    "WhichAI एक छोटा प्रोजेक्ट है जिसे एक व्यक्ति चलाता है। जवाब आने में कुछ दिन लग सकते हैं।",
+  "contact.lede": "WhichAI एक छोटा प्रोजेक्ट है जिसे एक व्यक्ति चलाता है। सब कुछ GitHub के ज़रिए होता है, और जवाब आने में कुछ दिन लग सकते हैं।",
   "contact.email.title": "ईमेल",
-  "contact.email.missing": "संपर्क ईमेल अभी जोड़ा नहीं गया है।",
   "contact.email.text": "प्लान, कीमत या आपके डेटा के बारे में सवालों के लिए:",
-  "contact.feedback.title": "GitHub पर फ़ीडबैक",
-  "contact.feedback.text":
-    "टूल के गलत रिकॉर्ड, बग या किसी विचार के लिए इश्यू खोलें। यह सार्वजनिक है, इसलिए निजी जानकारी न लिखें।",
+  "contact.feedback.title": "सवाल और फ़ीडबैक",
+  "contact.feedback.text": "सवाल, टूल के गलत रिकॉर्ड, बग या किसी विचार के लिए GitHub पर इश्यू खोलें। यह सार्वजनिक है, इसलिए निजी जानकारी न लिखें।",
   "contact.feedback.link": "फ़ीडबैक भेजें",
   "contact.security.title": "सुरक्षा की समस्याएँ",
-  "contact.security.text": "इन्हें निजी तौर पर बताएँ। सार्वजनिक इश्यू न खोलें।",
-  "contact.security.link": "सुरक्षा नीति",
-  "contact.institution.title": "कॉलेज और कोचिंग केंद्र",
-  "contact.institution.text":
-    "संस्थान प्लान के बारे में ईमेल से पूछें। बताएँ कि आपके लगभग कितने छात्र हैं।",
-  "contact.institution.link": "संस्थान प्लान के बारे में ईमेल करें",
+  "contact.security.text": "इन्हें GitHub के ज़रिए निजी तौर पर बताएँ। सार्वजनिक इश्यू न खोलें।",
+  "contact.security.link": "सुरक्षा समस्या की रिपोर्ट करें",
+  "contact.institution.title": "कॉलेज और संस्थान",
+  "contact.institution.text": "एक इश्यू खोलें और अपने संस्थान का नाम तथा लगभग कितने छात्र हैं, बताएँ।",
+  "contact.institution.link": "संस्थान प्लान के बारे में पूछें",
 
   // Parts and missed goals
   "understanding.didYouMean": "क्या आपका मतलब इनमें से कोई था?",

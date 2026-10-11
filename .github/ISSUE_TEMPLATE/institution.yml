@@ -1,0 +1,29 @@
+name: Institution plan
+description: Ask about WhichAI for a college, school or coaching centre.
+title: "Institution plan: "
+labels: ["institution"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your interest. Issues in this repository are public, so please share only what you are comfortable having public: the institution's name and rough size. Do not include phone numbers, email addresses or anything private.
+  - type: input
+    id: institution
+    attributes:
+      label: Institution name
+    validations:
+      required: true
+  - type: input
+    id: students
+    attributes:
+      label: Roughly how many students?
+      description: A range is fine, for example "200 to 300".
+    validations:
+      required: false
+  - type: textarea
+    id: needs
+    attributes:
+      label: What would you like to use WhichAI for?
+      description: A few plain sentences are enough.
+    validations:
+      required: true

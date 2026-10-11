@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/provider";
-import { CONTACT_EMAIL } from "@/lib/links";
+import { getContactEmail } from "@/lib/links";
 import styles from "./Content.module.css";
 
 const LAST_UPDATED = "2026-10-10";
 
 export function PrivacyContent() {
   const { t, rich, formatDate } = useI18n();
+  const email = getContactEmail();
   return (
     <article className={styles.page}>
       <h1 className={styles.title}>{t("privacy.title")}</h1>
@@ -60,11 +61,14 @@ export function PrivacyContent() {
 
       <section className={styles.section} aria-labelledby="contact">
         <h2 id="contact">{t("privacy.contact.title")}</h2>
-        <p>
-          {rich("privacy.contact.text", {
-            email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>,
-          })}
-        </p>
+        <p>{t("privacy.contact.text")}</p>
+        {email !== "" ? (
+          <p>
+            {rich("privacy.contact.email", {
+              email: <a href={`mailto:${email}`}>{email}</a>,
+            })}
+          </p>
+        ) : null}
       </section>
 
       <Link href="/" className={styles.back}>

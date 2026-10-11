@@ -4,7 +4,7 @@
 
 Do not open a public issue for security problems.
 
-Use GitHub's private reporting: the **Security** tab of this repository, then **Report a vulnerability**. If that is not available, email rishibhaskar254@gmail.com.
+Use GitHub's private vulnerability reporting: the **Security** tab of this repository, then **Report a vulnerability**. This is the only channel for security reports.
 
 Include what you found, how to reproduce it, and what you think the impact is. You will get an acknowledgement within a few days. Please give us reasonable time to fix the problem before sharing it publicly.
 

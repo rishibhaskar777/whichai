@@ -584,7 +584,7 @@ export const en = {
   "settings.account.signedOut":
     "You are not signed in. You can use everything without an account.",
   "settings.account.signIn": "Sign in",
-  "settings.about": "About",
+  "settings.about": "About & legal",
   "settings.about.version": "Version {version}",
   "settings.about.privacy": "Privacy",
   "settings.about.security": "Security policy",
@@ -681,12 +681,12 @@ export const en = {
   "privacy.signout.text":
     "Choose your name at the bottom of the sidebar, then Sign out. That deletes the cookie. To also remove WhichAI's access, revoke it in your Google account's security settings or in GitHub under Settings, Applications.",
   "privacy.contact.title": "Contact",
-  "privacy.contact.text":
-    "Questions or concerns: {email}. Security problems can also be reported privately through the Security tab of the project's GitHub repository.",
+  "privacy.contact.text": "Questions or concerns: use the contact page, which opens an issue on GitHub. Security problems can be reported privately through the Security tab of the project's GitHub repository.",
+  "privacy.contact.email": "You can also write to {email}.",
+  "account.menu": "Account menu",
 
   // Plans and pricing
   "plan.label": "{plan} plan",
-  "plan.guest": "Guest",
   "plan.upgrade": "Upgrade plan",
   "plan.subscription": "Subscription",
   "pricing.title": "Pricing",
@@ -715,8 +715,6 @@ export const en = {
   "pricing.institution.audience": "For colleges and coaching centres",
   "pricing.institution.priceNote": "There is no fixed price. Contact us.",
   "pricing.institution.subject": "WhichAI for our institution",
-  "pricing.institution.body":
-    "Hello,\n\nWe would like to know more about WhichAI for our institution.\n\nInstitution name:\nNumber of students:\nWhat we need:\n",
   "pricing.table.title": "Compare plans",
   "pricing.table.feature": "Feature",
   "pricing.table.included": "Included",
@@ -823,23 +821,18 @@ export const en = {
   "refund.how.text":
     "Use the contact page and say which plan and which payment you mean. Do not send card, UPI or bank details by email.",
   "contact.title": "Contact",
-  "contact.lede":
-    "WhichAI is a small project run by one person. Replies can take a few days.",
+  "contact.lede": "WhichAI is a small project run by one person. Everything goes through GitHub, and replies can take a few days.",
   "contact.email.title": "Email",
-  "contact.email.missing": "The contact email has not been added yet.",
   "contact.email.text": "For questions about plans, pricing or your data:",
-  "contact.feedback.title": "Feedback on GitHub",
-  "contact.feedback.text":
-    "For a wrong tool record, a bug or an idea, open an issue. It is public, so leave out personal details.",
+  "contact.feedback.title": "Questions and feedback",
+  "contact.feedback.text": "For a question, a wrong tool record, a bug or an idea, open an issue on GitHub. It is public, so leave out personal details.",
   "contact.feedback.link": "Send feedback",
   "contact.security.title": "Security problems",
-  "contact.security.text":
-    "Report these privately. Do not open a public issue.",
-  "contact.security.link": "Security policy",
-  "contact.institution.title": "Colleges and coaching centres",
-  "contact.institution.text":
-    "Ask about the Institution plan by email. Tell us roughly how many students you have.",
-  "contact.institution.link": "Email about the Institution plan",
+  "contact.security.text": "Report these privately through GitHub. Do not open a public issue.",
+  "contact.security.link": "Report a security problem",
+  "contact.institution.title": "Colleges and institutions",
+  "contact.institution.text": "Open an issue and tell us your institution's name and roughly how many students you have.",
+  "contact.institution.link": "Ask about the Institution plan",
 
   // Parts and missed goals
   "understanding.didYouMean": "Did you mean one of these?",

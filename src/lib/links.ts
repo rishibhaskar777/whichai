@@ -1,5 +1,9 @@
+import { parseContactEmail } from "@/lib/env";
+
 export const REPOSITORY_URL = "https://github.com/rishibhaskar777/whichai";
 export const SECURITY_POLICY_URL = `${REPOSITORY_URL}/security/policy`;
+/** GitHub's private vulnerability reporting form for this repository. */
+export const SECURITY_REPORT_URL = `${REPOSITORY_URL}/security/advisories/new`;
 export const FEEDBACK_URL = `${REPOSITORY_URL}/issues/new?template=feedback.yml`;
 
 /** A prefilled issue form for a wrong or out-of-date record. */
@@ -12,18 +16,24 @@ export function toolProblemUrl(toolId: string): string {
   return `${REPOSITORY_URL}/issues/new?${params.toString()}`;
 }
 
-/** The address in SECURITY.md. Empty means "use a GitHub issue instead". */
-export const CONTACT_EMAIL: string = "rishibhaskar254@gmail.com";
-
-export function mailtoUrl(subject: string, body: string): string {
-  const params = new URLSearchParams({ subject, body });
-  // URLSearchParams writes spaces as "+", which mail apps show literally.
-  return `mailto:${CONTACT_EMAIL}?${params.toString().replace(/\+/g, "%20")}`;
+/** The issue form for colleges and coaching centres asking about a plan. */
+export function institutionUrl(title: string): string {
+  const params = new URLSearchParams({
+    template: "institution.yml",
+    title,
+  });
+  return `${REPOSITORY_URL}/issues/new?${params.toString()}`;
 }
 
-/** A prefilled email to the contact, or a GitHub issue when no email is set. */
-export function contactUrl(subject: string, body: string): string {
-  if (CONTACT_EMAIL !== "") return mailtoUrl(subject, body);
-  const params = new URLSearchParams({ title: subject, body });
-  return `${REPOSITORY_URL}/issues/new?${params.toString()}`;
+/** Default contact address. Empty: every contact path goes through GitHub. */
+export const CONTACT_EMAIL: string = "";
+
+/**
+ * A project-only address from NEXT_PUBLIC_CONTACT_EMAIL, or the default.
+ * Empty means "show only the GitHub options".
+ */
+export function getContactEmail(): string {
+  return (
+    parseContactEmail(process.env.NEXT_PUBLIC_CONTACT_EMAIL) || CONTACT_EMAIL
+  );
 }
