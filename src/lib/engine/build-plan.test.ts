@@ -72,7 +72,13 @@ describe("every goal template", () => {
       NO_OPTIONS,
     );
 
-    for (const text of collectStrings(plan)) {
+    // The recorded pricing summary is the one place a price may appear.
+    const withoutRecordedPricing = JSON.parse(
+      JSON.stringify(plan, (key, value: unknown) =>
+        key === "pricing" && typeof value === "object" ? null : value,
+      ),
+    ) as unknown;
+    for (const text of collectStrings(withoutRecordedPricing)) {
       expect(hasConcretePrice(text), text).toBe(false);
     }
   });

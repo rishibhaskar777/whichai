@@ -58,7 +58,11 @@ describe("catalogue data files", () => {
   it("keep the verification fields consistent, with editorial scores only", () => {
     for (const tool of catalogue.tools) {
       expect(tool.lastVerified !== null, tool.id).toBe(tool.verified);
-      if (!tool.verified) expect(tool.pricing).toBe("[verify]");
+      // Pricing text always names the page it came from and the day.
+      if (tool.pricing !== "[verify]") {
+        expect(tool.pricingUrl, tool.id).toBeDefined();
+        expect(tool.pricingCheckedOn, tool.id).toBeDefined();
+      }
       expect(tool.scoreSource).toBe("editorial-estimate");
     }
   });
@@ -235,7 +239,6 @@ describe("catalogue files", () => {
     for (const tool of catalogue.tools) {
       expect(tool.verified, tool.id).toBe(false);
       expect(tool.lastVerified, tool.id).toBeNull();
-      expect(tool.pricing, tool.id).toBe("[verify]");
     }
   });
 });
