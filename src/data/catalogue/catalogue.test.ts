@@ -3,7 +3,7 @@ import {
   collectStrings,
   findProblems,
   hasConcretePrice,
-  withoutVerifiedPricing,
+  withoutRecordedPricing,
 } from "@/lib/catalogue/validate";
 import {
   GOAL_IDS,
@@ -64,7 +64,7 @@ describe("catalogue data files", () => {
   });
 
   it("contain no concrete price anywhere", () => {
-    for (const text of collectStrings(withoutVerifiedPricing(catalogue))) {
+    for (const text of collectStrings(withoutRecordedPricing(catalogue))) {
       expect(hasConcretePrice(text), text).toBe(false);
     }
   });
@@ -272,15 +272,46 @@ describe("tool schema rules", () => {
       verified: true,
       lastVerified: "2026-10-09",
       pricing: "Checked on the official page.",
+      pricingUrl: "https://example.com/pricing",
+      pricingCheckedOn: "2026-10-09",
     };
     expect(toolSchema.safeParse(checked).success).toBe(true);
   });
 
-  it("keeps an unverified record on the placeholder", () => {
-    const priced = { ...sample, pricing: "Free forever" };
+  it("does not let an unverified record carry a verification date", () => {
     const dated = { ...sample, lastVerified: "2026-10-09" };
-    expect(toolSchema.safeParse(priced).success).toBe(false);
     expect(toolSchema.safeParse(dated).success).toBe(false);
+  });
+
+  it("allows pricing text only with its page and the day it was read", () => {
+    const text = "Free plan; paid from $20/month";
+    const bare = { ...sample, pricing: text };
+    const noDay = {
+      ...sample,
+      pricing: text,
+      pricingUrl: "https://example.com/pricing",
+    };
+    const noPage = { ...sample, pricing: text, pricingCheckedOn: "2026-10-11" };
+    const recorded = {
+      ...sample,
+      pricing: text,
+      pricingUrl: "https://example.com/pricing",
+      pricingCheckedOn: "2026-10-11",
+    };
+    expect(toolSchema.safeParse(bare).success).toBe(false);
+    expect(toolSchema.safeParse(noDay).success).toBe(false);
+    expect(toolSchema.safeParse(noPage).success).toBe(false);
+    expect(toolSchema.safeParse(recorded).success).toBe(true);
+  });
+
+  it("does not allow a pricing date without pricing text", () => {
+    const orphan = { ...sample, pricingCheckedOn: "2026-10-11" };
+    expect(toolSchema.safeParse(orphan).success).toBe(false);
+  });
+
+  it("allows a pricing page without pricing text", () => {
+    const pageOnly = { ...sample, pricingUrl: "https://example.com/pricing" };
+    expect(toolSchema.safeParse(pageOnly).success).toBe(true);
   });
 });
 
@@ -295,9 +326,9 @@ describe("findProblems", () => {
     expect(findProblems(withTool({ providerId: "nobody" }))).toContain(
       `tool ${firstId}: unknown provider nobody`,
     );
-    expect(findProblems(withTool({ worksWith: ["no-such-tool"] })).join()).toMatch(
-      /unknown tool no-such-tool/,
-    );
+    expect(
+      findProblems(withTool({ worksWith: ["no-such-tool"] })).join(),
+    ).toMatch(/unknown tool no-such-tool/);
   });
 
   it("reports an included job that is unknown or already listed", () => {
@@ -317,13 +348,30 @@ describe("findProblems", () => {
     expect(findProblems(deep).join()).toMatch(/root page/);
   });
 
-  it("allows a price in the pricing text of a verified record", () => {
-    const checked = withTool({
-      verified: true,
-      lastVerified: "2026-10-09",
-      pricing: "Paid plan: $20 per month. Checked on the official page.",
+  it("allows a price in recorded pricing text, verified or not", () => {
+    const [first] = catalogue.tools;
+    const pricing = {
+      pricing: "Paid plan: $20 per month.",
+      pricingUrl: first!.officialUrl,
+      pricingCheckedOn: "2026-10-11",
+    };
+    expect(findProblems(withTool(pricing))).toEqual([]);
+    expect(
+      findProblems(
+        withTool({ ...pricing, verified: true, lastVerified: "2026-10-09" }),
+      ),
+    ).toEqual([]);
+  });
+
+  it("reports a pricing page that is off the tool's own domains", () => {
+    const [first] = catalogue.tools;
+    const offSite = withTool({
+      pricing: "Paid plan: $20 per month.",
+      pricingUrl: "https://example.org/pricing",
+      pricingCheckedOn: "2026-10-11",
     });
-    expect(findProblems(checked)).toEqual([]);
+    expect(first).toBeDefined();
+    expect(findProblems(offSite).join()).toMatch(/pricingUrl/);
   });
 
   it("reports a price in a verified record outside its pricing text", () => {
