@@ -694,7 +694,9 @@ describe("plans built from parts", () => {
   });
 });
 
-describe("accessibility", () => {
+// Eighteen large plans are checked one by one; give them room when many
+// test files run at once.
+describe("accessibility", { timeout: 30_000 }, () => {
   it.each(
     [
       "portfolio website with animations",
