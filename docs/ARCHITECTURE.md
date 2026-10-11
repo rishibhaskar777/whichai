@@ -307,6 +307,10 @@ On these pages, a swapped tool, a level change or an added or removed part repla
 
 `src/lib/i18n/en.ts` is the source of truth and `hi.ts` is typed to the same keys, so a missing translation fails the compile. `createI18n(locale)` gives `t`, `tn` (plurals), `rich` (placeholders that are elements) and Intl formatting. The language is a cookie read by the root layout, which sets `<html lang>` and the provider's locale; server components use `getI18n()`. Changing it in Settings writes the cookie, updates the page and calls `router.refresh()`. Catalogue content stays in English ([0010](decisions/0010-i18n.md)).
 
+## Background
+
+`src/components/aurora/` draws the page background ([0018](decisions/0018-live-background.md)). `AuroraBackground.tsx` is a client component inside the app shell. It always renders the CSS glow, and after load and an idle callback it imports `aurora-engine.ts` as a separate chunk, which draws `aurora-field.ts` onto a small canvas and returns null when no 2D context exists. `aurora-colour.ts` reads the `--glow-*` tokens. The `animatedBackground` setting, reduced motion and save-data decide between movement and one still frame.
+
 ## Principles
 
 - Server decides, client displays. Nothing security-relevant depends on client code.
