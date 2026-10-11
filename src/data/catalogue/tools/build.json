@@ -3180,6 +3180,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://zed.dev",
     "officialDomains": ["zed.dev", "github.com/zed-industries"],
+    "strengthTags": ["speed", "coding", "integrations"],
+    "strengthNotes": {
+      "speed": "opens and responds very quickly",
+      "coding": "has an AI assistant built into the editor",
+      "integrations": "supports real-time collaboration"
+    },
     "getIt": {
       "windows": {
         "url": "https://zed.dev/download",

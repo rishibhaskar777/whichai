@@ -48,6 +48,61 @@ export const JOB_STAGES = [
 export const jobStageSchema = z.enum(JOB_STAGES);
 export type JobStage = z.infer<typeof jobStageSchema>;
 
+/**
+ * What a tool is good at, in the words of the plan. A job slot lists the tags
+ * that matter for it, and a tool's `strengthNotes` explain each tag it has.
+ */
+export const STRENGTH_TAGS = [
+  "long-context",
+  "coding",
+  "reasoning",
+  "images",
+  "citations",
+  "voice",
+  "multilingual",
+  "beginner-friendly",
+  "free-tier-generous",
+  "local-private",
+  "india-payments",
+  "web-search",
+  "documents",
+  "integrations",
+  "video",
+  "music",
+  "design-polish",
+  "speed",
+  "templates",
+] as const;
+export const strengthTagSchema = z.enum(STRENGTH_TAGS);
+export type StrengthTag = z.infer<typeof strengthTagSchema>;
+
+/** The kinds of goal that tool notes and add-ons are written for. */
+export const GOAL_CATEGORIES = [
+  "websites-and-apps",
+  "games",
+  "writing",
+  "study",
+  "research-and-reading",
+  "media",
+  "business",
+  "data",
+] as const;
+export const goalCategorySchema = z.enum(GOAL_CATEGORIES);
+export type GoalCategory = z.infer<typeof goalCategorySchema>;
+
+/**
+ * What a person does with a tool in one job for one goal and level. The task
+ * continues "Use <tool> to ...", so it starts with a verb and has no full stop.
+ */
+export const slotSchema = z
+  .object({
+    tags: z.array(strengthTagSchema).min(1).max(3),
+    task: text(130),
+    starterPrompt: text(320),
+  })
+  .strict();
+export type Slot = z.infer<typeof slotSchema>;
+
 export const providerSchema = z.object({
   id: slug,
   name: text(60),
@@ -61,6 +116,8 @@ export const jobSchema = z.object({
   description: text(200),
   category: jobCategorySchema,
   stage: jobStageSchema,
+  /** Used for a part or feature that a goal does not write its own text for. */
+  defaultSlot: slotSchema,
   /** Words and phrases that show a person wants this job done. */
   keywords: z.array(text(40)).min(20).max(40),
 });
@@ -157,6 +214,31 @@ export const getItSchema = z
   .strict();
 export type GetIt = z.infer<typeof getItSchema>;
 
+export const MODEL_CLASS_IDS = [
+  "fast-and-cheap",
+  "balanced-everyday",
+  "deep-reasoning",
+  "long-documents",
+  "coding",
+  "image",
+] as const;
+export const modelClassIdSchema = z.enum(MODEL_CLASS_IDS);
+export type ModelClassId = z.infer<typeof modelClassIdSchema>;
+
+export const modelEntrySchema = z
+  .object({ name: text(60), modelClass: modelClassIdSchema })
+  .strict();
+export type ModelEntry = z.infer<typeof modelEntrySchema>;
+
+export const tipSchema = z
+  .object({
+    text: text(200),
+    /** The documentation page the tip comes from, when there is one. */
+    sourceUrl: httpsUrl.optional(),
+  })
+  .strict();
+export type Tip = z.infer<typeof tipSchema>;
+
 export const toolSchema = z
   .object({
     id: slug,
@@ -184,6 +266,41 @@ export const toolSchema = z
     officialUrl: httpsUrl,
     officialDomains: z.array(officialDomainSchema).min(1).max(6),
     getIt: getItSchema.optional(),
+    /** What the tool is good at. Every tag with a note is also listed here. */
+    strengthTags: z.array(strengthTagSchema).max(8).default([]),
+    /** One short phrase per tag, written to follow the tool's name. */
+    strengthNotes: z.partialRecord(strengthTagSchema, text(110)).default({}),
+    /** Editorial notes on what a general assistant is good at per kind of goal. */
+    categoryNotes: z
+      .partialRecord(
+        goalCategorySchema,
+        z.object({ text: text(130), source: z.literal("editorial") }).strict(),
+      )
+      .default({}),
+    /** Current models as named on `modelsUrl`, mapped to capability classes. */
+    models: z.array(modelEntrySchema).max(8).optional(),
+    /** The official page that names the models. */
+    modelsUrl: httpsUrl.optional(),
+    /** The day `modelsUrl` was read and the names above were copied from it. */
+    modelsCheckedOn: z.iso.date().optional(),
+    /** Settings and habits that help, from the tool's own documentation. */
+    tips: z.array(tipSchema).max(6).default([]),
+    /** The day the tips were compared with the documentation. */
+    tipsCheckedOn: z.iso.date().optional(),
+    /** General advice for staying inside free limits, with no numbers. */
+    freePlanTips: z.array(text(200)).max(4).default([]),
+    /** Tools from the catalogue that extend this one, by kind of goal. */
+    enhancedBy: z
+      .array(
+        z
+          .object({
+            toolId: slug,
+            categories: z.array(goalCategorySchema).min(1),
+          })
+          .strict(),
+      )
+      .max(8)
+      .default([]),
     /** Plan names, only when confident. Features stay "[verify]" until checked. */
     planTiers: z
       .array(z.object({ name: text(40), features: z.literal(VERIFY) }))
@@ -215,6 +332,38 @@ export const toolSchema = z
         message: "An unverified record must not have a verification date.",
       });
     }
+    const untagged = Object.keys(tool.strengthNotes).filter(
+      (tag) => !tool.strengthTags.includes(tag as StrengthTag),
+    );
+    if (untagged.length > 0) {
+      context.addIssue({
+        code: "custom",
+        path: ["strengthNotes"],
+        message: `strengthNotes has tags missing from strengthTags: ${untagged.join(", ")}.`,
+      });
+    }
+    const hasModels = (tool.models?.length ?? 0) > 0;
+    if (hasModels && !(tool.modelsUrl && tool.modelsCheckedOn)) {
+      context.addIssue({
+        code: "custom",
+        path: ["models"],
+        message: "Model names need modelsUrl and modelsCheckedOn.",
+      });
+    }
+    if (!hasModels && (tool.modelsUrl || tool.modelsCheckedOn)) {
+      context.addIssue({
+        code: "custom",
+        path: ["models"],
+        message: "modelsUrl and modelsCheckedOn need model names.",
+      });
+    }
+    if (tool.tips.some((tip) => tip.sourceUrl) && !tool.tipsCheckedOn) {
+      context.addIssue({
+        code: "custom",
+        path: ["tipsCheckedOn"],
+        message: "Tips with a source need tipsCheckedOn.",
+      });
+    }
     const hasPricingText = tool.pricing !== VERIFY;
     if (hasPricingText && !(tool.pricingUrl && tool.pricingCheckedOn)) {
       context.addIssue({
@@ -232,17 +381,6 @@ export const toolSchema = z
     }
   });
 export type Tool = z.infer<typeof toolSchema>;
-
-export const MODEL_CLASS_IDS = [
-  "fast-and-cheap",
-  "balanced-everyday",
-  "deep-reasoning",
-  "long-documents",
-  "coding",
-  "image",
-] as const;
-export const modelClassIdSchema = z.enum(MODEL_CLASS_IDS);
-export type ModelClassId = z.infer<typeof modelClassIdSchema>;
 
 export const effortSchema = z.enum(["low", "medium", "high"]);
 export type Effort = z.infer<typeof effortSchema>;
@@ -329,16 +467,31 @@ const modelGuidanceSchema = z.object({
   steps: z.array(modelStepSchema).min(1).max(4),
 });
 
-export const goalLevelSchema = z.object({
-  summary: text(400),
-  estimatedTime: text(120),
-  jobs: z.array(slug).max(10),
-  steps: z.array(workflowStepSchema).min(1).max(12),
-  commonMistakes: z.array(text(240)).min(1).max(6),
-  whenToUpgrade: z.array(text(240)).min(1).max(6),
-  checkTheFacts: text(400).nullable(),
-  modelGuidance: z.array(modelGuidanceSchema).max(8),
-});
+export const goalLevelSchema = z
+  .object({
+    summary: text(400),
+    estimatedTime: text(120),
+    /** Who this level suits, in one line. */
+    goodFor: text(140),
+    jobs: z.array(slug).max(10),
+    /** One entry per job: the task, the tags that matter and a starter prompt. */
+    slots: z.record(slug, slotSchema),
+    steps: z.array(workflowStepSchema).min(1).max(12),
+    commonMistakes: z.array(text(240)).min(1).max(6),
+    whenToUpgrade: z.array(text(240)).min(1).max(6),
+    checkTheFacts: text(400).nullable(),
+    modelGuidance: z.array(modelGuidanceSchema).max(8),
+  })
+  .superRefine((level, context) => {
+    const slotted = Object.keys(level.slots).sort().join();
+    if (slotted !== [...level.jobs].sort().join()) {
+      context.addIssue({
+        code: "custom",
+        path: ["slots"],
+        message: "slots needs exactly one entry for each job in jobs.",
+      });
+    }
+  });
 export type GoalLevel = z.infer<typeof goalLevelSchema>;
 
 export const goalFeatureSchema = z.object({
@@ -363,6 +516,8 @@ export type GoalGroup = z.infer<typeof goalGroupSchema>;
 export const goalTemplateSchema = z.object({
   id: goalIdSchema,
   group: goalGroupSchema,
+  /** The kind of goal, for tool notes. Null when a goal fits none of them. */
+  category: goalCategorySchema.nullable(),
   title: text(60),
   headline: text(100),
   example: text(120),

@@ -16,6 +16,11 @@ function job(id: string): Job {
     description: "x",
     category: "ai",
     stage: "idea",
+    defaultSlot: {
+      tags: ["reasoning"],
+      task: "do the work",
+      starterPrompt: "Help me.",
+    },
     keywords: [],
   };
 }

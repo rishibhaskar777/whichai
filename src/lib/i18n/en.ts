@@ -208,6 +208,22 @@ export const en = {
   "models.note":
     "Model names change. Check the tool's model picker and choose the closest match.",
   "models.explain": "What do these mean?",
+  "job.headline": "Use {tool} to {task}",
+  "job.about": "About {tool}: {summary}",
+  "plan.goodFor": "Suits: {text}",
+  "getMore.toggle": "Get more from {tool}",
+  "getMore.model": "Best model for this goal",
+  "getMore.modelsAsOf": "As of {date}, as named on the tool's own page:",
+  "getMore.modelsSource": "Source",
+  "getMore.classesOnly":
+    "No model names are recorded for this tool. Pick by what you need:",
+  "getMore.tips": "Settings that help",
+  "getMore.tipsChecked": "Compared with the documentation on {date}.",
+  "getMore.tipSource": "Source",
+  "getMore.addOns": "Add-ons",
+  "getMore.freePlan": "Staying within free limits",
+  "getMore.prompt": "Starter prompt for this goal",
+  "getMore.copyPrompt": "Copy the starter prompt for {tool}",
 
   // Accuracy card
   "accuracy.title": "Make this more accurate",
@@ -687,7 +703,8 @@ export const en = {
   "privacy.signout.text":
     "Choose your name at the bottom of the sidebar, then Sign out. That deletes the cookie. To also remove WhichAI's access, revoke it in your Google account's security settings or in GitHub under Settings, Applications.",
   "privacy.contact.title": "Contact",
-  "privacy.contact.text": "Questions or concerns: use the contact page, which opens an issue on GitHub. Security problems can be reported privately through the Security tab of the project's GitHub repository.",
+  "privacy.contact.text":
+    "Questions or concerns: use the contact page, which opens an issue on GitHub. Security problems can be reported privately through the Security tab of the project's GitHub repository.",
   "privacy.contact.email": "You can also write to {email}.",
   "account.menu": "Account menu",
 
@@ -827,17 +844,21 @@ export const en = {
   "refund.how.text":
     "Use the contact page and say which plan and which payment you mean. Do not send card, UPI or bank details by email.",
   "contact.title": "Contact",
-  "contact.lede": "WhichAI is a small project run by one person. Everything goes through GitHub, and replies can take a few days.",
+  "contact.lede":
+    "WhichAI is a small project run by one person. Everything goes through GitHub, and replies can take a few days.",
   "contact.email.title": "Email",
   "contact.email.text": "For questions about plans, pricing or your data:",
   "contact.feedback.title": "Questions and feedback",
-  "contact.feedback.text": "For a question, a wrong tool record, a bug or an idea, open an issue on GitHub. It is public, so leave out personal details.",
+  "contact.feedback.text":
+    "For a question, a wrong tool record, a bug or an idea, open an issue on GitHub. It is public, so leave out personal details.",
   "contact.feedback.link": "Send feedback",
   "contact.security.title": "Security problems",
-  "contact.security.text": "Report these privately through GitHub. Do not open a public issue.",
+  "contact.security.text":
+    "Report these privately through GitHub. Do not open a public issue.",
   "contact.security.link": "Report a security problem",
   "contact.institution.title": "Colleges and institutions",
-  "contact.institution.text": "Open an issue and tell us your institution's name and roughly how many students you have.",
+  "contact.institution.text":
+    "Open an issue and tell us your institution's name and roughly how many students you have.",
   "contact.institution.link": "Ask about the Institution plan",
 
   // Parts and missed goals

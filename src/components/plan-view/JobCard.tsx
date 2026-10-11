@@ -15,6 +15,7 @@ import type { JobRecommendation } from "@/lib/schemas/plan";
 import { useMediaQuery } from "@/lib/use-media-query";
 import controls from "@/styles/controls.module.css";
 import styles from "./JobCard.module.css";
+import { GetMore } from "./GetMore";
 import { ModelGuidance } from "./ModelGuidance";
 
 export function jobCardId(jobId: string): string {
@@ -32,7 +33,7 @@ interface JobCardProps {
 export function JobCard({ job, onSwap, onRemove }: JobCardProps) {
   const i18n = useI18n();
   const { t, rich, formatDate } = i18n;
-  const titleId = useId();
+  const nameId = useId();
   const panelId = useId();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const focusTitle = useRef(false);
@@ -60,7 +61,7 @@ export function JobCard({ job, onSwap, onRemove }: JobCardProps) {
       id={jobCardId(job.jobId)}
       tabIndex={-1}
       className={styles.card}
-      aria-labelledby={titleId}
+      aria-labelledby={nameId}
     >
       <div key={job.toolId} className={styles.content} data-swapped={swapped}>
         <header className={styles.header}>
@@ -69,13 +70,11 @@ export function JobCard({ job, onSwap, onRemove }: JobCardProps) {
               {job.jobName}
               <span className={styles.kind}>{t(`kind.${job.kind}`)}</span>
             </p>
-            <h3
-              id={titleId}
-              ref={titleRef}
-              tabIndex={-1}
-              className={styles.toolName}
-            >
-              {job.toolName}
+            <h3 ref={titleRef} tabIndex={-1} className={styles.toolName}>
+              {rich("job.headline", {
+                tool: <span id={nameId}>{job.toolName}</span>,
+                task: job.task,
+              })}
             </h3>
             {job.autoPick ? (
               <button
@@ -104,6 +103,9 @@ export function JobCard({ job, onSwap, onRemove }: JobCardProps) {
         ) : null}
 
         <p className={styles.why}>{job.why}</p>
+        <p className={styles.about}>
+          {t("job.about", { tool: job.toolName, summary: job.about })}
+        </p>
 
         {job.modelGuidance ? (
           <ModelGuidance guidance={job.modelGuidance} />
@@ -166,6 +168,14 @@ export function JobCard({ job, onSwap, onRemove }: JobCardProps) {
             officialUrl={job.officialUrl}
             variant="compact"
             detailHref={`/tools/${job.toolId}`}
+          />
+        ) : null}
+
+        {job.getMore ? (
+          <GetMore
+            toolName={job.toolName}
+            data={job.getMore}
+            starterPrompt={job.starterPrompt}
           />
         ) : null}
 

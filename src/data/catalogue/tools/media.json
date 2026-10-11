@@ -59,6 +59,39 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.adobe.com",
     "officialDomains": ["adobe.com"],
+    "strengthTags": ["images", "integrations", "design-polish"],
+    "strengthNotes": {
+      "images": "makes images from a text description",
+      "integrations": "works inside Adobe apps such as Photoshop and Express",
+      "design-polish": "has a simple interface with style options"
+    },
+    "tips": [
+      {
+        "text": "Name the subject, style, light and framing in a short prompt, then change one thing at a time."
+      },
+      {
+        "text": "Reuse the same style words across a series so the pictures look like a set."
+      }
+    ],
+    "freePlanTips": [
+      "Write a clear prompt first, so fewer generations are spent on guesses.",
+      "Make one or two variations and refine the best, rather than many at once.",
+      "Check the official pricing page for current limits and what free images may be used for."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "adobe-photoshop",
+        "categories": ["media"]
+      },
+      {
+        "toolId": "adobe-express",
+        "categories": ["media", "business"]
+      },
+      {
+        "toolId": "adobe-premiere-pro",
+        "categories": ["media"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://firefly.adobe.com",
@@ -94,6 +127,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://podcast.adobe.com",
     "officialDomains": ["podcast.adobe.com", "adobe.com"],
+    "strengthTags": ["voice", "beginner-friendly"],
+    "strengthNotes": {
+      "voice": "cleans up speech recordings and reduces noise and echo",
+      "beginner-friendly": "edits audio in a simple web editor"
+    },
     "getIt": {
       "web": {
         "url": "https://podcast.adobe.com",
@@ -168,6 +206,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.aiva.ai",
     "officialDomains": ["aiva.ai"],
+    "strengthTags": ["music", "design-polish"],
+    "strengthNotes": {
+      "music": "composes instrumental music in many styles",
+      "design-polish": "gives editable compositions"
+    },
     "getIt": {
       "web": {
         "url": "https://www.aiva.ai",
@@ -247,6 +290,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.bandlab.com",
     "officialDomains": ["bandlab.com"],
+    "strengthTags": ["music", "voice", "free-tier-generous"],
+    "strengthNotes": {
+      "music": "has a studio, loops and sounds in the browser and on a phone",
+      "voice": "records and mixes vocals",
+      "free-tier-generous": "is free to use"
+    },
     "getIt": {
       "web": {
         "url": "https://www.bandlab.com",
@@ -282,6 +331,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.beatoven.ai",
     "officialDomains": ["beatoven.ai"],
+    "strengthTags": ["music", "beginner-friendly"],
+    "strengthNotes": {
+      "music": "makes background music matched to a mood",
+      "beginner-friendly": "needs only a mood and a length"
+    },
     "getIt": {
       "web": {
         "url": "https://www.beatoven.ai",
@@ -613,6 +667,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://elevenlabs.io",
     "officialDomains": ["elevenlabs.io"],
+    "strengthTags": ["voice", "multilingual"],
+    "strengthNotes": {
+      "voice": "makes natural-sounding speech from text",
+      "multilingual": "supports many languages and accents"
+    },
     "getIt": {
       "web": {
         "url": "https://elevenlabs.io",
@@ -725,6 +784,11 @@
       "huggingface.co/black-forest-labs",
       "github.com/black-forest-labs"
     ],
+    "strengthTags": ["images", "local-private"],
+    "strengthNotes": {
+      "images": "makes high-quality images from text prompts",
+      "local-private": "has some open-weight versions that run on your own computer"
+    },
     "getIt": {
       "modelPage": {
         "url": "https://huggingface.co/black-forest-labs",
@@ -840,6 +904,27 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.heygen.com",
     "officialDomains": ["heygen.com"],
+    "strengthTags": ["video", "multilingual"],
+    "strengthNotes": {
+      "video": "makes a presenter video from a script",
+      "multilingual": "supports many languages and voices"
+    },
+    "tips": [
+      {
+        "text": "Write the script in short sentences so the delivery sounds natural."
+      }
+    ],
+    "freePlanTips": [
+      "Test an idea with a short clip before you spend credits on a long one.",
+      "Write one scene per prompt and join the clips in an editor.",
+      "Check whether free clips carry a watermark and what the licence allows."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "elevenlabs",
+        "categories": ["media", "business"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://www.heygen.com",
@@ -907,6 +992,35 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://ideogram.ai",
     "officialDomains": ["ideogram.ai"],
+    "strengthTags": ["images", "design-polish", "beginner-friendly"],
+    "strengthNotes": {
+      "images": "makes images from text prompts",
+      "design-polish": "puts readable text inside images such as posters and logos",
+      "beginner-friendly": "has a simple prompt box with style options"
+    },
+    "tips": [
+      {
+        "text": "Name the subject, style, light and framing in a short prompt, then change one thing at a time."
+      },
+      {
+        "text": "Reuse the same style words across a series so the pictures look like a set."
+      }
+    ],
+    "freePlanTips": [
+      "Write a clear prompt first, so fewer generations are spent on guesses.",
+      "Make one or two variations and refine the best, rather than many at once.",
+      "Check the official pricing page for current limits and what free images may be used for."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "canva",
+        "categories": ["media", "business"]
+      },
+      {
+        "toolId": "photopea",
+        "categories": ["media"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://ideogram.ai",
@@ -1017,6 +1131,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://invideo.io",
     "officialDomains": ["invideo.io"],
+    "strengthTags": ["video", "beginner-friendly"],
+    "strengthNotes": {
+      "video": "builds a draft video with stock clips, a voice-over and captions",
+      "beginner-friendly": "starts from a text brief"
+    },
     "getIt": {
       "web": {
         "url": "https://invideo.io",
@@ -1133,6 +1252,33 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://kling.ai",
     "officialDomains": ["kling.ai", "klingai.com"],
+    "strengthTags": ["video"],
+    "strengthNotes": {
+      "video": "makes short clips from text and images"
+    },
+    "tips": [
+      {
+        "text": "Describe one scene with the camera movement and the style, and keep the clip short."
+      },
+      {
+        "text": "Start from a still image when you need the clip to match a look you already have."
+      }
+    ],
+    "freePlanTips": [
+      "Test an idea with a short clip before you spend credits on a long one.",
+      "Write one scene per prompt and join the clips in an editor.",
+      "Check whether free clips carry a watermark and what the licence allows."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "capcut",
+        "categories": ["media"]
+      },
+      {
+        "toolId": "davinci-resolve",
+        "categories": ["media"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://kling.ai",
@@ -1241,6 +1387,34 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://leonardo.ai",
     "officialDomains": ["leonardo.ai"],
+    "strengthTags": ["images", "design-polish"],
+    "strengthNotes": {
+      "images": "makes images with many style presets",
+      "design-polish": "has editing tools beside the generator"
+    },
+    "tips": [
+      {
+        "text": "Name the subject, style, light and framing in a short prompt, then change one thing at a time."
+      },
+      {
+        "text": "Reuse the same style words across a series so the pictures look like a set."
+      }
+    ],
+    "freePlanTips": [
+      "Write a clear prompt first, so fewer generations are spent on guesses.",
+      "Make one or two variations and refine the best, rather than many at once.",
+      "Check the official pricing page for current limits and what free images may be used for."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "canva",
+        "categories": ["media", "business"]
+      },
+      {
+        "toolId": "photopea",
+        "categories": ["media"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://leonardo.ai",
@@ -1321,6 +1495,34 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://lumalabs.ai",
     "officialDomains": ["lumalabs.ai"],
+    "strengthTags": ["video", "beginner-friendly"],
+    "strengthNotes": {
+      "video": "turns a still image into a moving clip",
+      "beginner-friendly": "uses a simple prompt-based interface"
+    },
+    "tips": [
+      {
+        "text": "Describe one scene with the camera movement and the style, and keep the clip short."
+      },
+      {
+        "text": "Start from a still image when you need the clip to match a look you already have."
+      }
+    ],
+    "freePlanTips": [
+      "Test an idea with a short clip before you spend credits on a long one.",
+      "Write one scene per prompt and join the clips in an editor.",
+      "Check whether free clips carry a watermark and what the licence allows."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "capcut",
+        "categories": ["media"]
+      },
+      {
+        "toolId": "davinci-resolve",
+        "categories": ["media"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://lumalabs.ai",
@@ -1356,6 +1558,34 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.midjourney.com",
     "officialDomains": ["midjourney.com"],
+    "strengthTags": ["images", "design-polish"],
+    "strengthNotes": {
+      "images": "makes striking, artistic images from prompts",
+      "design-polish": "is known for a strong, stylised look"
+    },
+    "tips": [
+      {
+        "text": "Name the subject, style, light and framing in a short prompt, then change one thing at a time."
+      },
+      {
+        "text": "Reuse the same style words across a series so the pictures look like a set."
+      }
+    ],
+    "freePlanTips": [
+      "Write a clear prompt first, so fewer generations are spent on guesses.",
+      "Make one or two variations and refine the best, rather than many at once.",
+      "Check the official pricing page for current limits and what free images may be used for."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "canva",
+        "categories": ["media", "business"]
+      },
+      {
+        "toolId": "photopea",
+        "categories": ["media"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://www.midjourney.com",
@@ -1391,6 +1621,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://murf.ai",
     "officialDomains": ["murf.ai"],
+    "strengthTags": ["voice", "multilingual", "beginner-friendly"],
+    "strengthNotes": {
+      "voice": "makes voice-overs in many voices",
+      "multilingual": "supports many languages",
+      "beginner-friendly": "has a simple editor for timing voice-overs to slides or video"
+    },
     "getIt": {
       "web": {
         "url": "https://murf.ai",
@@ -1580,6 +1816,34 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://runway.com",
     "officialDomains": ["runway.com", "runwayml.com"],
+    "strengthTags": ["video", "design-polish"],
+    "strengthNotes": {
+      "video": "creates short clips from text, images or existing video",
+      "design-polish": "has tools for changing existing footage"
+    },
+    "tips": [
+      {
+        "text": "Describe one scene with the camera movement and the style, and keep the clip short."
+      },
+      {
+        "text": "Start from a still image when you need the clip to match a look you already have."
+      }
+    ],
+    "freePlanTips": [
+      "Test an idea with a short clip before you spend credits on a long one.",
+      "Write one scene per prompt and join the clips in an editor.",
+      "Check whether free clips carry a watermark and what the licence allows."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "capcut",
+        "categories": ["media"]
+      },
+      {
+        "toolId": "davinci-resolve",
+        "categories": ["media"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://runway.com",
@@ -1615,6 +1879,33 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://sora.com",
     "officialDomains": ["sora.com", "openai.com"],
+    "strengthTags": ["video"],
+    "strengthNotes": {
+      "video": "makes short clips from a text description or an image"
+    },
+    "tips": [
+      {
+        "text": "Describe one scene with the camera movement and the style, and keep the clip short."
+      },
+      {
+        "text": "Start from a still image when you need the clip to match a look you already have."
+      }
+    ],
+    "freePlanTips": [
+      "Test an idea with a short clip before you spend credits on a long one.",
+      "Write one scene per prompt and join the clips in an editor.",
+      "Check whether free clips carry a watermark and what the licence allows."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "capcut",
+        "categories": ["media"]
+      },
+      {
+        "toolId": "davinci-resolve",
+        "categories": ["media"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://sora.com",
@@ -1650,6 +1941,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://soundraw.io",
     "officialDomains": ["soundraw.io"],
+    "strengthTags": ["music", "beginner-friendly"],
+    "strengthNotes": {
+      "music": "makes background tracks from a mood, genre and length",
+      "beginner-friendly": "lets you adjust parts of a track to fit your video"
+    },
     "getIt": {
       "web": {
         "url": "https://soundraw.io",
@@ -1686,6 +1982,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://speechify.com",
     "officialDomains": ["speechify.com"],
+    "strengthTags": ["voice", "beginner-friendly"],
+    "strengthNotes": {
+      "voice": "reads PDFs, articles and documents aloud",
+      "beginner-friendly": "has adjustable speed and natural voices"
+    },
     "getIt": {
       "web": {
         "url": "https://speechify.com",
@@ -1729,6 +2030,35 @@
       "huggingface.co/stabilityai",
       "github.com/Stability-AI"
     ],
+    "strengthTags": ["images", "local-private", "free-tier-generous"],
+    "strengthNotes": {
+      "images": "makes images from text prompts",
+      "local-private": "runs on your own computer",
+      "free-tier-generous": "is open and free to run yourself"
+    },
+    "tips": [
+      {
+        "text": "Name the subject, style, light and framing in a short prompt, then change one thing at a time."
+      },
+      {
+        "text": "Reuse the same style words across a series so the pictures look like a set."
+      }
+    ],
+    "freePlanTips": [
+      "Write a clear prompt first, so fewer generations are spent on guesses.",
+      "Make one or two variations and refine the best, rather than many at once.",
+      "Check the official pricing page for current limits and what free images may be used for."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "comfyui",
+        "categories": ["media"]
+      },
+      {
+        "toolId": "flux-models",
+        "categories": ["media"]
+      }
+    ],
     "getIt": {
       "modelPage": {
         "url": "https://huggingface.co/stabilityai",
@@ -1764,6 +2094,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://suno.com",
     "officialDomains": ["suno.com"],
+    "strengthTags": ["music", "beginner-friendly"],
+    "strengthNotes": {
+      "music": "makes complete songs with vocals from a short prompt",
+      "beginner-friendly": "lets you write your own lyrics or have them written"
+    },
     "getIt": {
       "web": {
         "url": "https://suno.com",
@@ -1801,6 +2136,21 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.synthesia.io",
     "officialDomains": ["synthesia.io"],
+    "strengthTags": ["video", "multilingual"],
+    "strengthNotes": {
+      "video": "makes presenter videos with AI avatars from a script",
+      "multilingual": "supports many languages"
+    },
+    "tips": [
+      {
+        "text": "Write the script in short sentences so the delivery sounds natural."
+      }
+    ],
+    "freePlanTips": [
+      "Test an idea with a short clip before you spend credits on a long one.",
+      "Write one scene per prompt and join the clips in an editor.",
+      "Check whether free clips carry a watermark and what the licence allows."
+    ],
     "getIt": {
       "web": {
         "url": "https://www.synthesia.io",
@@ -1833,6 +2183,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.udio.com",
     "officialDomains": ["udio.com"],
+    "strengthTags": ["music", "design-polish"],
+    "strengthNotes": {
+      "music": "makes songs from text prompts",
+      "design-polish": "lets you extend and remix tracks"
+    },
     "getIt": {
       "web": {
         "url": "https://www.udio.com",

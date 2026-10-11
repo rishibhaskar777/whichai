@@ -75,7 +75,8 @@ describe("swapping a tool into a job", () => {
       chosenTools: { [original.jobId]: tool.id },
     }).levels.polished.jobs.find((j) => j.jobId === original.jobId)!;
 
-    expect(job.why).toContain(tool.summary);
+    expect(job.about).toBe(tool.summary);
+    expect(job.why).toContain(tool.name);
     expect(job.kind).toBe(tool.kind);
     expect(job.officialUrl).toBe(tool.officialUrl);
     expect(job.getIt).toEqual(tool.getIt ?? null);
