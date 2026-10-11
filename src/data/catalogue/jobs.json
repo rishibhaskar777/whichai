@@ -1305,7 +1305,11 @@
       "virtual assistant",
       "ai receptionist",
       "auto reply",
-      "auto replies"
+      "auto replies",
+      "whatsapp order",
+      "whatsapp orders",
+      "order on whatsapp",
+      "whatsapp business"
     ],
     "stage": "build"
   },

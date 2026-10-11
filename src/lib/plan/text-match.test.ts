@@ -127,3 +127,9 @@ describe("tokenCues", () => {
     expect(tokenCues(text)).toHaveLength(tokenize(text).length);
   });
 });
+
+describe("possessives", () => {
+  it("drops what is left of a possessive", () => {
+    expect(tokenize("my dad's shop")).toEqual(["dad", "shop"]);
+  });
+});

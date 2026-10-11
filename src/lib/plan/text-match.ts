@@ -29,6 +29,8 @@ const STOP_WORDS: ReadonlySet<string> = new Set([
   "at",
   "by",
   "this",
+  // What is left of a possessive: "dad's" splits into "dad", "s".
+  "s",
   "that",
   "these",
   "those",

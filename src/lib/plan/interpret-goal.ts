@@ -231,9 +231,11 @@ function chooseLead(ranked: GoalMatch[], cues: readonly Cue[]): GoalMatch[] {
   // What a goal is about is read where its first words end: "a chatbot" in
   // "a website with a chatbot" is an add-on, however early its phrase starts.
   const rank = (match: GoalMatch) => {
-    const [first] = [...match.spans].sort(
-      (a, b) => a.start - b.start || a.length - b.length,
-    );
+    // Spans of three or more words are phrases with a gap in them, whose
+    // end says little about where the thing named begins.
+    const [first] = match.spans
+      .filter((span) => span.length <= 2)
+      .sort((a, b) => a.start - b.start || a.length - b.length);
     const end = first ? first.start + first.length - 1 : -1;
     return CUE_RANK[cues[end] ?? "none"];
   };
