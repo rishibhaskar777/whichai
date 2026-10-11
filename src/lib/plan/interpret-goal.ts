@@ -1,9 +1,11 @@
 import { catalogue } from "@/data/catalogue";
+import { COMMON_GOAL_IDS } from "@/data/catalogue/common-goals";
 import {
   CUSTOM_GOAL_ID,
   FALLBACK_GOAL_ID,
   JOB_STAGES,
   type Catalogue,
+  type GoalGroup,
   type GoalTemplate,
   type Job,
 } from "@/lib/schemas/catalogue";
@@ -15,8 +17,10 @@ import {
   locatePhrase,
   phraseKey,
   scorePhrases,
+  tokenCues,
   tokenize,
   tokenizePhrase,
+  type Cue,
   type Span,
 } from "./text-match";
 
@@ -30,6 +34,12 @@ interface SkillRule {
 const MAX_PARTS = 6;
 /** A goal needs about one distinctive word or a two-word phrase to be sure. */
 const CONFIDENT_SCORE = 1;
+/** Goals this near the best are weighed by what each one is for. */
+const CLOSE_SCORE = 2.5;
+/** A result word ("into a dashboard") promotes a goal this close to the best. */
+const PROMOTE_WINDOW = 1;
+/** A close goal lends its job as a part only with a phrase of its own. */
+const COMPANION_SCORE = 2;
 /** Lead over the runner-up that separates a clear match from a coin toss. */
 const CONFIDENT_LEAD = 0.5;
 /** "which ai" or "best ai tool" is two words of evidence on its own. */
@@ -76,13 +86,29 @@ const LEVEL_RANK: Record<Level, number> = {
   advanced: 2,
 };
 
-export const coveredGoals: readonly {
+export interface CoveredGoal {
   goalType: GoalType;
   title: string;
   example: string;
-}[] = catalogue.goals
+  group: GoalGroup;
+  /** One of the goals shown first on the "no plan yet" card. */
+  common: boolean;
+  /** Lowercase words to search on: the title, example and keywords. */
+  searchText: string;
+}
+
+export const coveredGoals: readonly CoveredGoal[] = catalogue.goals
   .filter((goal) => goal.id !== CUSTOM_GOAL_ID)
-  .map(({ id, title, example }) => ({ goalType: id, title, example }));
+  .map((goal) => ({
+    goalType: goal.id,
+    title: goal.title,
+    example: goal.example,
+    group: goal.group,
+    common: COMMON_GOAL_IDS.includes(goal.id),
+    searchText: [goal.title, goal.example, ...goal.keywords, ...goal.synonyms]
+      .join(" ")
+      .toLowerCase(),
+  }));
 
 /** A job a person can add to a plan, with the words a search should match. */
 export interface PartOption {
@@ -158,10 +184,18 @@ interface GoalMatch {
   score: number;
   firstIndex: number;
   spans: Span[];
+  /** True when the cue words, not the score, put this goal in front. */
+  ledByCue?: boolean;
+  /** A close goal whose own job is brought in as a part. */
+  companion?: GoalTemplate;
 }
 
 /** Goals with any evidence, best first. Ties go to the earlier mention. */
-function rankGoals(tokens: readonly string[], data: Catalogue): GoalMatch[] {
+function rankGoals(
+  tokens: readonly string[],
+  data: Catalogue,
+  cues: readonly Cue[],
+): GoalMatch[] {
   const candidates = data.goals.filter((goal) => goal.id !== CUSTOM_GOAL_ID);
   const shared = sharedCounts(data).goals;
   const ranked = candidates
@@ -176,22 +210,71 @@ function rankGoals(tokens: readonly string[], data: Catalogue): GoalMatch[] {
     }))
     .filter((match) => match.score > 0)
     .sort((a, b) => b.score - a.score || a.firstIndex - b.firstIndex);
-  return preferEarlierMention(ranked);
+  return chooseLead(ranked, cues);
 }
 
+const CUE_RANK: Record<NonNullable<Cue> | "none", number> = {
+  primary: 0,
+  none: 1,
+  secondary: 2,
+};
+
 /**
- * Goals within a hair of the best are a toss-up, so the one the person named
- * first leads. The runner-up stays close, which keeps confidence low.
+ * Goals that score close are decided by what is being made. A goal named after
+ * "for" or "with" is a subject or an add-on, and one named after "into" is the
+ * result. Failing that, a toss-up goes to the one named first. The goal that
+ * loses keeps its place as a companion, whose own job joins as a part.
  */
-function preferEarlierMention(ranked: GoalMatch[]): GoalMatch[] {
+function chooseLead(ranked: GoalMatch[], cues: readonly Cue[]): GoalMatch[] {
   const top = ranked[0];
   if (!top) return ranked;
+  // What a goal is about is read where its first words end: "a chatbot" in
+  // "a website with a chatbot" is an add-on, however early its phrase starts.
+  const rank = (match: GoalMatch) => {
+    const [first] = [...match.spans].sort(
+      (a, b) => a.start - b.start || a.length - b.length,
+    );
+    const end = first ? first.start + first.length - 1 : -1;
+    return CUE_RANK[cues[end] ?? "none"];
+  };
+  /** Negative when the cue words put a first, positive for b, 0 if undecided. */
+  const byCueWords = (a: GoalMatch, b: GoalMatch) => {
+    // A goal that only shares a word has no say in what is being made.
+    if (Math.min(a.score, b.score) < CONFIDENT_SCORE) return 0;
+    const difference = rank(a) - rank(b);
+    if (difference === 0) return 0;
+    const favoured = difference < 0 ? a : b;
+    const promoted = rank(favoured) === CUE_RANK.primary;
+    // A result word promotes a goal only when it is nearly as strong.
+    if (promoted && Math.abs(a.score - b.score) > PROMOTE_WINDOW) return 0;
+    return difference;
+  };
   const close = ranked.filter(
-    (match) => top.score - match.score < CONFIDENT_LEAD,
+    (match) => top.score - match.score <= CLOSE_SCORE,
   );
   const rest = ranked.filter((match) => !close.includes(match));
-  close.sort((a, b) => a.firstIndex - b.firstIndex || b.score - a.score);
-  return [...close, ...rest];
+  close.sort((a, b) => {
+    const cue = byCueWords(a, b);
+    if (cue !== 0) return cue;
+    const gap = b.score - a.score;
+    if (Math.abs(gap) < CONFIDENT_LEAD) {
+      return a.firstIndex - b.firstIndex || gap;
+    }
+    return gap;
+  });
+  const lead = close[0]!;
+  const other = close[1];
+  const byCue = other !== undefined && byCueWords(lead, other) < 0;
+  const ordered = [lead, ...close.slice(1), ...rest];
+  ordered[0] = {
+    ...lead,
+    ...(byCue ? { ledByCue: true } : {}),
+    // Only a goal with a phrase of its own lends its job, not a lone word.
+    ...(byCue && other.score >= COMPANION_SCORE
+      ? { companion: other.goal }
+      : {}),
+  };
+  return ordered;
 }
 
 interface PartHit {
@@ -343,6 +426,7 @@ function goalWithTemplate(
   text: string,
   data: Catalogue,
   goalSpans: readonly Span[],
+  companion?: GoalTemplate,
 ): UnderstoodGoal {
   const features = matchFeatures(tokens, template);
   const taken = new Set(
@@ -356,6 +440,8 @@ function goalWithTemplate(
   const parts = detectJobs(tokens, data, taken, strict)
     .filter((job) => !provided.has(job.id))
     .slice(0, MAX_PARTS);
+  const borrowed = companionJob(companion, provided, parts, data);
+  if (borrowed) parts.push(borrowed);
 
   const chips: Chip[] = [
     goalChip(template.id, template.title),
@@ -369,6 +455,23 @@ function goalWithTemplate(
     chips,
     inferredLevel: inferLevel(chips),
   };
+}
+
+/** The one job that makes the close goal what it is, when this one lacks it. */
+function companionJob(
+  companion: GoalTemplate | undefined,
+  provided: ReadonlySet<string>,
+  parts: readonly Job[],
+  data: Catalogue,
+): Job | undefined {
+  if (!companion) return undefined;
+  const id = companion.levels.simple.jobs.find(
+    (jobId) =>
+      jobId !== "ai-assistant" &&
+      !provided.has(jobId) &&
+      !parts.some((part) => part.id === jobId),
+  );
+  return data.jobs.find((job) => job.id === id);
 }
 
 function customGoal(
@@ -419,7 +522,7 @@ export function understandGoal(
   data: Catalogue = catalogue,
 ): Understanding | null {
   const tokens = tokenize(goalText);
-  const ranked = rankGoals(tokens, data);
+  const ranked = rankGoals(tokens, data, tokenCues(goalText));
   const wrapper = ranked.find((match) => match.goal.id === FALLBACK_GOAL_ID);
   const contenders = ranked.filter(
     (match) => match.goal.id !== FALLBACK_GOAL_ID,
@@ -448,9 +551,17 @@ export function understandGoal(
   const goal =
     weak && partsGoal && namedParts
       ? partsGoal
-      : goalWithTemplate(clear.goal, tokens, goalText, data, clear.spans);
+      : goalWithTemplate(
+          clear.goal,
+          tokens,
+          goalText,
+          data,
+          clear.spans,
+          clear.companion,
+        );
   const decided =
     clear === wrapper ||
+    clear.ledByCue === true ||
     (clear.score >= CONFIDENT_SCORE &&
       (second === undefined || clear.score - second.score >= CONFIDENT_LEAD));
   const suggestions = decided

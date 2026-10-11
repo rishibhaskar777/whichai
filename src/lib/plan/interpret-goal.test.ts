@@ -516,3 +516,52 @@ describe("interpretGoal: skills and level", () => {
     expect(understoodGoalSchema.safeParse(goal).success).toBe(true);
   });
 });
+
+describe("interpretGoal: close goals and what is being made", () => {
+  it("makes the translation, with document writing as a part", () => {
+    const goal = interpretGoal("translator for my project report");
+    expect(goal?.goalType).toBe("translate-documents");
+    expect(tasks(goal)).toContain("writing-and-editing");
+  });
+
+  it("makes the business website, with the chatbot and SEO as parts", () => {
+    const goal = interpretGoal(
+      "business website with whatsapp chatbot and seo",
+    );
+    expect(goal?.goalType).toBe("business-website");
+    expect(tasks(goal)).toEqual(
+      expect.arrayContaining(["chatbot-builder", "seo"]),
+    );
+  });
+
+  it("makes the portfolio when design projects are what it shows", () => {
+    const goal = interpretGoal(
+      "make me a portfolio site for my UI design projects",
+    );
+    expect(goal?.goalType).toBe("portfolio-website");
+    expect(tasks(goal)).toContain("design-tool");
+  });
+
+  it("makes the dashboard when the sheet is what it is made from", () => {
+    const goal = interpretGoal("turn my excel sheet into a nice dashboard");
+    expect(goal?.goalType).toBe("data-dashboard");
+  });
+
+  it("is sure of a choice the cue words made", () => {
+    expect(
+      understandGoal("business website with whatsapp chatbot and seo")
+        ?.confidence,
+    ).toBe("high");
+  });
+
+  it("does not let a goal that only shares a word decide", () => {
+    expect(interpretGoal("website for my restaurant")?.goalType).toBe(
+      "business-website",
+    );
+  });
+
+  it("keeps a toss-up with no cue words to the goal named first", () => {
+    expect(interpretGoal("blog newsletter")?.goalType).toBe("blog");
+    expect(interpretGoal("newsletter blog")?.goalType).toBe("email-newsletter");
+  });
+});

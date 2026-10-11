@@ -86,6 +86,53 @@ export function tokenize(text: string): string[] {
     .filter((word) => word.length > 0 && !STOP_WORDS.has(word));
 }
 
+/**
+ * How a word relates to what is being made. Words after "for", "with" or
+ * "and" name a subject or an add-on ("a site for my design projects", "a
+ * website with a chatbot"). Words after "into" name the result ("turn my
+ * sheet into a dashboard").
+ */
+export type Cue = "primary" | "secondary" | null;
+
+const SECONDARY_CUES: ReadonlySet<string> = new Set([
+  "for",
+  "of",
+  "about",
+  "with",
+  "and",
+  "plus",
+  "including",
+  "also",
+  "using",
+]);
+const PRIMARY_CUES: ReadonlySet<string> = new Set(["into"]);
+/** A cue reaches this many words, so "into a nice dashboard" still counts. */
+const CUE_REACH = 2;
+
+/** One cue for each token `tokenize` returns for the same text. */
+export function tokenCues(text: string): Cue[] {
+  const cues: Cue[] = [];
+  let pending: Cue = null;
+  let reach = 0;
+  const words = text
+    .toLowerCase()
+    .split(/[^\p{L}\p{M}\p{N}]+/u)
+    .filter((word) => word.length > 0);
+  for (const word of words) {
+    const secondary = SECONDARY_CUES.has(word);
+    const primary = PRIMARY_CUES.has(word);
+    if (!STOP_WORDS.has(word)) {
+      cues.push(reach > 0 ? pending : null);
+      if (reach > 0) reach -= 1;
+    }
+    if (secondary || primary) {
+      pending = primary ? "primary" : "secondary";
+      reach = CUE_REACH;
+    }
+  }
+  return cues;
+}
+
 const phraseCache = new Map<string, string[]>();
 
 /**
