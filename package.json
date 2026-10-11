@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "format": "prettier --write .",
+    "goals:report": "vitest run src/lib/plan/goal-corpus.test.ts",
     "data:report": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/data-report.ts",
     "data:version": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/catalogue-version.ts",
     "links:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-links.ts",

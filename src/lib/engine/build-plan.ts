@@ -3,6 +3,7 @@ import { pricingInfo } from "@/lib/catalogue/pricing";
 import { featureIdOf, taskJobIdOf } from "@/lib/plan/chips";
 import {
   JOB_CATEGORIES,
+  JOB_STAGES,
   type Catalogue,
   type GoalLevel,
   type GoalTemplate,
@@ -19,6 +20,7 @@ import type {
   PlanLevel,
   ToolkitGroup,
   UnderstoodGoal,
+  WorkflowStep,
 } from "@/lib/schemas/plan";
 import { LEVELS } from "@/lib/schemas/plan";
 import {
@@ -44,6 +46,15 @@ export interface BuildOptions {
   toolsUsed: ReadonlySet<string>;
   /** Tools picked by hand, by job id. Unknown or unsuitable ids are ignored. */
   chosenTools?: Readonly<Record<string, string>>;
+  /** Jobs added from the full list, on top of what the goal provides. */
+  addedJobs?: readonly string[];
+  /** Jobs taken out of the plan by hand. */
+  removedJobs?: readonly string[];
+}
+
+export interface PartEdits {
+  added?: readonly string[] | undefined;
+  removed?: readonly string[] | undefined;
 }
 
 interface Picked {
@@ -53,22 +64,55 @@ interface Picked {
   covers: Job[];
 }
 
-export function jobIdsFor(
+interface JobSelection {
+  ids: string[];
+  /** Jobs that are in the plan because of a part, not because of the goal. */
+  parts: Set<string>;
+}
+
+function stageRank(jobId: string, data: Catalogue): number {
+  const stage = data.jobs.find((job) => job.id === jobId)?.stage;
+  return stage ? JOB_STAGES.indexOf(stage) : JOB_STAGES.length;
+}
+
+function selectJobs(
   template: GoalTemplate,
   chips: readonly Chip[],
   level: Level,
-): string[] {
+  edits: PartEdits,
+  data: Catalogue,
+): JobSelection {
   const featureIds = new Set(chips.map(featureIdOf));
   const fromFeatures = template.features
     .filter((feature) => featureIds.has(feature.id))
     .flatMap((feature) => feature.jobs);
-  const fromTasks = chips.flatMap((chip) => taskJobIdOf(chip) ?? []);
+  const base = [...template.levels[level].jobs, ...fromFeatures];
 
-  const ids = [
-    ...new Set([...template.levels[level].jobs, ...fromFeatures, ...fromTasks]),
-  ];
+  // Parts follow the goal's own jobs, in the order a project goes.
+  const parts = [
+    ...chips.flatMap((chip) => taskJobIdOf(chip) ?? []),
+    ...(edits.added ?? []),
+  ].filter((id) => !base.includes(id));
+  const ordered = [...new Set(parts)].sort(
+    (a, b) => stageRank(a, data) - stageRank(b, data),
+  );
+
+  const removed = new Set(edits.removed ?? []);
+  const ids = [...new Set([...base, ...ordered])].filter(
+    (id) => !removed.has(id),
+  );
   if (ids.length === 0) ids.push(DEFAULT_JOB);
-  return ids.slice(0, MAX_JOBS);
+  return { ids: ids.slice(0, MAX_JOBS), parts: new Set(ordered) };
+}
+
+export function jobIdsFor(
+  template: GoalTemplate,
+  chips: readonly Chip[],
+  level: Level,
+  edits: PartEdits = {},
+  data: Catalogue = catalogue,
+): string[] {
+  return selectJobs(template, chips, level, edits, data).ids;
 }
 
 function pickTools(
@@ -185,6 +229,24 @@ function toolkitFor(picked: readonly Picked[]): ToolkitGroup[] {
   });
 }
 
+/** The plan schema holds up to 12 workflow steps. */
+const MAX_STEPS = 12;
+
+/** One step for each part the goal does not cover, so it is not left out. */
+function partSteps(
+  picked: readonly Picked[],
+  parts: ReadonlySet<string>,
+  fill: (text: string) => string,
+): WorkflowStep[] {
+  return picked
+    .filter(({ job }) => parts.has(job.id))
+    .map(({ job }) => ({
+      title: `Your part: ${job.name}`.slice(0, 80),
+      detail: fill(`${job.description} Use {job:${job.id}} for this part.`),
+      examplePrompt: null,
+    }));
+}
+
 const BRIEF_LIMIT = 1200;
 
 /** Adds the chosen tools to the brief, before its closing "ask me" line. */
@@ -205,7 +267,13 @@ function buildLevel(
   data: Catalogue,
 ): PlanLevel {
   const goalLevel = template.levels[level];
-  const jobIds = jobIdsFor(template, goal.chips, level);
+  const { ids: jobIds, parts } = selectJobs(
+    template,
+    goal.chips,
+    level,
+    { added: options.addedJobs, removed: options.removedJobs },
+    data,
+  );
   const { picked, coveredBy } = pickTools(
     jobIds,
     template,
@@ -241,11 +309,14 @@ function buildLevel(
     ),
     toolkit: toolkitFor(picked),
     tiers: null,
-    workflow: goalLevel.steps.map((step) => ({
-      title: fill(step.title),
-      detail: fill(step.detail),
-      examplePrompt: step.examplePrompt,
-    })),
+    workflow: [
+      ...goalLevel.steps.map((step) => ({
+        title: fill(step.title),
+        detail: fill(step.detail),
+        examplePrompt: step.examplePrompt,
+      })),
+      ...partSteps(picked, parts, fill),
+    ].slice(0, MAX_STEPS),
     starterBrief: briefWithTools(
       template.starterBrief,
       picked.map(({ selection }) => selection.pick.name),

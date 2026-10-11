@@ -90,7 +90,8 @@ export const hi: Record<MessageKey, string> = {
   "home.announce.plan": "योजना तैयार है",
   "home.editGoal": "अपना लक्ष्य बदलें",
   "home.yourGoal": "आपका लक्ष्य: ",
-  "home.englishOnly": "अभी लक्ष्य अंग्रेज़ी में लिखने पर ही समझे जाते हैं।",
+  "home.englishOnly":
+    "अपना लक्ष्य अंग्रेज़ी में लिखिए। अंग्रेज़ी अक्षरों में हिंदी शब्द, जैसे banana hai, भी चलते हैं।",
 
   // Goal form
   "goal.submit": "योजना पाएँ",
@@ -841,4 +842,57 @@ export const hi: Record<MessageKey, string> = {
   "contact.institution.text":
     "संस्थान प्लान के बारे में ईमेल से पूछें। बताएँ कि आपके लगभग कितने छात्र हैं।",
   "contact.institution.link": "संस्थान प्लान के बारे में ईमेल करें",
+
+  // Parts and missed goals
+  "understanding.didYouMean": "क्या आपका मतलब इनमें से कोई था?",
+  "understanding.partsOnly":
+    "हमें कुछ हिस्से मिले, लेकिन कोई लक्ष्य उनसे ठीक से मेल नहीं खाता।",
+  "understanding.buildFromParts": "जो हिस्से मैंने बताए, उनसे योजना बनाएँ",
+  "understanding.addPart": "हिस्सा जोड़ें",
+  "parts.title": "हिस्सा जोड़ें",
+  "parts.help":
+    "एक हिस्सा चुनिए, हम उसके लिए टूल चुन देंगे। आप उसे बाद में हटा भी सकते हैं।",
+  "parts.search": "हिस्से खोजें",
+  "parts.none": "इससे कोई हिस्सा मेल नहीं खाता। कोई और शब्द आज़माइए।",
+  "parts.results.one": "{count} हिस्सा",
+  "parts.results.other": "{count} हिस्से",
+  "parts.inPlan": "आपकी योजना में है",
+  "parts.add": "{label} जोड़ें",
+  "plan.addPart": "हिस्सा जोड़ें",
+  "plan.addPartHelp":
+    "कुछ ऐसा चाहिए जो इस योजना में नहीं है? हिस्सा जोड़ें, हम उसके लिए टूल चुन देंगे।",
+  "plan.partAdded": "{job} जोड़ दिया।",
+  "plan.partRemoved": "{job} योजना से हटा दिया।",
+  "plan.partCovered": "{job} इस योजना के किसी और टूल से पहले ही हो जाता है।",
+  "job.removePart": "{job} को योजना से हटाएँ",
+  "job.removePartShort": "यह हिस्सा हटाएँ",
+  "settings.improve": "WhichAI को बेहतर बनाने में मदद करें",
+  "settings.improve.help":
+    "जो लक्ष्य WhichAI नहीं समझ पाया, वे केवल इस डिवाइस पर रहते हैं, जब तक खोज इतिहास चालू है। जब तक आप बटन दबाकर GitHub इश्यू खुद जमा नहीं करते, कुछ भी नहीं भेजा जाता। भेजने से पहले आप इश्यू बदल सकते हैं।",
+  "settings.improve.count.one": "{count} लक्ष्य इस डिवाइस पर रखा है",
+  "settings.improve.count.other": "{count} लक्ष्य इस डिवाइस पर रखे हैं",
+  "settings.improve.none": "अब तक कोई लक्ष्य छूटा नहीं है।",
+  "settings.improve.reason.no-match": "समझ नहीं आया",
+  "settings.improve.reason.parts-only": "सिर्फ़ हिस्सों से बना",
+  "settings.improve.reason.unsure": "पक्का नहीं था",
+  "settings.improve.send": "GitHub इश्यू खोलें",
+  "settings.improve.clear": "यह सूची मिटाएँ",
+  "settings.improve.cleared": "छूटे हुए लक्ष्यों की सूची मिटा दी गई।",
+  "privacy.device.item4":
+    "जो लक्ष्य हम नहीं समझ पाए: अधिकतम 50, केवल तब तक जब तक खोज इतिहास चालू है। जब तक आप सेटिंग से GitHub इश्यू खोलकर जमा नहीं करते, ये कहीं नहीं भेजे जाते। आप इन्हें वहीं मिटा सकते हैं।",
+
+  // No-match card
+  "noMatch.search": "सभी लक्ष्यों में खोजें",
+  "noMatch.searchResults": "मेल खाते लक्ष्य",
+  "noMatch.results.one": "{count} लक्ष्य मेल खाता है",
+  "noMatch.results.other": "{count} लक्ष्य मेल खाते हैं",
+  "noMatch.noResults":
+    "इससे कोई लक्ष्य मेल नहीं खाता। कोई और शब्द आज़माइए, या ऊपर अपने शब्दों में बताइए।",
+  "noMatch.seeAll": "सभी लक्ष्य देखें",
+  "noMatch.hideAll": "कम लक्ष्य दिखाएँ",
+  "goalGroup.sites-and-apps": "वेबसाइट और ऐप",
+  "goalGroup.create": "बनाना",
+  "goalGroup.study": "पढ़ाई",
+  "goalGroup.work": "काम और व्यापार",
+  "goalGroup.ai": "AI टूल",
 };

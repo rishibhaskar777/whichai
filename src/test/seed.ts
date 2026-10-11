@@ -17,6 +17,8 @@ export function requestFor(
     budget: null,
     toolsUsed: [],
     chosenTools: {},
+    addedJobs: [],
+    removedJobs: [],
     ...overrides,
   };
 }

@@ -3,6 +3,7 @@ import {
   editDistance,
   findPhrase,
   scorePhrases,
+  tokenCues,
   tokenize,
   wordsMatch,
 } from "./text-match";
@@ -99,5 +100,36 @@ describe("findPhrase and scorePhrases", () => {
 
   it("scores zero when nothing matches", () => {
     expect(scorePhrases(["hello"], ["video"]).score).toBe(0);
+  });
+});
+
+describe("tokenCues", () => {
+  it("marks words after for or with as secondary, up to two words", () => {
+    const text = "a site for my design work";
+    expect(tokenize(text)).toEqual(["site", "design", "work"]);
+    expect(tokenCues(text)).toEqual([null, "secondary", "secondary"]);
+  });
+
+  it("marks the result after into as primary", () => {
+    const text = "turn my sheet into a nice dashboard today";
+    expect(tokenize(text)).toEqual([
+      "turn",
+      "sheet",
+      "nice",
+      "dashboard",
+      "today",
+    ]);
+    expect(tokenCues(text)).toEqual([null, null, "primary", "primary", null]);
+  });
+
+  it("returns one cue for each token", () => {
+    const text = "Make a logo and a poster, plus a card";
+    expect(tokenCues(text)).toHaveLength(tokenize(text).length);
+  });
+});
+
+describe("possessives", () => {
+  it("drops what is left of a possessive", () => {
+    expect(tokenize("my dad's shop")).toEqual(["dad", "shop"]);
   });
 });

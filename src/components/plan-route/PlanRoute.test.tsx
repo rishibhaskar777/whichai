@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { encodePlanRequest } from "@/lib/share/share-link";
+import { decodePlanRequest, encodePlanRequest } from "@/lib/share/share-link";
 import { createMemoryBackend } from "@/lib/storage/backend";
 import { searchParams } from "@/test/navigation";
 import { requestFor, planNamed, seed } from "@/test/seed";
@@ -145,5 +146,115 @@ describe("plan route for a saved plan", () => {
         name: "That saved plan isn't here",
       }),
     ).toBeInTheDocument();
+  });
+});
+
+describe("plan route address updates", () => {
+  it("replaces the fragment when the level changes, without a new history entry", async () => {
+    const user = userEvent.setup();
+    const request = requestFor("portfolio website", { level: "simple" });
+    openFragment(`#${encodePlanRequest(request)}`);
+    const entries = window.history.length;
+
+    await renderRoute();
+    await user.click(await screen.findByRole("radio", { name: "Advanced" }));
+
+    await waitFor(() => {
+      const decoded = decodePlanRequest(window.location.hash);
+      expect(decoded.ok && decoded.request.level).toBe("advanced");
+    });
+    expect(window.history.length).toBe(entries);
+  });
+
+  it("keeps a swapped tool in the fragment", async () => {
+    const user = userEvent.setup();
+    const request = requestFor("portfolio website", { level: "polished" });
+    openFragment(`#${encodePlanRequest(request)}`);
+
+    await renderRoute();
+    const swap = (
+      await screen.findAllByRole("button", {
+        name: /^Choose .* if/,
+      })
+    )[0]!;
+    await user.click(swap);
+
+    await waitFor(() => {
+      const decoded = decodePlanRequest(window.location.hash);
+      expect(
+        decoded.ok && Object.keys(decoded.request.chosenTools),
+      ).toHaveLength(1);
+    });
+  });
+
+  it("keeps an added part in the fragment", async () => {
+    const user = userEvent.setup();
+    const request = requestFor("portfolio website", { level: "simple" });
+    openFragment(`#${encodePlanRequest(request)}`);
+
+    await renderRoute();
+    await user.click(await screen.findByRole("button", { name: "Add a part" }));
+    const dialog = await screen.findByRole("dialog");
+    await user.type(within(dialog).getByLabelText("Search parts"), "razorpay");
+    await user.click(
+      within(dialog).getByRole("button", { name: /Payments \(India\)/ }),
+    );
+
+    await waitFor(() => {
+      const decoded = decodePlanRequest(window.location.hash);
+      expect(decoded.ok && decoded.request.addedJobs).toEqual([
+        "payments-india",
+      ]);
+    });
+  });
+
+  it("does not start the plan over when the fragment it wrote is read back", async () => {
+    const user = userEvent.setup();
+    const request = requestFor("portfolio website", { level: "simple" });
+    openFragment(`#${encodePlanRequest(request)}`);
+
+    await renderRoute();
+    await user.click(await screen.findByRole("radio", { name: "Advanced" }));
+    await waitFor(() =>
+      expect(decodePlanRequest(window.location.hash)).toMatchObject({
+        ok: true,
+      }),
+    );
+    await user.click(screen.getByRole("radio", { name: "Polished" }));
+
+    expect(screen.getByRole("radio", { name: "Polished" })).toBeChecked();
+  });
+
+  it("opens a saved plan with the changes in the fragment on top of it", async () => {
+    const plan = planNamed("My site");
+    const changed = { ...plan.planRequest, level: "advanced" as const };
+    window.history.replaceState(
+      null,
+      "",
+      `/plan?id=${plan.id}#${encodePlanRequest(changed)}`,
+    );
+
+    await renderRoute([plan], `id=${plan.id}`);
+
+    expect(
+      await screen.findByRole("radio", { name: "Advanced" }),
+    ).toBeChecked();
+    // The saved copy is still the older one, so it can be updated.
+    expect(
+      screen.getByRole("button", { name: "Update saved plan" }),
+    ).toBeEnabled();
+  });
+
+  it("keeps the saved plan's address and updates only the fragment", async () => {
+    const user = userEvent.setup();
+    const plan = planNamed("My site");
+    window.history.replaceState(null, "", `/plan?id=${plan.id}`);
+
+    await renderRoute([plan], `id=${plan.id}`);
+    await user.click(await screen.findByRole("radio", { name: "Advanced" }));
+
+    await waitFor(() => expect(window.location.hash.length).toBeGreaterThan(1));
+    expect(window.location.search).toBe(`?id=${plan.id}`);
+    expect(window.location.pathname).toBe("/plan");
   });
 });

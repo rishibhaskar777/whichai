@@ -28,7 +28,55 @@ const STOP_WORDS: ReadonlySet<string> = new Set([
   "into",
   "at",
   "by",
+  "this",
+  // What is left of a possessive: "dad's" splits into "dad", "s".
+  "s",
+  "that",
+  "these",
+  "those",
+  "please",
+  "pls",
+  "plz",
+  // Hinglish filler: "mujhe resume banana hai" keeps only "resume".
+  "mujhe",
+  "mera",
+  "meri",
+  "mere",
+  "hai",
+  "hain",
+  "ho",
+  "hoon",
+  "kya",
+  "ka",
+  "ki",
+  "ke",
+  "ko",
+  "se",
+  "par",
+  "pe",
+  "mein",
+  "liye",
+  "chahiye",
+  "chaiye",
+  "karna",
+  "karni",
+  "karne",
+  "kar",
+  "karo",
+  "karein",
+  "banana",
+  "banani",
+  "banane",
+  "banao",
+  "bana",
+  "ek",
+  "aur",
+  "wala",
+  "wali",
 ]);
+
+/** What a phrase is worth when other words sit between its words. */
+const GAP_WEIGHT = 0.75;
 
 /** Words shorter than this must match exactly, so short words stay safe. */
 const MIN_FUZZY_LENGTH = 5;
@@ -38,6 +86,68 @@ export function tokenize(text: string): string[] {
     .toLowerCase()
     .split(/[^\p{L}\p{M}\p{N}]+/u)
     .filter((word) => word.length > 0 && !STOP_WORDS.has(word));
+}
+
+/**
+ * How a word relates to what is being made. Words after "for", "with" or
+ * "and" name a subject or an add-on ("a site for my design projects", "a
+ * website with a chatbot"). Words after "into" name the result ("turn my
+ * sheet into a dashboard").
+ */
+export type Cue = "primary" | "secondary" | null;
+
+const SECONDARY_CUES: ReadonlySet<string> = new Set([
+  "for",
+  "of",
+  "about",
+  "with",
+  "and",
+  "plus",
+  "including",
+  "also",
+  "using",
+]);
+const PRIMARY_CUES: ReadonlySet<string> = new Set(["into"]);
+/** A cue reaches this many words, so "into a nice dashboard" still counts. */
+const CUE_REACH = 2;
+
+/** One cue for each token `tokenize` returns for the same text. */
+export function tokenCues(text: string): Cue[] {
+  const cues: Cue[] = [];
+  let pending: Cue = null;
+  let reach = 0;
+  const words = text
+    .toLowerCase()
+    .split(/[^\p{L}\p{M}\p{N}]+/u)
+    .filter((word) => word.length > 0);
+  for (const word of words) {
+    const secondary = SECONDARY_CUES.has(word);
+    const primary = PRIMARY_CUES.has(word);
+    if (!STOP_WORDS.has(word)) {
+      cues.push(reach > 0 ? pending : null);
+      if (reach > 0) reach -= 1;
+    }
+    if (secondary || primary) {
+      pending = primary ? "primary" : "secondary";
+      reach = CUE_REACH;
+    }
+  }
+  return cues;
+}
+
+const phraseCache = new Map<string, string[]>();
+
+/**
+ * The words of a keyword or phrase from the catalogue. The same few thousand
+ * phrases are read on every goal, so each one is split once.
+ */
+export function tokenizePhrase(text: string): string[] {
+  let words = phraseCache.get(text);
+  if (!words) {
+    words = tokenize(text);
+    phraseCache.set(text, words);
+  }
+  return words;
 }
 
 /** Optimal string alignment distance: a swapped pair of letters costs one. */
@@ -84,7 +194,9 @@ export function wordsMatch(typed: string, expected: string): boolean {
   if (typed === `${expected}s` || `${typed}s` === expected) return true;
   if (Math.min(typed.length, expected.length) < MIN_FUZZY_LENGTH) return false;
   if (typed[0] !== expected[0]) return false;
-  return editDistance(typed, expected) <= allowedEdits(expected.length);
+  const allowed = allowedEdits(expected.length);
+  if (Math.abs(typed.length - expected.length) > allowed) return false;
+  return editDistance(typed, expected) <= allowed;
 }
 
 /** Index of the first place the phrase appears in the tokens, or -1. */
@@ -102,9 +214,52 @@ export function findPhrase(
   return -1;
 }
 
+/**
+ * Where a phrase starts and ends in the tokens. With a gap, up to that many
+ * other words may sit between two words of the phrase, in order, so
+ * "summarise my class notes pdf" still finds "summarise pdf".
+ */
+export function locatePhrase(
+  tokens: readonly string[],
+  phrase: readonly string[],
+  maxGap = 0,
+): { start: number; end: number } | null {
+  if (phrase.length === 0) return null;
+  for (let start = 0; start < tokens.length; start += 1) {
+    if (!wordsMatch(tokens[start]!, phrase[0]!)) continue;
+    let end = start;
+    let complete = true;
+    for (let word = 1; word < phrase.length && complete; word += 1) {
+      let next = -1;
+      for (let at = end + 1; at <= end + 1 + maxGap; at += 1) {
+        if (at < tokens.length && wordsMatch(tokens[at]!, phrase[word]!)) {
+          next = at;
+          break;
+        }
+      }
+      if (next < 0) complete = false;
+      else end = next;
+    }
+    if (complete) return { start, end };
+  }
+  return null;
+}
+
 /** The words of a phrase, as stored in a lookup of how many goals use it. */
 export function phraseKey(phrase: string): string {
-  return tokenize(phrase).join(" ");
+  return tokenizePhrase(phrase).join(" ");
+}
+
+/** Where a phrase was found: the first token and how many tokens it covers. */
+export interface Span {
+  start: number;
+  length: number;
+}
+
+export interface PhraseScore {
+  score: number;
+  firstIndex: number;
+  spans: Span[];
 }
 
 /**
@@ -118,19 +273,39 @@ export function scorePhrases(
   tokens: readonly string[],
   phrases: readonly string[],
   sharedBy: ReadonlyMap<string, number> = new Map(),
-): { score: number; firstIndex: number } {
+  maxGap = 0,
+): PhraseScore {
+  // Phrases that cover the same words count once, at their best value.
+  const best = new Map<string, { span: Span; value: number }>();
+  for (const text of phrases) {
+    const phrase = tokenizePhrase(text);
+    const exact = findPhrase(tokens, phrase);
+    const found =
+      exact >= 0
+        ? { start: exact, end: exact + phrase.length - 1 }
+        : phrase.length > 1 && maxGap > 0
+          ? locatePhrase(tokens, phrase, maxGap)
+          : null;
+    if (!found) continue;
+    const length = found.end - found.start + 1;
+    // Words that sit apart are weaker evidence than words side by side.
+    const spread = length === phrase.length ? 1 : GAP_WEIGHT;
+    const value =
+      (phrase.length * spread) / (sharedBy.get(phrase.join(" ")) ?? 1);
+    const key = `${found.start}:${length}`;
+    const current = best.get(key);
+    if (!current || value > current.value) {
+      best.set(key, { span: { start: found.start, length }, value });
+    }
+  }
+
   let score = 0;
   let firstIndex = Number.POSITIVE_INFINITY;
-  const counted = new Set<string>();
-  for (const text of phrases) {
-    const phrase = tokenize(text);
-    const index = findPhrase(tokens, phrase);
-    if (index < 0) continue;
-    const span = `${index}:${phrase.length}`;
-    if (counted.has(span)) continue;
-    counted.add(span);
-    score += phrase.length / (sharedBy.get(phrase.join(" ")) ?? 1);
-    firstIndex = Math.min(firstIndex, index);
+  const spans: Span[] = [];
+  for (const { span, value } of best.values()) {
+    score += value;
+    spans.push(span);
+    firstIndex = Math.min(firstIndex, span.start);
   }
-  return { score, firstIndex };
+  return { score, firstIndex, spans };
 }

@@ -286,3 +286,11 @@
   margin-top: 2px;
   color: var(--accent);
 }
+
+.missList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}

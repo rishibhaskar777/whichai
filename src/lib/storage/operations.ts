@@ -3,6 +3,7 @@ import { CATALOGUE_VERSION } from "./catalogue-version";
 import {
   MAX_HISTORY_ENTRIES,
   MAX_IMPORT_BYTES,
+  MAX_MISSED_GOALS,
   MAX_SAVED_PLANS,
   MAX_TITLE_LENGTH,
   SCHEMA_VERSION,
@@ -11,11 +12,13 @@ import {
   BACKUP_APP,
   backupFileSchema,
   historyEntrySchema,
+  missedGoalSchema,
   parseItems,
   savedPlanSchema,
   settingsSchema,
   type HistoryEntry,
   type LocalData,
+  type MissedGoal,
   type SavedPlan,
   type Settings,
 } from "./schemas";
@@ -186,6 +189,26 @@ export function addHistoryEntry(
     (existing) => existing.goal.toLowerCase() !== key,
   );
   return [entry, ...kept].slice(0, MAX_HISTORY_ENTRIES);
+}
+
+/** Adds a goal that was not understood. The same text is kept once, newest first. */
+export function addMissedGoal(
+  misses: readonly MissedGoal[],
+  goal: string,
+  reason: MissedGoal["reason"],
+  now: Date = new Date(),
+): MissedGoal[] {
+  const text = goal.trim();
+  const key = text.toLowerCase();
+  const entry: MissedGoal = {
+    id: newId(),
+    goal: text,
+    reason,
+    createdAt: now.toISOString(),
+  };
+  if (!missedGoalSchema.safeParse(entry).success) return [...misses];
+  const kept = misses.filter((existing) => existing.goal.toLowerCase() !== key);
+  return [entry, ...kept].slice(0, MAX_MISSED_GOALS);
 }
 
 export type HistoryGroupId = "today" | "yesterday" | "week" | "older";

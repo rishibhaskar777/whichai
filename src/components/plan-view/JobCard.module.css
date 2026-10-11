@@ -326,3 +326,18 @@
     display: none;
   }
 }
+
+.removePart {
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.removePart:hover {
+  color: var(--text);
+}

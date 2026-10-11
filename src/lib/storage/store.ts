@@ -1,14 +1,21 @@
 import type { KvBackend } from "./backend";
 import { readEnvelope, serialize } from "./envelope";
-import { MAX_HISTORY_ENTRIES, MAX_SAVED_PLANS, MAX_TOTAL_SIZE } from "./limits";
+import {
+  MAX_HISTORY_ENTRIES,
+  MAX_MISSED_GOALS,
+  MAX_SAVED_PLANS,
+  MAX_TOTAL_SIZE,
+} from "./limits";
 import {
   DEFAULT_SETTINGS,
   historyEntrySchema,
+  missedGoalSchema,
   parseItems,
   savedPlanSchema,
   settingsSchema,
   type HistoryEntry,
   type LocalData,
+  type MissedGoal,
   type SavedPlan,
   type Settings,
 } from "./schemas";
@@ -17,9 +24,14 @@ export type StoreError = "unavailable" | "full";
 
 export type WriteResult = { ok: true } | { ok: false; error: StoreError };
 
-type Collection = "plans" | "history" | "settings";
+type Collection = "plans" | "history" | "settings" | "misses";
 
-const COLLECTIONS: readonly Collection[] = ["plans", "history", "settings"];
+const COLLECTIONS: readonly Collection[] = [
+  "plans",
+  "history",
+  "settings",
+  "misses",
+];
 
 export interface LoadedData extends LocalData {
   /** False on a first visit, so callers can keep cookie-based defaults. */
@@ -33,6 +45,9 @@ export interface Store {
   savePlans(plans: readonly SavedPlan[]): Promise<WriteResult>;
   saveHistory(entries: readonly HistoryEntry[]): Promise<WriteResult>;
   saveSettings(settings: Settings): Promise<WriteResult>;
+  /** Goals that were not understood. Kept apart so backups never carry them. */
+  loadMisses(): Promise<MissedGoal[]>;
+  saveMisses(entries: readonly MissedGoal[]): Promise<WriteResult>;
   clear(): Promise<WriteResult>;
 }
 
@@ -53,6 +68,7 @@ export function createStore(backend: KvBackend): Store {
     plans: 0,
     history: 0,
     settings: 0,
+    misses: 0,
   };
 
   async function read(collection: Collection): Promise<unknown> {
@@ -106,6 +122,17 @@ export function createStore(backend: KvBackend): Store {
     savePlans: (plans) => write("plans", plans),
     saveHistory: (entries) => write("history", entries),
     saveSettings: (settings) => write("settings", settings),
+
+    async loadMisses() {
+      const misses = parseItems(
+        missedGoalSchema,
+        await read("misses"),
+        MAX_MISSED_GOALS,
+      );
+      sizes.misses = serialize(misses).length;
+      return misses;
+    },
+    saveMisses: (entries) => write("misses", entries),
 
     async clear() {
       try {

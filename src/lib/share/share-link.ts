@@ -26,9 +26,21 @@ function fromBase64Url(text: string): Uint8Array {
   return Uint8Array.from(binary, (char) => char.charCodeAt(0));
 }
 
+/** Empty part lists are left out, so links stay short and older links match. */
+function withoutEmptyParts(request: PlanRequest) {
+  const { addedJobs, removedJobs, ...rest } = request;
+  return {
+    ...rest,
+    ...(addedJobs.length > 0 ? { addedJobs } : {}),
+    ...(removedJobs.length > 0 ? { removedJobs } : {}),
+  };
+}
+
 /** Null when the encoded request would not fit in a share link. */
 export function encodePlanRequest(request: PlanRequest): string | null {
-  const bytes = new TextEncoder().encode(JSON.stringify(request));
+  const bytes = new TextEncoder().encode(
+    JSON.stringify(withoutEmptyParts(request)),
+  );
   const encoded = toBase64Url(bytes);
   return encoded.length <= MAX_FRAGMENT_LENGTH ? encoded : null;
 }

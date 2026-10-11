@@ -15,6 +15,7 @@ function job(id: string): Job {
     name: `Job ${id}`,
     description: "x",
     category: "ai",
+    stage: "idea",
     keywords: [],
   };
 }
