@@ -145,3 +145,14 @@ export function getAuthEnv(): AuthEnv | null {
   if (warning) console.warn(warning);
   return cachedAuth;
 }
+
+const contactEmailSchema = z.email();
+
+/*
+ * The public contact address is optional. A missing or malformed value gives
+ * an empty string so the interface falls back to GitHub.
+ */
+export function parseContactEmail(value: string | undefined): string {
+  const result = contactEmailSchema.safeParse(value?.trim());
+  return result.success ? result.data : "";
+}

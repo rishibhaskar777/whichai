@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/provider";
-import { contactUrl } from "@/lib/links";
+import { institutionUrl } from "@/lib/links";
 import {
   BILLINGS,
   cardPlans,
@@ -118,13 +118,13 @@ export function PricingView({ billing, currentPlan }: PricingViewProps) {
           </ul>
         </div>
         <a
-          href={contactUrl(
-            t("pricing.institution.subject"),
-            t("pricing.institution.body"),
-          )}
+          href={institutionUrl(t("pricing.institution.subject"))}
+          target="_blank"
+          rel="noopener noreferrer"
           className={controls.button}
         >
           {t("pricing.contactUs")}
+          <span className={controls.srOnly}>{t("link.newTab")}</span>
         </a>
       </section>
 

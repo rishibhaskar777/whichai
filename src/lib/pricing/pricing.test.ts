@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import data from "@/data/pricing/plans.json";
-import { contactUrl, mailtoUrl } from "@/lib/links";
+import { CONTACT_EMAIL, getContactEmail, institutionUrl } from "@/lib/links";
 import { getCurrentPlan } from "./current-plan";
 import { formatPrice } from "./format";
 import {
@@ -243,14 +243,29 @@ describe("billing switch", () => {
 });
 
 describe("contact links", () => {
-  it("builds a prefilled email with encoded spaces", () => {
-    const url = mailtoUrl("Institution plan", "Hello there");
-    expect(url.startsWith("mailto:")).toBe(true);
-    expect(url).toContain("subject=Institution%20plan");
-    expect(url).not.toContain("+");
+  afterEach(() => {
+    vi.unstubAllEnvs();
   });
 
-  it("uses the email while one is configured", () => {
-    expect(contactUrl("Hi", "Body").startsWith("mailto:")).toBe(true);
+  it("opens the institution issue form with the title prefilled", () => {
+    const url = new URL(institutionUrl("WhichAI for our institution"));
+    expect(url.hostname).toBe("github.com");
+    expect(url.pathname.endsWith("/issues/new")).toBe(true);
+    expect(url.searchParams.get("template")).toBe("institution.yml");
+    expect(url.searchParams.get("title")).toBe("WhichAI for our institution");
+  });
+
+  it("has no contact email unless one is configured", () => {
+    expect(CONTACT_EMAIL).toBe("");
+    expect(getContactEmail()).toBe("");
+  });
+
+  it("reads a valid NEXT_PUBLIC_CONTACT_EMAIL and ignores an invalid one", () => {
+    vi.stubEnv("NEXT_PUBLIC_CONTACT_EMAIL", "hello@example.org");
+    expect(getContactEmail()).toBe("hello@example.org");
+    vi.stubEnv("NEXT_PUBLIC_CONTACT_EMAIL", "not an address");
+    expect(getContactEmail()).toBe("");
+    vi.stubEnv("NEXT_PUBLIC_CONTACT_EMAIL", "");
+    expect(getContactEmail()).toBe("");
   });
 });

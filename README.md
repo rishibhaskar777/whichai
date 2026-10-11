@@ -30,8 +30,8 @@ TypeScript throughout. Next.js (App Router), React, CSS Modules with CSS custom 
 Requirements: Node.js 24 (see `.nvmrc`) and npm. The first build downloads the font files once, so it needs network access.
 
 ```bash
-git clone https://github.com/rishibhaskar777/whichai-1.git
-cd whichai-1
+git clone https://github.com/rishibhaskar777/whichai.git
+cd whichai
 npm ci
 cp .env.example .env.local
 npm run dev
@@ -79,7 +79,7 @@ Next.js App Router with a `src/` directory: `app/` for routes, `components/` for
 - A plain-language privacy page at `/privacy` that says what stays on your device and how to delete it.
 - **AI news** from official sources. The server reads about 30 public RSS and Atom feeds (company blogs, changelogs, GitHub releases of official repositories), at most every 30 minutes, and keeps the last good result if a feed fails. The panel shows the six newest headlines with source, age, tag and a New badge. **What Changed** at `/what-changed` lists everything from the last 60 days with search, tag and source filters and pages, all in the URL, and each tool page shows its recent news. A headline gets an "Affects your plans" badge when a plan saved on your device uses that tool; that check never leaves your device. Headlines stay in their original language and link to the source. See [0012](docs/decisions/0012-news-from-official-feeds.md) and [docs/NEWS-SOURCES.md](docs/NEWS-SOURCES.md).
 - **Tool discovery.** A weekly GitHub Actions job looks for new AI tools on GitHub, Hugging Face, Hacker News and our own news feeds, and follows what it finds in one watchlist issue. A candidate gets an issue of its own, with the evidence and the closest listed tools, only when it passes every admission rule. Nothing enters the catalogue without a person approving it: the `approved` label posts a draft record, and `npm run discover:import` adds it locally for you to verify and commit. See [docs/TOOL-DISCOVERY.md](docs/TOOL-DISCOVERY.md) and [0013](docs/decisions/0013-tool-discovery.md).
-- **Plans and pricing.** `/pricing` shows Free, Plus, Pro, Ultra and Institution in rupees, with a monthly and yearly switch kept in the URL, a comparison table and a FAQ. Everyone is on Free and paid plans are not open: `/checkout` is a preview whose Pay button only opens a dialog saying payments are coming in an upcoming update. No payment details are asked for and nothing is sent. Settings has a Subscription section, the sidebar shows a quiet "Free plan" label, and draft Terms, Refund policy and Contact pages exist. Plans and prices are edited in `src/data/pricing/plans.json`; see [docs/PRICING.md](docs/PRICING.md) and [0014](docs/decisions/0014-pricing-preview.md).
+- **Plans and pricing.** `/pricing` shows Free, Plus, Pro, Ultra and Institution in rupees, with a monthly and yearly switch kept in the URL, a comparison table and a FAQ. Everyone is on Free and paid plans are not open: `/checkout` is a preview whose Pay button only opens a dialog saying payments are coming in an upcoming update. No payment details are asked for and nothing is sent. Settings has a Subscription section, the account row shows a quiet "Free plan" line, and draft Terms, Refund policy and Contact pages exist (linked from Settings, under About & legal, and from the bottom of the pricing and checkout pages). Plans and prices are edited in `src/data/pricing/plans.json`; see [docs/PRICING.md](docs/PRICING.md) and [0014](docs/decisions/0014-pricing-preview.md).
 
 ## Security
 

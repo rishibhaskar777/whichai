@@ -1,7 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { headingViolations, seriousViolations } from "@/test/axe";
 import Page from "./page";
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
 
 describe("privacy page", () => {
   it("covers what is received, stored, not done, sign-out and contact", () => {
@@ -20,9 +24,15 @@ describe("privacy page", () => {
         screen.getByRole("heading", { level: 2, name }),
       ).toBeInTheDocument();
     }
+    expect(screen.queryByRole("link", { name: /@/ })).not.toBeInTheDocument();
+  });
+
+  it("shows a contact address only when one is configured", () => {
+    vi.stubEnv("NEXT_PUBLIC_CONTACT_EMAIL", "hello@example.org");
+    render(<Page />);
     expect(
-      screen.getByRole("link", { name: "rishibhaskar254@gmail.com" }),
-    ).toHaveAttribute("href", "mailto:rishibhaskar254@gmail.com");
+      screen.getByRole("link", { name: "hello@example.org" }),
+    ).toHaveAttribute("href", "mailto:hello@example.org");
   });
 
   it("has no accessibility or heading-order violations", async () => {

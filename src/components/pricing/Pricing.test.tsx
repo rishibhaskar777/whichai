@@ -129,12 +129,16 @@ describe("pricing page", () => {
     expect(text).not.toMatch(/most popular|\busers\b|testimonial|rated|% off/i);
   });
 
-  it("offers Contact us for the Institution plan by email", () => {
+  it("offers Contact us for the Institution plan through a GitHub issue", () => {
     render(<PricingView billing="monthly" currentPlan="free" />);
 
     const section = screen.getByRole("region", { name: "Institution" });
-    const link = within(section).getByRole("link", { name: "Contact us" });
-    expect(link.getAttribute("href")).toMatch(/^mailto:.+@.+\?subject=/);
+    const link = within(section).getByRole("link", { name: /Contact us/ });
+    const url = new URL(link.getAttribute("href") as string);
+    expect(url.origin).toBe("https://github.com");
+    expect(url.pathname.endsWith("/issues/new")).toBe(true);
+    expect(url.searchParams.get("template")).toBe("institution.yml");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
     for (const feature of [
       "Student access",
       "Department dashboard",
@@ -275,8 +279,8 @@ describe("checkout preview", () => {
     expect(screen.getByText("You will be asked to sign in")).toBeVisible();
     unmount();
 
-    render(<CheckoutView plan="pro" billing="monthly" viewerName="Rishi" />);
-    expect(screen.getByText("Signed in as Rishi")).toBeVisible();
+    render(<CheckoutView plan="pro" billing="monthly" viewerName="Ada" />);
+    expect(screen.getByText("Signed in as Ada")).toBeVisible();
   });
 
   it("opens the dialog from Pay without a network request or a form field", async () => {
@@ -323,7 +327,7 @@ describe("checkout preview", () => {
 
   it("has no accessibility or heading problems", async () => {
     const { container } = render(
-      <CheckoutView plan="pro" billing="yearly" viewerName="Rishi" />,
+      <CheckoutView plan="pro" billing="yearly" viewerName="Ada" />,
     );
     expect(await seriousViolations(container)).toEqual([]);
     expect(await headingViolations(container)).toEqual([]);

@@ -304,7 +304,7 @@ describe("account menu", () => {
     await user.click(account as HTMLElement);
 
     expect(account).toHaveAttribute("aria-expanded", "true");
-    const signOut = screen.getByRole("button", { name: "Sign out" });
+    const signOut = screen.getByRole("menuitem", { name: "Sign out" });
     const form = signOut.closest("form") as HTMLFormElement;
     expect(form.method).toBe("post");
     expect(form.getAttribute("action")).toBe("/api/auth/sign-out");
@@ -319,7 +319,7 @@ describe("account menu", () => {
 
     await user.keyboard("{Escape}");
 
-    expect(screen.queryByRole("button", { name: "Sign out" })).toBeNull();
+    expect(screen.queryByRole("menuitem", { name: "Sign out" })).toBeNull();
     expect(account).toHaveFocus();
   });
 });

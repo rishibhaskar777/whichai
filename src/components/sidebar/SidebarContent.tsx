@@ -8,20 +8,14 @@ import {
   CloseIcon,
   CompareIcon,
   FolderIcon,
-  HelpIcon,
   HomeIcon,
   LibraryIcon,
   PanelLeftIcon,
   PlusIcon,
   SearchIcon,
-  SettingsIcon,
 } from "@/components/icons";
-import { AccountMenu } from "./AccountMenu";
-import { GuestPlanRow } from "./PlanLabel";
+import { SidebarAccount } from "./AccountMenu";
 import { RecentProjects } from "./RecentProjects";
-import { SidebarLegal } from "./SidebarLegal";
-import { SignInButton } from "./SignInButton";
-import { ThemeControl } from "@/components/theme-control/ThemeControl";
 import { useI18n } from "@/lib/i18n/provider";
 import type { MessageKey } from "@/lib/i18n/en";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
@@ -126,40 +120,12 @@ export function SidebarContent({
       </nav>
 
       <div className={styles.bottom} data-print-hide="">
-        <div className={styles.footerLinks}>
-          <Link
-            href="/settings"
-            className={styles.link}
-            aria-current={pathname === "/settings" ? "page" : undefined}
-            onClick={closeDrawer}
-          >
-            <SettingsIcon />
-            <span className={labelClass}>{t("nav.settings")}</span>
-          </Link>
-          <Link
-            href="/help"
-            className={styles.link}
-            aria-current={pathname === "/help" ? "page" : undefined}
-            onClick={closeDrawer}
-          >
-            <HelpIcon />
-            <span className={labelClass}>{t("nav.help")}</span>
-          </Link>
-        </div>
-        {viewer ? (
-          <AccountMenu
-            viewer={viewer}
-            collapsed={collapsed}
-            onNavigate={closeDrawer}
-          />
-        ) : (
-          <>
-            {collapsed ? null : <GuestPlanRow onNavigate={closeDrawer} />}
-            <SignInButton collapsed={collapsed} />
-          </>
-        )}
-        <ThemeControl initialChoice={initialTheme} compact={collapsed} />
-        {collapsed ? null : <SidebarLegal onNavigate={closeDrawer} />}
+        <SidebarAccount
+          viewer={viewer}
+          collapsed={collapsed}
+          initialTheme={initialTheme}
+          onNavigate={closeDrawer}
+        />
       </div>
     </div>
   );

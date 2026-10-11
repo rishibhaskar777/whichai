@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
-import { CONTACT_EMAIL } from "@/lib/links";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { REPOSITORY_URL } from "@/lib/links";
 import { headingViolations, seriousViolations } from "@/test/axe";
 import { AppProviders } from "@/test/wrappers";
 import { ContactContent, RefundContent, TermsContent } from "./LegalContent";
@@ -8,6 +8,10 @@ import { ContactContent, RefundContent, TermsContent } from "./LegalContent";
 vi.mock("next/navigation", async () =>
   (await import("@/test/navigation")).navigationMock("/terms"),
 );
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
 
 const DRAFT = "Draft: will be reviewed before paid plans launch.";
 
@@ -25,15 +29,12 @@ describe.each([
     expect(screen.getByRole("note")).toHaveTextContent(DRAFT);
   });
 
-  it("links Terms, Refund policy, Privacy and Contact", () => {
+  it("has no legal link bar; those links live in Settings and on pricing", () => {
     render(<Component />);
 
-    const nav = screen.getByRole("navigation", { name: "Legal and contact" });
     expect(
-      within(nav)
-        .getAllByRole("link")
-        .map((link) => link.getAttribute("href")),
-    ).toEqual(["/terms", "/refund-policy", "/privacy", "/contact"]);
+      screen.queryByRole("navigation", { name: "Legal and contact" }),
+    ).not.toBeInTheDocument();
   });
 
   it("has no accessibility or heading problems", async () => {
@@ -60,18 +61,58 @@ describe("Refund and Cancellation Policy", () => {
 });
 
 describe("Contact", () => {
-  it("lists the email from SECURITY.md and the GitHub feedback link", () => {
+  it("offers feedback, a private security report and an institution issue on GitHub", () => {
     render(<ContactContent />);
 
-    expect(CONTACT_EMAIL).toBe("rishibhaskar254@gmail.com");
-    expect(screen.getByRole("link", { name: CONTACT_EMAIL })).toHaveAttribute(
-      "href",
-      `mailto:${CONTACT_EMAIL}`,
-    );
     const feedback = screen.getByRole("link", { name: /Send feedback/ });
     expect(feedback).toHaveAttribute("target", "_blank");
     expect(feedback).toHaveAttribute("rel", "noopener noreferrer");
-    expect(feedback.getAttribute("href")).toContain("github.com/");
+    expect(feedback).toHaveAttribute(
+      "href",
+      `${REPOSITORY_URL}/issues/new?template=feedback.yml`,
+    );
+
+    expect(
+      screen.getByRole("link", { name: /Report a security problem/ }),
+    ).toHaveAttribute("href", `${REPOSITORY_URL}/security/advisories/new`);
+
+    const institution = screen.getByRole("link", {
+      name: /Ask about the Institution plan/,
+    });
+    const url = new URL(institution.getAttribute("href") as string);
+    expect(url.origin).toBe("https://github.com");
+    expect(url.searchParams.get("template")).toBe("institution.yml");
+  });
+
+  it("shows no email and no mailto link by default", () => {
+    const { container } = render(<ContactContent />);
+
+    expect(container.querySelector('a[href^="mailto:"]')).toBeNull();
+    expect(
+      screen.queryByRole("heading", { level: 2, name: "Email" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows the email only when NEXT_PUBLIC_CONTACT_EMAIL is set", () => {
+    vi.stubEnv("NEXT_PUBLIC_CONTACT_EMAIL", "hello@example.org");
+    render(<ContactContent />);
+
+    const section = screen
+      .getByRole("heading", { level: 2, name: "Email" })
+      .closest("section") as HTMLElement;
+    expect(
+      within(section).getByRole("link", { name: "hello@example.org" }),
+    ).toHaveAttribute("href", "mailto:hello@example.org");
+    expect(
+      screen.getByRole("link", { name: /Send feedback/ }),
+    ).toBeInTheDocument();
+  });
+
+  it("ignores an invalid address", () => {
+    vi.stubEnv("NEXT_PUBLIC_CONTACT_EMAIL", "not-an-address");
+    const { container } = render(<ContactContent />);
+
+    expect(container.querySelector('a[href^="mailto:"]')).toBeNull();
   });
 
   it("reads in Hindi", () => {
@@ -82,6 +123,9 @@ describe("Contact", () => {
     );
     expect(
       screen.getByRole("heading", { level: 1, name: "संपर्क" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /सुरक्षा समस्या की रिपोर्ट करें/ }),
     ).toBeInTheDocument();
   });
 });

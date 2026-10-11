@@ -44,7 +44,7 @@ src/
     tool-library/, compare-plans/   redirect to /tools and /compare
   components/          UI components, one folder per component
     app-shell/         three-region layout, drawer, panel state
-    sidebar/           navigation, sign-in button, account menu
+    sidebar/           navigation and one footer row: sign in, or the account menu
     sign-in/           glass sign-in popup (native dialog), shared panel, provider marks
     news-panel/        AI news panel in the shell
     news/              news entry, What Changed page, tag label, plan-tool provider and badge

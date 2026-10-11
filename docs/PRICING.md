@@ -79,5 +79,5 @@ Nobody can subscribe yet. Every account and every guest is on Free, and `getCurr
 | `/pricing`                 | `src/components/pricing/PricingView.tsx`   |
 | `/checkout?plan=&billing=` | `src/components/pricing/CheckoutView.tsx`  |
 | Settings, Subscription     | `src/components/settings/SettingsView.tsx` |
-| Sidebar "Free plan" label  | `src/components/sidebar/PlanLabel.tsx`     |
+| Sidebar "Free plan" label  | `src/components/sidebar/AccountMenu.tsx`   |
 | Helpers (savings, table)   | `src/lib/pricing/plans.ts`                 |

@@ -2,6 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Viewer } from "@/lib/auth/get-session";
+import { REPOSITORY_URL } from "@/lib/links";
 import { MAX_IMPORT_BYTES } from "@/lib/storage/limits";
 import { createMemoryBackend, type KvBackend } from "@/lib/storage/backend";
 import { buildBackup } from "@/lib/storage/operations";
@@ -79,7 +80,12 @@ describe("settings: structure", () => {
     renderSettings();
     await ready();
 
-    for (const name of ["General", "Privacy and data", "Account", "About"]) {
+    for (const name of [
+      "General",
+      "Privacy and data",
+      "Account",
+      "About & legal",
+    ]) {
       expect(
         screen.getByRole("heading", { level: 2, name }),
       ).toBeInTheDocument();
@@ -652,7 +658,7 @@ describe("settings: subscription", () => {
     expect(dialog).not.toHaveAttribute("open");
   });
 
-  it("links Terms, Refund policy and Contact from About", async () => {
+  it("links the legal pages, security policy and repository from About & legal", async () => {
     renderSettings();
     await ready();
 
@@ -667,6 +673,22 @@ describe("settings: subscription", () => {
     expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
       "href",
       "/contact",
+    );
+    expect(screen.getByRole("link", { name: "Privacy" })).toHaveAttribute(
+      "href",
+      "/privacy",
+    );
+    const about = screen
+      .getByRole("heading", { level: 2, name: "About & legal" })
+      .closest("section") as HTMLElement;
+    const external = within(about)
+      .getAllByRole("link", { name: /opens in a new tab/ })
+      .map((link) => link.getAttribute("href"));
+    expect(external).toEqual(
+      expect.arrayContaining([
+        `${REPOSITORY_URL}/security/policy`,
+        REPOSITORY_URL,
+      ]),
     );
   });
 });

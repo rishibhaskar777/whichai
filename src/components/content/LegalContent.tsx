@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { LegalLinks } from "@/components/pricing/LegalLinks";
 import { useI18n } from "@/lib/i18n/provider";
 import type { MessageKey } from "@/lib/i18n/en";
 import {
-  CONTACT_EMAIL,
   FEEDBACK_URL,
-  SECURITY_POLICY_URL,
-  contactUrl,
+  SECURITY_REPORT_URL,
+  getContactEmail,
+  institutionUrl,
 } from "@/lib/links";
 import controls from "@/styles/controls.module.css";
 import styles from "./Content.module.css";
@@ -38,7 +37,6 @@ function LegalPage({
         {t("legal.updated", { date: formatDate(LAST_UPDATED, "long") })}
       </p>
       {children}
-      <LegalLinks />
       <Link href="/" className={styles.back}>
         {t("content.back")}
       </Link>
@@ -126,56 +124,53 @@ export function RefundContent() {
   );
 }
 
+function NewTabLink({ href, label }: { href: string; label: string }) {
+  const { t } = useI18n();
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+      {label}
+      <span className={controls.srOnly}>{t("link.newTab")}</span>
+    </a>
+  );
+}
+
 export function ContactContent() {
   const { t } = useI18n();
-  const hasEmail = CONTACT_EMAIL !== "";
+  const email = getContactEmail();
   return (
     <LegalPage title="contact.title" lede="contact.lede">
-      <Section id="contact-email" title="contact.email.title">
-        <p>{t("contact.email.text")}</p>
-        <p>
-          {hasEmail ? (
-            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-          ) : (
-            <span>{t("contact.email.missing")}</span>
-          )}
-        </p>
-      </Section>
       <Section id="contact-feedback" title="contact.feedback.title">
         <p>{t("contact.feedback.text")}</p>
         <p>
-          <a href={FEEDBACK_URL} target="_blank" rel="noopener noreferrer">
-            {t("contact.feedback.link")}
-            <span className={controls.srOnly}>{t("link.newTab")}</span>
-          </a>
+          <NewTabLink href={FEEDBACK_URL} label={t("contact.feedback.link")} />
         </p>
       </Section>
       <Section id="contact-security" title="contact.security.title">
         <p>{t("contact.security.text")}</p>
         <p>
-          <a
-            href={SECURITY_POLICY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t("contact.security.link")}
-            <span className={controls.srOnly}>{t("link.newTab")}</span>
-          </a>
+          <NewTabLink
+            href={SECURITY_REPORT_URL}
+            label={t("contact.security.link")}
+          />
         </p>
       </Section>
       <Section id="contact-institution" title="contact.institution.title">
         <p>{t("contact.institution.text")}</p>
         <p>
-          <a
-            href={contactUrl(
-              t("pricing.institution.subject"),
-              t("pricing.institution.body"),
-            )}
-          >
-            {t("contact.institution.link")}
-          </a>
+          <NewTabLink
+            href={institutionUrl(t("pricing.institution.subject"))}
+            label={t("contact.institution.link")}
+          />
         </p>
       </Section>
+      {email !== "" ? (
+        <Section id="contact-email" title="contact.email.title">
+          <p>{t("contact.email.text")}</p>
+          <p>
+            <a href={`mailto:${email}`}>{email}</a>
+          </p>
+        </Section>
+      ) : null}
     </LegalPage>
   );
 }
