@@ -1,1 +1,13 @@
-[]
+[
+  { "text": "i have to submit mini project next week", "goal": "build-an-app" },
+  {
+    "text": "make reels for my cousin's bakery",
+    "goal": "social-media-content"
+  },
+  { "text": "notes for dbms exam", "goal": "exam-preparation" },
+  {
+    "text": "website for my dad's shop with whatsapp order",
+    "goal": "business-website",
+    "parts": ["chatbot-builder"]
+  }
+]
