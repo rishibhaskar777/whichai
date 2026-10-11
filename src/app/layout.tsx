@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { AppShell } from "@/components/app-shell/AppShell";
 import { getProviderAvailability } from "@/lib/auth/config";
 import { getViewer } from "@/lib/auth/get-session";
-import { getEnv } from "@/lib/env";
+import { getDevTestAccount, getEnv } from "@/lib/env";
 import { I18nProvider } from "@/lib/i18n/provider";
 import { getLocale } from "@/lib/i18n/server";
 import { getNews } from "@/lib/news";
@@ -68,6 +68,11 @@ export default async function RootLayout({
             initialTheme={theme ?? "system"}
             viewer={await getViewer()}
             providers={getProviderAvailability()}
+            devAccount={
+              process.env.NODE_ENV === "development"
+                ? getDevTestAccount()
+                : null
+            }
           >
             {children}
           </AppShell>

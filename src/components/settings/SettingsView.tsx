@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useId, useState } from "react";
+import { lazy, Suspense, useId, useState } from "react";
 import { useAccount } from "@/components/account/AccountProvider";
 import { ConfirmDialog } from "@/components/dialog/ConfirmDialog";
 import { CheckIcon, DownloadIcon, ExternalLinkIcon } from "@/components/icons";
@@ -33,6 +33,16 @@ import {
   SwitchSetting,
 } from "./SettingsControls";
 import styles from "./Settings.module.css";
+
+/* Removed from production builds: the condition is folded away at build time. */
+const DeveloperTools =
+  process.env.NODE_ENV === "development"
+    ? lazy(() =>
+        import("@/components/dev/DeveloperTools").then((module) => ({
+          default: module.DeveloperTools,
+        })),
+      )
+    : null;
 
 const PROVIDER_NAMES = { google: "Google", github: "GitHub" } as const;
 
@@ -415,6 +425,12 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
           )}
         </SettingRow>
       </Panel>
+
+      {DeveloperTools ? (
+        <Suspense fallback={null}>
+          <DeveloperTools />
+        </Suspense>
+      ) : null}
 
       <Panel title={t("settings.about")}>
         <div className={styles.row}>
