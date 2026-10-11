@@ -20,7 +20,7 @@ People using plans asked for four things: to try a different tool in a card with
 
 - `HomeFlow` pushes a history entry for the understanding card and for the plan. Level, budget, tools used and chosen tools replace the current entry. Editing chips on the understanding card replaces it too, so Back returns to the same chips.
 - The fragment holds the request in the share-link format. The understanding step uses the prefix `understanding.`. A goal with no match has a history entry with state only. The fragment is validated like a share link; anything invalid is the home step.
-- The raw goal text is never in the address. It stays in `sessionStorage` (`whichai:goal`) for the tab, so Back to the start refills the search box. "New plan" clears it and adds a home entry.
+- The raw goal text is never in the address. It stays in the history entry's state (`whichaiHome`, added to the router's own fields), so Back to the start refills the search box and a reload starts empty. "New plan" clears it and adds a home entry.
 - Reloading reads the fragment and restores the step. A card's "View full details" link notes the card in the current history entry (`whichaiReturnCard`), so Back from the tool page scrolls to and focuses it.
 - Plans opened from Projects or a share link (`/plan`) do not rewrite their address when changed.
 

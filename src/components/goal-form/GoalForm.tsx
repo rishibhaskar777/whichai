@@ -110,6 +110,7 @@ export function GoalForm({
             className={styles.textarea}
             rows={compact ? 1 : 2}
             maxLength={GOAL_MAX_LENGTH}
+            autoComplete="off"
             value={value}
             onChange={(event) => {
               onValueChange(event.target.value);

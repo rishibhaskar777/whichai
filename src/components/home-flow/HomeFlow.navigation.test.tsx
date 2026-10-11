@@ -8,6 +8,7 @@ import {
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
+import { resetDocumentLoad } from "@/lib/plan/home-history";
 import { decodePlanRequest } from "@/lib/share/share-link";
 import { AppProviders } from "@/test/wrappers";
 import { HomeFlow } from "./HomeFlow";
@@ -91,6 +92,23 @@ function chipLabels() {
     .map((button) => button.getAttribute("aria-label"));
 }
 
+function ownState(): { goal?: string; step?: string } {
+  const state = window.history.state as Record<string, unknown> | null;
+  return (state?.whichaiHome ?? {}) as { goal?: string; step?: string };
+}
+
+function emptyHome() {
+  expect(
+    screen.getByRole("heading", {
+      level: 1,
+      name: "What do you want to do with AI?",
+    }),
+  ).toBeInTheDocument();
+  expect(searchBox()).toHaveValue("");
+  expect(window.location.hash).toBe("");
+  expect(ownState()).toEqual({});
+}
+
 beforeEach(() => {
   // A fresh entry drops any forward entries an earlier test left behind, so
   // history.length counts only what the test itself pushes.
@@ -131,7 +149,8 @@ describe("history entries", () => {
     expect(address).not.toContain(GOAL);
     expect(decodedFragment).not.toContain(GOAL);
     expect(window.location.search).toBe("");
-    expect(window.sessionStorage.getItem("whichai:goal")).toBe(GOAL);
+    expect(window.sessionStorage.getItem("whichai:goal")).toBeNull();
+    expect(ownState().goal).toBe(GOAL);
   });
 
   it("replaces, not pushes, when the level changes", async () => {
@@ -214,54 +233,89 @@ describe("Back and Forward", () => {
 });
 
 describe("reloading", () => {
-  it("restores the plan, its level and the chosen tools", async () => {
+  it("starts with an empty search after a full page load on a plan", async () => {
     const user = userEvent.setup();
     const first = render(<Page />);
     await submit(user);
     await confirm(user);
-    await user.click(screen.getByRole("radio", { name: "Polished" }));
-    const swap = screen.getAllByRole("button", { name: /^Choose .+ if / })[0]!;
-    await user.click(swap);
-    await waitFor(() =>
-      expect(Object.keys(requestInAddress().chosenTools)).toHaveLength(1),
-    );
-    const chosen = requestInAddress().chosenTools;
-    const headline = document.getElementById("plan-headline")?.textContent;
     first.unmount();
+    resetDocumentLoad();
 
     render(<Page />);
 
+    await waitFor(() => expect(searchBox()).toBeInTheDocument());
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    emptyHome();
+    expect(screen.queryByText(GOAL)).not.toBeInTheDocument();
     expect(
-      await screen.findByRole(
-        "radio",
-        { name: "Polished" },
-        { timeout: LOAD_TIMEOUT },
-      ),
-    ).toBeChecked();
-    expect(document.getElementById("plan-headline")).toHaveTextContent(
-      headline ?? "",
-    );
-    expect(requestInAddress().chosenTools).toEqual(chosen);
-    const [jobId, toolId] = Object.entries(chosen)[0]!;
-    expect(document.querySelector(`#job-card-${jobId}`)).toBeInTheDocument();
-    expect(toolId).toBeTruthy();
-    expect(screen.getByText(GOAL)).toBeInTheDocument();
+      screen.queryByText("Here's what we understood"),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("radio", { name: "Simple" }),
+    ).not.toBeInTheDocument();
   });
 
-  it("restores the understanding card with its chips", async () => {
+  it("starts with an empty search after a reload on the home step", async () => {
     const user = userEvent.setup();
     const first = render(<Page />);
     await submit(user);
-    await addChip(user, "Dark mode");
-    const remaining = chipLabels();
+    await go("back");
+    await waitFor(() => expect(searchBox()).toHaveValue(GOAL));
     first.unmount();
+    resetDocumentLoad();
 
     render(<Page />);
 
-    await screen.findByText("Here's what we understood", undefined, {
-      timeout: LOAD_TIMEOUT,
-    });
-    expect(chipLabels()).toEqual(remaining);
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    emptyHome();
+  });
+
+  it("keeps the router fields in the history entry", async () => {
+    const user = userEvent.setup();
+    window.history.replaceState({ __NA: true, tree: ["", {}] }, "", "/");
+    const pushSpy = vi.spyOn(window.history, "pushState");
+    render(<Page />);
+    await submit(user);
+    await confirm(user);
+
+    expect(window.history.state).toMatchObject({ __NA: true, tree: ["", {}] });
+    expect(ownState().step).toBe("plan");
+    expect(pushSpy).toHaveBeenCalled();
+    for (const [state] of pushSpy.mock.calls) {
+      expect(state).toMatchObject({ __NA: true, tree: ["", {}] });
+    }
+    pushSpy.mockRestore();
+  });
+
+  it("drops our key but not the router fields on a full page load", async () => {
+    window.history.replaceState(
+      {
+        __NA: true,
+        whichaiHome: { goal: GOAL, step: "understanding" },
+      },
+      "",
+      "/#understanding.abc",
+    );
+    render(<Page />);
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    expect(window.history.state).toEqual({ __NA: true });
+    expect(window.location.hash).toBe("");
+    expect(searchBox()).toHaveValue("");
+  });
+
+  it("clears a goal that an earlier version left in session storage", async () => {
+    window.sessionStorage.setItem("whichai:goal", GOAL);
+    render(<Page />);
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    expect(window.sessionStorage.getItem("whichai:goal")).toBeNull();
+    expect(searchBox()).toHaveValue("");
+  });
+
+  it("turns browser autofill off on the search box", () => {
+    render(<Page />);
+    expect(searchBox()).toHaveAttribute("autocomplete", "off");
   });
 
   it("starts at home when the fragment is not a valid request", async () => {

@@ -8,13 +8,15 @@ import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { UnderstandingCard } from "@/components/understanding-card/UnderstandingCard";
 import {
   pushHomeStep,
+  readHomeGoal,
   readHomeStep,
+  rememberHomeGoal,
   replaceHomeStep,
+  startFreshHomeVisit,
   type HomeStep,
 } from "@/lib/plan/home-history";
 import type { GoalSuggestion, Understanding } from "@/lib/plan/interpret-goal";
 import { loadInterpreter, type Interpreter } from "@/lib/plan/load-interpreter";
-import { readSessionGoal, writeSessionGoal } from "@/lib/plan/session-goal";
 import { useI18n } from "@/lib/i18n/provider";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
 import { CUSTOM_GOAL_ID } from "@/lib/schemas/catalogue";
@@ -95,7 +97,8 @@ export function HomeFlow() {
     if (newPlanCount === mountedNewPlanCount.current) return;
     navigation.current.token += 1;
     const current = readHomeStep(window.location.hash, window.history.state);
-    if (current.step !== "home") pushHomeStep({ step: "home" });
+    if (current.step === "home") replaceHomeStep(current, "");
+    else pushHomeStep({ step: "home" }, "");
   }, [newPlanCount]);
 
   const planStage = useCallback((request: PlanRequest): Stage => {
@@ -107,7 +110,7 @@ export function HomeFlow() {
   const showStep = useCallback(
     async (target: HomeStep) => {
       const token = (navigation.current.token += 1);
-      const goalText = readSessionGoal();
+      const goalText = readHomeGoal(window.history.state);
       setSubmittedGoal(goalText);
 
       if (target.step === "home") {
@@ -138,6 +141,10 @@ export function HomeFlow() {
   useEffect(() => {
     const show = () =>
       void showStep(readHomeStep(window.location.hash, window.history.state));
+    if (startFreshHomeVisit() && inputRef.current) {
+      // The browser can put back the text of a reloaded page before React runs.
+      inputRef.current.value = "";
+    }
     show();
     window.addEventListener("popstate", show);
     return () => window.removeEventListener("popstate", show);
@@ -155,22 +162,22 @@ export function HomeFlow() {
     const understanding = loaded.understandGoal(goalText);
     const goal = understanding?.goal ?? null;
     navigation.current.token += 1;
-    writeSessionGoal(goalText);
+    rememberHomeGoal(goalText);
     setInterpreter(loaded);
     setSubmittedGoal(goalText);
     setDraft("");
     if (goal) {
-      pushHomeStep({
-        step: "understanding",
-        request: understandingRequest(goal),
-      });
+      pushHomeStep(
+        { step: "understanding", request: understandingRequest(goal) },
+        goalText,
+      );
       setStage({
         kind: "understanding",
         goal,
         doubt: doubtOf(understanding),
       });
     } else {
-      pushHomeStep({ step: "no-match" });
+      pushHomeStep({ step: "no-match" }, goalText);
       setStage({ kind: "no-match" });
     }
     return understanding;
@@ -249,7 +256,7 @@ export function HomeFlow() {
       addedJobs: [],
       removedJobs: [],
     };
-    pushHomeStep({ step: "plan", request });
+    pushHomeStep({ step: "plan", request }, submittedGoal);
     setStage(planStage(request));
   }
 
