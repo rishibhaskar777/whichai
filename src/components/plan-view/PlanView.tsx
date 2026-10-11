@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   useEffect,
   useId,
@@ -17,6 +18,8 @@ import {
   PlusIcon,
   ShareIcon,
 } from "@/components/icons";
+import { useEntitlements } from "@/components/entitlements/EntitlementsProvider";
+import { LockedControl } from "@/components/entitlements/LockedControl";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { PartPicker } from "@/components/part-picker/PartPicker";
 import { useToast } from "@/components/toast/ToastProvider";
@@ -28,6 +31,7 @@ import type {
   Level,
   UnderstoodGoal,
 } from "@/lib/schemas/plan";
+import { canSaveProject, requirementFor } from "@/lib/plans/entitlements";
 import { listParts, type PartOption } from "@/lib/plan/interpret-goal";
 import { requestKeyOf } from "@/lib/plan/request-key";
 import { MAX_PART_EDITS, type PlanRequest } from "@/lib/schemas/plan-request";
@@ -125,11 +129,18 @@ export function PlanView({
   onRequestChange,
 }: PlanViewProps) {
   const { t, locale } = useI18n();
-  const { settings, savePlan, updatePlan, deletePlan } = useLocalData();
+  const { settings, plans, savePlan, updatePlan, deletePlan } = useLocalData();
+  const { entitlements } = useEntitlements();
   const { show } = useToast();
+  const router = useRouter();
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const jobsTitleId = useId();
-  const [level, setLevel] = useState<Level>(initialLevel);
+  // A plan opened at a level this person cannot use shows the next one down.
+  const [level, setLevel] = useState<Level>(
+    initialLevel === "advanced" && !entitlements.advancedLevel
+      ? "polished"
+      : initialLevel,
+  );
   const [levelNotice, setLevelNotice] = useState("");
   const [usedTools, setUsedTools] = useState<ReadonlySet<string>>(
     () => new Set(initialToolsUsed ?? NO_TOOLS),
@@ -310,6 +321,17 @@ export function PlanView({
       }
       return;
     }
+    if (!canSaveProject(entitlements, plans.length)) {
+      show({
+        message: t("limits.projects.reached", {
+          max: entitlements.savedProjects ?? 0,
+        }),
+        tone: "error",
+        actionLabel: t("limits.upgrade"),
+        onAction: () => router.push("/pricing"),
+      });
+      return;
+    }
     const result = await savePlan(request, plan.headline);
     if (!result.ok) return;
     const { id } = result.value;
@@ -340,6 +362,9 @@ export function PlanView({
     }
   }
 
+  const saveRequirement = requirementFor("saveProjects", entitlements);
+  const exportRequirement = requirementFor("exportPlans", entitlements);
+  const shareRequirement = requirementFor("shareLinks", entitlements);
   const isSaved = savedId !== null && savedKey === requestKey;
   const saveLabel = isSaved
     ? t("plan.saved")
@@ -365,7 +390,11 @@ export function PlanView({
       </h1>
 
       <div data-print-hide="">
-        <LevelSwitch level={level} onChange={changeLevel} />
+        <LevelSwitch
+          level={level}
+          onChange={changeLevel}
+          locked={entitlements.advancedLevel ? [] : ["advanced"]}
+        />
       </div>
       <p className={styles.printLevel}>
         {t("plan.levelGroup")}: {t(`level.${level}`)}
@@ -439,31 +468,58 @@ export function PlanView({
           label={t("plan.copyBrief")}
           variant="primary"
         />
-        <button
-          type="button"
-          className={controls.button}
-          disabled={isSaved}
-          onClick={() => void save()}
-        >
-          {isSaved ? <CheckIcon /> : <BookmarkIcon />}
-          {saveLabel}
-        </button>
-        <button
-          type="button"
-          className={controls.button}
-          onClick={() => printWithTitle(plan.headline)}
-        >
-          <DownloadIcon />
-          {t("plan.downloadPdf")}
-        </button>
-        <button
-          type="button"
-          className={controls.button}
-          onClick={() => void copyShareLink()}
-        >
-          <ShareIcon />
-          {t("plan.copyShareLink")}
-        </button>
+        {saveRequirement !== "none" && savedId === null ? (
+          <LockedControl
+            requirement={saveRequirement}
+            className={controls.button}
+          >
+            {t("plan.save")}
+          </LockedControl>
+        ) : (
+          <button
+            type="button"
+            className={controls.button}
+            disabled={isSaved}
+            onClick={() => void save()}
+          >
+            {isSaved ? <CheckIcon /> : <BookmarkIcon />}
+            {saveLabel}
+          </button>
+        )}
+        {exportRequirement !== "none" ? (
+          <LockedControl
+            requirement={exportRequirement}
+            className={controls.button}
+          >
+            {t("plan.downloadPdf")}
+          </LockedControl>
+        ) : (
+          <button
+            type="button"
+            className={controls.button}
+            onClick={() => printWithTitle(plan.headline)}
+          >
+            <DownloadIcon />
+            {t("plan.downloadPdf")}
+          </button>
+        )}
+        {shareRequirement !== "none" ? (
+          <LockedControl
+            requirement={shareRequirement}
+            className={controls.button}
+          >
+            {t("plan.copyShareLink")}
+          </LockedControl>
+        ) : (
+          <button
+            type="button"
+            className={controls.button}
+            onClick={() => void copyShareLink()}
+          >
+            <ShareIcon />
+            {t("plan.copyShareLink")}
+          </button>
+        )}
       </div>
 
       <AccuracyCard

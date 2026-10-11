@@ -97,20 +97,19 @@ describe("plan data", () => {
 
 describe("features", () => {
   it("builds each paid plan on the one before it", () => {
-    expect(planFeatures(getPlan("free"))).toHaveLength(7);
-    expect(planFeatures(getPlan("plus"))).toHaveLength(11);
-    expect(planFeatures(getPlan("pro"))).toHaveLength(15);
-    expect(planFeatures(getPlan("ultra"))).toHaveLength(19);
+    expect(planFeatures(getPlan("free"))).toHaveLength(6);
+    expect(planFeatures(getPlan("plus"))).toHaveLength(13);
+    expect(planFeatures(getPlan("pro"))).toHaveLength(17);
+    expect(planFeatures(getPlan("ultra"))).toHaveLength(21);
   });
 
   it("gives Free only what works today", () => {
     expect(planFeatures(getPlan("free")).map((f) => f.id)).toEqual([
       "plans-three-levels",
-      "library-compare",
+      "tool-library",
       "live-news",
       "saved-local",
       "share-links",
-      "pdf-export",
       "languages",
     ]);
   });
@@ -186,12 +185,12 @@ describe("comparison table", () => {
     const row = table.features.find((entry) => entry.id === "change-alerts");
     expect(row?.included).toEqual([false, true, true, true]);
     const base = table.features.find((entry) => entry.id === "pdf-export");
-    expect(base?.included).toEqual([true, true, true, true]);
+    expect(base?.included).toEqual([false, true, true, true]);
   });
 
   it("lists limits with a value, or null where a plan has none", () => {
     const compare = table.limits.find((row) => row.id === "compare-tools");
-    expect(compare?.values).toEqual([3, 3, 6, 6]);
+    expect(compare?.values).toEqual([null, 3, 6, 6]);
     const team = table.limits.find((row) => row.id === "team-members");
     expect(team?.values).toEqual([null, null, null, 5]);
   });

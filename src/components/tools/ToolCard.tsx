@@ -9,6 +9,7 @@ import {
 import { toggleSelection } from "@/lib/library/compare";
 import type { Job, Tool } from "@/lib/schemas/catalogue";
 import controls from "@/styles/controls.module.css";
+import { CompareLink } from "./CompareLink";
 import { GetIt } from "./GetIt";
 import { PLATFORM_META } from "./link-meta";
 import styles from "./ToolCard.module.css";
@@ -117,17 +118,16 @@ export function ToolCard({
             {t("library.card.compareFull")}
           </span>
         ) : (
-          <Link
+          <CompareLink
             href={compareHref}
             className={styles.compare}
-            data-picked={picked ? "true" : undefined}
-            prefetch={false}
+            picked={picked}
           >
             {picked
               ? t("library.card.removeCompare")
               : t("library.card.addCompare")}
             <span className={controls.srOnly}> {tool.name}</span>
-          </Link>
+          </CompareLink>
         )}
       </footer>
     </article>

@@ -746,7 +746,10 @@ describe("settings: subscription", () => {
     ).toBeInTheDocument();
     expect(within(section).getByText("Free plan")).toBeInTheDocument();
     expect(within(section).getByText("₹0 a month")).toBeInTheDocument();
-    expect(within(section).getByText("PDF export")).toBeInTheDocument();
+    expect(
+      within(section).getByText("Full Tool Library"),
+    ).toBeInTheDocument();
+    expect(within(section).queryByText("PDF export")).not.toBeInTheDocument();
     expect(within(section).getByText("Share links")).toBeInTheDocument();
     expect(
       within(section).queryByText("Change alerts"),

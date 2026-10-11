@@ -1,0 +1,43 @@
+.locked {
+  position: relative;
+  color: var(--text-muted);
+}
+
+.icon {
+  flex: none;
+}
+
+/* Hidden until hover or keyboard focus, but always present as the description. */
+.tip {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  z-index: 5;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  line-height: 1.4;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity var(--duration-fast) var(--ease-out);
+  visibility: hidden;
+}
+
+.locked:hover .tip,
+.locked:focus-visible .tip {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tip {
+    transition: none;
+  }
+}

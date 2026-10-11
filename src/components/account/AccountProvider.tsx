@@ -34,6 +34,11 @@ export interface AccountContextValue {
   /** "loading" until this browser's account storage has been read. */
   status: "loading" | "ready";
   identity: Identity;
+  /**
+   * Names the profile that per-profile data (such as today's plan count) is
+   * kept under. Stable for a person; changes when they log in or out.
+   */
+  profileKey: string;
   register: (input: RegisterInput) => Promise<RegisterResult>;
   login: (input: LoginInput) => Promise<LoginResult>;
   logout: () => Promise<void>;
@@ -42,9 +47,17 @@ export interface AccountContextValue {
   deleteLocalAccount: () => Promise<boolean>;
 }
 
+/** The profile of someone who has neither signed in nor continued as guest. */
+export const VISITOR_KEY = "guest:visitor";
+
+export function isGuestKey(key: string): boolean {
+  return key.startsWith("guest:");
+}
+
 const FALLBACK: AccountContextValue = {
   status: "ready",
   identity: { kind: "none" },
+  profileKey: VISITOR_KEY,
   register: async () => ({ ok: false, reason: "storage" }),
   login: async () => ({ ok: false, reason: "storage" }),
   logout: async () => {},
@@ -60,10 +73,11 @@ export function useAccount(): AccountContextValue {
 
 interface LocalIdentity {
   user: AccountUser | null;
-  guest: boolean;
+  /** The guest profile id, or null when there is none. */
+  guestId: string | null;
 }
 
-const SIGNED_OUT: LocalIdentity = { user: null, guest: false };
+const SIGNED_OUT: LocalIdentity = { user: null, guestId: null };
 
 interface AccountProviderProps {
   /** Tests pass a backend; the app opens IndexedDB or localStorage itself. */
@@ -90,7 +104,7 @@ export function AccountProvider({ backend, children }: AccountProviderProps) {
       const user = await service.currentUser();
       const guest = user ? null : await service.currentGuest();
       if (cancelled) return;
-      setLocal({ user, guest: guest !== null });
+      setLocal({ user, guestId: guest?.id ?? null });
       setStatus("ready");
     })();
     return () => {
@@ -106,7 +120,7 @@ export function AccountProvider({ backend, children }: AccountProviderProps) {
   const login = useCallback(
     async (input: LoginInput) => {
       const result = await (await getService()).login(input);
-      if (result.ok) setLocal({ user: result.user, guest: false });
+      if (result.ok) setLocal({ user: result.user, guestId: null });
       return result;
     },
     [getService],
@@ -115,13 +129,16 @@ export function AccountProvider({ backend, children }: AccountProviderProps) {
   const logout = useCallback(async () => {
     const service = await getService();
     await service.logout();
-    setLocal({ user: null, guest: (await service.currentGuest()) !== null });
+    setLocal({
+      user: null,
+      guestId: (await service.currentGuest())?.id ?? null,
+    });
   }, [getService]);
 
   const continueAsGuest = useCallback(async () => {
     const profile = await (await getService()).startGuest();
     if (!profile) return false;
-    setLocal((current) => ({ ...current, guest: true }));
+    setLocal((current) => ({ ...current, guestId: profile.id }));
     return true;
   }, [getService]);
 
@@ -140,13 +157,20 @@ export function AccountProvider({ backend, children }: AccountProviderProps) {
         initials: getInitials(`${name} ${local.user.lastName}`),
       };
     }
-    return local.guest ? { kind: "guest" } : { kind: "none" };
+    return local.guestId ? { kind: "guest" } : { kind: "none" };
   }, [local]);
+
+  const profileKey = local.user
+    ? `user:${local.user.id}`
+    : local.guestId
+      ? `guest:${local.guestId}`
+      : VISITOR_KEY;
 
   const value = useMemo<AccountContextValue>(
     () => ({
       status,
       identity,
+      profileKey,
       register,
       login,
       logout,
@@ -156,6 +180,7 @@ export function AccountProvider({ backend, children }: AccountProviderProps) {
     [
       status,
       identity,
+      profileKey,
       register,
       login,
       logout,

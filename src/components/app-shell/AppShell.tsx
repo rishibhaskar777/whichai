@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AccountProvider } from "@/components/account/AccountProvider";
+import { EntitlementsProvider } from "@/components/entitlements/EntitlementsProvider";
 import { AuroraBackground } from "@/components/aurora/AuroraBackground";
 import { MenuIcon } from "@/components/icons";
 import { LocalDataProvider } from "@/components/local-data/LocalDataProvider";
@@ -17,6 +18,7 @@ import type { ProviderAvailability } from "@/lib/auth/config";
 import type { Viewer } from "@/lib/auth/get-session";
 import { useI18n } from "@/lib/i18n/provider";
 import { NewPlanProvider } from "@/lib/new-plan-signal";
+import type { Tier } from "@/lib/plans/entitlements";
 import type { PanelNews } from "@/lib/news/types";
 import type { ThemeChoice } from "@/lib/theme";
 import { useMediaQuery } from "@/lib/use-media-query";
@@ -30,6 +32,8 @@ interface AppShellProps {
   initialTheme: ThemeChoice;
   viewer: Viewer | null;
   providers: ProviderAvailability;
+  /** Fixes the tier instead of working it out from who is signed in. Used by tests. */
+  tier?: Tier;
   children: ReactNode;
 }
 
@@ -38,6 +42,7 @@ export function AppShell({
   initialTheme,
   viewer,
   providers,
+  tier,
   children,
 }: AppShellProps) {
   const { t } = useI18n();
@@ -75,11 +80,15 @@ export function AppShell({
 
   return (
     <ToastProvider>
-      <LocalDataProvider>
-        <NewPlanProvider>
-          <PlanToolsProvider>
-            <AccountProvider>
-              <SignInProvider providers={providers}>
+      <AccountProvider>
+        <EntitlementsProvider
+          viewerKey={viewer ? `viewer:${viewer.provider}` : null}
+          tier={tier}
+        >
+          <LocalDataProvider>
+            <NewPlanProvider>
+              <PlanToolsProvider>
+                <SignInProvider providers={providers}>
                 <KeyboardShortcuts />
                 <div
                   className={styles.shell}
@@ -157,11 +166,12 @@ export function AppShell({
                     }
                   />
                 </div>
-              </SignInProvider>
-            </AccountProvider>
-          </PlanToolsProvider>
-        </NewPlanProvider>
-      </LocalDataProvider>
+                </SignInProvider>
+              </PlanToolsProvider>
+            </NewPlanProvider>
+          </LocalDataProvider>
+        </EntitlementsProvider>
+      </AccountProvider>
     </ToastProvider>
   );
 }

@@ -2,7 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEntitlements } from "@/components/entitlements/EntitlementsProvider";
 import { GoalForm } from "@/components/goal-form/GoalForm";
+import { LimitCard } from "@/components/limit-card/LimitCard";
 import { NoMatchCard } from "@/components/no-match-card/NoMatchCard";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { UnderstandingCard } from "@/components/understanding-card/UnderstandingCard";
@@ -19,6 +21,7 @@ import type { GoalSuggestion, Understanding } from "@/lib/plan/interpret-goal";
 import { loadInterpreter, type Interpreter } from "@/lib/plan/load-interpreter";
 import { useI18n } from "@/lib/i18n/provider";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
+import { LOW_REMAINING_THRESHOLD } from "@/lib/plans/entitlements";
 import { CUSTOM_GOAL_ID } from "@/lib/schemas/catalogue";
 import type { Chip, UnderstoodGoal } from "@/lib/schemas/plan";
 import type { PlanRequest } from "@/lib/schemas/plan-request";
@@ -42,6 +45,7 @@ type Stage =
   | { kind: "understanding"; goal: UnderstoodGoal; doubt: Doubt | null }
   | { kind: "no-match" }
   | { kind: "editing" }
+  | { kind: "limit" }
   | { kind: "plan"; request: PlanRequest; key: number };
 
 /** The request that stands for the understanding step in the address. */
@@ -68,12 +72,14 @@ function doubtOf(understanding: Understanding | null): Doubt | null {
 const ANNOUNCEMENT_KEYS = {
   understanding: "home.announce.understanding",
   "no-match": "home.announce.noMatch",
+  limit: "home.announce.limit",
   plan: "home.announce.plan",
 } as const;
 
 export function HomeFlow() {
-  const { t, locale } = useI18n();
+  const { t, tn, locale } = useI18n();
   const { settings, recordGoal, recordMiss } = useLocalData();
+  const { tier, entitlements, remaining, consumePlan } = useEntitlements();
   const [stage, setStage] = useState<Stage>({ kind: "empty" });
   const [submittedGoal, setSubmittedGoal] = useState("");
   const [draft, setDraft] = useState("");
@@ -244,12 +250,22 @@ export function HomeFlow() {
       ...stage.goal,
       inferredLevel: interpreter.inferLevel(stage.goal.chips),
     };
+    // Only a plan made from a new goal counts. Back, Forward, a change of
+    // level and a saved or shared plan all reach the plan without this call.
+    if (!consumePlan()) {
+      setStage({ kind: "limit" });
+      return;
+    }
+    const wanted =
+      settings.defaultLevel === "auto"
+        ? goal.inferredLevel
+        : settings.defaultLevel;
     const request: PlanRequest = {
       goal,
       level:
-        settings.defaultLevel === "auto"
-          ? goal.inferredLevel
-          : settings.defaultLevel,
+        wanted === "advanced" && !entitlements.advancedLevel
+          ? "polished"
+          : wanted,
       budget: settings.defaultBudget,
       toolsUsed: [],
       chosenTools: {},
@@ -325,6 +341,8 @@ export function HomeFlow() {
           />
         ) : null}
 
+        {stage.kind === "limit" ? <LimitCard tier={tier} /> : null}
+
         {stage.kind === "no-match" && interpreter ? (
           <NoMatchCard goals={interpreter.coveredGoals} onChoose={submitGoal} />
         ) : null}
@@ -356,6 +374,11 @@ export function HomeFlow() {
           inputRef={inputRef}
           compact={started}
         />
+        <p role="status" className={styles.remaining}>
+          {remaining !== null && remaining <= LOW_REMAINING_THRESHOLD
+            ? tn("limits.remaining", remaining)
+            : ""}
+        </p>
       </div>
 
       <div className={styles.spacer} aria-hidden="true" />

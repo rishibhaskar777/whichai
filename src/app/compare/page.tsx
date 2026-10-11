@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { CompareGate } from "@/components/tools/CompareGate";
 import { CompareView } from "@/components/tools/CompareView";
 import { catalogue } from "@/data/catalogue";
 import { getI18n } from "@/lib/i18n/server";
@@ -44,11 +45,13 @@ export default async function Page({ searchParams }: PageProps) {
   }
 
   return (
-    <CompareView
-      catalogue={catalogue}
-      selected={selected}
-      unmatched={unmatched}
-      i18n={await getI18n()}
-    />
+    <CompareGate>
+      <CompareView
+        catalogue={catalogue}
+        selected={selected}
+        unmatched={unmatched}
+        i18n={await getI18n()}
+      />
+    </CompareGate>
   );
 }

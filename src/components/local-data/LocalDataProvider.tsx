@@ -11,6 +11,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { useEntitlements } from "@/components/entitlements/EntitlementsProvider";
 import { useToast } from "@/components/toast/ToastProvider";
 import { useI18n } from "@/lib/i18n/provider";
 import {
@@ -163,6 +164,8 @@ export function LocalDataProvider({
   const { t, locale, setLocale } = useI18n();
   const { show } = useToast();
   const router = useRouter();
+  const { entitlements } = useEntitlements();
+  const keepSearches = entitlements.keepSearches;
 
   const [data, setData] = useState<LocalData>(EMPTY);
   const [status, setStatus] = useState<"loading" | "ready">("loading");
@@ -171,6 +174,10 @@ export function LocalDataProvider({
   const missesRef = useRef<MissedGoal[]>([]);
   const dataRef = useRef<LocalData>(EMPTY);
   const queue = useRef<Promise<unknown>>(Promise.resolve());
+  // Searches made without an account last for this visit only. Entries from
+  // earlier visits stay in storage but are not shown until an account is used.
+  const [visitStart] = useState(() => new Date().toISOString());
+  const keepSearchesRef = useRef(keepSearches);
   const [storeSlot] = useState(() => {
     let resolve!: (store: Store) => void;
     const promise = new Promise<Store>((done) => {
@@ -258,7 +265,7 @@ export function LocalDataProvider({
       const writes = [];
       if (after.plans !== before.plans)
         writes.push(store.savePlans(after.plans));
-      if (after.history !== before.history) {
+      if (after.history !== before.history && keepSearchesRef.current) {
         writes.push(store.saveHistory(after.history));
       }
       if (after.settings !== before.settings) {
@@ -269,6 +276,17 @@ export function LocalDataProvider({
     },
     [],
   );
+
+  // Logging in turns on keeping searches: this visit's are written then.
+  useEffect(() => {
+    const was = keepSearchesRef.current;
+    keepSearchesRef.current = keepSearches;
+    if (!keepSearches || was || status !== "ready") return;
+    void enqueue(async () => {
+      const store = await storeSlot.promise;
+      await store.saveHistory(dataRef.current.history);
+    });
+  }, [keepSearches, status, enqueue, storeSlot]);
 
   const mutate = useCallback(
     <T,>(compute: Compute<T>, quiet = false): Promise<Mutation<T>> =>
@@ -312,6 +330,9 @@ export function LocalDataProvider({
   const value = useMemo<LocalDataContextValue>(
     () => ({
       ...data,
+      history: keepSearches
+        ? data.history
+        : data.history.filter((entry) => entry.createdAt >= visitStart),
       status,
       persistent,
       savePlan: (request, title) =>
@@ -418,6 +439,8 @@ export function LocalDataProvider({
     }),
     [
       data,
+      keepSearches,
+      visitStart,
       misses,
       status,
       persistent,

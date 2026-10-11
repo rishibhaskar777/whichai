@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useId, useMemo, useState } from "react";
 import { RefreshIcon, TrashIcon } from "@/components/icons";
 import { ConfirmDialog } from "@/components/dialog/ConfirmDialog";
+import { useEntitlements } from "@/components/entitlements/EntitlementsProvider";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { StorageNotice } from "@/components/local-data/StorageNotice";
 import { GOAL_TITLES } from "@/data/catalogue/goal-titles";
@@ -30,6 +31,7 @@ export function SearchesView() {
   const { t, tn, formatDate } = useI18n();
   const { history, status, settings, deleteHistoryEntry, clearHistory } =
     useLocalData();
+  const { entitlements } = useEntitlements();
   const { startGoal } = useNewPlanSignal();
   const router = useRouter();
   const [confirmingClear, setConfirmingClear] = useState(false);
@@ -73,6 +75,12 @@ export function SearchesView() {
         <p role="note" className={styles.note}>
           {t("searches.off")}{" "}
           <Link href="/settings">{t("searches.openSettings")}</Link>
+        </p>
+      ) : null}
+
+      {status === "ready" && !entitlements.keepSearches ? (
+        <p role="note" className={styles.note}>
+          {t("limits.searches.note")}
         </p>
       ) : null}
 

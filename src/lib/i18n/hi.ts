@@ -243,14 +243,13 @@ export const hi: Record<MessageKey, string> = {
 
   // Sign-in
   "signin.login.title": "WhichAI में लॉग इन करें",
-  "signin.login.lede":
-    "वापस स्वागत है। जहाँ छोड़ा था, वहीं से आगे बढ़ने के लिए लॉग इन करें।",
+  "signin.login.lede": "वापसी पर स्वागत है। जहाँ छोड़ा था, वहीं से शुरू करें।",
   "signin.register.title": "अपना WhichAI खाता बनाएँ",
   "signin.registerWith": "{method} से रजिस्टर करें",
   "signin.login.submit": "लॉग इन करें",
-  "signin.login.submitting": "लॉग इन हो रहा है",
+  "signin.login.submitting": "लॉग इन हो रहा है…",
   "signin.register.submit": "अभी रजिस्टर करें",
-  "signin.register.submitting": "आपका खाता बन रहा है",
+  "signin.register.submitting": "खाता बन रहा है…",
   "signin.login.new": "WhichAI पर नए हैं?",
   "signin.login.registerLink": "रजिस्टर करें",
   "signin.register.existing": "पहले से WhichAI पर हैं?",
@@ -258,8 +257,7 @@ export const hi: Record<MessageKey, string> = {
   "signin.register.success": "खाता बन गया। जारी रखने के लिए लॉग इन करें।",
   "signin.forgot": "पासवर्ड भूल गए?",
   "signin.forgot.note": "पासवर्ड रीसेट आने वाले अपडेट में खातों के साथ आएगा।",
-  "signin.preview":
-    "प्रीव्यू: ऑनलाइन खाते शुरू होने तक खाते केवल इसी ब्राउज़र में सहेजे जाते हैं।",
+  "signin.preview": "खाते अभी सिर्फ़ इसी ब्राउज़र में सहेजे जाते हैं।",
   "signin.password.show": "पासवर्ड दिखाएँ",
   "signin.password.hide": "पासवर्ड छिपाएँ",
   "auth.field.email": "ईमेल",
@@ -808,7 +806,7 @@ export const hi: Record<MessageKey, string> = {
   "pricing.description":
     "भारतीय रुपये में WhichAI के प्लान। फ्री में योजना बनाना, टूल लाइब्रेरी और तुलना शामिल है; सशुल्क प्लान अभी शुरू नहीं हुए हैं।",
   "pricing.lede":
-    "फ्री में योजना बनाना, टूल लाइब्रेरी, तुलना और लाइव समाचार शामिल हैं। सशुल्क प्लान में अलर्ट, सिंक और टीम सुविधाएँ जुड़ती हैं, और वे आने वाले अपडेट में खुलेंगे।",
+    "फ्री में योजना बनाना, टूल लाइब्रेरी और लाइव समाचार शामिल हैं। सशुल्क प्लान में तुलना, PDF एक्सपोर्ट और एडवांस्ड स्तर जुड़ता है, फिर अलर्ट, सिंक और टीम सुविधाएँ। वे आने वाले अपडेट में खुलेंगे।",
   "pricing.billing.label": "बिलिंग अवधि",
   "pricing.billing.monthly": "मासिक",
   "pricing.billing.yearly": "वार्षिक",
@@ -838,7 +836,7 @@ export const hi: Record<MessageKey, string> = {
   "pricing.faq.title": "सवाल",
   "pricing.faq.q1": "क्या मैं WhichAI मुफ़्त में इस्तेमाल कर सकता हूँ?",
   "pricing.faq.a1":
-    "हाँ। फ्री प्लान में वह सब है जो आज काम करता है: तीन स्तरों पर योजनाएँ, टूल लाइब्रेरी और तुलना, लाइव AI समाचार, इस ब्राउज़र में सहेजी योजनाएँ, शेयर लिंक, PDF एक्सपोर्ट, और अंग्रेज़ी व हिन्दी। इसकी कोई समय-सीमा नहीं है।",
+    "हाँ। फ्री प्लान में सरल और पॉलिश्ड स्तरों पर योजनाएँ, टूल लाइब्रेरी, लाइव AI समाचार, इस ब्राउज़र में सहेजे प्रोजेक्ट और खोजें, शेयर लिंक, और अंग्रेज़ी व हिन्दी हैं। इसकी कोई समय-सीमा नहीं है। खाते के बिना भी आप अतिथि के रूप में रोज़ कुछ योजनाएँ बना सकते हैं।",
   "pricing.faq.q2": "अपग्रेड करने पर मेरी सहेजी योजनाओं का क्या होगा?",
   "pricing.faq.a2":
     "कुछ नहीं। आपकी सहेजी योजनाएँ इसी ब्राउज़र में वैसी ही रहेंगी और काम करती रहेंगी। उन्हें डिवाइसों के बीच सिंक करना प्लस की योजनाबद्ध सुविधाओं में से एक है।",
@@ -980,4 +978,48 @@ export const hi: Record<MessageKey, string> = {
   "goalGroup.study": "पढ़ाई",
   "goalGroup.work": "काम और व्यापार",
   "goalGroup.ai": "AI टूल",
+
+  // Plan limits and locks
+  "limits.card.label": "रोज़ाना योजना सीमा",
+  "limits.guest.text":
+    "आपने आज की {used} अतिथि योजनाएँ इस्तेमाल कर ली हैं। रोज़ {free} योजनाएँ पाने के लिए मुफ़्त खाता बनाएँ।",
+  "limits.free.text":
+    "आप आज की {limit} योजनाओं तक पहुँच गए हैं। असीमित योजनाओं के लिए अपग्रेड करें।",
+  "limits.register": "रजिस्टर करें",
+  "limits.login": "लॉग इन करें",
+  "limits.upgrade": "अपग्रेड करें",
+  "limits.remaining.one": "आज {count} योजना बची है",
+  "limits.remaining.other": "आज {count} योजनाएँ बची हैं",
+  "limits.locked.paid": "पेड प्लान पर उपलब्ध",
+  "limits.locked.account": "खाते के साथ मुफ़्त",
+  "limits.projects.reached":
+    "आपने {max} प्रोजेक्ट सहेज लिए हैं, जो मुफ़्त खाते की सीमा है। असीमित सहेजने के लिए अपग्रेड करें।",
+  "limits.searches.note":
+    "सिर्फ़ इस विज़िट की खोजें। इन्हें रखने के लिए मुफ़्त खाता बनाएँ।",
+  "limits.compare.title": "टूल की तुलना पेड प्लान पर है",
+  "limits.compare.text":
+    "किसी भी पेड प्लान पर टूल आमने-सामने रखें। लाइब्रेरी में हर टूल आप अब भी देख सकते हैं।",
+  "limits.compare.seePlans": "प्लान देखें",
+  "limits.compare.library": "लाइब्रेरी देखें",
+  "home.announce.limit": "आज की योजना सीमा पूरी हो गई",
+  "pricing.table.guest": "अतिथि",
+  "pricing.table.unlimited": "असीमित",
+  "pricing.table.thisVisit": "सिर्फ़ इस विज़िट में",
+  "pricing.table.more": "पेड प्लान पर और",
+  "pricing.table.browserNote":
+    "रोज़ की सीमाएँ और लॉक अभी आपके ब्राउज़र में जाँचे जाते हैं। ऑनलाइन खाते आने पर ये पक्के हो जाएँगे।",
+  "pricing.row.plansPerDay": "रोज़ की योजनाएँ",
+  "pricing.row.savedProjects": "सहेजे प्रोजेक्ट",
+  "pricing.row.searches": "खोजें सहेजी जाती हैं",
+  "pricing.row.shareLinks": "शेयर लिंक",
+  "pricing.row.advancedLevel": "एडवांस्ड स्तर",
+  "pricing.row.compare": "टूल की तुलना",
+  "pricing.row.exportPlans": "PDF एक्सपोर्ट",
+  "signin.register.lede": "हमेशा मुफ़्त। कार्ड की ज़रूरत नहीं।",
+  "signin.preview.badge": "प्रीव्यू",
+  "signin.guestLimit": "दिन में {count} योजनाओं तक सीमित",
+  "auth.placeholder.email": "you@example.com",
+  "auth.placeholder.password": "आपका पासवर्ड",
+  "auth.placeholder.newPassword": "कम से कम 8 अक्षर",
+  "auth.capsLock": "Caps Lock चालू है",
 };

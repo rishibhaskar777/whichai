@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { headingViolations, seriousViolations } from "@/test/axe";
 import { AppProviders } from "@/test/wrappers";
 import { CheckoutView } from "./CheckoutView";
+import { entitlementsFor } from "@/lib/plans/entitlements";
 import { PricingView } from "./PricingView";
 
 vi.mock("next/navigation", async () =>
@@ -156,7 +157,14 @@ describe("pricing page", () => {
     const headers = within(head)
       .getAllByRole("columnheader")
       .map((header) => header.textContent);
-    expect(headers).toEqual(["Feature", "Free", "Plus", "Pro", "Ultra"]);
+    expect(headers).toEqual([
+      "Feature",
+      "Guest",
+      "Free",
+      "Plus",
+      "Pro",
+      "Ultra",
+    ]);
 
     const row = within(table).getByRole("row", { name: /Change alerts/ });
     expect(
@@ -164,6 +172,7 @@ describe("pricing page", () => {
         .getAllByRole("cell")
         .map((cell) => cell.textContent?.replace("–", "")),
     ).toEqual([
+      "GuestNot included",
       "FreeNot included",
       "PlusIncluded",
       "ProIncluded",
@@ -176,11 +185,45 @@ describe("pricing page", () => {
         .getAllByRole("cell")
         .map((cell) => cell.textContent?.replace("–", "")),
     ).toEqual([
+      "GuestNot included",
       "FreeNot included",
       "PlusNot included",
       "ProNot included",
       "Ultra5",
     ]);
+  });
+
+  it("states the daily limits from the entitlements", () => {
+    render(<PricingView billing="monthly" currentPlan="free" />);
+    const table = screen.getByRole("table", { name: "Compare plans" });
+    const cells = (name: RegExp) =>
+      within(within(table).getByRole("row", { name }))
+        .getAllByRole("cell")
+        .map((cell) => cell.textContent?.replace("–", ""));
+
+    const guest = entitlementsFor("guest");
+    const free = entitlementsFor("free");
+    expect(cells(/Plans per day/)).toEqual([
+      `Guest${guest.dailyPlans}`,
+      `Free${free.dailyPlans}`,
+      "PlusUnlimited",
+      "ProUnlimited",
+      "UltraUnlimited",
+    ]);
+    expect(cells(/Saved projects/)[0]).toBe("GuestNot included");
+    expect(cells(/Searches kept/)[0]).toBe("GuestThis visit only");
+    expect(cells(/Advanced level/).slice(0, 3)).toEqual([
+      "GuestNot included",
+      "FreeNot included",
+      "PlusIncluded",
+    ]);
+  });
+
+  it("says the limits are checked in the browser for now", () => {
+    render(<PricingView billing="monthly" currentPlan="free" />);
+    expect(
+      screen.getByText(/checked in your browser for now/),
+    ).toBeInTheDocument();
   });
 
   it("answers the five questions honestly", () => {

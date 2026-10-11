@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppShell } from "@/components/app-shell/AppShell";
 import { panelNewsFixture } from "@/test/news";
 import { headingViolations, seriousViolations } from "@/test/axe";
+import type { Tier } from "@/lib/plans/entitlements";
 import { HomeFlow } from "./HomeFlow";
 
 vi.mock("next/navigation", async () =>
@@ -13,13 +14,14 @@ vi.mock("next/navigation", async () =>
 const PORTFOLIO_GOAL = "Build a portfolio website with a blog";
 const UNKNOWN_GOAL = "What is the weather in Delhi today";
 
-function renderHome() {
+function renderHome(tier: Tier = "ultra") {
   return render(
     <AppShell
       news={panelNewsFixture}
       initialTheme="system"
       viewer={null}
       providers={{ google: true, github: true }}
+      tier={tier}
     >
       <HomeFlow />
     </AppShell>,

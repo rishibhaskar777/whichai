@@ -240,13 +240,13 @@ export const en = {
 
   // Sign-in
   "signin.login.title": "Log in to WhichAI",
-  "signin.login.lede": "Welcome back. Log in to pick up where you left off.",
+  "signin.login.lede": "Welcome back. Pick up where you left off.",
   "signin.register.title": "Create your WhichAI account",
   "signin.registerWith": "Register with {method}",
   "signin.login.submit": "Log in",
-  "signin.login.submitting": "Logging in",
+  "signin.login.submitting": "Logging in…",
   "signin.register.submit": "Register now",
-  "signin.register.submitting": "Creating your account",
+  "signin.register.submitting": "Creating account…",
   "signin.login.new": "New to WhichAI?",
   "signin.login.registerLink": "Register",
   "signin.register.existing": "Already on WhichAI?",
@@ -255,8 +255,7 @@ export const en = {
   "signin.forgot": "Forgot password?",
   "signin.forgot.note":
     "Password reset arrives with accounts in an upcoming update.",
-  "signin.preview":
-    "Preview: accounts are saved only in this browser until online accounts launch.",
+  "signin.preview": "Accounts are saved only in this browser for now.",
   "signin.password.show": "Show password",
   "signin.password.hide": "Hide password",
   "auth.field.email": "Email",
@@ -808,7 +807,7 @@ export const en = {
   "pricing.description":
     "WhichAI plans in Indian rupees. Free covers planning, the Tool Library and Compare; paid plans are not open yet.",
   "pricing.lede":
-    "Free covers planning, the Tool Library, Compare and live news. Paid plans add alerts, sync and team features, and they open in an upcoming update.",
+    "Free covers planning, the Tool Library and live news. Paid plans add Compare, PDF export and the Advanced level, then alerts, sync and team features. They open in an upcoming update.",
   "pricing.billing.label": "Billing period",
   "pricing.billing.monthly": "Monthly",
   "pricing.billing.yearly": "Yearly",
@@ -838,7 +837,7 @@ export const en = {
   "pricing.faq.title": "Questions",
   "pricing.faq.q1": "Can I use WhichAI for free?",
   "pricing.faq.a1":
-    "Yes. The Free plan has everything that works today: plans at three levels, the Tool Library and Compare, live AI news, saved plans in this browser, share links, PDF export, and English and Hindi. It has no time limit.",
+    "Yes. The Free plan has plans at the Simple and Polished levels, the Tool Library, live AI news, saved projects and searches in this browser, share links, and English and Hindi. It has no time limit. Without an account you can still make a few plans a day as a guest.",
   "pricing.faq.q2": "What happens to my saved plans if I upgrade?",
   "pricing.faq.a2":
     "Nothing. Your saved plans stay where they are, in this browser, and keep working. Syncing them across devices is one of the planned Plus features.",
@@ -978,6 +977,50 @@ export const en = {
   "goalGroup.study": "Study",
   "goalGroup.work": "Work and business",
   "goalGroup.ai": "AI tools",
+
+  // Plan limits and locks
+  "limits.card.label": "Daily plan limit",
+  "limits.guest.text":
+    "You've used today's {used} guest plans. Create a free account to get {free} a day.",
+  "limits.free.text":
+    "You've reached today's {limit} plans. Upgrade for unlimited plans.",
+  "limits.register": "Register",
+  "limits.login": "Log in",
+  "limits.upgrade": "Upgrade",
+  "limits.remaining.one": "{count} plan left today",
+  "limits.remaining.other": "{count} plans left today",
+  "limits.locked.paid": "Available on paid plans",
+  "limits.locked.account": "Free with an account",
+  "limits.projects.reached":
+    "You've saved {max} projects, the most a free account keeps. Upgrade for unlimited saves.",
+  "limits.searches.note":
+    "Searches from this visit only. Create a free account to keep them.",
+  "limits.compare.title": "Compare tools is on paid plans",
+  "limits.compare.text":
+    "Put tools side by side on any paid plan. You can still browse every tool in the library.",
+  "limits.compare.seePlans": "See plans",
+  "limits.compare.library": "Browse the library",
+  "home.announce.limit": "Daily plan limit reached",
+  "pricing.table.guest": "Guest",
+  "pricing.table.unlimited": "Unlimited",
+  "pricing.table.thisVisit": "This visit only",
+  "pricing.table.more": "More on paid plans",
+  "pricing.table.browserNote":
+    "Daily limits and locks are checked in your browser for now. They become firm when online accounts launch.",
+  "pricing.row.plansPerDay": "Plans per day",
+  "pricing.row.savedProjects": "Saved projects",
+  "pricing.row.searches": "Searches kept",
+  "pricing.row.shareLinks": "Share links",
+  "pricing.row.advancedLevel": "Advanced level",
+  "pricing.row.compare": "Compare tools",
+  "pricing.row.exportPlans": "PDF export",
+  "signin.register.lede": "Free forever. No card needed.",
+  "signin.preview.badge": "Preview",
+  "signin.guestLimit": "Limited to {count} plans a day",
+  "auth.placeholder.email": "you@example.com",
+  "auth.placeholder.password": "Your password",
+  "auth.placeholder.newPassword": "At least 8 characters",
+  "auth.capsLock": "Caps Lock is on",
 } as const satisfies Record<string, string>;
 
 export type MessageKey = keyof typeof en;
