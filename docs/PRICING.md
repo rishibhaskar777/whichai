@@ -2,7 +2,9 @@
 
 Plans, prices and features live in one file, [src/data/pricing/plans.json](../src/data/pricing/plans.json). The pricing page, the checkout preview, the Settings subscription section and the sidebar label all read it, so changing the file changes every screen. No code edit is needed.
 
-Nobody can subscribe yet. Every account and every guest is on Free, and `getCurrentPlan()` in `src/lib/pricing/current-plan.ts` returns `"free"`. See [0014](decisions/0014-pricing-preview.md).
+Nobody can subscribe yet. Every signed-in account is on Free, and `getCurrentPlan()` in `src/lib/pricing/current-plan.ts` returns `"free"`. People without an account are on the Guest tier, which is not in this file. See [0014](decisions/0014-pricing-preview.md).
+
+**What each tier may do is not in this file.** Daily plan counts, saved-project limits and which features are locked live in [src/lib/plans/entitlements.ts](../src/lib/plans/entitlements.ts) ([0020](decisions/0020-entitlements.md)). The comparison table on `/pricing` reads both. Those limits are checked in the browser until online accounts exist.
 
 ## File shape
 
@@ -63,7 +65,8 @@ Nobody can subscribe yet. Every account and every guest is on Free, and `getCurr
 
 ## Rules
 
-- **Free lists only what works today.** Before adding a feature to `free`, check that it works in the current release. Paid plans list planned features, and the pricing page says so.
+- **Free lists only what a free account can do today.** Before adding a feature to `free`, check that it works and is not locked for Free in `entitlements.ts`. Paid plans list planned features, and the pricing page says so.
+- **No numbers that entitlements own.** Do not write daily plan counts or project limits in feature text; the table shows them from `entitlements.ts`. A feature id that the entitlement rows already state goes in `ENTITLEMENT_FEATURE_IDS`.
 - **No invented numbers.** No user counts, ratings, testimonials or discounts that never existed. "Recommended" is a label, not a claim about data.
 - **Both languages.** A missing `hi` string fails the schema. Hindi text still needs a native review ([0010](decisions/0010-i18n.md)).
 - **Rupees only.** `currency` must be `INR`. Taxes are not included in the numbers; the page says "Taxes may apply" ([0014](decisions/0014-pricing-preview.md)).

@@ -3,7 +3,10 @@
   "plans": [
     {
       "id": "free",
-      "name": { "en": "Free", "hi": "फ्री" },
+      "name": {
+        "en": "Free",
+        "hi": "फ्री"
+      },
       "tagline": {
         "en": "Everything you need to find the right tools.",
         "hi": "सही टूल चुनने के लिए ज़रूरी सब कुछ।"
@@ -15,28 +18,31 @@
         {
           "id": "plans-three-levels",
           "name": {
-            "en": "Plans for any goal at three levels",
-            "hi": "किसी भी लक्ष्य के लिए तीन स्तरों पर योजना"
+            "en": "Plans for any goal",
+            "hi": "किसी भी लक्ष्य के लिए योजना"
           },
           "description": {
-            "en": "Simple, Polished and Advanced versions of one plan.",
-            "hi": "एक ही योजना के सरल, पॉलिश्ड और एडवांस्ड रूप।"
+            "en": "Simple and Polished versions of one plan.",
+            "hi": "एक ही योजना के सरल और पॉलिश्ड रूप।"
           }
         },
         {
-          "id": "library-compare",
+          "id": "tool-library",
           "name": {
-            "en": "Full Tool Library and Compare",
-            "hi": "पूरी टूल लाइब्रेरी और तुलना"
+            "en": "Full Tool Library",
+            "hi": "पूरी टूल लाइब्रेरी"
           },
           "description": {
-            "en": "Browse every tool in the catalogue and compare them side by side.",
-            "hi": "कैटलॉग के हर टूल को देखें और आमने-सामने तुलना करें।"
+            "en": "Browse every tool in the catalogue.",
+            "hi": "कैटलॉग के हर टूल को देखें।"
           }
         },
         {
           "id": "live-news",
-          "name": { "en": "Live AI news", "hi": "लाइव AI समाचार" },
+          "name": {
+            "en": "Live AI news",
+            "hi": "लाइव AI समाचार"
+          },
           "description": {
             "en": "Headlines from the official sources of the tools.",
             "hi": "टूल के आधिकारिक स्रोतों से ताज़ा सुर्खियाँ।"
@@ -45,53 +51,45 @@
         {
           "id": "saved-local",
           "name": {
-            "en": "Saved plans and search history in this browser",
-            "hi": "इस ब्राउज़र में सहेजी योजनाएँ और खोज इतिहास"
+            "en": "Saved projects and searches in this browser",
+            "hi": "इस ब्राउज़र में सहेजे प्रोजेक्ट और खोजें"
           },
           "description": {
             "en": "Kept on your device, with export and import.",
-            "hi": "आपके डिवाइस पर रखा जाता है, एक्सपोर्ट और इम्पोर्ट के साथ।"
+            "hi": "आपके डिवाइस पर रखे जाते हैं, एक्सपोर्ट और इम्पोर्ट के साथ।"
           }
         },
         {
           "id": "share-links",
-          "name": { "en": "Share links", "hi": "शेयर लिंक" },
+          "name": {
+            "en": "Share links",
+            "hi": "शेयर लिंक"
+          },
           "description": {
             "en": "Send a plan to someone without sending your goal text to a server.",
             "hi": "अपना लक्ष्य किसी सर्वर को भेजे बिना योजना किसी को भेजें।"
           }
         },
         {
-          "id": "pdf-export",
-          "name": { "en": "PDF export", "hi": "PDF एक्सपोर्ट" },
-          "description": {
-            "en": "Print or save any plan as a PDF.",
-            "hi": "किसी भी योजना को PDF के रूप में प्रिंट या सेव करें।"
-          }
-        },
-        {
           "id": "languages",
-          "name": { "en": "English and Hindi", "hi": "अंग्रेज़ी और हिन्दी" },
+          "name": {
+            "en": "English and Hindi",
+            "hi": "अंग्रेज़ी और हिन्दी"
+          },
           "description": {
             "en": "The whole interface in both languages.",
             "hi": "पूरा इंटरफ़ेस दोनों भाषाओं में।"
           }
         }
       ],
-      "limits": [
-        {
-          "id": "compare-tools",
-          "label": {
-            "en": "Tools in one comparison",
-            "hi": "एक तुलना में टूल"
-          },
-          "value": 3
-        }
-      ]
+      "limits": []
     },
     {
       "id": "plus",
-      "name": { "en": "Plus", "hi": "प्लस" },
+      "name": {
+        "en": "Plus",
+        "hi": "प्लस"
+      },
       "tagline": {
         "en": "Stay on top of the tools you use.",
         "hi": "अपने इस्तेमाल के टूल पर नज़र बनाए रखें।"
@@ -102,8 +100,44 @@
       "highlight": false,
       "features": [
         {
+          "id": "advanced-level",
+          "name": {
+            "en": "Advanced level of every plan",
+            "hi": "हर योजना का एडवांस्ड स्तर"
+          },
+          "description": {
+            "en": "The deepest version of each plan.",
+            "hi": "हर योजना का सबसे गहरा रूप।"
+          }
+        },
+        {
+          "id": "library-compare",
+          "name": {
+            "en": "Compare tools side by side",
+            "hi": "टूल की आमने-सामने तुलना"
+          },
+          "description": {
+            "en": "Put tools next to each other.",
+            "hi": "टूल एक-दूसरे के बगल में रखें।"
+          }
+        },
+        {
+          "id": "pdf-export",
+          "name": {
+            "en": "PDF export",
+            "hi": "PDF एक्सपोर्ट"
+          },
+          "description": {
+            "en": "Print or save any plan as a PDF.",
+            "hi": "किसी भी योजना को PDF के रूप में प्रिंट या सेव करें।"
+          }
+        },
+        {
           "id": "change-alerts",
-          "name": { "en": "Change alerts", "hi": "बदलाव की सूचना" },
+          "name": {
+            "en": "Change alerts",
+            "hi": "बदलाव की सूचना"
+          },
           "description": {
             "en": "Know when a tool in your saved plans changes its price or limits.",
             "hi": "जानें जब आपकी सहेजी योजनाओं का कोई टूल कीमत या सीमा बदले।"
@@ -111,7 +145,10 @@
         },
         {
           "id": "stack-check",
-          "name": { "en": "Stack check", "hi": "स्टैक जाँच" },
+          "name": {
+            "en": "Stack check",
+            "hi": "स्टैक जाँच"
+          },
           "description": {
             "en": "Find AI subscriptions that overlap.",
             "hi": "एक-दूसरे से मिलते-जुलते AI सब्सक्रिप्शन खोजें।"
@@ -130,7 +167,10 @@
         },
         {
           "id": "ad-free",
-          "name": { "en": "Ad-free forever", "hi": "हमेशा विज्ञापन-मुक्त" },
+          "name": {
+            "en": "Ad-free forever",
+            "hi": "हमेशा विज्ञापन-मुक्त"
+          },
           "description": {
             "en": "No ads, now or later.",
             "hi": "कोई विज्ञापन नहीं, अभी या आगे।"
@@ -150,12 +190,18 @@
     },
     {
       "id": "pro",
-      "name": { "en": "Pro", "hi": "प्रो" },
+      "name": {
+        "en": "Pro",
+        "hi": "प्रो"
+      },
       "tagline": {
         "en": "Go deeper on every step of a plan.",
         "hi": "योजना के हर कदम पर और गहराई से जाएँ।"
       },
-      "label": { "en": "Recommended", "hi": "सुझाया गया" },
+      "label": {
+        "en": "Recommended",
+        "hi": "सुझाया गया"
+      },
       "includes": "plus",
       "monthlyPrice": 149,
       "yearlyPrice": 1490,
@@ -185,7 +231,10 @@
         },
         {
           "id": "compare-six",
-          "name": { "en": "Compare up to 6 tools", "hi": "6 टूल तक की तुलना" },
+          "name": {
+            "en": "Compare up to 6 tools",
+            "hi": "6 टूल तक की तुलना"
+          },
           "description": {
             "en": "Put six tools side by side instead of three.",
             "hi": "तीन की जगह छह टूल आमने-सामने रखें।"
@@ -216,7 +265,10 @@
     },
     {
       "id": "ultra",
-      "name": { "en": "Ultra", "hi": "अल्ट्रा" },
+      "name": {
+        "en": "Ultra",
+        "hi": "अल्ट्रा"
+      },
       "tagline": {
         "en": "Work on plans together.",
         "hi": "योजनाओं पर मिलकर काम करें।"
@@ -261,7 +313,10 @@
         },
         {
           "id": "priority-support",
-          "name": { "en": "Priority support", "hi": "प्राथमिकता सहायता" },
+          "name": {
+            "en": "Priority support",
+            "hi": "प्राथमिकता सहायता"
+          },
           "description": {
             "en": "Your questions are answered first.",
             "hi": "आपके सवालों के जवाब पहले दिए जाते हैं।"
@@ -279,14 +334,20 @@
         },
         {
           "id": "team-members",
-          "label": { "en": "People in a team", "hi": "टीम में लोग" },
+          "label": {
+            "en": "People in a team",
+            "hi": "टीम में लोग"
+          },
           "value": 5
         }
       ]
     },
     {
       "id": "institution",
-      "name": { "en": "Institution", "hi": "संस्थान" },
+      "name": {
+        "en": "Institution",
+        "hi": "संस्थान"
+      },
       "tagline": {
         "en": "For colleges and coaching centres.",
         "hi": "कॉलेजों और कोचिंग केंद्रों के लिए।"
@@ -297,7 +358,10 @@
       "features": [
         {
           "id": "student-access",
-          "name": { "en": "Student access", "hi": "छात्रों के लिए पहुँच" },
+          "name": {
+            "en": "Student access",
+            "hi": "छात्रों के लिए पहुँच"
+          },
           "description": {
             "en": "Accounts for your students.",
             "hi": "आपके छात्रों के लिए खाते।"
@@ -305,7 +369,10 @@
         },
         {
           "id": "department-dashboard",
-          "name": { "en": "Department dashboard", "hi": "विभाग डैशबोर्ड" },
+          "name": {
+            "en": "Department dashboard",
+            "hi": "विभाग डैशबोर्ड"
+          },
           "description": {
             "en": "See how a department uses plans.",
             "hi": "देखें कि कोई विभाग योजनाओं का कैसे उपयोग करता है।"

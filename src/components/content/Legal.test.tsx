@@ -14,19 +14,20 @@ afterEach(() => {
 });
 
 const DRAFT = "Draft: will be reviewed before paid plans launch.";
+const REVIEW_DRAFT = "Draft, pending legal review.";
 
 describe.each([
-  ["Terms of Service", TermsContent],
-  ["Refund and Cancellation Policy", RefundContent],
-  ["Contact", ContactContent],
-])("%s", (title, Component) => {
+  ["Terms of Service", TermsContent, REVIEW_DRAFT],
+  ["Refund and Cancellation Policy", RefundContent, DRAFT],
+  ["Contact", ContactContent, DRAFT],
+])("%s", (title, Component, draft) => {
   it("renders one heading and the draft note", () => {
     render(<Component />);
 
     expect(
       screen.getByRole("heading", { level: 1, name: title }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("note")).toHaveTextContent(DRAFT);
+    expect(screen.getByRole("note")).toHaveTextContent(draft);
   });
 
   it("has no legal link bar; those links live in Settings and on pricing", () => {
@@ -45,6 +46,73 @@ describe.each([
 });
 
 describe("Terms of Service", () => {
+  it("has the sections a full terms page needs, in order", () => {
+    render(<TermsContent />);
+    const headings = screen
+      .getAllByRole("heading", { level: 2 })
+      .map((heading) => heading.textContent);
+
+    expect(headings).toEqual([
+      "1. Accepting these terms",
+      "2. Who we are",
+      "3. Who can use WhichAI",
+      "4. Accounts and security",
+      "5. Using WhichAI as a guest",
+      "6. Acceptable use",
+      "7. What the service is",
+      "8. Accuracy and no professional advice",
+      "9. Subscriptions and payments",
+      "10. Refunds",
+      "11. Intellectual property",
+      "12. Your feedback",
+      "13. Third-party links",
+      "14. Disclaimers",
+      "15. Limits on our liability",
+      "16. Your responsibility for misuse",
+      "17. Ending your use",
+      "18. Changes to these terms",
+      "19. Governing law",
+      "20. Contact",
+    ]);
+  });
+
+  it("states the age rule, India as the governing law and the effective date", () => {
+    render(<TermsContent />);
+
+    expect(screen.getByText(/at least 13 years old/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/governed by the laws of India/),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Effective date: 11 October 2026/),
+    ).toBeInTheDocument();
+  });
+
+  it("links the refund policy and the contact page, and shows no email", () => {
+    const { container } = render(<TermsContent />);
+
+    expect(
+      screen.getByRole("link", { name: "Refund and Cancellation Policy" }),
+    ).toHaveAttribute("href", "/refund-policy");
+    expect(screen.getByRole("link", { name: "contact page" })).toHaveAttribute(
+      "href",
+      "/contact",
+    );
+    expect(container.querySelector('a[href^="mailto:"]')).toBeNull();
+  });
+
+  it("says in Hindi that the full text is English only", () => {
+    render(
+      <AppProviders locale="hi">
+        <TermsContent />
+      </AppProviders>,
+    );
+
+    expect(
+      screen.getByText(/केवल अंग्रेज़ी में दिखाया जाता है/),
+    ).toBeInTheDocument();
+  });
+
   it("says nothing is charged today", () => {
     render(<TermsContent />);
     expect(screen.getByText(/Paid plans do not exist yet/)).toBeInTheDocument();

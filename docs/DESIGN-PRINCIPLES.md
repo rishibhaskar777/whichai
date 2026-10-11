@@ -50,7 +50,19 @@ The glow layer is fixed behind the page and is an aurora: soft bands and blobs i
 - The theme toggle switches light and dark in one click and its icon shows the mode you will switch to. The icons rotate and fade over 250ms using `transform` and `opacity`; reduced motion keeps a crossfade. The System choice lives in Settings.
 - The account menu holds Settings, Upgrade plan, Help, Language and, after a divider, Sign out. The More menu holds Settings, Help, Plans & pricing and Language. Both are real menus: arrow keys, Home and End move, Escape closes and returns focus.
 - On the rail the avatar (or sign-in icon), the toggle and More stack and centre. Menus and tooltips are positioned against the viewport because the sidebar clips its contents.
+- A guest sees "Guest" and the Free plan badge in the same account button, and the menu ends with "Sign in". A logged-in preview account shows the first name and two initials, and the menu ends with "Sign out", which clears the session and keeps the account.
 - Legal links are not in the sidebar. They are in Settings under "About & legal" and at the bottom of `/pricing` and `/checkout`, where payment pages need them.
+
+## Sign-in popup
+
+- Two views in one dialog, Log in and Register, switched with a short fade and a height animation (none under reduced motion). Focus moves to the new title. The popup has no scrollbar at 1366x768; on shorter screens it still scrolls by touch with the bar hidden and a fade at the bottom edge. It is centred with at least 24px to every edge, and under 480px it opens as a full-height sheet.
+- The header is centred: the logo mark, the title (22px) and a one-line subtitle. Both views share the same width and header layout.
+- Spacing follows an 8px rhythm in groups: header, Google, divider, form, switch link, footer. The divider is a 1px line on each side of a centred "or", in the border colour.
+- Fields are 46px tall, with a visible label above, a placeholder, a hint or error below, and a 1px border dark enough to meet 3:1 as a control boundary. Email takes focus when the popup opens. A "Caps Lock is on" note takes the hint line under a password. "Forgot password?" is small and muted, and underlined only on hover and focus. Names sit side by side and stack below 420px.
+- The one primary action uses the accent fill with `--on-accent` text. This is the only filled-accent button; elsewhere primary buttons stay filled with the text colour.
+- Errors are shown under the field and as a short summary of field names that takes focus. A message about the whole form (a wrong password) replaces the list.
+- A small rounded "Preview" badge with an info icon and the line "Accounts are saved only in this browser for now." ends both views. The login view then ends with the muted "Continue without signing in" and, under it, the guest limit in subtle text.
+- A control that is locked on the person's plan keeps its place, shows a lock, says "Available on paid plans" on hover and focus and links to /pricing ([0020](decisions/0020-entitlements.md)).
 
 ## Motion
 

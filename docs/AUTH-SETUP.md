@@ -72,6 +72,8 @@ GITHUB_CLIENT_SECRET=<from GitHub>
 
 You can set up only one provider. The other button will not appear.
 
+Optional, development only: set `DEV_TEST_EMAIL` and `DEV_TEST_PASSWORD` to have a preview account created the first time the app loads in a browser, so you do not have to register again after clearing site data. The password must follow the sign-up rules (at least 8 characters, not a common password). Both are ignored in production builds. Settings also shows a "Developer tools" section there, with a plan switcher and a button that resets today's usage.
+
 Restart `npm run dev` after changing `.env.local`. Open http://localhost:3000 (not `127.0.0.1`; the address must match `NEXT_PUBLIC_SITE_URL` and the redirect URIs exactly), choose **Sign in** and try each button.
 
 ## 5. Going live later

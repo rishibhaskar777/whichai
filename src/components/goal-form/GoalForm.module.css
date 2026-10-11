@@ -305,3 +305,13 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+.textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

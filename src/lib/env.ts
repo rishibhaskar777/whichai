@@ -156,3 +156,35 @@ export function parseContactEmail(value: string | undefined): string {
   const result = contactEmailSchema.safeParse(value?.trim());
   return result.success ? result.data : "";
 }
+
+export interface DevTestAccount {
+  email: string;
+  password: string;
+}
+
+const MAX_DEV_PASSWORD_LENGTH = 128;
+
+/*
+ * A preview account to create on first load while developing, so there is no
+ * need to register by hand after clearing site data. Both values are optional;
+ * anything missing or malformed gives null.
+ */
+export function parseDevTestAccount(
+  email: string | undefined,
+  password: string | undefined,
+): DevTestAccount | null {
+  const address = contactEmailSchema.safeParse(emptyToUndefined(email)?.trim());
+  const secret = emptyToUndefined(password);
+  if (!address.success || secret === undefined) return null;
+  if (secret.length > MAX_DEV_PASSWORD_LENGTH) return null;
+  return { email: address.data, password: secret };
+}
+
+/* Null outside development, so the production bundle never reads these. */
+export function getDevTestAccount(): DevTestAccount | null {
+  if (process.env.NODE_ENV !== "development") return null;
+  return parseDevTestAccount(
+    process.env.DEV_TEST_EMAIL,
+    process.env.DEV_TEST_PASSWORD,
+  );
+}

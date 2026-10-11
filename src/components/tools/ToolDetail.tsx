@@ -3,6 +3,7 @@ import { ExternalLinkIcon } from "@/components/icons";
 import { NewsEntry } from "@/components/news/NewsEntry";
 import type { NewsItem } from "@/lib/news/types";
 import { compareHref } from "@/lib/library/compare";
+import { CompareLink } from "./CompareLink";
 import { libraryHref, DEFAULT_QUERY } from "@/lib/library/query";
 import type { ToolDetails } from "@/lib/library/tool-details";
 import type { I18n } from "@/lib/i18n/translate";
@@ -227,9 +228,12 @@ export function ToolDetail({ details, i18n, news }: ToolDetailProps) {
             <ExternalLinkIcon />
             <span className={controls.srOnly}>{t("job.opensInNewTab")}</span>
           </a>
-          <Link href={compareHref([tool.id])} className={controls.button}>
+          <CompareLink
+            href={compareHref([tool.id])}
+            className={controls.button}
+          >
             {t("tool.compare")}
-          </Link>
+          </CompareLink>
           <a
             href={toolProblemUrl(tool.id)}
             target="_blank"

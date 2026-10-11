@@ -1,63 +1,32 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
+  useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
-  type ComponentType,
-  type SVGProps,
 } from "react";
-import { MailIcon, PhoneIcon } from "@/components/icons";
+import { useAccount } from "@/components/account/AccountProvider";
+import { InfoIcon } from "@/components/icons";
 import { Wordmark } from "@/components/wordmark/Wordmark";
 import type { AuthErrorCode } from "@/lib/auth/errors";
 import type { ProviderAvailability } from "@/lib/auth/config";
 import { useI18n } from "@/lib/i18n/provider";
-import type { MessageKey } from "@/lib/i18n/en";
-import {
-  AppleMark,
-  GitHubMark,
-  GoogleMark,
-  MicrosoftMark,
-} from "./ProviderMarks";
+import { entitlementsFor, GUEST_TIER } from "@/lib/plans/entitlements";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { GoogleButton } from "./GoogleButton";
+import { LoginForm } from "./LoginForm";
+import { RegisterForm } from "./RegisterForm";
 import styles from "./SignIn.module.css";
 
-type OptionId = "google" | "github" | "microsoft" | "apple" | "email" | "phone";
+export type AuthView = "login" | "register";
 
-interface Option {
-  id: OptionId;
-  /* A brand name, or a message key for a generic method such as email. */
-  label: string | MessageKey;
-  name: string;
-  Mark: ComponentType<SVGProps<SVGSVGElement>>;
-}
-
-const PRIMARY_OPTIONS: readonly Option[] = [
-  { id: "google", label: "Google", name: "Google", Mark: GoogleMark },
-  { id: "github", label: "GitHub", name: "GitHub", Mark: GitHubMark },
-  {
-    id: "microsoft",
-    label: "Microsoft",
-    name: "Microsoft",
-    Mark: MicrosoftMark,
-  },
-  { id: "apple", label: "Apple", name: "Apple", Mark: AppleMark },
-];
-
-const SECONDARY_OPTIONS: readonly Option[] = [
-  { id: "email", label: "signin.method.email", name: "Email", Mark: MailIcon },
-  {
-    id: "phone",
-    label: "signin.method.phone",
-    name: "Phone number",
-    Mark: PhoneIcon,
-  },
-];
-
-type LiveProvider = "google" | "github";
-
-function isLive(id: OptionId): id is LiveProvider {
-  return id === "google" || id === "github";
+/** Asks the panel to show a view. A new `id` is a new request. */
+export interface ViewRequest {
+  view: AuthView;
+  id: number;
 }
 
 interface SignInPanelProps {
@@ -66,10 +35,17 @@ interface SignInPanelProps {
   headingLevel: "h1" | "h2";
   titleId: string;
   error?: AuthErrorCode | null;
-  /* The dialog passes this; the standalone page falls back to a link. */
-  onDismiss?: () => void;
-  onNavigate?: () => void;
+  initialView?: AuthView;
+  viewRequest?: ViewRequest;
+  /**
+   * Called after a login or when a guest profile is made. The dialog closes;
+   * the standalone page falls back to going to `next`.
+   */
+  onDone?: () => void;
 }
+
+/* Long enough to clean up after the height transition if its event is missed. */
+const HEIGHT_TRANSITION_FALLBACK_MS = 400;
 
 export function SignInPanel({
   providers,
@@ -77,24 +53,94 @@ export function SignInPanel({
   headingLevel: Heading,
   titleId,
   error = null,
-  onDismiss,
-  onNavigate,
+  initialView = "login",
+  viewRequest,
+  onDone,
 }: SignInPanelProps) {
-  const { t } = useI18n();
+  const { t, formatNumber } = useI18n();
+  const router = useRouter();
+  const { continueAsGuest } = useAccount();
+  const reducedMotion = useReducedMotion();
+
   const panelRef = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState<LiveProvider | null>(null);
-  const [notice, setNotice] = useState<{ text: string; count: number } | null>(
-    null,
-  );
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const heightBefore = useRef<number | null>(null);
+  const focusTitle = useRef(false);
+
+  const [view, setView] = useState<AuthView>(initialView);
+  const [switched, setSwitched] = useState(false);
+  const [email, setEmail] = useState("");
+  const [created, setCreated] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [comingSoon, setComingSoon] = useState<number | null>(null);
+  const [guestPending, setGuestPending] = useState(false);
 
   // Coming back with the browser's back button restores this page as it was.
   useEffect(() => {
     const reset = (event: PageTransitionEvent) => {
-      if (event.persisted) setLoading(null);
+      if (event.persisted) setGoogleLoading(false);
     };
     window.addEventListener("pageshow", reset);
     return () => window.removeEventListener("pageshow", reset);
   }, []);
+
+  // The dialog asked for a view while it was closed: no animation, no focus.
+  const handledRequest = useRef(viewRequest?.id ?? 0);
+  useLayoutEffect(() => {
+    if (!viewRequest || viewRequest.id === handledRequest.current) return;
+    handledRequest.current = viewRequest.id;
+    setView(viewRequest.view);
+    setCreated(false);
+  }, [viewRequest]);
+
+  const switchTo = useCallback(
+    (nextView: AuthView) => {
+      const viewport = viewportRef.current;
+      heightBefore.current =
+        viewport && !reducedMotion ? viewport.offsetHeight : null;
+      focusTitle.current = true;
+      setSwitched(true);
+      setView(nextView);
+    },
+    [reducedMotion],
+  );
+
+  // Animate the height from the old view to the new one, then let it be auto.
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    const before = heightBefore.current;
+    heightBefore.current = null;
+    if (!viewport || before === null) return;
+    const after = viewport.offsetHeight;
+    if (before === after) return;
+
+    viewport.style.height = `${before}px`;
+    void viewport.offsetHeight;
+    viewport.style.height = `${after}px`;
+
+    const finish = () => {
+      viewport.style.height = "";
+      viewport.removeEventListener("transitionend", finish);
+    };
+    viewport.addEventListener("transitionend", finish);
+    const timer = window.setTimeout(finish, HEIGHT_TRANSITION_FALLBACK_MS);
+    return () => {
+      window.clearTimeout(timer);
+      finish();
+    };
+  }, [view]);
+
+  useEffect(() => {
+    if (!focusTitle.current) return;
+    focusTitle.current = false;
+    const title = titleRef.current;
+    if (!title) return;
+    // Made focusable only now, so the dialog's own first focus lands on a
+    // control and not on the heading.
+    title.tabIndex = -1;
+    title.focus();
+  }, [view]);
 
   // Shows the fade at the bottom edge only while more content is below.
   useEffect(() => {
@@ -115,121 +161,136 @@ export function SignInPanel({
       window.removeEventListener("resize", update);
       observer?.disconnect();
     };
-  }, [notice]);
+  }, [view, created, comingSoon]);
 
-  const showComingSoon = (option: Option) =>
-    setNotice((current) => ({
-      text: t("signin.comingSoon", { name: option.name }),
-      count: (current?.count ?? 0) + 1,
-    }));
+  const finish = useCallback(() => {
+    if (onDone) onDone();
+    else router.push(next);
+  }, [onDone, router, next]);
 
-  const renderOption = (option: Option) => {
-    const { id, Mark } = option;
-    const method = option.label.startsWith("signin.method.")
-      ? t(option.label as MessageKey)
-      : option.label;
-    const text = t("signin.continueWith", { method });
-
-    if (isLive(id) && providers[id]) {
-      const busy = loading !== null;
-      return (
-        <a
-          key={id}
-          href={`/api/auth/sign-in/${id}?next=${encodeURIComponent(next)}`}
-          className={styles.provider}
-          aria-disabled={busy}
-          data-loading={loading === id}
-          onClick={(event) => {
-            if (busy) {
-              event.preventDefault();
-              return;
-            }
-            setLoading(id);
-          }}
-        >
-          {loading === id ? (
-            <span className={styles.spinner} aria-hidden="true" />
-          ) : (
-            <Mark className={styles.mark} />
-          )}
-          <span className={styles.providerLabel}>{text}</span>
-        </a>
-      );
-    }
-
-    return (
-      <button
-        key={id}
-        type="button"
-        className={styles.provider}
-        aria-disabled={loading !== null}
-        onClick={() => {
-          if (loading === null) showComingSoon(option);
-        }}
-      >
-        <Mark className={styles.mark} />
-        <span className={styles.providerLabel}>{text}</span>
-      </button>
-    );
-  };
+  async function startGuest() {
+    if (guestPending) return;
+    setGuestPending(true);
+    await continueAsGuest();
+    setGuestPending(false);
+    finish();
+  }
 
   const visibleError = error && error !== "not-configured" ? error : null;
+  const login = view === "login";
 
   return (
     <div ref={panelRef} className={styles.panel}>
-      <div className={styles.brand}>
-        <Wordmark />
-      </div>
-      <Heading id={titleId} className={styles.title}>
-        {t("signin.title")}
-      </Heading>
-      <p className={styles.lede}>{t("signin.lede")}</p>
+      <div className={styles.viewport} ref={viewportRef}>
+        <div
+          key={view}
+          className={styles.view}
+          data-fade={switched ? "true" : undefined}
+        >
+          <div className={styles.header}>
+            <span className={styles.logo} aria-hidden="true">
+              <Wordmark showName={false} />
+            </span>
+            <Heading id={titleId} ref={titleRef} className={styles.title}>
+              {login ? t("signin.login.title") : t("signin.register.title")}
+            </Heading>
+            <p className={styles.lede}>
+              {login ? t("signin.login.lede") : t("signin.register.lede")}
+            </p>
+          </div>
 
-      {visibleError ? (
-        <p role="alert" className={styles.error}>
-          {t(`auth.error.${visibleError}`)}
-        </p>
-      ) : null}
-
-      <div className={styles.buttons}>
-        {PRIMARY_OPTIONS.map(renderOption)}
-        <div className={styles.divider}>
-          <span>{t("signin.or")}</span>
-        </div>
-        {SECONDARY_OPTIONS.map(renderOption)}
-
-        <div role="status" aria-live="polite" className={styles.noticeSlot}>
-          {notice ? (
-            <p key={notice.count} className={styles.notice}>
-              {notice.text}
+          {login && created ? (
+            <p role="status" className={styles.success}>
+              {t("signin.register.success")}
             </p>
           ) : null}
+
+          {login && visibleError ? (
+            <p role="alert" className={styles.error}>
+              {t(`auth.error.${visibleError}`)}
+            </p>
+          ) : null}
+
+          <div className={styles.buttons}>
+            <GoogleButton
+              mode={view}
+              available={providers.google}
+              next={next}
+              loading={googleLoading}
+              disabled={guestPending}
+              onStart={() => setGoogleLoading(true)}
+              onComingSoon={() => setComingSoon((count) => (count ?? 0) + 1)}
+            />
+            <div role="status" aria-live="polite" className={styles.noticeSlot}>
+              {comingSoon !== null ? (
+                <p key={comingSoon} className={styles.notice}>
+                  {t("signin.comingSoon", { name: "Google" })}
+                </p>
+              ) : null}
+            </div>
+            <p role="status" className={styles.srOnly}>
+              {googleLoading ? t("signin.opening", { name: "Google" }) : ""}
+            </p>
+          </div>
+
+          <div className={styles.divider}>
+            <span className={styles.rule} aria-hidden="true" />
+            <span className={styles.dividerText}>{t("signin.or")}</span>
+            <span className={styles.rule} aria-hidden="true" />
+          </div>
+
+          {login ? (
+            <LoginForm
+              initialEmail={email}
+              disabled={googleLoading || guestPending}
+              onSignedIn={finish}
+              onRegister={() => {
+                setCreated(false);
+                switchTo("register");
+              }}
+            />
+          ) : (
+            <RegisterForm
+              disabled={googleLoading}
+              onRegistered={(registered) => {
+                setEmail(registered);
+                setCreated(true);
+                switchTo("login");
+              }}
+              onLogin={() => switchTo("login")}
+            />
+          )}
+
+          <div className={styles.footer}>
+            <p className={styles.preview}>
+              <span className={styles.badge}>
+                <InfoIcon width="14" height="14" />
+                {t("signin.preview.badge")}
+              </span>
+              <span>{t("signin.preview")}</span>
+            </p>
+            {login ? (
+              <div className={styles.guest}>
+                <button
+                  type="button"
+                  className={styles.dismiss}
+                  disabled={googleLoading || guestPending}
+                  onClick={() => void startGuest()}
+                >
+                  {t("signin.dismiss")}
+                </button>
+                <p className={styles.guestLimit}>
+                  {t("signin.guestLimit", {
+                    count: formatNumber(
+                      entitlementsFor(GUEST_TIER).dailyPlans ?? 0,
+                    ),
+                  })}
+                </p>
+              </div>
+            ) : null}
+          </div>
         </div>
-        <p role="status" className={styles.srOnly}>
-          {loading
-            ? t("signin.opening", {
-                name: loading === "google" ? "Google" : "GitHub",
-              })
-            : ""}
-        </p>
       </div>
-
-      {onDismiss ? (
-        <button type="button" className={styles.dismiss} onClick={onDismiss}>
-          {t("signin.dismiss")}
-        </button>
-      ) : (
-        <Link href={next} className={styles.dismiss}>
-          {t("signin.dismiss")}
-        </Link>
-      )}
-
-      <p className={styles.fine}>
-        {t("signin.fine")}{" "}
-        <Link href="/privacy" onClick={() => onNavigate?.()}>
-          {t("signin.privacy")}
-        </Link>
-      </p>
     </div>
   );
 }

@@ -55,16 +55,16 @@
 }
 
 .card {
-  width: min(400px, 100%);
+  width: min(440px, 100%);
   margin-block: var(--space-12);
 }
 
 .dialog {
   position: fixed;
   inset: 0;
-  width: min(400px, calc(100vw - 2rem));
-  max-width: 400px;
-  max-height: calc(100dvh - 1rem);
+  width: min(440px, calc(100vw - 3rem));
+  max-width: 440px;
+  max-height: calc(100dvh - 3rem);
   margin: auto;
   padding: 0;
   overflow: visible;
@@ -118,12 +118,12 @@
 }
 
 /*
- * The popup is sized to fit. On very short screens it still scrolls by touch,
- * wheel and keyboard, with the scrollbar hidden and a fade at the bottom edge
- * while more content is below.
+ * The popup is sized to fit, centred, with at least 24px to every edge. On
+ * very short screens it still scrolls by touch, wheel and keyboard, with the
+ * scrollbar hidden and a fade at the bottom edge while more content is below.
  */
 .dialog .panel {
-  max-height: calc(100dvh - 1rem);
+  max-height: calc(100dvh - 3rem);
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;
@@ -152,32 +152,73 @@
   opacity: 1;
 }
 
-/* Short screens: the title already names the product, so drop the wordmark. */
-@media (max-height: 720px) {
-  .dialog .brand {
-    display: none;
+.panel {
+  padding: var(--space-6) var(--space-8);
+}
+
+/*
+ * The height is animated from script when the view changes. The side padding
+ * keeps focus rings from being clipped by overflow.
+ */
+.viewport {
+  margin-inline: calc(var(--space-1) * -1);
+  padding-inline: var(--space-1);
+  overflow: hidden;
+  transition: height var(--duration-base) var(--ease-out);
+}
+
+/* Groups sit 16px apart: header, Google, divider, form, switch link, footer. */
+.view {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-4);
+}
+
+.view[data-fade="true"] {
+  animation: view-in var(--duration-base) var(--ease-out);
+}
+
+@keyframes view-in {
+  from {
+    opacity: 0;
   }
 }
 
-.panel {
+.header {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-2);
-  padding: var(--space-4) var(--space-8);
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
 }
 
-.brand {
+.logo {
+  display: grid;
+  place-items: center;
+  margin-bottom: var(--space-1);
   color: var(--text);
 }
 
+.logo svg {
+  width: 28px;
+  height: 28px;
+}
+
 .title {
-  font-size: 1.75rem;
+  font-size: 1.375rem;
   letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Focused from script only, so it shows no ring: the new heading is the cue. */
+.title:focus {
+  outline: none;
 }
 
 .lede {
-  color: var(--text-on-glass);
+  color: var(--text-muted);
   font-size: var(--text-nav);
   line-height: 1.45;
 }
@@ -241,21 +282,23 @@
   opacity: 1;
 }
 
+/* A hairline on each side with "or" centred between them, in both views. */
 .divider {
-  display: flex;
-  margin-block: var(--space-1);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: var(--space-3);
-  color: var(--text-on-glass);
+  gap: var(--space-4);
+  color: var(--text-muted);
   font-size: var(--text-sm);
 }
 
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
+.rule {
   height: 1px;
-  background: var(--border-strong);
+  background: var(--border);
+}
+
+.dividerText {
+  line-height: 1;
 }
 
 .noticeSlot:empty {
@@ -278,26 +321,48 @@
   }
 }
 
+/* The last line of the login view, quieter than everything above it. */
 .dismiss {
-  align-self: center;
   min-height: 2.25rem;
   padding: 0 var(--space-3);
   border: 0;
   background: transparent;
-  color: var(--text-on-glass);
+  color: var(--text-muted);
   font-size: var(--text-nav);
   text-decoration: underline;
   text-underline-offset: 0.2em;
+}
+
+.dismiss:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 @media (pointer: coarse) {
   .dismiss {
     min-height: 2.75rem;
   }
+
+  .linkButton,
+  .forgot {
+    min-height: 2.75rem;
+  }
 }
 
-.dismiss:hover {
+.dismiss:hover:not(:disabled) {
   color: var(--text);
+}
+
+.guest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.guestLimit {
+  color: var(--text-subtle);
+  font-size: var(--text-xs);
+  line-height: 1.4;
 }
 
 .spinner {
@@ -323,12 +388,6 @@
   color: var(--status-danger);
 }
 
-.fine {
-  color: var(--text-on-glass);
-  font-size: var(--text-nav);
-  line-height: 1.45;
-}
-
 .close {
   position: absolute;
   top: var(--space-3);
@@ -351,6 +410,268 @@
   color: var(--text);
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.label {
+  color: var(--text);
+  font-size: var(--text-nav);
+  font-weight: var(--weight-medium);
+}
+
+.input {
+  width: 100%;
+  height: 46px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--text-subtle);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-base);
+}
+
+.input::placeholder {
+  color: var(--text-subtle);
+  opacity: 1;
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--status-danger);
+}
+
+.passwordWrap {
+  position: relative;
+}
+
+.passwordInput {
+  padding-right: 2.75rem;
+}
+
+.reveal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 100%;
+  border: 0;
+  border-radius: 0 12px 12px 0;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.reveal:hover {
+  color: var(--text);
+}
+
+.hint,
+.capsHint {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.capsHint:empty {
+  display: none;
+}
+
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.fieldError {
+  color: var(--status-danger);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.summary {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--status-danger);
+  border-radius: var(--radius-md);
+  color: var(--status-danger);
+  font-size: var(--text-nav);
+  line-height: 1.4;
+}
+
+.summary:focus {
+  outline: none;
+}
+
+.summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.summary a {
+  color: inherit;
+}
+
+.summaryList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-3);
+  margin-top: var(--space-1);
+  font-weight: var(--weight-medium);
+}
+
+/* At the right end of the password label: small, muted, underlined on hover and focus only. */
+.forgot {
+  min-height: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  text-decoration: none;
+  text-underline-offset: 0.2em;
+}
+
+.forgot:hover,
+.forgot:focus-visible {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.nameRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.checkRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.checkbox {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.125rem;
+  accent-color: var(--accent);
+}
+
+.checkLabel {
+  font-size: var(--text-nav);
+  line-height: 1.45;
+}
+
+/* The accent fill takes its text colour from --on-accent in both themes. */
+.submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 46px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: var(--text-nav);
+  font-weight: var(--weight-medium);
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.submit:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submit[data-loading="true"] {
+  cursor: progress;
+  opacity: 1;
+}
+
+.switchLine {
+  align-self: center;
+  color: var(--text-muted);
+  font-size: var(--text-nav);
+  text-align: center;
+}
+
+.linkButton {
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* The footer is its own group, 24px below the switch link. */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1) var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  text-align: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+
+.success {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--status-success);
+  border-radius: var(--radius-md);
+  color: var(--status-success);
+  font-size: var(--text-nav);
+}
+
 .srOnly {
   position: absolute;
   width: 1px;
@@ -360,34 +681,40 @@
   white-space: nowrap;
 }
 
-@media (max-width: 599px) {
+/* Under 480px the dialog opens as a full-height sheet. */
+@media (max-width: 479px) {
   .dialog {
-    inset: auto 0 0 0;
+    inset: 0;
     width: 100%;
     max-width: none;
+    height: 100dvh;
+    max-height: none;
     margin: 0;
-    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
-    transform: translateY(100%);
+    border: 0;
+    border-radius: 0;
+    transform: translateY(2rem);
   }
 
   @starting-style {
     .dialog[open] {
-      transform: translateY(100%);
+      transform: translateY(2rem);
     }
   }
 
-  .title {
-    font-size: 1.5rem;
+  .dialog::before,
+  .dialog::after {
+    display: none;
   }
 
   .dialog .panel {
-    max-height: calc(100dvh - 1rem);
-    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    height: 100%;
+    max-height: none;
+    border-radius: 0;
   }
 
   .panel {
-    padding: var(--space-4) var(--space-5)
-      calc(var(--space-4) + env(safe-area-inset-bottom));
+    padding: var(--space-6) var(--space-4)
+      calc(var(--space-6) + env(safe-area-inset-bottom));
   }
 
   .card {
@@ -395,7 +722,21 @@
   }
 }
 
+@media (max-width: 419px) {
+  .nameRow {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .viewport {
+    transition: none;
+  }
+
+  .view[data-fade="true"] {
+    animation: none;
+  }
+
   .dialog,
   .dialog[open] {
     transform: none;

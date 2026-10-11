@@ -159,3 +159,15 @@
     transform: translateY(var(--motion-distance));
   }
 }
+
+/* "2 plans left today". Empty most of the time, so it takes no room. */
+.remaining {
+  margin-top: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.remaining:empty {
+  display: none;
+}

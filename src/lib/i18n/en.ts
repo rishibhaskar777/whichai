@@ -239,19 +239,112 @@ export const en = {
   "budget.more": "More",
 
   // Sign-in
-  "signin.title": "Sign in to WhichAI",
-  "signin.lede":
-    "Sign in to keep your plans. For now your plans stay in this browser.",
+  "signin.login.title": "Log in to WhichAI",
+  "signin.login.lede": "Welcome back. Pick up where you left off.",
+  "signin.register.title": "Create your WhichAI account",
+  "signin.registerWith": "Register with {method}",
+  "signin.login.submit": "Log in",
+  "signin.login.submitting": "Logging in…",
+  "signin.register.submit": "Register now",
+  "signin.register.submitting": "Creating account…",
+  "signin.login.new": "New to WhichAI?",
+  "signin.login.registerLink": "Register",
+  "signin.register.existing": "Already on WhichAI?",
+  "signin.register.loginLink": "Log in",
+  "signin.register.success": "Account created. Log in to continue.",
+  "signin.forgot": "Forgot password?",
+  "signin.forgot.note":
+    "Password reset arrives with accounts in an upcoming update.",
+  "signin.preview": "Accounts are saved only in this browser for now.",
+  "signin.password.show": "Show password",
+  "signin.password.hide": "Hide password",
+  "auth.field.email": "Email",
+  "auth.field.password": "Password",
+  "auth.field.firstName": "First name",
+  "auth.field.lastName": "Last name",
+  "auth.password.hint": "At least 8 characters, up to 128. No symbol rules.",
+  "auth.password.hint.more":
+    "{count} more needed. Up to 128 characters, no symbol rules.",
+  "auth.password.hint.ok": "Long enough. Up to 128 characters.",
+  "auth.password.hint.over": "That is over 128 characters. Please shorten it.",
+  "auth.terms.label": "I agree to the {terms} and {privacy}",
+  "auth.terms.privacy": "Privacy Policy",
+  "auth.error.summary": "Please fix these to continue:",
+  "auth.error.email.required": "Enter your email address.",
+  "auth.error.email.invalid":
+    "Enter a valid email address, like name@example.com.",
+  "auth.error.password.required": "Enter your password.",
+  "auth.error.password.short": "Use at least 8 characters.",
+  "auth.error.password.long": "Use 128 characters or fewer.",
+  "auth.error.password.common":
+    "That password is too common. Choose a different one.",
+  "auth.error.firstName.required": "Enter your first name.",
+  "auth.error.firstName.invalid":
+    "Letters, spaces, hyphens and apostrophes only.",
+  "auth.error.firstName.long": "Use 50 characters or fewer.",
+  "auth.error.lastName.required": "Enter your last name.",
+  "auth.error.lastName.invalid":
+    "Letters, spaces, hyphens and apostrophes only.",
+  "auth.error.lastName.long": "Use 50 characters or fewer.",
+  "auth.error.terms.required":
+    "Agree to the Terms of Service and Privacy Policy to register.",
+  "auth.error.credentials": "Email or password is incorrect.",
+  "auth.error.duplicate":
+    "An account with this email already exists in this browser. Log in instead.",
+  "auth.error.locked": "Too many attempts. Try again in {seconds} seconds.",
+  "auth.error.storage":
+    "This browser would not save your details. Check that site storage is allowed and try again.",
+  "auth.error.invalid": "Please check your details and try again.",
+  "account.guest": "Guest",
+  "settings.account.signedInLocal":
+    "Logged in as {name}. This account is saved only in this browser.",
+  "settings.account.guest":
+    "You are using WhichAI as a guest. You can use everything without an account.",
+  "settings.account.deleteLocal": "Delete local account and data",
+  "settings.account.deleteLocal.help":
+    "Removes preview accounts, your login and any guest profile from this browser, along with saved plans, search history and settings. This cannot be undone.",
+  "settings.account.deleteLocal.title": "Delete local account and data?",
+  "settings.account.deleteLocal.confirm": "Delete",
+  "settings.account.deleteLocal.done": "Local account and data deleted.",
+  "legal.draftReview": "Draft, pending legal review.",
+  "terms.englishOnly":
+    "The full text of these terms is shown in English only while it is under legal review.",
+  "terms.effective": "Effective date: {date}",
+  "privacy.preview.title": "Preview accounts",
+  "privacy.preview.text1":
+    "An account you create with an email address and password is a preview account. It exists only in this browser and nothing about it is sent to us. It holds your email address, your first and last name, the date you registered and a hash of your password.",
+  "privacy.preview.text2":
+    "Your password is never kept as you typed it. It is turned into a hash with PBKDF2 (SHA-256, 600,000 rounds and a random salt), so the stored value cannot simply be read back. A hash does not make a weak password safe, so choose a long one that you use nowhere else.",
+  "privacy.preview.text3":
+    "Because the account lives in this browser, it does not follow you to another browser or device, and clearing this site's data removes it. After five wrong passwords, logging in pauses for 30 seconds; that check also happens only in your browser. Online accounts are planned, and preview accounts may not carry over to them.",
+  "privacy.guest.title": "Guest profile",
+  "privacy.guest.text":
+    "If you choose Continue without signing in, this browser saves a random identifier and the date, so the sidebar can say Guest. It holds no name, email address or other personal detail. The browser also keeps a count of the plans made today under that profile, to apply the daily limit; the count starts again each day and is never sent to us.",
+  "privacy.cookies.title": "Cookies",
+  "privacy.cookies.text1":
+    "We use only the cookies the site needs, and no analytics or advertising cookies.",
+  "privacy.cookies.item1":
+    "Sign-in: after you sign in with Google, one cookie holds the provider, your account identifier and your name, encrypted so only this site can read it. It lasts seven days. During sign-in a second cookie lives for ten minutes to check that the response came from the provider, then it is deleted.",
+  "privacy.cookies.item2":
+    "Preferences: your theme and language are saved in two small cookies for a year, so the page can show the right look and language with no flash. They hold one word each and nothing else.",
+  "privacy.cookies.text2":
+    "Preview accounts and the guest profile are not cookies. They are kept in your browser's storage and are never sent to a server.",
+  "privacy.news.title": "AI news",
+  "privacy.rights.title": "Your rights under India's DPDP Act, 2023",
+  "privacy.rights.text1":
+    "India's Digital Personal Data Protection Act, 2023 gives you, as the person the data is about, the right to ask for a summary of the personal data processed about you, to have it corrected or erased, to have a complaint dealt with, and to name someone to act for you if you cannot.",
+  "privacy.rights.text2":
+    "Almost everything WhichAI keeps is in your own browser, so you can use these rights yourself: look at it in Settings, export it and delete it. If you want to raise a concern or a request, use the contact page. If you are under 18, the Act expects a parent or guardian to agree to the processing of your personal data, so please ask one before you create an account.",
+  "privacy.delete.title": "Deleting your data",
+  "privacy.delete.text1":
+    "Open Settings, then Account, and choose Delete local account and data. After you confirm, it removes preview accounts, your login and the guest profile from this browser, along with saved plans, search history and settings.",
+  "privacy.delete.text2":
+    "Clear all data on this device removes plans, history and settings but keeps your accounts. You can also clear this site's data in your browser.",
   "signin.continueWith": "Continue with {method}",
-  "signin.method.email": "email",
-  "signin.method.phone": "phone number",
   "signin.or": "or",
   "signin.comingSoon": "{name} sign-in is coming in an upcoming update.",
   "signin.opening": "Opening {name} sign-in",
   "signin.dismiss": "Continue without signing in",
-  "signin.fine":
-    "We only receive your name from Google or GitHub. We never see your password.",
-  "signin.privacy": "Privacy",
   "signin.close": "Close sign-in",
   "auth.error.not-configured": "Sign-in is not configured on this server.",
   "auth.error.failed": "We couldn't sign you in. Please try again.",
@@ -672,14 +765,12 @@ export const en = {
     "What WhichAI does with your information, in plain language. Last updated {date}.",
   "privacy.receive.title": "What we receive",
   "privacy.receive.text1":
-    "When you sign in with Google or GitHub, they tell us your name and an identifier that is unique to your account with them. We use the name to greet you and the identifier to recognise the same account next time.",
+    "When you sign in with Google, Google tells us your name and an identifier that is unique to your account with them. We use the name to greet you and the identifier to recognise the same account next time.",
   "privacy.receive.text2":
-    "The permissions we ask for also cover your email address. We do not read it, keep it or use it. We never see your password; you type it on Google's or GitHub's own page.",
+    "The permissions we ask for also cover your email address. We do not read it, keep it or use it. We never see your Google password; you type it on Google's own page. Accounts you make with an email address and password are described under Preview accounts.",
   "privacy.store.title": "What we store",
   "privacy.store.text1":
-    "One cookie on your device when you sign in. It holds the sign-in provider, your account identifier and your name, encrypted so only this site can read it. It lasts seven days. During sign-in a second cookie lives for ten minutes to check that the response really came from the provider, then it is deleted.",
-  "privacy.store.text2":
-    "We have no database. Nothing about you is stored on our servers.",
+    "We have no database. Nothing about you is stored on our servers. What we place on your device is described under Cookies and What stays on your device.",
   "privacy.device.title": "What stays on your device",
   "privacy.device.text1":
     "Saved plans, search history and settings are kept in your browser, in IndexedDB or, if that is not available, in local storage. They never leave your device, we cannot see them, and nobody backs them up for you. Use Export my data in Settings to keep a copy.",
@@ -689,22 +780,19 @@ export const en = {
     "Search history: the goals you searched for, with the date. You can turn this off in Settings, delete single entries, or clear it all.",
   "privacy.device.item3":
     "Settings: language, theme, motion, plan defaults and currency display.",
-  "privacy.device.text2":
-    "Your theme and language are also saved in two small preference cookies for a year, so the server can show the right look and language with no flash. They hold one word each and nothing else.",
   "privacy.device.text3":
     "Share links keep the plan choices after the # in the address. Browsers never send that part to a server, so we never receive it.",
   "privacy.device.news":
     "The AI news is read by our server from the public feeds of official sites, and your browser never contacts those sites until you open a headline. Which headlines affect your saved plans is worked out on your device from your saved plans, and nothing about it is sent anywhere.",
-  "privacy.device.text4":
-    "To delete all of it, open Settings and choose Clear all data on this device, or clear this site's data in your browser.",
   "privacy.never.title": "What we don't do",
   "privacy.never.item1": "We don't sell or share your information.",
   "privacy.never.item2": "We don't track you or show ads.",
-  "privacy.never.item3": "We don't collect passwords.",
+  "privacy.never.item3":
+    "We don't receive or collect passwords. A preview account's password is checked inside your browser and kept there only as a hash.",
   "privacy.never.item4": "We don't send you email.",
   "privacy.signout.title": "Signing out and leaving",
   "privacy.signout.text":
-    "Choose your name at the bottom of the sidebar, then Sign out. That deletes the cookie. To also remove WhichAI's access, revoke it in your Google account's security settings or in GitHub under Settings, Applications.",
+    "Choose your name at the bottom of the sidebar, then Sign out. For a Google sign-in that deletes the cookie; to also remove WhichAI's access, revoke it in your Google account's security settings. For a preview account it ends the session but keeps the account in this browser until you delete it. A guest can choose Sign in from the same menu.",
   "privacy.contact.title": "Contact",
   "privacy.contact.text":
     "Questions or concerns: use the contact page, which opens an issue on GitHub. Security problems can be reported privately through the Security tab of the project's GitHub repository.",
@@ -719,7 +807,7 @@ export const en = {
   "pricing.description":
     "WhichAI plans in Indian rupees. Free covers planning, the Tool Library and Compare; paid plans are not open yet.",
   "pricing.lede":
-    "Free covers planning, the Tool Library, Compare and live news. Paid plans add alerts, sync and team features, and they open in an upcoming update.",
+    "Free covers planning, the Tool Library and live news. Paid plans add Compare, PDF export and the Advanced level, then alerts, sync and team features. They open in an upcoming update.",
   "pricing.billing.label": "Billing period",
   "pricing.billing.monthly": "Monthly",
   "pricing.billing.yearly": "Yearly",
@@ -749,7 +837,7 @@ export const en = {
   "pricing.faq.title": "Questions",
   "pricing.faq.q1": "Can I use WhichAI for free?",
   "pricing.faq.a1":
-    "Yes. The Free plan has everything that works today: plans at three levels, the Tool Library and Compare, live AI news, saved plans in this browser, share links, PDF export, and English and Hindi. It has no time limit.",
+    "Yes. The Free plan has plans at the Simple and Polished levels, the Tool Library, live AI news, saved projects and searches in this browser, share links, and English and Hindi. It has no time limit. Without an account you can still make a few plans a day as a guest.",
   "pricing.faq.q2": "What happens to my saved plans if I upgrade?",
   "pricing.faq.a2":
     "Nothing. Your saved plans stay where they are, in this browser, and keep working. Syncing them across devices is one of the planned Plus features.",
@@ -804,33 +892,7 @@ export const en = {
   "legal.privacy": "Privacy",
   "legal.contact": "Contact",
   "terms.title": "Terms of Service",
-  "terms.lede":
-    "These are the rules for using WhichAI, written to be read. They are short on purpose.",
-  "terms.use.title": "What WhichAI is",
-  "terms.use.text":
-    "WhichAI suggests which AI tools to use for a goal and how to use them. It does not do the task for you, and it is not legal, financial or professional advice.",
-  "terms.free.title": "The free plan",
-  "terms.free.text":
-    "Using WhichAI on the Free plan costs nothing. Paid plans do not exist yet, and nobody is charged for anything today.",
-  "terms.paid.title": "Paid plans, when they open",
-  "terms.paid.text":
-    "Before anyone can pay, the price, the billing period, the tax and what is included will be shown on the checkout page. Prices are in Indian rupees. Renewal and cancellation work as described in the refund policy.",
-  "terms.accuracy.title": "Accuracy of what you see",
-  "terms.accuracy.text":
-    "Tool details come from a catalogue that is still being checked, and most records say Not verified. Prices, limits and features change often. Check the tool's own website before you pay for anything.",
-  "terms.data.title": "Your data",
-  "terms.data.text":
-    "Plans and history you save stay in your browser. How the site handles information is described in the privacy page.",
-  "terms.conduct.title": "Fair use",
-  "terms.conduct.item1": "Do not try to break, overload or probe the service.",
-  "terms.conduct.item2": "Do not use it to do something illegal.",
-  "terms.conduct.item3":
-    "Do not copy the catalogue in bulk and present it as your own.",
-  "terms.changes.title": "Changes",
-  "terms.changes.text":
-    "These terms may change. The date is at the top of the page, and a change that affects paid plans will be announced before it applies.",
-  "terms.contact.title": "Questions",
-  "terms.contact.text": "Write to us through the contact page.",
+  "terms.lede": "The rules for using WhichAI, in plain language.",
   "refund.title": "Refund and Cancellation Policy",
   "refund.lede":
     "How cancelling and refunds are meant to work once paid plans open.",
@@ -915,6 +977,59 @@ export const en = {
   "goalGroup.study": "Study",
   "goalGroup.work": "Work and business",
   "goalGroup.ai": "AI tools",
+
+  // Plan limits and locks
+  "limits.usageLabel": "Today's plans",
+  "limits.bar.guest":
+    "You've reached today's {limit} guest plans. Resets in {time}.",
+  "limits.bar.free": "You've reached today's {limit} plans. Resets in {time}.",
+  "limits.bar.time": "{hours}h {minutes}m",
+  "limits.registerFree": "Register free",
+  "limits.seePlans": "See plans",
+  "limits.perDay": "{count} plans a day",
+  "limits.usageLine": "{left} of {limit} plans left today",
+  "limits.card.label": "Daily plan limit",
+  "limits.guest.text":
+    "You've used today's {used} guest plans. Create a free account to get {free} a day.",
+  "limits.free.text":
+    "You've reached today's {limit} plans. Upgrade for unlimited plans.",
+  "limits.register": "Register",
+  "limits.login": "Log in",
+  "limits.upgrade": "Upgrade",
+  "limits.remaining.one": "{count} plan left today",
+  "limits.remaining.other": "{count} plans left today",
+  "limits.locked.paid": "Available on paid plans",
+  "limits.locked.account": "Free with an account",
+  "limits.projects.reached":
+    "You've saved {max} projects, the most a free account keeps. Upgrade for unlimited saves.",
+  "limits.searches.note":
+    "Searches from this visit only. Create a free account to keep them.",
+  "limits.compare.title": "Compare tools is on paid plans",
+  "limits.compare.text":
+    "Put tools side by side on any paid plan. You can still browse every tool in the library.",
+  "limits.compare.seePlans": "See plans",
+  "limits.compare.library": "Browse the library",
+  "home.announce.limit": "Daily plan limit reached",
+  "pricing.table.guest": "Guest",
+  "pricing.table.unlimited": "Unlimited",
+  "pricing.table.thisVisit": "This visit only",
+  "pricing.table.more": "More on paid plans",
+  "pricing.table.browserNote":
+    "Daily limits and locks are checked in your browser for now. They become firm when online accounts launch.",
+  "pricing.row.plansPerDay": "Plans per day",
+  "pricing.row.savedProjects": "Saved projects",
+  "pricing.row.searches": "Searches kept",
+  "pricing.row.shareLinks": "Share links",
+  "pricing.row.advancedLevel": "Advanced level",
+  "pricing.row.compare": "Compare tools",
+  "pricing.row.exportPlans": "PDF export",
+  "signin.register.lede": "Free forever. No card needed.",
+  "signin.preview.badge": "Preview",
+  "signin.guestLimit": "Limited to {count} plans a day",
+  "auth.placeholder.email": "you@example.com",
+  "auth.placeholder.password": "Your password",
+  "auth.placeholder.newPassword": "At least 8 characters",
+  "auth.capsLock": "Caps Lock is on",
 } as const satisfies Record<string, string>;
 
 export type MessageKey = keyof typeof en;

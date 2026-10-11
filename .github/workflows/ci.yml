@@ -22,6 +22,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
-      - run: npm test
       - run: npm run build
+      # After the build, so the production bundle test has output to inspect.
+      - run: npm test
       - run: npm audit --omit=dev --audit-level=high

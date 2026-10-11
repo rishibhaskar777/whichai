@@ -2,7 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEntitlements } from "@/components/entitlements/EntitlementsProvider";
 import { GoalForm } from "@/components/goal-form/GoalForm";
+import { LimitBar } from "@/components/limit-card/LimitBar";
 import { NoMatchCard } from "@/components/no-match-card/NoMatchCard";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { UnderstandingCard } from "@/components/understanding-card/UnderstandingCard";
@@ -19,6 +21,7 @@ import type { GoalSuggestion, Understanding } from "@/lib/plan/interpret-goal";
 import { loadInterpreter, type Interpreter } from "@/lib/plan/load-interpreter";
 import { useI18n } from "@/lib/i18n/provider";
 import { useNewPlanSignal } from "@/lib/new-plan-signal";
+import { LOW_REMAINING_THRESHOLD } from "@/lib/plans/entitlements";
 import { CUSTOM_GOAL_ID } from "@/lib/schemas/catalogue";
 import type { Chip, UnderstoodGoal } from "@/lib/schemas/plan";
 import type { PlanRequest } from "@/lib/schemas/plan-request";
@@ -72,8 +75,16 @@ const ANNOUNCEMENT_KEYS = {
 } as const;
 
 export function HomeFlow() {
-  const { t, locale } = useI18n();
+  const { t, tn, locale } = useI18n();
   const { settings, recordGoal, recordMiss } = useLocalData();
+  const {
+    tier,
+    entitlements,
+    remaining,
+    canStartGoal,
+    canStartNewGoal,
+    recordNewGoal,
+  } = useEntitlements();
   const [stage, setStage] = useState<Stage>({ kind: "empty" });
   const [submittedGoal, setSubmittedGoal] = useState("");
   const [draft, setDraft] = useState("");
@@ -157,8 +168,21 @@ export function HomeFlow() {
     textarea.setSelectionRange(textarea.value.length, textarea.value.length);
   }, [stage.kind]);
 
-  async function showGoal(goalText: string) {
+  /*
+   * The one way a new goal starts: the home search, the composer under a plan,
+   * a suggestion, a goal picked on the no-match card and a re-run from
+   * Searches all end here. The gate is asked before any work and again once
+   * the interpreter has loaded, so two quick submits cannot both take the
+   * last plan. The goal counts when its understanding card is made.
+   */
+  async function startGoal(goalText: string) {
+    // Sending an edited goal back unchanged is still the same goal.
+    const sameGoal =
+      stage.kind === "editing" &&
+      goalText.trim().toLowerCase() === submittedGoal.trim().toLowerCase();
+    if (!sameGoal && !canStartNewGoal()) return;
     const loaded = await loadInterpreter();
+    if (!sameGoal && !canStartNewGoal()) return;
     const understanding = loaded.understandGoal(goalText);
     const goal = understanding?.goal ?? null;
     navigation.current.token += 1;
@@ -176,11 +200,13 @@ export function HomeFlow() {
         goal,
         doubt: doubtOf(understanding),
       });
+      if (!sameGoal) recordNewGoal();
     } else {
       pushHomeStep({ step: "no-match" }, goalText);
       setStage({ kind: "no-match" });
     }
-    return understanding;
+    void recordGoal(goalText, goal?.goalType ?? null);
+    noteMiss(goalText, understanding);
   }
 
   /** Remembers, on this device only, a goal that no template matched well. */
@@ -198,22 +224,22 @@ export function HomeFlow() {
   );
 
   function submitGoal(goalText: string) {
-    void showGoal(goalText).then((understanding) => {
-      void recordGoal(goalText, understanding?.goal.goalType ?? null);
-      noteMiss(goalText, understanding);
-    });
+    void startGoal(goalText);
   }
+
+  // The effect below must not re-run when the gate's identity changes.
+  const startGoalRef = useRef(startGoal);
+  useEffect(() => {
+    startGoalRef.current = startGoal;
+  });
 
   // A goal re-run from the Searches page arrives through the signal, not the URL.
   useEffect(() => {
     if (!pendingGoal || pendingGoal.token === handledGoalToken.current) return;
     handledGoalToken.current = pendingGoal.token;
     consumeGoal();
-    void showGoal(pendingGoal.text).then((understanding) => {
-      void recordGoal(pendingGoal.text, understanding?.goal.goalType ?? null);
-      noteMiss(pendingGoal.text, understanding);
-    });
-  }, [pendingGoal, consumeGoal, recordGoal, noteMiss]);
+    void startGoalRef.current(pendingGoal.text);
+  }, [pendingGoal, consumeGoal]);
 
   function updateChips(update: (chips: readonly Chip[]) => Chip[]) {
     if (stage.kind !== "understanding") return;
@@ -244,12 +270,17 @@ export function HomeFlow() {
       ...stage.goal,
       inferredLevel: interpreter.inferLevel(stage.goal.chips),
     };
+    // The goal was counted when its card was made, so this never asks the gate.
+    const wanted =
+      settings.defaultLevel === "auto"
+        ? goal.inferredLevel
+        : settings.defaultLevel;
     const request: PlanRequest = {
       goal,
       level:
-        settings.defaultLevel === "auto"
-          ? goal.inferredLevel
-          : settings.defaultLevel,
+        wanted === "advanced" && !entitlements.advancedLevel
+          ? "polished"
+          : wanted,
       budget: settings.defaultBudget,
       toolsUsed: [],
       chosenTools: {},
@@ -349,16 +380,29 @@ export function HomeFlow() {
         data-print-hide=""
         onFocusCapture={() => void loadInterpreter()}
       >
+        {canStartGoal ? null : <LimitBar tier={tier} />}
         <GoalForm
           value={draft}
           onValueChange={setDraft}
           onSubmit={submitGoal}
           inputRef={inputRef}
           compact={started}
+          disabled={!canStartGoal}
         />
+        <p role="status" className={styles.remaining}>
+          {remaining !== null &&
+          remaining > 0 &&
+          remaining <= LOW_REMAINING_THRESHOLD
+            ? tn("limits.remaining", remaining)
+            : ""}
+        </p>
       </div>
 
       <div className={styles.spacer} aria-hidden="true" />
+
+      <p role="status" className={controls.srOnly}>
+        {canStartGoal ? "" : t("home.announce.limit")}
+      </p>
 
       <p role="status" className={controls.srOnly}>
         {stage.kind in ANNOUNCEMENT_KEYS
