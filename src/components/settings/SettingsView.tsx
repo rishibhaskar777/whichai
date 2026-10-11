@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
 import { ConfirmDialog } from "@/components/dialog/ConfirmDialog";
-import { CheckIcon, DownloadIcon } from "@/components/icons";
+import { CheckIcon, DownloadIcon, ExternalLinkIcon } from "@/components/icons";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { StorageNotice } from "@/components/local-data/StorageNotice";
 import { SubscriptionDialog } from "@/components/pricing/SubscriptionDialog";
@@ -14,11 +14,13 @@ import { useI18n } from "@/lib/i18n/provider";
 import type { Locale } from "@/lib/i18n/locales";
 import { BUDGET_VALUES, budgetLabel } from "@/lib/plan/budget-labels";
 import { FEEDBACK_URL, REPOSITORY_URL, SECURITY_POLICY_URL } from "@/lib/links";
+import { buildMissedGoalsIssueUrl } from "@/lib/misses/issue-url";
 import { getCurrentPlan } from "@/lib/pricing/current-plan";
 import { formatPrice } from "@/lib/pricing/format";
 import { getPlan, localize, planFeatures } from "@/lib/pricing/plans";
 import { LEVELS } from "@/lib/schemas/plan";
 import { downloadTextFile } from "@/lib/storage/download";
+import { CATALOGUE_VERSION } from "@/lib/storage/catalogue-version";
 import { backupFileName } from "@/lib/storage/operations";
 import controls from "@/styles/controls.module.css";
 import Link from "next/link";
@@ -70,11 +72,18 @@ function ExternalLink({ href, label }: { href: string; label: string }) {
 
 export function SettingsView({ viewer, version }: SettingsViewProps) {
   const i18n = useI18n();
-  const { t } = i18n;
+  const { t, tn } = i18n;
   const router = useRouter();
   const { show } = useToast();
   const { open: openSignIn } = useSignIn();
-  const { settings, updateSettings, exportBackup, clearAll } = useLocalData();
+  const {
+    settings,
+    updateSettings,
+    exportBackup,
+    clearAll,
+    misses,
+    clearMisses,
+  } = useLocalData();
   const [confirmingClear, setConfirmingClear] = useState(false);
   const [managingSubscription, setManagingSubscription] = useState(false);
   const plan = getPlan(getCurrentPlan());
@@ -220,6 +229,56 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
             </button>
           )}
         </SettingRow>
+      </Panel>
+
+      <Panel title={t("settings.improve")}>
+        <div className={styles.row}>
+          <div className={styles.rowText}>
+            <p className={styles.rowHelp}>{t("settings.improve.help")}</p>
+            {misses.length === 0 ? (
+              <p className={styles.rowHelp}>{t("settings.improve.none")}</p>
+            ) : (
+              <>
+                <p className={styles.rowLabel}>
+                  {tn("settings.improve.count", misses.length)}
+                </p>
+                <ul className={styles.missList}>
+                  {misses.slice(0, 10).map((miss) => (
+                    <li key={miss.id}>
+                      <span>{miss.goal}</span>{" "}
+                      <span className={styles.rowHelp}>
+                        ({t(`settings.improve.reason.${miss.reason}`)})
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+          {misses.length > 0 ? (
+            <div className={styles.rowControl}>
+              <a
+                className={controls.button}
+                href={buildMissedGoalsIssueUrl(misses, CATALOGUE_VERSION)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t("settings.improve.send")}
+                <ExternalLinkIcon width="16" height="16" />
+                <span className={controls.srOnly}>
+                  {t("job.opensInNewTab")}
+                </span>
+              </a>
+              <button
+                type="button"
+                className={controls.button}
+                onClick={() => void clearMisses()}
+              >
+                {t("settings.improve.clear")}
+              </button>
+            </div>
+          ) : null}
+        </div>
       </Panel>
 
       <Panel id="subscription" title={t("settings.subscription")}>

@@ -35,6 +35,7 @@ export function PrivacyContent() {
           <li>{t("privacy.device.item1")}</li>
           <li>{t("privacy.device.item2")}</li>
           <li>{t("privacy.device.item3")}</li>
+          <li>{t("privacy.device.item4")}</li>
         </ul>
         <p>{t("privacy.device.text2")}</p>
         <p>{t("privacy.device.text3")}</p>

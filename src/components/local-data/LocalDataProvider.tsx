@@ -26,6 +26,7 @@ import { openBackend, type KvBackend } from "@/lib/storage/backend";
 import { MAX_SAVED_PLANS } from "@/lib/storage/limits";
 import {
   addHistoryEntry,
+  addMissedGoal,
   addPlan,
   applyImport,
   buildBackup,
@@ -43,6 +44,7 @@ import {
   DEFAULT_SETTINGS,
   settingsSchema,
   type LocalData,
+  type MissedGoal,
   type SavedPlan,
   type Settings,
 } from "@/lib/storage/schemas";
@@ -82,6 +84,10 @@ export interface LocalDataContextValue extends LocalData {
   deletePlan: (id: string) => Promise<Mutation<SavedPlan>>;
   restorePlan: (plan: SavedPlan) => Promise<Mutation<SavedPlan>>;
   recordGoal: (goal: string, goalType: GoalType | null) => Promise<void>;
+  /** Goals that were not understood. They stay on this device. */
+  misses: MissedGoal[];
+  recordMiss: (goal: string, reason: MissedGoal["reason"]) => Promise<void>;
+  clearMisses: () => Promise<void>;
   deleteHistoryEntry: (id: string) => Promise<void>;
   clearHistory: () => Promise<void>;
   updateSettings: (patch: Partial<Settings>) => Promise<void>;
@@ -112,6 +118,9 @@ const FALLBACK: LocalDataContextValue = {
   deletePlan: unavailable,
   restorePlan: unavailable,
   recordGoal: async () => {},
+  misses: [],
+  recordMiss: async () => {},
+  clearMisses: async () => {},
   deleteHistoryEntry: async () => {},
   clearHistory: async () => {},
   updateSettings: async () => {},
@@ -158,6 +167,8 @@ export function LocalDataProvider({
   const [data, setData] = useState<LocalData>(EMPTY);
   const [status, setStatus] = useState<"loading" | "ready">("loading");
   const [persistent, setPersistent] = useState(true);
+  const [misses, setMisses] = useState<MissedGoal[]>([]);
+  const missesRef = useRef<MissedGoal[]>([]);
   const dataRef = useRef<LocalData>(EMPTY);
   const queue = useRef<Promise<unknown>>(Promise.resolve());
   const [storeSlot] = useState(() => {
@@ -224,6 +235,10 @@ export function LocalDataProvider({
           };
       applySettings(settings);
       commit({ plans: loaded.plans, history: loaded.history, settings });
+      const loadedMisses = await store.loadMisses();
+      if (cancelled) return;
+      missesRef.current = loadedMisses;
+      setMisses(loadedMisses);
       setPersistent(store.persistent);
       setStatus("ready");
     })();
@@ -341,6 +356,28 @@ export function LocalDataProvider({
           true,
         );
       },
+      misses,
+      recordMiss: (goal, reason) =>
+        enqueue(async () => {
+          if (!dataRef.current.settings.saveHistory) return;
+          const store = await storeSlot.promise;
+          const next = addMissedGoal(missesRef.current, goal, reason);
+          const result = await store.saveMisses(next);
+          if (!result.ok) return;
+          missesRef.current = next;
+          setMisses(next);
+        }),
+      clearMisses: () =>
+        enqueue(async () => {
+          const store = await storeSlot.promise;
+          const result = await store.saveMisses([]);
+          if (!result.ok) {
+            report(result.error);
+            return;
+          }
+          missesRef.current = [];
+          setMisses([]);
+        }),
       deleteHistoryEntry: async (id) => {
         await mutate((current) => ({
           ok: true,
@@ -373,12 +410,15 @@ export function LocalDataProvider({
           }
           applySettings(DEFAULT_SETTINGS);
           clearPreferenceCookies();
+          missesRef.current = [];
+          setMisses([]);
           commit(EMPTY);
           return { ok: true, value: null } as const;
         }),
     }),
     [
       data,
+      misses,
       status,
       persistent,
       mutate,

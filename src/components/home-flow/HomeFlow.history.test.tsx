@@ -124,7 +124,9 @@ describe("home page language", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("अभी लक्ष्य अंग्रेज़ी में लिखने पर ही समझे जाते हैं।"),
+      screen.getByText(
+        "अपना लक्ष्य अंग्रेज़ी में लिखिए। अंग्रेज़ी अक्षरों में हिंदी शब्द, जैसे banana hai, भी चलते हैं।",
+      ),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "पढ़ाई की योजना" }),

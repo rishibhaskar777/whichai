@@ -87,7 +87,8 @@ export const en = {
   "home.announce.plan": "Plan ready",
   "home.editGoal": "Edit your goal",
   "home.yourGoal": "Your goal: ",
-  "home.englishOnly": "Goals are understood in English for now.",
+  "home.englishOnly":
+    "Write your goal in English. Hindi words in English letters, like banana hai, work too.",
 
   // Goal form
   "goal.submit": "Get a plan",
@@ -839,6 +840,43 @@ export const en = {
   "contact.institution.text":
     "Ask about the Institution plan by email. Tell us roughly how many students you have.",
   "contact.institution.link": "Email about the Institution plan",
+
+  // Parts and missed goals
+  "understanding.didYouMean": "Did you mean one of these?",
+  "understanding.partsOnly": "We found parts, but no goal that fits them well.",
+  "understanding.buildFromParts": "Build from the parts I described",
+  "understanding.addPart": "Add a part",
+  "parts.title": "Add a part",
+  "parts.help":
+    "Pick a part and we choose a tool for it. You can take it out again later.",
+  "parts.search": "Search parts",
+  "parts.none": "No part matches that. Try another word.",
+  "parts.results.one": "{count} part",
+  "parts.results.other": "{count} parts",
+  "parts.inPlan": "In your plan",
+  "parts.add": "Add {label}",
+  "plan.addPart": "Add a part",
+  "plan.addPartHelp":
+    "Need something this plan leaves out? Add a part and we pick a tool for it.",
+  "plan.partAdded": "Added {job}.",
+  "plan.partRemoved": "Removed {job} from the plan.",
+  "plan.partCovered": "{job} is already covered by another tool in this plan.",
+  "job.removePart": "Remove {job} from the plan",
+  "job.removePartShort": "Remove this part",
+  "settings.improve": "Help improve WhichAI",
+  "settings.improve.help":
+    "Goals WhichAI could not understand are kept only on this device, while search history is on. Nothing is sent unless you press the button and submit the GitHub issue yourself. You can edit the issue before you send it.",
+  "settings.improve.count.one": "{count} goal kept on this device",
+  "settings.improve.count.other": "{count} goals kept on this device",
+  "settings.improve.none": "No missed goals so far.",
+  "settings.improve.reason.no-match": "not understood",
+  "settings.improve.reason.parts-only": "built from parts only",
+  "settings.improve.reason.unsure": "not sure",
+  "settings.improve.send": "Open a GitHub issue",
+  "settings.improve.clear": "Clear this list",
+  "settings.improve.cleared": "The list of missed goals was cleared.",
+  "privacy.device.item4":
+    "Goals we did not understand: up to 50, kept only while search history is on. They are never sent anywhere unless you open the GitHub issue from Settings and submit it. You can clear them there.",
 } as const satisfies Record<string, string>;
 
 export type MessageKey = keyof typeof en;

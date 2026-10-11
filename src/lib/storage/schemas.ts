@@ -30,6 +30,17 @@ export const historyEntrySchema = z.object({
 });
 export type HistoryEntry = z.infer<typeof historyEntrySchema>;
 
+export const MISS_REASONS = ["no-match", "parts-only", "unsure"] as const;
+
+/** A goal the interpreter could not match to a template. Never sent anywhere. */
+export const missedGoalSchema = z.object({
+  id: idSchema,
+  goal: z.string().trim().min(1).max(500),
+  reason: z.enum(MISS_REASONS),
+  createdAt: timestampSchema,
+});
+export type MissedGoal = z.infer<typeof missedGoalSchema>;
+
 export const themeChoiceSchema = z.enum(["system", "light", "dark"]);
 export const motionChoiceSchema = z.enum(["system", "on", "off"]);
 export const currencySchema = z.enum(["₹", "$"]);
