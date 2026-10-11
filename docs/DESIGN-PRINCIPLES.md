@@ -75,6 +75,8 @@ The glow layer is fixed behind the page. It has three large blobs made from radi
 
 Motion exception: collapsing the sidebar or the news panel animates the grid column width, which is a layout property, because the page must reflow. It is switched off under `prefers-reduced-motion`.
 
+Theme toggle exception: the toggle in the sidebar reveals the new theme with a View Transition, a circle growing from the button over 400ms with ease-out (`src/lib/theme-transition.ts`). The circle is animated with the Web Animations API, so no inline style is needed. It is skipped, and the theme changes at once, when the browser lacks `document.startViewTransition` or reduced motion is on. Changes made in Settings do not use it, and there is no colour transition on every element.
+
 Second motion exception: when a goal is submitted, the greeting collapses (a grid row going from `1fr` to `0fr`) and the search moves to the bottom (`flex-grow` on the spacers and the thread) in 350ms. A single layout transition moves everything together, so no script measures positions. The level switch indicator, the card reveals and the fade-in of plan content after a level change use `transform` and `opacity` only. Disclosures expand with a grid row transition. All of it is removed under `prefers-reduced-motion`, leaving fades.
 
 ## Plan view

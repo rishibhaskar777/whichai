@@ -132,6 +132,50 @@ describe("theme toggle", () => {
     expect(document.documentElement.dataset.theme).toBe("dark");
   });
 
+  it("changes the theme inside a view transition when supported", async () => {
+    const doc = document as unknown as { startViewTransition?: unknown };
+    const root = document.documentElement as unknown as { animate?: unknown };
+    let themeInsideCallback: string | undefined;
+    doc.startViewTransition = vi.fn((callback: () => void) => {
+      callback();
+      themeInsideCallback = document.documentElement.dataset.theme;
+      return { ready: Promise.resolve(), finished: Promise.resolve() };
+    });
+    root.animate = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <AppProviders>
+        <Sidebar />
+      </AppProviders>,
+    );
+
+    await user.click(toDark());
+
+    expect(doc.startViewTransition).toHaveBeenCalledTimes(1);
+    expect(themeInsideCallback).toBe("dark");
+    expect(document.cookie).toContain("theme=dark");
+    delete doc.startViewTransition;
+    delete root.animate;
+  });
+
+  it("does not use a view transition for changes made in Settings", async () => {
+    const doc = document as unknown as { startViewTransition?: unknown };
+    doc.startViewTransition = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <AppProviders>
+        <SettingsView viewer={null} version="1.0.0" />
+      </AppProviders>,
+    );
+    const group = await screen.findByRole("radiogroup", { name: "Theme" });
+
+    await user.click(within(group).getByRole("radio", { name: "Dark" }));
+
+    expect(document.documentElement.dataset.theme).toBe("dark");
+    expect(doc.startViewTransition).not.toHaveBeenCalled();
+    delete doc.startViewTransition;
+  });
+
   it("persists across a reload through the stored settings", async () => {
     const backend = createMemoryBackend();
     const user = userEvent.setup();

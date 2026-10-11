@@ -4,6 +4,7 @@ import { MoonIcon, SunIcon } from "@/components/icons";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
 import { useI18n } from "@/lib/i18n/provider";
 import type { ThemeChoice } from "@/lib/theme";
+import { revealTheme } from "@/lib/theme-transition";
 import { useShownTheme } from "./use-theme-choice";
 import { useTooltip } from "./use-tooltip";
 import styles from "./SidebarContent.module.css";
@@ -36,7 +37,14 @@ export function ThemeToggle({ initialTheme, collapsed }: ThemeToggleProps) {
         className={styles.iconButton}
         aria-label={label}
         data-shown={shown}
-        onClick={() => void updateSettings({ theme: next })}
+        onClick={(event) => {
+          const rect = event.currentTarget.getBoundingClientRect();
+          revealTheme(
+            { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 },
+            // updateSettings applies the theme before its first await.
+            () => void updateSettings({ theme: next }),
+          );
+        }}
         {...handlers}
       >
         <MoonIcon className={styles.themeIcon} data-active={next === "dark"} />

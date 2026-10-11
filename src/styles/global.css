@@ -118,3 +118,17 @@ html[data-motion="full"] {
 
   scroll-behavior: smooth;
 }
+
+/*
+ * The theme toggle reveals the new theme with a growing circle, animated from
+ * script. The browser's default crossfade is switched off for that case only.
+ */
+html[data-theme-reveal]::view-transition-old(root),
+html[data-theme-reveal]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html[data-theme-reveal]::view-transition-new(root) {
+  z-index: 1;
+}
