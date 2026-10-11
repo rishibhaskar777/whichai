@@ -87,3 +87,9 @@
   color: var(--text-subtle);
   font-size: var(--text-sm);
 }
+
+.legalBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}

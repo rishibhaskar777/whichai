@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { useI18n } from "@/lib/i18n/provider";
 import type { MessageKey } from "@/lib/i18n/en";
+import { TERMS_SECTIONS, type TermsBlock } from "./terms-text";
 import {
   FEEDBACK_URL,
   SECURITY_REPORT_URL,
@@ -19,10 +20,14 @@ const LAST_UPDATED = "2026-10-11";
 function LegalPage({
   title,
   lede,
+  draft = "legal.draft",
+  dateLabel = "legal.updated",
   children,
 }: {
   title: MessageKey;
   lede: MessageKey;
+  draft?: MessageKey;
+  dateLabel?: MessageKey;
   children: ReactNode;
 }) {
   const { t, formatDate } = useI18n();
@@ -30,11 +35,11 @@ function LegalPage({
     <article className={styles.page}>
       <h1 className={styles.title}>{t(title)}</h1>
       <p className={styles.draft} role="note">
-        {t("legal.draft")}
+        {t(draft)}
       </p>
       <p className={styles.lede}>{t(lede)}</p>
       <p className={styles.meta}>
-        {t("legal.updated", { date: formatDate(LAST_UPDATED, "long") })}
+        {t(dateLabel, { date: formatDate(LAST_UPDATED, "long") })}
       </p>
       {children}
       <Link href="/" className={styles.back}>
@@ -62,41 +67,57 @@ function Section({
   );
 }
 
-export function TermsContent() {
-  const { t } = useI18n();
+function TermsBlockView({ block }: { block: TermsBlock }) {
+  if (typeof block === "string") return <p>{block}</p>;
+  if ("list" in block) {
+    return (
+      <ul className={styles.list}>
+        {block.list.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    );
+  }
+  const { link } = block;
   return (
-    <LegalPage title="terms.title" lede="terms.lede">
-      <Section id="terms-use" title="terms.use.title">
-        <p>{t("terms.use.text")}</p>
-      </Section>
-      <Section id="terms-free" title="terms.free.title">
-        <p>{t("terms.free.text")}</p>
-      </Section>
-      <Section id="terms-paid" title="terms.paid.title">
-        <p>{t("terms.paid.text")}</p>
-      </Section>
-      <Section id="terms-accuracy" title="terms.accuracy.title">
-        <p>{t("terms.accuracy.text")}</p>
-      </Section>
-      <Section id="terms-data" title="terms.data.title">
-        <p>{t("terms.data.text")}</p>
-      </Section>
-      <Section id="terms-conduct" title="terms.conduct.title">
-        <ul className={styles.list}>
-          <li>{t("terms.conduct.item1")}</li>
-          <li>{t("terms.conduct.item2")}</li>
-          <li>{t("terms.conduct.item3")}</li>
-        </ul>
-      </Section>
-      <Section id="terms-changes" title="terms.changes.title">
-        <p>{t("terms.changes.text")}</p>
-      </Section>
-      <Section id="terms-contact" title="terms.contact.title">
-        <p>
-          {t("terms.contact.text")}{" "}
-          <Link href="/contact">{t("legal.contact")}</Link>
-        </p>
-      </Section>
+    <p>
+      {block.text}{" "}
+      {link.external ? (
+        <NewTabLink href={link.href} label={link.label} />
+      ) : (
+        <Link href={link.href}>{link.label}</Link>
+      )}
+      {block.after}
+    </p>
+  );
+}
+
+export function TermsContent() {
+  const { t, locale } = useI18n();
+  return (
+    <LegalPage
+      title="terms.title"
+      lede="terms.lede"
+      draft="legal.draftReview"
+      dateLabel="terms.effective"
+    >
+      {locale === "en" ? null : (
+        <p className={styles.meta}>{t("terms.englishOnly")}</p>
+      )}
+      <div className={styles.legalBody} lang="en">
+        {TERMS_SECTIONS.map((section) => (
+          <section
+            key={section.id}
+            className={styles.section}
+            aria-labelledby={`terms-${section.id}`}
+          >
+            <h2 id={`terms-${section.id}`}>{section.title}</h2>
+            {section.blocks.map((block, index) => (
+              <TermsBlockView key={index} block={block} />
+            ))}
+          </section>
+        ))}
+      </div>
     </LegalPage>
   );
 }

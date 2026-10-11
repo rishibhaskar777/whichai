@@ -15,8 +15,15 @@ describe("privacy page", () => {
     ).toBeInTheDocument();
     for (const name of [
       "What we receive",
+      "Preview accounts",
+      "Guest profile",
       "What we store",
+      "Cookies",
+      "What stays on your device",
+      "AI news",
       "What we don't do",
+      "Your rights under India's DPDP Act, 2023",
+      "Deleting your data",
       "Signing out and leaving",
       "Contact",
     ]) {
@@ -25,6 +32,19 @@ describe("privacy page", () => {
       ).toBeInTheDocument();
     }
     expect(screen.queryByRole("link", { name: /@/ })).not.toBeInTheDocument();
+  });
+
+  it("carries the draft note and describes preview accounts honestly", () => {
+    render(<Page />);
+
+    expect(screen.getByRole("note")).toHaveTextContent(
+      "Draft, pending legal review.",
+    );
+    expect(screen.getByText(/exists only in this browser/)).toBeInTheDocument();
+    expect(screen.getByText(/PBKDF2/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Delete local account and data/, { selector: "p" }),
+    ).toBeInTheDocument();
   });
 
   it("shows a contact address only when one is configured", () => {

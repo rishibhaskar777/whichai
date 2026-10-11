@@ -5,7 +5,7 @@ import { useI18n } from "@/lib/i18n/provider";
 import { getContactEmail } from "@/lib/links";
 import styles from "./Content.module.css";
 
-const LAST_UPDATED = "2026-10-10";
+const LAST_UPDATED = "2026-10-11";
 
 export function PrivacyContent() {
   const { t, rich, formatDate } = useI18n();
@@ -13,6 +13,9 @@ export function PrivacyContent() {
   return (
     <article className={styles.page}>
       <h1 className={styles.title}>{t("privacy.title")}</h1>
+      <p className={styles.draft} role="note">
+        {t("legal.draftReview")}
+      </p>
       <p className={styles.lede}>
         {t("privacy.lede", { date: formatDate(LAST_UPDATED, "long", "UTC") })}
       </p>
@@ -23,10 +26,31 @@ export function PrivacyContent() {
         <p>{t("privacy.receive.text2")}</p>
       </section>
 
+      <section className={styles.section} aria-labelledby="preview">
+        <h2 id="preview">{t("privacy.preview.title")}</h2>
+        <p>{t("privacy.preview.text1")}</p>
+        <p>{t("privacy.preview.text2")}</p>
+        <p>{t("privacy.preview.text3")}</p>
+      </section>
+
+      <section className={styles.section} aria-labelledby="guest">
+        <h2 id="guest">{t("privacy.guest.title")}</h2>
+        <p>{t("privacy.guest.text")}</p>
+      </section>
+
       <section className={styles.section} aria-labelledby="store">
         <h2 id="store">{t("privacy.store.title")}</h2>
         <p>{t("privacy.store.text1")}</p>
-        <p>{t("privacy.store.text2")}</p>
+      </section>
+
+      <section className={styles.section} aria-labelledby="cookies">
+        <h2 id="cookies">{t("privacy.cookies.title")}</h2>
+        <p>{t("privacy.cookies.text1")}</p>
+        <ul className={styles.list}>
+          <li>{t("privacy.cookies.item1")}</li>
+          <li>{t("privacy.cookies.item2")}</li>
+        </ul>
+        <p>{t("privacy.cookies.text2")}</p>
       </section>
 
       <section className={styles.section} aria-labelledby="device">
@@ -38,10 +62,12 @@ export function PrivacyContent() {
           <li>{t("privacy.device.item3")}</li>
           <li>{t("privacy.device.item4")}</li>
         </ul>
-        <p>{t("privacy.device.text2")}</p>
         <p>{t("privacy.device.text3")}</p>
+      </section>
+
+      <section className={styles.section} aria-labelledby="news">
+        <h2 id="news">{t("privacy.news.title")}</h2>
         <p>{t("privacy.device.news")}</p>
-        <p>{t("privacy.device.text4")}</p>
       </section>
 
       <section className={styles.section} aria-labelledby="never">
@@ -52,6 +78,18 @@ export function PrivacyContent() {
           <li>{t("privacy.never.item3")}</li>
           <li>{t("privacy.never.item4")}</li>
         </ul>
+      </section>
+
+      <section className={styles.section} aria-labelledby="rights">
+        <h2 id="rights">{t("privacy.rights.title")}</h2>
+        <p>{t("privacy.rights.text1")}</p>
+        <p>{t("privacy.rights.text2")}</p>
+      </section>
+
+      <section className={styles.section} aria-labelledby="delete">
+        <h2 id="delete">{t("privacy.delete.title")}</h2>
+        <p>{t("privacy.delete.text1")}</p>
+        <p>{t("privacy.delete.text2")}</p>
       </section>
 
       <section className={styles.section} aria-labelledby="signout">
