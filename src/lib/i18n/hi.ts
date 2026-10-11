@@ -980,6 +980,16 @@ export const hi: Record<MessageKey, string> = {
   "goalGroup.ai": "AI टूल",
 
   // Plan limits and locks
+  "limits.usageLabel": "आज की योजनाएँ",
+  "limits.bar.guest":
+    "आप आज की {limit} अतिथि योजनाओं तक पहुँच गए हैं। {time} में रीसेट होगा।",
+  "limits.bar.free":
+    "आप आज की {limit} योजनाओं तक पहुँच गए हैं। {time} में रीसेट होगा।",
+  "limits.bar.time": "{hours} घं {minutes} मि",
+  "limits.registerFree": "मुफ़्त रजिस्टर करें",
+  "limits.seePlans": "प्लान देखें",
+  "limits.perDay": "दिन में {count} योजनाएँ",
+  "limits.usageLine": "आज {limit} में से {left} योजनाएँ बची हैं",
   "limits.card.label": "रोज़ाना योजना सीमा",
   "limits.guest.text":
     "आपने आज की {used} अतिथि योजनाएँ इस्तेमाल कर ली हैं। रोज़ {free} योजनाएँ पाने के लिए मुफ़्त खाता बनाएँ।",

@@ -8,8 +8,11 @@ vi.hoisted(() => {
 });
 
 import { AppShell } from "@/components/app-shell/AppShell";
+import { HomeFlow } from "@/components/home-flow/HomeFlow";
 import { SettingsView } from "@/components/settings/SettingsView";
+import { dayKey } from "@/lib/plans/usage";
 import { createLocalPreviewService } from "@/lib/auth/local-preview";
+import { createMemoryBackend } from "@/lib/storage/backend";
 import { panelNewsFixture } from "@/test/news";
 import { AppProviders } from "@/test/wrappers";
 
@@ -47,6 +50,42 @@ describe("developer tools in development", () => {
       within(switcher).getByRole("radio", { name: "My real plan" }),
     );
     await waitFor(() => expect(tools).toHaveTextContent("Acting as guest"));
+  });
+
+  it("drives the same gate: switching to Guest applies the guest limit", async () => {
+    const user = userEvent.setup();
+    const backend = createMemoryBackend();
+    await backend.set(
+      "plan-usage",
+      JSON.stringify({
+        "guest:visitor": { day: dayKey(new Date()), count: 5 },
+      }),
+    );
+    render(
+      <AppProviders tier="derived" backend={backend}>
+        <SettingsView viewer={null} version="1.0.0" />
+        <HomeFlow />
+      </AppProviders>,
+    );
+    const tools = await screen.findByRole("region", {
+      name: "Developer tools",
+    });
+    const composer = () =>
+      screen.getByLabelText(/What do you want to do with AI/);
+
+    await user.click(within(tools).getByRole("radio", { name: "free" }));
+    await waitFor(() => expect(composer()).toBeEnabled());
+
+    await user.click(within(tools).getByRole("radio", { name: "Guest" }));
+    await waitFor(() => expect(composer()).toBeDisabled());
+    expect(
+      screen.getByRole("region", { name: "Daily plan limit" }),
+    ).toHaveTextContent("5 guest plans");
+
+    await user.click(
+      within(tools).getByRole("button", { name: "Reset today's usage" }),
+    );
+    await waitFor(() => expect(composer()).toBeEnabled());
   });
 
   it("creates the test account once, hashed, and it can log in", async () => {

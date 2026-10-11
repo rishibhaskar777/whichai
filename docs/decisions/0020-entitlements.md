@@ -28,9 +28,13 @@ There is no server account to hold them. A person who clears site data, uses a p
 
 ### What counts
 
-One plan counts when it is made from a new goal: the "Yes, show my plan" step of the home flow. These do not count: Back and Forward, switching level on the same plan, reloading a plan, opening a saved plan from Projects, opening a share link. Re-running a goal from Searches is a new goal and counts.
+The limit works like a message limit in a chat: one use is taken when a new goal is submitted and its understanding card is made. Every way of starting a goal goes through one gate in `src/lib/plans/usage.ts`, `canStartNewGoal()` before and `recordNewGoal()` after: the home search, the composer under a plan, suggestion chips, a goal chosen on the no-match card and a re-run from Searches. In `HomeFlow` they all end in `startGoal()`.
 
-Counting is checked before the plan is shown. At the limit the plan is replaced by an inline card: a guest gets Register and Log in, a free account gets a link to `/pricing`. With two or fewer left, a small note near the search box says how many remain.
+These do not count: Edit (including sending the edited goal back unchanged), the "Add something we missed" chips, Add a part, "Yes, show my plan", switching level, Back and Forward, reloading a plan, opening a saved plan and opening a share link. A goal that no template matches makes no card and is not counted. `/plan` only opens saved and shared plans, which never start a goal, so it does not use the gate.
+
+At the limit the composer stays but its textarea and send button are disabled, and a bar above it says when the count resets ("Resets in 3h 12m", updated every minute) with Register free and Log in for a guest or See plans for a free account. Suggestion chips are disabled and New plan shows the same bar. A card made before the limit can still be confirmed. At local midnight the composer re-enables without a reload. The limit is announced once to screen readers.
+
+The sidebar shows a guest as "Guest" with "5 plans a day", never "Free plan", and the account menu has a "3 of 5 plans left today" line.
 
 ### Where usage is kept
 

@@ -19,9 +19,11 @@ import {
   type Tier,
 } from "@/lib/plans/entitlements";
 import {
+  canStartNewGoal as gateAllows,
   createUsageStore,
   dayKey,
   msUntilMidnight,
+  recordNewGoal as recordGoal,
   type UsageStore,
 } from "@/lib/plans/usage";
 import { getCurrentPlan } from "@/lib/pricing/current-plan";
@@ -39,13 +41,15 @@ export interface EntitlementsContextValue {
   usedToday: number;
   /** Plans left today, or null when there is no limit. */
   remaining: number | null;
-  /** False when today's plans are used up. */
-  canGeneratePlan: boolean;
+  /** False when today's plans are used up. For drawing the interface. */
+  canStartGoal: boolean;
   /**
-   * Counts one plan made from a new goal. Returns false, and counts nothing,
-   * when none are left today.
+   * The gate every way of starting a goal asks first. Reads the count at the
+   * moment of the call, so two quick submits cannot both pass.
    */
-  consumePlan: () => boolean;
+  canStartNewGoal: () => boolean;
+  /** Counts the goal whose understanding card was just made. */
+  recordNewGoal: () => void;
   /** Forgets today's count for this profile. */
   resetUsage: () => Promise<void>;
   /** Forgets every profile's count. */
@@ -62,8 +66,9 @@ const FALLBACK: EntitlementsContextValue = {
   entitlements: entitlementsFor("ultra"),
   usedToday: 0,
   remaining: null,
-  canGeneratePlan: true,
-  consumePlan: () => true,
+  canStartGoal: true,
+  canStartNewGoal: () => true,
+  recordNewGoal: () => {},
   resetUsage: async () => {},
   clearUsage: async () => {},
   tierOverride: null,
@@ -183,18 +188,20 @@ export function EntitlementsProvider({
 
   const remaining = plansRemaining(entitlements, used);
 
-  const consumePlan = useCallback(() => {
-    const limit = entitlements.dailyPlans;
-    if (limit !== null && usedRef.current >= limit) return false;
+  const canStartNewGoal = useCallback(
+    () => gateAllows(entitlements.dailyPlans, usedRef.current),
+    [entitlements.dailyPlans],
+  );
+
+  const recordNewGoal = useCallback(() => {
     usedRef.current += 1;
     setUsed(usedRef.current);
     void getStore().then(async ({ usage }) => {
-      const count = await usage.increment(profileKey);
+      const count = await recordGoal(usage, profileKey);
       usedRef.current = Math.max(usedRef.current, count);
       setUsed(usedRef.current);
     });
-    return true;
-  }, [entitlements.dailyPlans, getStore, profileKey]);
+  }, [getStore, profileKey]);
 
   const resetUsage = useCallback(async () => {
     const { usage } = await getStore();
@@ -217,8 +224,9 @@ export function EntitlementsProvider({
       entitlements,
       usedToday: used,
       remaining,
-      canGeneratePlan: remaining === null || remaining > 0,
-      consumePlan,
+      canStartGoal: remaining === null || remaining > 0,
+      canStartNewGoal,
+      recordNewGoal,
       resetUsage,
       clearUsage,
       tierOverride: devTier,
@@ -231,7 +239,8 @@ export function EntitlementsProvider({
       entitlements,
       used,
       remaining,
-      consumePlan,
+      canStartNewGoal,
+      recordNewGoal,
       resetUsage,
       clearUsage,
       devTier,

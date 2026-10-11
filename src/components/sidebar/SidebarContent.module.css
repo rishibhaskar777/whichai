@@ -554,3 +554,13 @@
   color: var(--text-muted);
   font-size: var(--text-xs);
 }
+
+/* "3 of 5 plans left today": text in the menu, not something to press. */
+.usageLine {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  cursor: default;
+}

@@ -822,7 +822,8 @@ describe("guest", () => {
 
     await waitFor(() => expect(signInDialog()).not.toHaveAttribute("open"));
     const [guest] = await screen.findAllByRole("button", { name: /Guest/ });
-    expect(guest).toHaveTextContent("Free plan");
+    expect(guest).toHaveTextContent("5 plans a day");
+    expect(guest).not.toHaveTextContent("Free plan");
     const profile = JSON.parse(
       window.localStorage.getItem("whichai:preview-guest") as string,
     ) as Record<string, unknown>;

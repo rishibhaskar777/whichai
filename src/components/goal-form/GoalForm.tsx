@@ -17,6 +17,8 @@ interface GoalFormProps {
   onSubmit: (goal: string) => void;
   inputRef: RefObject<HTMLTextAreaElement | null>;
   compact?: boolean;
+  /** True when the daily limit is reached: nothing can be typed or sent. */
+  disabled?: boolean;
 }
 
 export function GoalForm({
@@ -25,6 +27,7 @@ export function GoalForm({
   onSubmit,
   inputRef: textareaRef,
   compact = false,
+  disabled = false,
 }: GoalFormProps) {
   const { t } = useI18n();
   const [focused, setFocused] = useState(false);
@@ -54,6 +57,7 @@ export function GoalForm({
   }, [textareaRef, value]);
 
   function submit() {
+    if (disabled) return;
     const result = goalSchema.safeParse({ goal: value });
     if (!result.success) {
       const issue = result.error.issues[0];
@@ -72,6 +76,7 @@ export function GoalForm({
 
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
     if (
+      !disabled &&
       event.key === "Enter" &&
       !event.shiftKey &&
       !event.nativeEvent.isComposing
@@ -82,6 +87,7 @@ export function GoalForm({
   }
 
   function fillSuggestion(goal: string) {
+    if (disabled) return;
     onValueChange(goal);
     setError(null);
     textareaRef.current?.focus();
@@ -111,6 +117,8 @@ export function GoalForm({
             rows={compact ? 1 : 2}
             maxLength={GOAL_MAX_LENGTH}
             autoComplete="off"
+            disabled={disabled}
+            aria-disabled={disabled}
             value={value}
             onChange={(event) => {
               onValueChange(event.target.value);
@@ -145,7 +153,8 @@ export function GoalForm({
             <button
               type="submit"
               className={styles.submit}
-              disabled={value.trim().length === 0}
+              disabled={disabled || value.trim().length === 0}
+              aria-disabled={disabled || value.trim().length === 0}
             >
               <ArrowUpIcon />
               <span className={styles.srOnly}>{t("goal.submit")}</span>
@@ -169,6 +178,8 @@ export function GoalForm({
               <button
                 type="button"
                 className={styles.chip}
+                disabled={disabled}
+                aria-disabled={disabled}
                 onClick={() => fillSuggestion(suggestion.goal)}
               >
                 {t(suggestion.labelKey)}

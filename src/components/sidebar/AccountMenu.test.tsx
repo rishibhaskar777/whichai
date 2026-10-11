@@ -32,7 +32,7 @@ function renderSidebar(
   { collapsed = false, locale = "en" }: RenderOptions = {},
 ) {
   return render(
-    <AppProviders locale={locale}>
+    <AppProviders locale={locale} tier="free">
       <SidebarContent
         collapsed={collapsed}
         initialTheme="system"

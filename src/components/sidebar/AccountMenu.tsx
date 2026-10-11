@@ -2,12 +2,13 @@
 
 import { useRef, type ReactNode } from "react";
 import { useAccount } from "@/components/account/AccountProvider";
+import { useEntitlements } from "@/components/entitlements/EntitlementsProvider";
 import { ChevronDownIcon, MoreIcon, UserIcon } from "@/components/icons";
 import { useSignIn } from "@/components/sign-in/SignInProvider";
 import type { Viewer } from "@/lib/auth/get-session";
 import { getInitials } from "@/lib/auth/initials";
 import { useI18n } from "@/lib/i18n/provider";
-import { getCurrentPlan } from "@/lib/pricing/current-plan";
+import { GUEST_TIER } from "@/lib/plans/entitlements";
 import { getPlan, localize } from "@/lib/pricing/plans";
 import type { ThemeChoice } from "@/lib/theme";
 import {
@@ -205,8 +206,15 @@ function AccountMenu({
   onNavigate,
   exit,
 }: AccountMenuProps) {
-  const { t, locale } = useI18n();
-  const plan = getPlan(getCurrentPlan());
+  const { t, locale, formatNumber } = useI18n();
+  const { tier, entitlements, remaining } = useEntitlements();
+  // A guest is never shown a plan name: they see what a day allows.
+  const subtitle =
+    tier === GUEST_TIER
+      ? t("limits.perDay", {
+          count: formatNumber(entitlements.dailyPlans ?? 0),
+        })
+      : t("plan.label", { plan: localize(getPlan(tier).name, locale) });
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   return (
     <PopoverMenu
@@ -232,9 +240,7 @@ function AccountMenu({
           </span>
           <span className={collapsed ? styles.srOnly : styles.accountText}>
             <span className={styles.accountName}>{name}</span>
-            <span className={styles.accountPlan}>
-              {t("plan.label", { plan: localize(plan.name, locale) })}
-            </span>
+            <span className={styles.accountPlan}>{subtitle}</span>
           </span>
           {collapsed ? null : (
             <ChevronDownIcon className={styles.chevron} aria-hidden="true" />
@@ -244,6 +250,18 @@ function AccountMenu({
     >
       {(close) => (
         <>
+          {entitlements.dailyPlans !== null && remaining !== null ? (
+            <span
+              role="group"
+              aria-label={t("limits.usageLabel")}
+              className={styles.usageLine}
+            >
+              {t("limits.usageLine", {
+                left: formatNumber(remaining),
+                limit: formatNumber(entitlements.dailyPlans),
+              })}
+            </span>
+          ) : null}
           <MenuLink href="/settings" onClick={close}>
             {t("nav.settings")}
           </MenuLink>
@@ -263,7 +281,7 @@ function AccountMenu({
   );
 }
 
-/** A guest sees "Guest" and the Free plan, and can sign in from the menu. */
+/** A guest sees "Guest" and what a day allows, and can sign in from the menu. */
 function GuestMenu({
   collapsed,
   onNavigate,

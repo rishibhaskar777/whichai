@@ -979,6 +979,15 @@ export const en = {
   "goalGroup.ai": "AI tools",
 
   // Plan limits and locks
+  "limits.usageLabel": "Today's plans",
+  "limits.bar.guest":
+    "You've reached today's {limit} guest plans. Resets in {time}.",
+  "limits.bar.free": "You've reached today's {limit} plans. Resets in {time}.",
+  "limits.bar.time": "{hours}h {minutes}m",
+  "limits.registerFree": "Register free",
+  "limits.seePlans": "See plans",
+  "limits.perDay": "{count} plans a day",
+  "limits.usageLine": "{left} of {limit} plans left today",
   "limits.card.label": "Daily plan limit",
   "limits.guest.text":
     "You've used today's {used} guest plans. Create a free account to get {free} a day.",

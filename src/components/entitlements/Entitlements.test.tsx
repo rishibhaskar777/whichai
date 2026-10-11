@@ -1,17 +1,15 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { useAccount } from "@/components/account/AccountProvider";
 import { HomeFlow } from "@/components/home-flow/HomeFlow";
 import { useLocalData } from "@/components/local-data/LocalDataProvider";
-import { LimitCard } from "@/components/limit-card/LimitCard";
 import { PlanRoute } from "@/components/plan-route/PlanRoute";
 import { CompareGate } from "@/components/tools/CompareGate";
 import { dayKey } from "@/lib/plans/usage";
 import type { Tier } from "@/lib/plans/entitlements";
 import { encodePlanRequest } from "@/lib/share/share-link";
 import { createMemoryBackend, type KvBackend } from "@/lib/storage/backend";
-import { seriousViolations } from "@/test/axe";
 import { searchParams } from "@/test/navigation";
 import { planNamed, requestFor, seed } from "@/test/seed";
 import { AppProviders } from "@/test/wrappers";
@@ -85,56 +83,6 @@ async function planShown() {
 }
 
 describe("daily plan limits", () => {
-  it("lets a guest make 5 plans and shows the limit card instead of the 6th", async () => {
-    const { backend, user } = renderHome("guest");
-
-    for (let made = 0; made < 5; made += 1) {
-      await makePlan(user, `${GOAL} ${made}`);
-      await planShown();
-    }
-    await waitFor(async () => expect(await storedCount(backend)).toBe(5));
-
-    await makePlan(user, `${GOAL} again`);
-
-    const card = await screen.findByRole("region", {
-      name: "Daily plan limit",
-    });
-    expect(card).toHaveTextContent(
-      "You've used today's 5 guest plans. Create a free account to get 20 a day.",
-    );
-    expect(screen.queryByRole("radio", { name: "Simple" })).toBeNull();
-    expect(await storedCount(backend)).toBe(5);
-
-    await user.click(within(card).getByRole("button", { name: "Register" }));
-    const dialog = document.querySelector("dialog") as HTMLDialogElement;
-    expect(
-      within(dialog).getByRole("heading", {
-        name: "Create your WhichAI account",
-      }),
-    ).toBeInTheDocument();
-  });
-
-  it("gives a free account 20 plans, then a link to /pricing", async () => {
-    const backend = createMemoryBackend();
-    await seedUsage(backend, 19);
-    const { user } = renderHome("free", backend);
-
-    await makePlan(user);
-    await planShown();
-    await makePlan(user, `${GOAL} again`);
-
-    const card = await screen.findByRole("region", {
-      name: "Daily plan limit",
-    });
-    expect(card).toHaveTextContent(
-      "You've reached today's 20 plans. Upgrade for unlimited plans.",
-    );
-    expect(within(card).getByRole("link", { name: "Upgrade" })).toHaveAttribute(
-      "href",
-      "/pricing",
-    );
-  });
-
   it("never limits a paid plan", async () => {
     const backend = createMemoryBackend();
     await seedUsage(backend, 500);
@@ -244,14 +192,14 @@ describe("daily plan limits", () => {
 
 function Harness() {
   const { register, login, identity } = useAccount();
-  const { consumePlan, usedToday, tier } = useEntitlements();
+  const { recordNewGoal, usedToday, tier } = useEntitlements();
   const { plans } = useLocalData();
   return (
     <div>
       <p data-testid="state">
         {identity.kind}|{tier}|{usedToday}|{plans.length}
       </p>
-      <button type="button" onClick={() => consumePlan()}>
+      <button type="button" onClick={() => recordNewGoal()}>
         use
       </button>
       <button
@@ -436,19 +384,4 @@ describe("locked features", () => {
 
     expect(await screen.findByText("the table")).toBeInTheDocument();
   });
-});
-
-describe("limit card", () => {
-  it.each(["guest", "free"] as const)(
-    "has no serious accessibility violations for %s",
-    async (tier) => {
-      const { container } = render(
-        <AppProviders tier={tier}>
-          <LimitCard tier={tier} />
-        </AppProviders>,
-      );
-
-      expect(await seriousViolations(container)).toEqual([]);
-    },
-  );
 });

@@ -39,6 +39,37 @@ function without(usage: Usage, profile: string): Usage {
   );
 }
 
+/** Whole hours and minutes until the next local midnight, rounded up. */
+export function timeUntilMidnight(date: Date): {
+  hours: number;
+  minutes: number;
+} {
+  const total = Math.max(1, Math.ceil(msUntilMidnight(date) / 60_000));
+  return { hours: Math.floor(total / 60), minutes: total % 60 };
+}
+
+/*
+ * The one gate for starting a goal, like a message limit in a chat. Every way
+ * of starting a goal asks canStartNewGoal() before it begins and calls
+ * recordNewGoal() once the understanding card exists. Anything that works on
+ * a goal already started (edit, chips, parts, level, Back, saved plans, share
+ * links) never reaches it.
+ */
+export function canStartNewGoal(
+  dailyLimit: number | null,
+  usedToday: number,
+): boolean {
+  return dailyLimit === null || usedToday < dailyLimit;
+}
+
+/** Counts one new goal for the profile and returns today's total. */
+export function recordNewGoal(
+  store: UsageStore,
+  profile: string,
+): Promise<number> {
+  return store.increment(profile);
+}
+
 export interface UsageStore {
   /** Plans made today by this profile. */
   count(profile: string): Promise<number>;

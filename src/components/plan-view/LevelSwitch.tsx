@@ -11,7 +11,11 @@ interface LevelSwitchProps {
   locked?: readonly Level[];
 }
 
-export function LevelSwitch({ level, onChange, locked = [] }: LevelSwitchProps) {
+export function LevelSwitch({
+  level,
+  onChange,
+  locked = [],
+}: LevelSwitchProps) {
   const { t } = useI18n();
   const name = useId();
 

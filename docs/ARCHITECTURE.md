@@ -267,7 +267,7 @@ data/pricing/plans.json --pricingSchema--> PLANS (parsed when the module loads)
 
 ## Entitlements
 
-What a guest, a free account and a paid plan may do lives in `src/lib/plans/entitlements.ts` ([0020](decisions/0020-entitlements.md)). `src/lib/plans/usage.ts` keeps today's plan count per profile in the key-value backend. `EntitlementsProvider` (`src/components/entitlements/`) works out the tier from the account and exposes `useEntitlements()`; `HomeFlow` calls `consumePlan()` when a plan is made from a new goal. `LockedControl` is the lock shown on a feature the tier does not have, and `LimitCard` replaces the plan at the daily limit.
+What a guest, a free account and a paid plan may do lives in `src/lib/plans/entitlements.ts` ([0020](decisions/0020-entitlements.md)). `src/lib/plans/usage.ts` keeps today's plan count per profile in the key-value backend. `EntitlementsProvider` (`src/components/entitlements/`) works out the tier from the account and exposes `useEntitlements()`; `HomeFlow` asks `canStartNewGoal()` and calls `recordNewGoal()` when a new goal is submitted. `LockedControl` is the lock shown on a feature the tier does not have, and `LimitBar` sits above the composer at the daily limit.
 
 These limits are enforced in the browser only, until server accounts exist. They can be bypassed by clearing site data, so they are a product boundary and not a security control.
 
