@@ -242,6 +242,7 @@ export const hi: Record<MessageKey, string> = {
   "budget.more": "इससे ज़्यादा",
 
   // Sign-in
+  "account.guest": "अतिथि",
   "signin.title": "WhichAI में साइन इन करें",
   "signin.lede":
     "अपनी योजनाएँ सँभालने के लिए साइन इन करें। अभी आपकी योजनाएँ इसी ब्राउज़र में रहती हैं।",

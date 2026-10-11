@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { AccountProvider } from "@/components/account/AccountProvider";
 import { AuroraBackground } from "@/components/aurora/AuroraBackground";
 import { MenuIcon } from "@/components/icons";
 import { LocalDataProvider } from "@/components/local-data/LocalDataProvider";
@@ -77,79 +78,87 @@ export function AppShell({
       <LocalDataProvider>
         <NewPlanProvider>
           <PlanToolsProvider>
-            <SignInProvider providers={providers}>
-              <KeyboardShortcuts />
-              <div
-                className={styles.shell}
-                data-print-reset=""
-                data-sidebar={railMode ? "rail" : "full"}
-                data-news={newsChoice}
-              >
-                <AuroraBackground />
+            <AccountProvider>
+              <SignInProvider providers={providers}>
+                <KeyboardShortcuts />
+                <div
+                  className={styles.shell}
+                  data-print-reset=""
+                  data-sidebar={railMode ? "rail" : "full"}
+                  data-news={newsChoice}
+                >
+                  <AuroraBackground />
 
-                <a href="#main" className={styles.skipLink} data-print-hide="">
-                  {t("shell.skipToMain")}
-                </a>
-
-                <header className={styles.mobileBar} data-print-hide="">
-                  <button
-                    type="button"
-                    className={styles.menuButton}
-                    onClick={() => setDrawerOpen(true)}
-                    aria-label={t("shell.openMenu")}
-                    aria-haspopup="dialog"
+                  <a
+                    href="#main"
+                    className={styles.skipLink}
+                    data-print-hide=""
                   >
-                    <MenuIcon />
-                  </button>
-                  <Wordmark />
-                </header>
+                    {t("shell.skipToMain")}
+                  </a>
 
-                <div className={styles.sidebar} data-print-hide="">
-                  <SidebarContent
-                    collapsed={railMode}
-                    initialTheme={initialTheme}
-                    viewer={viewer}
-                    onToggleCollapse={() => setRailMode((current) => !current)}
+                  <header className={styles.mobileBar} data-print-hide="">
+                    <button
+                      type="button"
+                      className={styles.menuButton}
+                      onClick={() => setDrawerOpen(true)}
+                      aria-label={t("shell.openMenu")}
+                      aria-haspopup="dialog"
+                    >
+                      <MenuIcon />
+                    </button>
+                    <Wordmark />
+                  </header>
+
+                  <div className={styles.sidebar} data-print-hide="">
+                    <SidebarContent
+                      collapsed={railMode}
+                      initialTheme={initialTheme}
+                      viewer={viewer}
+                      onToggleCollapse={() =>
+                        setRailMode((current) => !current)
+                      }
+                    />
+                  </div>
+
+                  <dialog
+                    ref={drawerRef}
+                    className={styles.drawer}
+                    data-print-hide=""
+                    aria-label={t("shell.mainMenu")}
+                    onClose={closeDrawer}
+                    onClick={(event) => {
+                      if (event.target === event.currentTarget) closeDrawer();
+                    }}
+                  >
+                    <SidebarContent
+                      collapsed={false}
+                      initialTheme={initialTheme}
+                      viewer={viewer}
+                      onClose={closeDrawer}
+                    />
+                  </dialog>
+
+                  <main id="main" tabIndex={-1} className={styles.main}>
+                    <div
+                      className={styles.content}
+                      data-wide={wide ? "true" : undefined}
+                    >
+                      {children}
+                    </div>
+                  </main>
+
+                  <NewsPanel
+                    news={news}
+                    choice={newsChoice}
+                    expanded={newsExpanded}
+                    onToggle={() =>
+                      setNewsChoice(newsExpanded ? "collapsed" : "open")
+                    }
                   />
                 </div>
-
-                <dialog
-                  ref={drawerRef}
-                  className={styles.drawer}
-                  data-print-hide=""
-                  aria-label={t("shell.mainMenu")}
-                  onClose={closeDrawer}
-                  onClick={(event) => {
-                    if (event.target === event.currentTarget) closeDrawer();
-                  }}
-                >
-                  <SidebarContent
-                    collapsed={false}
-                    initialTheme={initialTheme}
-                    viewer={viewer}
-                    onClose={closeDrawer}
-                  />
-                </dialog>
-
-                <main id="main" tabIndex={-1} className={styles.main}>
-                  <div
-                    className={styles.content}
-                    data-wide={wide ? "true" : undefined}
-                  >
-                    {children}
-                  </div>
-                </main>
-
-                <NewsPanel
-                  news={news}
-                  choice={newsChoice}
-                  expanded={newsExpanded}
-                  onToggle={() =>
-                    setNewsChoice(newsExpanded ? "collapsed" : "open")
-                  }
-                />
-              </div>
-            </SignInProvider>
+              </SignInProvider>
+            </AccountProvider>
           </PlanToolsProvider>
         </NewPlanProvider>
       </LocalDataProvider>

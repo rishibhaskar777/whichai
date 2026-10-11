@@ -239,6 +239,7 @@ export const en = {
   "budget.more": "More",
 
   // Sign-in
+  "account.guest": "Guest",
   "signin.title": "Sign in to WhichAI",
   "signin.lede":
     "Sign in to keep your plans. For now your plans stay in this browser.",

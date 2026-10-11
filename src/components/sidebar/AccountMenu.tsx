@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef, type ReactNode } from "react";
+import { useAccount } from "@/components/account/AccountProvider";
 import { ChevronDownIcon, MoreIcon, UserIcon } from "@/components/icons";
 import { useSignIn } from "@/components/sign-in/SignInProvider";
 import type { Viewer } from "@/lib/auth/get-session";
@@ -27,7 +29,8 @@ interface SidebarAccountProps {
 
 /**
  * The bottom of the sidebar. Expanded, one row: sign in (or the account) then
- * the theme toggle, and More for guests. On the rail the same controls stack.
+ * the theme toggle, and More for people who are not signed in. On the rail the
+ * same controls stack.
  */
 export function SidebarAccount({
   viewer,
@@ -35,18 +38,67 @@ export function SidebarAccount({
   initialTheme,
   onNavigate,
 }: SidebarAccountProps) {
+  const { t } = useI18n();
+  const { identity, logout } = useAccount();
   const toggle = (
     <ThemeToggle initialTheme={initialTheme} collapsed={collapsed} />
   );
+
+  let account: ReactNode = null;
+  if (viewer) {
+    account = (
+      <AccountMenu
+        name={viewer.name}
+        initials={getInitials(viewer.name)}
+        collapsed={collapsed}
+        onNavigate={onNavigate}
+        exit={() => (
+          <form method="post" action="/api/auth/sign-out">
+            <input type="hidden" name="csrf" value={viewer.signOutToken} />
+            <button type="submit" role="menuitem" className={styles.menuItem}>
+              {t("nav.signOut")}
+            </button>
+          </form>
+        )}
+      />
+    );
+  } else if (identity.kind === "preview") {
+    account = (
+      <AccountMenu
+        name={identity.name}
+        initials={identity.initials}
+        collapsed={collapsed}
+        onNavigate={onNavigate}
+        exit={(close) => (
+          <button
+            type="button"
+            role="menuitem"
+            className={styles.menuItem}
+            onClick={() => {
+              close();
+              void logout();
+            }}
+          >
+            {t("nav.signOut")}
+          </button>
+        )}
+      />
+    );
+  } else if (identity.kind === "guest") {
+    account = (
+      <GuestMenu
+        collapsed={collapsed}
+        onNavigate={onNavigate}
+        label={t("account.guest")}
+      />
+    );
+  }
+
   return (
     <div className={styles.bottomRow} data-collapsed={collapsed}>
-      {viewer ? (
+      {account ? (
         <>
-          <AccountMenu
-            viewer={viewer}
-            collapsed={collapsed}
-            onNavigate={onNavigate}
-          />
+          {account}
           {toggle}
         </>
       ) : (
@@ -137,17 +189,25 @@ function MoreMenu({
   );
 }
 
-function AccountMenu({
-  viewer,
-  collapsed,
-  onNavigate,
-}: {
-  viewer: Viewer;
+interface AccountMenuProps {
+  name: string;
+  initials: string;
   collapsed: boolean;
   onNavigate?: (() => void) | undefined;
-}) {
+  /** The last item: Sign out, or Sign in for a guest. */
+  exit: (close: () => void, trigger: HTMLElement | null) => ReactNode;
+}
+
+function AccountMenu({
+  name,
+  initials,
+  collapsed,
+  onNavigate,
+  exit,
+}: AccountMenuProps) {
   const { t, locale } = useI18n();
   const plan = getPlan(getCurrentPlan());
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
   return (
     <PopoverMenu
       label={t("account.menu")}
@@ -156,7 +216,10 @@ function AccountMenu({
       onNavigate={onNavigate}
       trigger={({ ref, open, menuId, onClick }) => (
         <button
-          ref={ref}
+          ref={(node) => {
+            ref.current = node;
+            triggerRef.current = node;
+          }}
           type="button"
           className={styles.accountButton}
           aria-haspopup="menu"
@@ -165,10 +228,10 @@ function AccountMenu({
           onClick={onClick}
         >
           <span className={styles.avatar} aria-hidden="true">
-            {getInitials(viewer.name)}
+            {initials}
           </span>
           <span className={collapsed ? styles.srOnly : styles.accountText}>
-            <span className={styles.accountName}>{viewer.name}</span>
+            <span className={styles.accountName}>{name}</span>
             <span className={styles.accountPlan}>
               {t("plan.label", { plan: localize(plan.name, locale) })}
             </span>
@@ -193,14 +256,45 @@ function AccountMenu({
           <MenuDivider />
           <LanguageGroup />
           <MenuDivider />
-          <form method="post" action="/api/auth/sign-out">
-            <input type="hidden" name="csrf" value={viewer.signOutToken} />
-            <button type="submit" role="menuitem" className={styles.menuItem}>
-              {t("nav.signOut")}
-            </button>
-          </form>
+          {exit(close, triggerRef.current)}
         </>
       )}
     </PopoverMenu>
+  );
+}
+
+/** A guest sees "Guest" and the Free plan, and can sign in from the menu. */
+function GuestMenu({
+  collapsed,
+  onNavigate,
+  label,
+}: {
+  collapsed: boolean;
+  onNavigate?: (() => void) | undefined;
+  label: string;
+}) {
+  const { t } = useI18n();
+  const { open } = useSignIn();
+  return (
+    <AccountMenu
+      name={label}
+      initials={getInitials(label)}
+      collapsed={collapsed}
+      onNavigate={onNavigate}
+      exit={(close, trigger) => (
+        <button
+          type="button"
+          role="menuitem"
+          className={styles.menuItem}
+          aria-haspopup="dialog"
+          onClick={() => {
+            close();
+            if (trigger) open(trigger);
+          }}
+        >
+          {t("nav.signIn")}
+        </button>
+      )}
+    />
   );
 }

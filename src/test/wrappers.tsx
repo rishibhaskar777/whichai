@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { AccountProvider } from "@/components/account/AccountProvider";
 import { LocalDataProvider } from "@/components/local-data/LocalDataProvider";
 import { SignInProvider } from "@/components/sign-in/SignInProvider";
 import { ToastProvider } from "@/components/toast/ToastProvider";
@@ -30,9 +31,13 @@ export function AppProviders({
           backend={realStorage ? undefined : (backend ?? fallback)}
         >
           <NewPlanProvider>
-            <SignInProvider providers={{ google: false, github: false }}>
-              {children}
-            </SignInProvider>
+            <AccountProvider
+              backend={realStorage ? undefined : (backend ?? fallback)}
+            >
+              <SignInProvider providers={{ google: false, github: false }}>
+                {children}
+              </SignInProvider>
+            </AccountProvider>
           </NewPlanProvider>
         </LocalDataProvider>
       </ToastProvider>
