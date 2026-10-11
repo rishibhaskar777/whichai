@@ -535,6 +535,9 @@ export const en = {
   "settings.motion": "Reduce motion",
   "settings.motion.help":
     "On keeps movement to a minimum. Off keeps animation even if your device asks for less. System follows your device.",
+  "settings.background": "Animated background",
+  "settings.background.help":
+    "On lets the soft blue light behind the page move slowly. Off keeps it still. It also stays still when Reduce motion is on or your device saves data.",
   "settings.level": "Default plan level",
   "settings.level.help":
     "The level a plan opens on. Automatic picks one from your goal.",

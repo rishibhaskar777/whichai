@@ -149,6 +149,18 @@ export function SettingsView({ viewer, version }: SettingsViewProps) {
           ]}
           onChange={(reduceMotion) => void updateSettings({ reduceMotion })}
         />
+        <RadioSetting<"on" | "off">
+          label={t("settings.background")}
+          help={t("settings.background.help")}
+          value={settings.animatedBackground ? "on" : "off"}
+          options={[
+            { value: "on", label: t("common.on") },
+            { value: "off", label: t("common.off") },
+          ]}
+          onChange={(choice) =>
+            void updateSettings({ animatedBackground: choice === "on" })
+          }
+        />
         <SelectSetting
           label={t("settings.level")}
           help={t("settings.level.help")}
