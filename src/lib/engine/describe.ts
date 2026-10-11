@@ -1,4 +1,4 @@
-import { VERIFY, type Job, type Tool } from "@/lib/schemas/catalogue";
+import type { Job, Tool } from "@/lib/schemas/catalogue";
 import type { Alternative, Budget, JobTag } from "@/lib/schemas/plan";
 
 const LEVEL_STRETCH_NOTE = "More technical than the rest of this level.";
@@ -23,20 +23,6 @@ export function coverText(covers: readonly Job[]): string {
   return ` It also covers ${names}, so you need no separate tool for that.`;
 }
 
-/**
- * Unverified records never show a price. A verified record carries the text
- * its reviewer wrote in `pricing`.
- */
-export function pricingText(tool: Tool, budget: Budget | null): string {
-  if (tool.verified) return tool.pricing;
-  if (tool.hasFreeOption === true) {
-    return `Has a free option. Price and limits: ${VERIFY}.`;
-  }
-  if (tool.hasFreeOption === false) return `Paid only. Price: ${VERIFY}.`;
-  const base = `Free option: ${VERIFY}. Price and limits: ${VERIFY}.`;
-  return budget === "zero" ? `${base} Not confirmed as free yet.` : base;
-}
-
 export function watchOutText(tool: Tool, levelStretched: boolean): string {
   const notes = tool.watchOutFor.slice(0, 2);
   return (levelStretched ? [LEVEL_STRETCH_NOTE, ...notes] : notes).join(" ");
@@ -51,16 +37,17 @@ export function toAlternative(tool: Tool): Alternative {
   };
 }
 
+/** Says where to look for prices; the numbers live on the tools' own pages. */
 export function costText(picks: readonly Tool[], budget: Budget | null) {
   if (budget === "zero") {
-    return `Free options only, once confirmed. Limits: ${VERIFY}`;
+    return "Free plans only. Check each tool's pricing page for its limits.";
   }
   const paidOnly = picks.filter((tool) => tool.hasFreeOption === false).length;
   if (paidOnly > 0) {
     const noun = paidOnly === 1 ? "tool is" : "tools are";
-    return `${paidOnly} ${noun} paid only. Prices: ${VERIFY}`;
+    return `${paidOnly} ${noun} paid only. See each tool's pricing page for prices.`;
   }
-  return `Free options may cover this. Prices and limits: ${VERIFY}`;
+  return "Free plans may cover this. See each tool's pricing page for limits.";
 }
 
 function joinNames(names: readonly string[]): string {

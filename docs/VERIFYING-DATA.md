@@ -1,6 +1,6 @@
 # Verifying tool data
 
-Every record in `src/data/catalogue/tools/*.json` (one file per category) starts as `"verified": false` with `"pricing": "[verify]"`. The site shows these as sample data. This page is the checklist for turning one record into a checked one.
+Every record in `src/data/catalogue/tools/*.json` (one file per category) starts as `"verified": false` with `"pricing": "[verify]"`. The site never shows `[verify]`; it shows a "See pricing" link instead. This page is the checklist for turning one record into a checked one.
 
 Fit scores (`fitScores`) are editorial estimates. Verifying a record does not turn them into test results, and they stay marked `"scoreSource": "editorial-estimate"`.
 
@@ -40,6 +40,7 @@ Change these fields in that tool's file under `tools/`:
 ```
 
 - `pricing` is plain text, up to 200 characters. It replaces `[verify]`. A price may appear here and nowhere else in the record.
+- `pricingUrl` is the official pricing page (on the tool's `officialDomains`) and `pricingCheckedOn` is the day you read it. Pricing text is rejected without both. Keep the currency the page showed; never convert. If the page is blocked, unclear or differs by region, leave `[verify]` and, if you know the page, set only `pricingUrl`.
 - `lastVerified` must be a real date. A verified record without one does not pass the checks.
 - Do not change `scoreSource`, and do not change `fitScores` as part of verification.
 
@@ -65,8 +66,7 @@ Put the page you checked and the date in the pull request description so a revie
 
 ## After verifying
 
-- The card for that tool shows the date and the official-docs source instead of "Not verified".
-- A plan stops showing the sample notice only when every tool it names is verified.
+- The card for that tool shows a "Verified <date>" tick.
 - Prices and limits change. Re-check records on a schedule and always before a release. The oldest verified records in the report are the next ones to check.
 
 ## Verify a download link safely

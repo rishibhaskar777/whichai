@@ -9,6 +9,7 @@ import {
 import {
   GOAL_IDS,
   MODEL_CLASS_IDS,
+  VERIFY,
   type Catalogue,
   type Tool,
 } from "../schemas/catalogue.ts";
@@ -32,14 +33,15 @@ export function hasConcretePrice(text: string): boolean {
 }
 
 /**
- * A price may appear only in the pricing text of a verified record, where a
- * reviewer wrote it from the official page. Everything else stays free of it.
+ * A price may appear only in the pricing text of a record that names the
+ * official page it was read from and the day (the schema enforces that pair).
+ * Everything else stays free of it.
  */
-export function withoutVerifiedPricing(catalogue: Catalogue): Catalogue {
+export function withoutRecordedPricing(catalogue: Catalogue): Catalogue {
   return {
     ...catalogue,
     tools: catalogue.tools.map((tool) =>
-      tool.verified ? { ...tool, pricing: "" } : tool,
+      tool.pricing === VERIFY ? tool : { ...tool, pricing: "" },
     ),
   };
 }
@@ -93,6 +95,13 @@ function findLinkProblems(tool: Tool): string[] {
         `${label}: getIt.${link.key} but platforms lacks ${platform}`,
       );
     }
+  }
+
+  if (
+    tool.pricingUrl &&
+    !isOnToolDomain(tool.pricingUrl, tool.officialDomains)
+  ) {
+    problems.push(`${label}: pricingUrl is not on its officialDomains`);
   }
 
   const command = tool.getIt?.cliInstall;
@@ -210,7 +219,7 @@ export function findProblems(catalogue: Catalogue): string[] {
     }
   }
 
-  for (const text of collectStrings(withoutVerifiedPricing(catalogue))) {
+  for (const text of collectStrings(withoutRecordedPricing(catalogue))) {
     if (hasConcretePrice(text)) problems.push(`concrete price in "${text}"`);
   }
 

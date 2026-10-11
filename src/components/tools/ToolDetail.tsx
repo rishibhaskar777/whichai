@@ -7,10 +7,11 @@ import { libraryHref, DEFAULT_QUERY } from "@/lib/library/query";
 import type { ToolDetails } from "@/lib/library/tool-details";
 import type { I18n } from "@/lib/i18n/translate";
 import { toolProblemUrl } from "@/lib/links";
-import { VERIFY } from "@/lib/schemas/catalogue";
+import { pricingInfo } from "@/lib/catalogue/pricing";
 import controls from "@/styles/controls.module.css";
 import { GetIt } from "./GetIt";
 import { PLATFORM_META } from "./link-meta";
+import { freeOptionText, PricingValue } from "./Pricing";
 import styles from "./ToolDetail.module.css";
 
 interface ToolDetailProps {
@@ -23,12 +24,6 @@ interface ToolDetailProps {
 export function ToolDetail({ details, i18n, news }: ToolDetailProps) {
   const { t, formatDate } = i18n;
   const { tool, provider, jobs, worksWith, alternatives, goals } = details;
-  const freeText =
-    tool.hasFreeOption === true
-      ? t("tool.free.yes")
-      : tool.hasFreeOption === false
-        ? t("tool.free.no")
-        : t("tool.free.unknown");
 
   return (
     <article className={styles.page}>
@@ -47,11 +42,11 @@ export function ToolDetail({ details, i18n, news }: ToolDetailProps) {
           </p>
         ) : null}
         <p className={styles.summary}>{tool.summary}</p>
-        <p className={styles.status} data-verified={tool.verified}>
-          {tool.verified && tool.lastVerified
-            ? t("tool.verifiedOn", { date: formatDate(tool.lastVerified) })
-            : t("tool.notVerified")}
-        </p>
+        {tool.verified && tool.lastVerified ? (
+          <p className={styles.status} data-verified="true">
+            {t("tool.verifiedOn", { date: formatDate(tool.lastVerified) })}
+          </p>
+        ) : null}
       </header>
 
       <section aria-labelledby="tool-jobs" className={styles.section}>
@@ -100,15 +95,12 @@ export function ToolDetail({ details, i18n, news }: ToolDetailProps) {
           <div>
             <dt>{t("job.pricing")}</dt>
             <dd>
-              {tool.pricing}
-              {tool.pricing === VERIFY ? (
-                <span className={styles.note}> {t("tool.pricingNote")}</span>
-              ) : null}
+              <PricingValue i18n={i18n} pricing={pricingInfo(tool)} />
             </dd>
           </div>
           <div>
             <dt>{t("tool.freeOption")}</dt>
-            <dd>{freeText}</dd>
+            <dd>{freeOptionText(i18n, tool.hasFreeOption)}</dd>
           </div>
           <div>
             <dt>{t("tool.skill")}</dt>
@@ -139,7 +131,7 @@ export function ToolDetail({ details, i18n, news }: ToolDetailProps) {
           <ul className={styles.list}>
             {tool.planTiers.map((tier) => (
               <li key={tier.name}>
-                <strong>{tier.name}</strong>: {tier.features}
+                <strong>{tier.name}</strong>
               </li>
             ))}
           </ul>

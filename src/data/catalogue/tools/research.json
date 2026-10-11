@@ -767,7 +767,9 @@
     "kind": "app",
     "skillLevel": "intermediate",
     "hasFreeOption": true,
-    "pricing": "[verify]",
+    "pricing": "Free plan (300 MB storage); paid from $20/year (2 GB storage)",
+    "pricingUrl": "https://www.zotero.org/storage",
+    "pricingCheckedOn": "2026-10-11",
     "platforms": ["windows", "macos", "linux"],
     "worksWith": [],
     "strengths": [

@@ -33,6 +33,22 @@ export function AboutContent() {
         </ul>
       </section>
 
+      <section
+        id="data"
+        className={styles.section}
+        aria-labelledby="about-data"
+      >
+        <h2 id="about-data">{t("about.data.title")}</h2>
+        <p>{t("about.data.intro")}</p>
+        <ul className={styles.list}>
+          <li>{t("about.data.links")}</li>
+          <li>{t("about.data.pricing")}</li>
+          <li>{t("about.data.verified")}</li>
+          <li>{t("about.data.scores")}</li>
+        </ul>
+        <p>{t("about.data.change")}</p>
+      </section>
+
       <section className={styles.section} aria-labelledby="about-free">
         <h2 id="about-free">{t("about.free.title")}</h2>
         <p>{t("about.free.text")}</p>

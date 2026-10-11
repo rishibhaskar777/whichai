@@ -75,6 +75,8 @@ export interface SelectionContext {
   toolsUsed: ReadonlySet<string>;
   chosen: readonly Tool[];
   seed: string;
+  /** A tool the person picked by hand for this job. Ignored if it cannot do it. */
+  forcedToolId?: string | undefined;
 }
 
 export interface Selection {
@@ -83,6 +85,8 @@ export interface Selection {
   /** The tool the person uses today when the pick scores clearly higher. */
   outscored: Tool | null;
   alternatives: Tool[];
+  /** Set when the person swapped the pick: the tool the engine chose itself. */
+  autoPick: Tool | null;
   /** The pick is more technical than the plan level allows. */
   levelStretched: boolean;
 }
@@ -96,7 +100,7 @@ function candidatePool(
   return atLevel.length > 0 ? atLevel : affordable;
 }
 
-export function selectForJob(
+function selectAutomatically(
   jobId: string,
   tools: readonly Tool[],
   context: SelectionContext,
@@ -142,6 +146,65 @@ export function selectForJob(
     tag,
     outscored,
     alternatives,
+    autoPick: null,
     levelStretched: !fitsLevel(pick, context.level),
   };
+}
+
+/**
+ * The tag for a hand-picked tool follows the same idea as the automatic one:
+ * Keep if the person already uses it, Better option if it scores higher than
+ * the tool they use for the job, New otherwise.
+ */
+function swappedSelection(
+  jobId: string,
+  automatic: Selection,
+  forced: Tool,
+  tools: readonly Tool[],
+  context: SelectionContext,
+): Selection {
+  const usedTop = tools
+    .filter((tool) => tool.jobs.includes(jobId))
+    .filter((tool) => context.toolsUsed.has(tool.id))
+    .sort(
+      (a, b) => fitFor(b, jobId) - fitFor(a, jobId) || a.id.localeCompare(b.id),
+    )[0];
+
+  let tag: JobTag = "new";
+  let outscored: Tool | null = null;
+  if (context.toolsUsed.has(forced.id)) {
+    tag = "keep";
+  } else if (usedTop && fitFor(forced, jobId) > fitFor(usedTop, jobId)) {
+    tag = "better";
+    outscored = usedTop;
+  }
+
+  // The previous pick joins the list; the swapped-in tool leaves it.
+  const alternatives = [automatic.pick, ...automatic.alternatives]
+    .filter((tool) => tool.id !== forced.id)
+    .slice(0, MAX_ALTERNATIVES);
+  return {
+    pick: forced,
+    tag,
+    outscored,
+    alternatives,
+    autoPick: automatic.pick.id === forced.id ? null : automatic.pick,
+    levelStretched: !fitsLevel(forced, context.level),
+  };
+}
+
+export function selectForJob(
+  jobId: string,
+  tools: readonly Tool[],
+  context: SelectionContext,
+): Selection | null {
+  const automatic = selectAutomatically(jobId, tools, context);
+  if (!automatic || context.forcedToolId === undefined) return automatic;
+
+  const forced = tools.find(
+    (tool) => tool.id === context.forcedToolId && tool.jobs.includes(jobId),
+  );
+  return forced
+    ? swappedSelection(jobId, automatic, forced, tools, context)
+    : automatic;
 }

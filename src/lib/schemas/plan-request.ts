@@ -29,5 +29,10 @@ export const planRequestSchema = z.strictObject({
   level: levelSchema,
   budget: budgetSchema.nullable(),
   toolsUsed: z.array(z.string().min(1).max(60)).max(40),
+  /** Tools picked by hand instead of the engine's choice, by job id. */
+  chosenTools: z
+    .record(z.string().min(1).max(60), z.string().min(1).max(60))
+    .refine((chosen) => Object.keys(chosen).length <= 12)
+    .default({}),
 });
 export type PlanRequest = z.infer<typeof planRequestSchema>;

@@ -23,14 +23,15 @@ interface GetItProps {
 interface Entry {
   key: GetItLinkKey;
   url: string;
-  linkCheckedOn: string | null;
+  linkCheckedOn: string;
 }
 
-function entriesOf(getIt: GetItData | undefined): Entry[] {
+/** Only links the checker has opened and seen end on an official page. */
+function checkedEntriesOf(getIt: GetItData | undefined): Entry[] {
   if (!getIt) return [];
   return LINK_ORDER.flatMap((key) => {
     const entry = getIt[key];
-    return entry
+    return entry?.linkCheckedOn
       ? [{ key, url: entry.url, linkCheckedOn: entry.linkCheckedOn }]
       : [];
   });
@@ -47,7 +48,7 @@ export function GetIt({
   const visitor = useVisitor();
   const current = currentLinkKeys(visitor.system, visitor.browser);
 
-  const all = entriesOf(getIt);
+  const all = checkedEntriesOf(getIt);
   // The visitor's own platform comes first, in the order of how specific it is.
   const ordered = [
     ...current.flatMap((key) => all.filter((entry) => entry.key === key)),
@@ -55,11 +56,10 @@ export function GetIt({
   ];
   const shown = variant === "compact" ? ordered.slice(0, 1) : ordered;
   const command = getIt?.cliInstall;
-  const hasAnything = ordered.length > 0 || command !== undefined;
 
   return (
     <div className={styles.block} data-variant={variant}>
-      {hasAnything ? (
+      {ordered.length > 0 ? (
         <ul className={styles.buttons}>
           {shown.map((entry) => {
             const { Icon, label } = LINK_META[entry.key];
@@ -81,11 +81,9 @@ export function GetIt({
                   </span>
                 </a>
                 <span className={styles.status}>
-                  {entry.linkCheckedOn
-                    ? t("getIt.checked", {
-                        date: formatDate(entry.linkCheckedOn),
-                      })
-                    : t("getIt.notChecked")}
+                  {t("getIt.checked", {
+                    date: formatDate(entry.linkCheckedOn),
+                  })}
                 </span>
               </li>
             );
@@ -99,7 +97,7 @@ export function GetIt({
           rel="noopener noreferrer"
         >
           <ExternalLinkIcon />
-          <span>{t("getIt.findOnSite")}</span>
+          <span>{t("getIt.officialSite")}</span>
           <span className={controls.srOnly}>{t("job.opensInNewTab")}</span>
         </a>
       )}

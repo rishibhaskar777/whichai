@@ -538,8 +538,10 @@
     "summary": "A note-taking app that turns your notes into spaced-repetition flashcards.",
     "kind": "app",
     "skillLevel": "beginner",
-    "hasFreeOption": "verify",
-    "pricing": "[verify]",
+    "hasFreeOption": true,
+    "pricing": "Free plan; Pro from $8/month, $96 billed yearly",
+    "pricingUrl": "https://www.remnote.com/pricing",
+    "pricingCheckedOn": "2026-10-11",
     "platforms": ["web", "windows", "macos", "linux", "android", "ios"],
     "worksWith": [],
     "strengths": [

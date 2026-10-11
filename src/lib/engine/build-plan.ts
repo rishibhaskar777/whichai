@@ -1,4 +1,5 @@
 import { catalogue } from "@/data/catalogue";
+import { pricingInfo } from "@/lib/catalogue/pricing";
 import { featureIdOf, taskJobIdOf } from "@/lib/plan/chips";
 import {
   JOB_CATEGORIES,
@@ -25,7 +26,6 @@ import {
   costText,
   coverText,
   fillToolNames,
-  pricingText,
   toAlternative,
   watchOutText,
   whyText,
@@ -42,6 +42,8 @@ export interface BuildOptions {
   budget: Budget | null;
   /** Ids of the tools the person already uses. */
   toolsUsed: ReadonlySet<string>;
+  /** Tools picked by hand, by job id. Unknown or unsuitable ids are ignored. */
+  chosenTools?: Readonly<Record<string, string>>;
 }
 
 interface Picked {
@@ -89,6 +91,7 @@ function pickTools(
       toolsUsed: options.toolsUsed,
       chosen,
       seed: `${template.id}:${jobId}`,
+      forcedToolId: options.chosenTools?.[jobId],
     });
     if (!selection) return;
 
@@ -132,7 +135,8 @@ function recommend(
   options: BuildOptions,
   data: Catalogue,
 ): JobRecommendation {
-  const { pick, tag, outscored, alternatives, levelStretched } = selection;
+  const { pick, tag, outscored, alternatives, autoPick, levelStretched } =
+    selection;
   return {
     jobId: job.id,
     jobName: job.name,
@@ -141,7 +145,8 @@ function recommend(
     kind: pick.kind,
     why: whyText(pick, tag, outscored) + coverText(covers),
     tag,
-    pricing: pricingText(pick, options.budget),
+    freeOption: pick.hasFreeOption,
+    pricing: pricingInfo(pick),
     watchOutFor: watchOutText(pick, levelStretched),
     fitScore: pick.fitScores[job.id] ?? 1,
     verified: pick.verified,
@@ -155,6 +160,9 @@ function recommend(
         ? compatibilityNote(pick, buildPeers, isCompatible)
         : null,
     alternatives: alternatives.map(toAlternative),
+    autoPick: autoPick
+      ? { toolId: autoPick.id, toolName: autoPick.name }
+      : null,
   };
 }
 
@@ -175,6 +183,18 @@ function toolkitFor(picked: readonly Picked[]): ToolkitGroup[] {
       }));
     return tools.length > 0 ? [{ category, tools }] : [];
   });
+}
+
+const BRIEF_LIMIT = 1200;
+
+/** Adds the chosen tools to the brief, before its closing "ask me" line. */
+function briefWithTools(brief: string, toolNames: readonly string[]): string {
+  const line = `Tools I plan to use: ${[...new Set(toolNames)].join(", ")}.`;
+  const lines = brief.split("\n");
+  const withTools = [...lines.slice(0, -1), line, ...lines.slice(-1)].join(
+    "\n",
+  );
+  return withTools.length <= BRIEF_LIMIT ? withTools : brief;
 }
 
 function buildLevel(
@@ -226,7 +246,10 @@ function buildLevel(
       detail: fill(step.detail),
       examplePrompt: step.examplePrompt,
     })),
-    starterBrief: template.starterBrief,
+    starterBrief: briefWithTools(
+      template.starterBrief,
+      picked.map(({ selection }) => selection.pick.name),
+    ),
     checkTheFacts: goalLevel.checkTheFacts,
     whenToUpgrade: goalLevel.whenToUpgrade.map(fill),
     commonMistakes: goalLevel.commonMistakes.map(fill),

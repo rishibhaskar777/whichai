@@ -149,7 +149,12 @@ export const toolSchema = z
     kind: toolKindSchema,
     skillLevel: skillLevelSchema,
     hasFreeOption: z.union([z.boolean(), z.literal("verify")]),
+    /** "[verify]" until a pricing summary is recorded with its page and date. */
     pricing: text(200),
+    /** The official page the pricing summary was read from. */
+    pricingUrl: httpsUrl.optional(),
+    /** The day the pricing summary was read from `pricingUrl`. */
+    pricingCheckedOn: z.iso.date().optional(),
     platforms: z.array(platformSchema).min(1),
     worksWith: z.array(slug),
     /** Jobs the tool also does on its own, such as hosting in a site builder. */
@@ -185,21 +190,27 @@ export const toolSchema = z
         message: "A verified record needs the date it was checked.",
       });
     }
-    if (!tool.verified) {
-      if (tool.lastVerified !== null) {
-        context.addIssue({
-          code: "custom",
-          path: ["lastVerified"],
-          message: "An unverified record must not have a verification date.",
-        });
-      }
-      if (tool.pricing !== VERIFY) {
-        context.addIssue({
-          code: "custom",
-          path: ["pricing"],
-          message: `An unverified record must use the ${VERIFY} placeholder.`,
-        });
-      }
+    if (!tool.verified && tool.lastVerified !== null) {
+      context.addIssue({
+        code: "custom",
+        path: ["lastVerified"],
+        message: "An unverified record must not have a verification date.",
+      });
+    }
+    const hasPricingText = tool.pricing !== VERIFY;
+    if (hasPricingText && !(tool.pricingUrl && tool.pricingCheckedOn)) {
+      context.addIssue({
+        code: "custom",
+        path: ["pricing"],
+        message: `Pricing text needs pricingUrl and pricingCheckedOn. Otherwise use ${VERIFY}.`,
+      });
+    }
+    if (!hasPricingText && tool.pricingCheckedOn) {
+      context.addIssue({
+        code: "custom",
+        path: ["pricingCheckedOn"],
+        message: "pricingCheckedOn needs pricing text.",
+      });
     }
   });
 export type Tool = z.infer<typeof toolSchema>;

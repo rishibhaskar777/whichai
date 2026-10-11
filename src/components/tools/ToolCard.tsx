@@ -76,13 +76,13 @@ export function ToolCard({
             {t("library.card.free")}
           </span>
         ) : null}
-        <span className={styles.badge}>
-          {tool.verified && tool.lastVerified
-            ? t("library.card.verifiedOn", {
-                date: formatDate(tool.lastVerified),
-              })
-            : t("library.card.notVerified")}
-        </span>
+        {tool.verified && tool.lastVerified ? (
+          <span className={styles.badge}>
+            {t("library.card.verifiedOn", {
+              date: formatDate(tool.lastVerified),
+            })}
+          </span>
+        ) : null}
         <ul
           className={styles.platforms}
           aria-label={t("library.card.platforms")}

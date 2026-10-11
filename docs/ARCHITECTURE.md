@@ -122,7 +122,7 @@ JSON files in `src/data/catalogue/`, described by `src/lib/schemas/catalogue.ts`
 
 `src/data/catalogue/index.ts` parses the files with the schemas and runs `findProblems` from `src/lib/catalogue/validate.ts` when the module loads on the server. A test runs the same checks, so a bad reference, a duplicate id, a non-https link, a link off a tool's official domains or a stray price fails both the tests and the build.
 
-`version.ts` holds the catalogue version, a hash of every catalogue file, written by `npm run data:version` and checked by a test. `goal-titles.ts` holds the nine goal titles for pages that must not load the whole catalogue. Every tool is unverified and uses placeholders for prices ([0007](decisions/0007-catalogue-and-engine.md)).
+`version.ts` holds the catalogue version, a hash of every catalogue file, written by `npm run data:version` and checked by a test. `goal-titles.ts` holds the nine goal titles for pages that must not load the whole catalogue. Every tool is unverified. Prices are recorded only where an official pricing page was read, with its address and date ([0015](decisions/0015-plan-polish.md)).
 
 ## Plan data flow
 
@@ -139,7 +139,7 @@ empty -> understanding -> plan
 2. `interpretGoal(text)` runs in the browser and returns an `UnderstoodGoal` or `null`. It reads keywords from the catalogue and makes no request.
 3. On a match, the understanding card shows the chips. Feature, task and skill chips can be removed. The chips that can be added come from the matched goal (`addableChips`). The goal chip is fixed.
 4. "Yes, show my plan" recomputes the level from the chips that remain (`inferLevel`) and renders `PlanView` with the understood goal.
-5. `PlanView` calls `buildPlan(goal, { level, budget, toolsUsed })` and shows one `PlanLevel` at a time. The level, the tools the person already uses and the monthly budget are component state. Changing the budget or the tools used rebuilds the plan. Nothing is stored, sent or put in the URL, and the goal text stays in memory until the page is closed or "New plan" is pressed.
+5. `PlanView` calls `buildPlan(goal, { level, budget, toolsUsed })` and shows one `PlanLevel` at a time. The level, the tools the person already uses and the monthly budget are component state. Changing the budget or the tools used rebuilds the plan. Nothing is sent to a server. The request (without the goal text) is kept in the address fragment so Back, Forward and reload work, and the goal text stays in `sessionStorage` for the tab until "New plan" is pressed ([0015](decisions/0015-plan-polish.md)). A tool can be swapped into a card; the choice is part of the request (`chosenTools`).
 
 ```
 text --interpretGoal--> UnderstoodGoal --buildPlan--> Plan --PlanView--> cards

@@ -73,6 +73,7 @@ export function PlanRoute() {
         initialLevel={planRequest.level}
         initialBudget={planRequest.budget}
         initialToolsUsed={planRequest.toolsUsed}
+        initialChosenTools={planRequest.chosenTools}
         savedPlanId={saved.id}
         notice={isStale(saved) ? t("projects.rebuilt") : undefined}
       />
@@ -99,6 +100,7 @@ export function PlanRoute() {
         initialLevel={request.level}
         initialBudget={request.budget}
         initialToolsUsed={request.toolsUsed}
+        initialChosenTools={request.chosenTools}
         notice={t("share.openedNotice")}
       />
     );
