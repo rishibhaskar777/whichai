@@ -23,13 +23,18 @@ export function isTypingTarget(target: EventTarget | null): boolean {
 const subscribeNever = () => () => {};
 const isMacPlatform = () => /Mac|iPhone|iPad/.test(navigator.platform);
 
+/** True on Apple platforms. Always false on the server and first render. */
+export function useIsMac(): boolean {
+  return useSyncExternalStore(subscribeNever, isMacPlatform, () => false);
+}
+
 export function KeyboardShortcuts() {
   const { t } = useI18n();
   const router = useRouter();
   const pathname = usePathname();
   const { request: requestNewPlan } = useNewPlanSignal();
   const [open, setOpen] = useState(false);
-  const mac = useSyncExternalStore(subscribeNever, isMacPlatform, () => false);
+  const mac = useIsMac();
   const titleId = useId();
 
   useEffect(() => {

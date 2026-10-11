@@ -407,6 +407,12 @@ export const en = {
   "confirm.typeToConfirm": "Type {text} to confirm",
   "nav.settings": "Settings",
   "nav.help": "Help",
+  "nav.more": "More",
+  "nav.plansPricing": "Plans & pricing",
+  "nav.section.work": "Your work",
+  "nav.section.explore": "Explore",
+  "theme.switchToDark": "Switch to dark mode",
+  "theme.switchToLight": "Switch to light mode",
   "storage.limit":
     "You can keep up to {max} saved plans. Delete one to save another.",
   "storage.full":
