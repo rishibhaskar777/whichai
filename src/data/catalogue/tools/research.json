@@ -60,6 +60,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.chatpdf.com",
     "officialDomains": ["chatpdf.com"],
+    "strengthTags": ["documents", "citations", "beginner-friendly"],
+    "strengthNotes": {
+      "documents": "answers questions about an uploaded PDF",
+      "citations": "points answers back to the page",
+      "beginner-friendly": "needs only an upload and a question"
+    },
     "getIt": {
       "web": {
         "url": "https://www.chatpdf.com",
@@ -95,6 +101,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://consensus.app",
     "officialDomains": ["consensus.app"],
+    "strengthTags": ["citations", "web-search"],
+    "strengthNotes": {
+      "citations": "links each claim to a published paper",
+      "web-search": "searches research papers rather than the open web"
+    },
     "getIt": {
       "web": {
         "url": "https://consensus.app",
@@ -130,6 +141,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://elicit.com",
     "officialDomains": ["elicit.com"],
+    "strengthTags": ["citations", "documents"],
+    "strengthNotes": {
+      "citations": "finds academic papers and pulls out their key details",
+      "documents": "puts what each paper says in a table"
+    },
     "getIt": {
       "web": {
         "url": "https://elicit.com",
@@ -267,6 +283,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://julius.ai",
     "officialDomains": ["julius.ai"],
+    "strengthTags": ["documents", "beginner-friendly"],
+    "strengthNotes": {
+      "documents": "answers questions about an uploaded spreadsheet",
+      "beginner-friendly": "makes charts and summaries from plain-language questions"
+    },
     "getIt": {
       "web": {
         "url": "https://julius.ai",
@@ -457,6 +478,12 @@
       "notebooklm.google.com",
       "google.com"
     ],
+    "strengthTags": ["citations", "documents", "long-context"],
+    "strengthNotes": {
+      "citations": "answers from the files you add and shows where each answer came from",
+      "documents": "turns your own material into summaries and study aids",
+      "long-context": "works across many of your sources at once"
+    },
     "getIt": {
       "web": {
         "url": "https://notebook.google.com",
@@ -497,6 +524,63 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.perplexity.ai",
     "officialDomains": ["perplexity.ai"],
+    "strengthTags": [
+      "citations",
+      "web-search",
+      "beginner-friendly",
+      "documents"
+    ],
+    "strengthNotes": {
+      "citations": "shows the pages it used for each answer",
+      "web-search": "searches the web before it answers",
+      "beginner-friendly": "gives a short answer with sources, in a simple search box",
+      "documents": "can answer questions about files you upload"
+    },
+    "categoryNotes": {
+      "websites-and-apps": {
+        "text": "answers technical questions with links to documentation and discussions",
+        "source": "editorial"
+      },
+      "games": {
+        "text": "finds rules, references and technical notes with sources",
+        "source": "editorial"
+      },
+      "writing": {
+        "text": "gathers facts with sources so you can check them while you write",
+        "source": "editorial"
+      },
+      "study": {
+        "text": "gives quick background on a topic with links you can open",
+        "source": "editorial"
+      },
+      "research-and-reading": {
+        "text": "searches the web and cites the pages used for each answer",
+        "source": "editorial"
+      },
+      "media": {
+        "text": "finds references and background for a script or video topic, with sources",
+        "source": "editorial"
+      },
+      "business": {
+        "text": "researches markets, companies and competitors with linked sources",
+        "source": "editorial"
+      },
+      "data": {
+        "text": "finds public data and background on a dataset's subject, with sources",
+        "source": "editorial"
+      }
+    },
+    "tips": [
+      {
+        "text": "Open the pages it cites and check them before you rely on an answer."
+      }
+    ],
+    "freePlanTips": [
+      "Start a new chat for each task so a long history does not use up your limits.",
+      "Paste only the part you need rather than a whole document.",
+      "Draft with a quicker model when one is offered, and keep the most capable one for the final pass.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
     "getIt": {
       "web": {
         "url": "https://www.perplexity.ai",
@@ -682,6 +766,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://scispace.com",
     "officialDomains": ["scispace.com", "typeset.io"],
+    "strengthTags": ["documents", "citations"],
+    "strengthNotes": {
+      "documents": "lets you chat with a paper and explains hard passages",
+      "citations": "searches a large database of papers"
+    },
     "getIt": {
       "web": {
         "url": "https://scispace.com",

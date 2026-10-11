@@ -25,6 +25,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://aider.chat",
     "officialDomains": ["aider.chat", "github.com/Aider-AI"],
+    "strengthTags": ["coding", "local-private", "integrations"],
+    "strengthNotes": {
+      "coding": "edits files in your Git repository from the terminal",
+      "local-private": "can work with models you run on your own machine",
+      "integrations": "commits each change to Git so you can undo it"
+    },
     "getIt": {
       "cliInstall": "python -m pip install aider-install && aider-install"
     },
@@ -58,6 +64,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://anythingllm.com",
     "officialDomains": ["anythingllm.com", "github.com/Mintplex-Labs"],
+    "strengthTags": ["local-private", "documents", "integrations"],
+    "strengthNotes": {
+      "local-private": "keeps your files and chats on your computer",
+      "documents": "chats with your own documents using local or hosted models",
+      "integrations": "works with local runners such as Ollama and LM Studio"
+    },
     "getIt": {
       "windows": {
         "url": "https://anythingllm.com/download",
@@ -103,6 +115,25 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://bolt.new",
     "officialDomains": ["bolt.new", "stackblitz.com"],
+    "strengthTags": ["coding", "beginner-friendly", "speed"],
+    "strengthNotes": {
+      "coding": "builds a working web app from a description",
+      "beginner-friendly": "runs in the browser with nothing to install",
+      "speed": "shows a running preview as it builds"
+    },
+    "tips": [
+      {
+        "text": "Describe one screen or feature at a time and test it before asking for the next."
+      },
+      {
+        "text": "Say what already works and what you want changed, so earlier work is not rewritten."
+      }
+    ],
+    "freePlanTips": [
+      "Work in small steps and review each change, so requests are not spent on rewrites.",
+      "Ask for a plan first and code second, so the answer is useful the first time.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
     "getIt": {
       "web": {
         "url": "https://bolt.new",
@@ -138,6 +169,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://brave.com",
     "officialDomains": ["brave.com"],
+    "strengthTags": ["beginner-friendly", "integrations"],
+    "strengthNotes": {
+      "beginner-friendly": "has an AI assistant built into the browser",
+      "integrations": "blocks ads and trackers by default"
+    },
     "getIt": {
       "windows": {
         "url": "https://brave.com/download/",
@@ -203,6 +239,77 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://chatgpt.com",
     "officialDomains": ["chatgpt.com", "openai.com"],
+    "strengthTags": [
+      "reasoning",
+      "beginner-friendly",
+      "images",
+      "voice",
+      "documents",
+      "coding",
+      "web-search",
+      "multilingual"
+    ],
+    "strengthNotes": {
+      "reasoning": "works through problems and plans step by step",
+      "beginner-friendly": "has a plain chat window that needs no set-up",
+      "images": "can create and edit pictures in the same chat",
+      "voice": "lets you talk to it by voice in the mobile apps",
+      "documents": "reads files you upload, such as PDFs and spreadsheets",
+      "coding": "writes, explains and fixes code in the chat",
+      "web-search": "can search the web for current information",
+      "multilingual": "reads and writes in many languages"
+    },
+    "categoryNotes": {
+      "websites-and-apps": {
+        "text": "plans pages and features, then writes and explains the code one step at a time",
+        "source": "editorial"
+      },
+      "games": {
+        "text": "helps design game rules and write code, and can sketch art ideas in the same chat",
+        "source": "editorial"
+      },
+      "writing": {
+        "text": "drafts and rewrites text in many tones and gives feedback on your own writing",
+        "source": "editorial"
+      },
+      "study": {
+        "text": "explains topics at your level and quizzes you on them in a conversation",
+        "source": "editorial"
+      },
+      "research-and-reading": {
+        "text": "explains hard texts and can search the web, so check its claims against the sources",
+        "source": "editorial"
+      },
+      "media": {
+        "text": "writes scripts and prompts and can create images in the same chat",
+        "source": "editorial"
+      },
+      "business": {
+        "text": "drafts emails, plans and presentations and analyses files you upload",
+        "source": "editorial"
+      },
+      "data": {
+        "text": "reads uploaded spreadsheets, explains the numbers and writes formulas",
+        "source": "editorial"
+      }
+    },
+    "tips": [
+      {
+        "text": "Make a project for a goal so its files and instructions stay together."
+      },
+      {
+        "text": "Set custom instructions once, with your role and the tone you want, so each chat starts informed."
+      },
+      {
+        "text": "Upload a file instead of pasting long text, so it can be read in full."
+      }
+    ],
+    "freePlanTips": [
+      "Start a new chat for each task so a long history does not use up your limits.",
+      "Paste only the part you need rather than a whole document.",
+      "Draft with a quicker model when one is offered, and keep the most capable one for the final pass.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
     "getIt": {
       "web": {
         "url": "https://chatgpt.com",
@@ -264,6 +371,97 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://claude.ai",
     "officialDomains": ["claude.ai", "claude.com", "anthropic.com"],
+    "strengthTags": [
+      "long-context",
+      "reasoning",
+      "coding",
+      "documents",
+      "multilingual",
+      "beginner-friendly"
+    ],
+    "strengthNotes": {
+      "long-context": "keeps long documents and many pasted pages in one conversation",
+      "reasoning": "works through a problem carefully and explains its reasoning",
+      "coding": "writes and reviews code and explains why a change helps",
+      "documents": "reads PDFs and other files you upload and answers from them",
+      "multilingual": "writes and translates in many languages",
+      "beginner-friendly": "gives clear, patient explanations in plain language"
+    },
+    "categoryNotes": {
+      "websites-and-apps": {
+        "text": "writes and reviews code carefully and explains the reasoning behind a change",
+        "source": "editorial"
+      },
+      "games": {
+        "text": "helps with game design documents and game code, and talks through logic and balance",
+        "source": "editorial"
+      },
+      "writing": {
+        "text": "writes in a natural, readable tone and edits long pieces closely",
+        "source": "editorial"
+      },
+      "study": {
+        "text": "explains ideas patiently and works through problems step by step",
+        "source": "editorial"
+      },
+      "research-and-reading": {
+        "text": "reads long documents you provide and summarises them with the details intact",
+        "source": "editorial"
+      },
+      "media": {
+        "text": "writes scripts, outlines and captions, and can describe images you share",
+        "source": "editorial"
+      },
+      "business": {
+        "text": "drafts reports and proposals and works through long documents",
+        "source": "editorial"
+      },
+      "data": {
+        "text": "reads tables you provide, explains what they show and writes formulas or analysis code",
+        "source": "editorial"
+      }
+    },
+    "models": [
+      {
+        "name": "Fable 5.1",
+        "modelClass": "deep-reasoning"
+      },
+      {
+        "name": "Opus 5.5",
+        "modelClass": "coding"
+      },
+      {
+        "name": "Sonnet 5.5",
+        "modelClass": "balanced-everyday"
+      },
+      {
+        "name": "Haiku 5.5",
+        "modelClass": "fast-and-cheap"
+      }
+    ],
+    "modelsUrl": "https://claude.com/pricing",
+    "modelsCheckedOn": "2026-10-11",
+    "tips": [
+      {
+        "text": "Use a project to keep the files and instructions for one goal in one place.",
+        "sourceUrl": "https://support.claude.com/en/articles/9517075-what-are-projects"
+      },
+      {
+        "text": "Write project instructions that say your role and the tone you want.",
+        "sourceUrl": "https://support.claude.com/en/articles/9517075-what-are-projects"
+      },
+      {
+        "text": "Open Settings, then Usage, to see how much of your limit is left.",
+        "sourceUrl": "https://claude.com/pricing"
+      }
+    ],
+    "tipsCheckedOn": "2026-10-11",
+    "freePlanTips": [
+      "Start a new chat for each task so a long history does not use up your limits.",
+      "Paste only the part you need rather than a whole document.",
+      "Draft with a quicker model when one is offered, and keep the most capable one for the final pass.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
     "getIt": {
       "web": {
         "url": "https://claude.ai",
@@ -315,6 +513,34 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.anthropic.com",
     "officialDomains": ["anthropic.com", "claude.com", "claude.ai"],
+    "strengthTags": ["coding", "long-context", "reasoning"],
+    "strengthNotes": {
+      "coding": "works on a whole project from the terminal",
+      "long-context": "reads your project files to understand the code before it changes anything",
+      "reasoning": "makes changes step by step that you can review"
+    },
+    "tips": [
+      {
+        "text": "Write project instructions in a CLAUDE.md file so every session starts with them.",
+        "sourceUrl": "https://code.claude.com/docs/en/memory"
+      }
+    ],
+    "tipsCheckedOn": "2026-10-11",
+    "freePlanTips": [
+      "Work in small steps and review each change, so requests are not spent on rewrites.",
+      "Ask for a plan first and code second, so the answer is useful the first time.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "git",
+        "categories": ["websites-and-apps", "games"]
+      },
+      {
+        "toolId": "visual-studio-code",
+        "categories": ["websites-and-apps"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://claude.com/product/claude-code",
@@ -352,6 +578,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://cline.bot",
     "officialDomains": ["cline.bot", "github.com/cline"],
+    "strengthTags": ["coding", "reasoning", "integrations"],
+    "strengthNotes": {
+      "coding": "plans and edits files inside VS Code",
+      "reasoning": "asks for approval before each action",
+      "integrations": "lets you pick your own model provider"
+    },
     "getIt": {
       "vscodeExtension": {
         "url": "https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev",
@@ -387,6 +619,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://github.com/openai/codex",
     "officialDomains": ["github.com/openai", "openai.com"],
+    "strengthTags": ["coding", "reasoning"],
+    "strengthNotes": {
+      "coding": "reads your project and edits it from the terminal",
+      "reasoning": "asks before it changes files or runs commands"
+    },
     "getIt": {
       "cliInstall": "npm install -g @openai/codex"
     },
@@ -421,6 +658,30 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://cursor.com",
     "officialDomains": ["cursor.com"],
+    "strengthTags": ["coding", "long-context", "reasoning"],
+    "strengthNotes": {
+      "coding": "edits across several files with an assistant built into the editor",
+      "long-context": "can look through a whole project when answering",
+      "reasoning": "plans changes before it edits"
+    },
+    "tips": [
+      {
+        "text": "Add project rules so the assistant follows your conventions in every request.",
+        "sourceUrl": "https://cursor.com/docs/context/rules"
+      }
+    ],
+    "tipsCheckedOn": "2026-10-11",
+    "freePlanTips": [
+      "Work in small steps and review each change, so requests are not spent on rewrites.",
+      "Ask for a plan first and code second, so the answer is useful the first time.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "git",
+        "categories": ["websites-and-apps", "games"]
+      }
+    ],
     "getIt": {
       "windows": {
         "url": "https://cursor.com/download",
@@ -465,6 +726,69 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.deepseek.com",
     "officialDomains": ["deepseek.com"],
+    "strengthTags": [
+      "reasoning",
+      "coding",
+      "local-private",
+      "beginner-friendly"
+    ],
+    "strengthNotes": {
+      "reasoning": "has reasoning-focused models that show their steps",
+      "coding": "writes and explains code",
+      "local-private": "publishes open-weight models you can run on your own computer",
+      "beginner-friendly": "has a simple web chat"
+    },
+    "categoryNotes": {
+      "websites-and-apps": {
+        "text": "writes and explains code, and its open-weight models can also run on your own machine",
+        "source": "editorial"
+      },
+      "games": {
+        "text": "helps with game logic and code",
+        "source": "editorial"
+      },
+      "writing": {
+        "text": "drafts and rewrites text in a chat",
+        "source": "editorial"
+      },
+      "study": {
+        "text": "works through maths and reasoning problems and shows its steps",
+        "source": "editorial"
+      },
+      "research-and-reading": {
+        "text": "reasons through hard questions, so check facts against sources",
+        "source": "editorial"
+      },
+      "media": {
+        "text": "writes scripts and prompts in a chat",
+        "source": "editorial"
+      },
+      "business": {
+        "text": "drafts text and works through analysis questions",
+        "source": "editorial"
+      },
+      "data": {
+        "text": "works through calculations and formulas and shows the steps",
+        "source": "editorial"
+      }
+    },
+    "tips": [
+      {
+        "text": "Ask it to show its steps, and check calculations yourself."
+      }
+    ],
+    "freePlanTips": [
+      "Start a new chat for each task so a long history does not use up your limits.",
+      "Paste only the part you need rather than a whole document.",
+      "Draft with a quicker model when one is offered, and keep the most capable one for the final pass.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "deepseek-models",
+        "categories": ["websites-and-apps", "data"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://chat.deepseek.com",
@@ -509,6 +833,12 @@
       "huggingface.co/deepseek-ai",
       "github.com/deepseek-ai"
     ],
+    "strengthTags": ["reasoning", "local-private", "coding"],
+    "strengthNotes": {
+      "reasoning": "includes reasoning-focused open-weight models",
+      "local-private": "has smaller distilled versions for ordinary computers",
+      "coding": "includes models that write code"
+    },
     "getIt": {
       "modelPage": {
         "url": "https://huggingface.co/deepseek-ai",
@@ -558,6 +888,107 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://gemini.google.com",
     "officialDomains": ["gemini.google.com", "google.com"],
+    "strengthTags": [
+      "integrations",
+      "long-context",
+      "images",
+      "web-search",
+      "multilingual",
+      "documents",
+      "coding",
+      "beginner-friendly"
+    ],
+    "strengthNotes": {
+      "integrations": "works with the Google apps and files you already use",
+      "long-context": "can take in long documents and large files in one go",
+      "images": "can understand and create pictures",
+      "web-search": "can use Google Search to find current information",
+      "multilingual": "works across many languages",
+      "documents": "reads files from your Drive and ones you upload",
+      "coding": "writes and explains code in the chat",
+      "beginner-friendly": "is available from a Google account with no separate set-up"
+    },
+    "categoryNotes": {
+      "websites-and-apps": {
+        "text": "writes and explains code, and connects with Google tools you may already use",
+        "source": "editorial"
+      },
+      "games": {
+        "text": "helps brainstorm game ideas and write game code",
+        "source": "editorial"
+      },
+      "writing": {
+        "text": "drafts and rewrites text, and works inside Google Docs and Gmail",
+        "source": "editorial"
+      },
+      "study": {
+        "text": "explains topics and works with the files in your Google account",
+        "source": "editorial"
+      },
+      "research-and-reading": {
+        "text": "searches the web and reads long documents you give it",
+        "source": "editorial"
+      },
+      "media": {
+        "text": "helps plan scripts and can work with images you share",
+        "source": "editorial"
+      },
+      "business": {
+        "text": "drafts emails and documents inside Gmail and Docs",
+        "source": "editorial"
+      },
+      "data": {
+        "text": "works with data in Google Sheets and explains what the numbers show",
+        "source": "editorial"
+      }
+    },
+    "models": [
+      {
+        "name": "Gemini Pro",
+        "modelClass": "deep-reasoning"
+      },
+      {
+        "name": "Gemini Flash",
+        "modelClass": "balanced-everyday"
+      },
+      {
+        "name": "Gemini Flash-Lite",
+        "modelClass": "fast-and-cheap"
+      }
+    ],
+    "modelsUrl": "https://support.google.com/gemini/answer/14517446",
+    "modelsCheckedOn": "2026-10-11",
+    "tips": [
+      {
+        "text": "Create a Gem with your own instructions and files for a task you repeat.",
+        "sourceUrl": "https://support.google.com/gemini/answer/15146780"
+      }
+    ],
+    "tipsCheckedOn": "2026-10-11",
+    "freePlanTips": [
+      "Start a new chat for each task so a long history does not use up your limits.",
+      "Paste only the part you need rather than a whole document.",
+      "Draft with a quicker model when one is offered, and keep the most capable one for the final pass.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "notebooklm",
+        "categories": ["study", "research-and-reading"]
+      },
+      {
+        "toolId": "google-docs",
+        "categories": ["writing", "business"]
+      },
+      {
+        "toolId": "google-sheets",
+        "categories": ["data", "business"]
+      },
+      {
+        "toolId": "google-slides",
+        "categories": ["business", "study"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://gemini.google.com",
@@ -601,6 +1032,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://github.com/google-gemini/gemini-cli",
     "officialDomains": ["github.com/google-gemini", "google.com"],
+    "strengthTags": ["coding", "free-tier-generous"],
+    "strengthNotes": {
+      "coding": "explains, writes and fixes code from the terminal",
+      "free-tier-generous": "is open source and signs in with a Google account"
+    },
     "getIt": {
       "cliInstall": "npm install -g @google/gemini-cli"
     },
@@ -638,6 +1074,12 @@
       "google.com",
       "huggingface.co/google"
     ],
+    "strengthTags": ["local-private", "speed", "integrations"],
+    "strengthNotes": {
+      "local-private": "comes in small sizes that suit ordinary computers",
+      "speed": "runs quickly at small sizes",
+      "integrations": "is supported by common local runners"
+    },
     "getIt": {
       "modelPage": {
         "url": "https://deepmind.google/models/gemma/",
@@ -675,6 +1117,34 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://github.com",
     "officialDomains": ["github.com", "githubcopilot.com"],
+    "strengthTags": ["coding", "integrations", "beginner-friendly"],
+    "strengthNotes": {
+      "coding": "suggests code as you type in your editor",
+      "integrations": "works in many editors and with GitHub",
+      "beginner-friendly": "answers questions about code in a chat panel"
+    },
+    "tips": [
+      {
+        "text": "Add custom instructions so answers follow your preferences and the conventions of your repository.",
+        "sourceUrl": "https://docs.github.com/en/copilot/how-tos/configure-custom-instructions"
+      }
+    ],
+    "tipsCheckedOn": "2026-10-11",
+    "freePlanTips": [
+      "Work in small steps and review each change, so requests are not spent on rewrites.",
+      "Ask for a plan first and code second, so the answer is useful the first time.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "visual-studio-code",
+        "categories": ["websites-and-apps", "games", "study"]
+      },
+      {
+        "toolId": "jetbrains-ides",
+        "categories": ["websites-and-apps", "games", "study"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://github.com/features/copilot",
@@ -719,6 +1189,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://glasp.co",
     "officialDomains": ["glasp.co"],
+    "strengthTags": ["documents", "beginner-friendly"],
+    "strengthNotes": {
+      "documents": "collects highlights from web pages and videos as notes",
+      "beginner-friendly": "works as a simple browser extension"
+    },
     "getIt": {
       "web": {
         "url": "https://glasp.co",
@@ -755,6 +1230,18 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://gpt4all.io",
     "officialDomains": ["gpt4all.io", "nomic.ai", "github.com/nomic-ai"],
+    "strengthTags": [
+      "local-private",
+      "documents",
+      "beginner-friendly",
+      "free-tier-generous"
+    ],
+    "strengthNotes": {
+      "local-private": "runs models on your own computer and keeps your files there",
+      "documents": "can chat with your local documents",
+      "beginner-friendly": "runs on ordinary laptops, with or without a graphics card",
+      "free-tier-generous": "is free to use"
+    },
     "getIt": {
       "web": {
         "url": "https://www.nomic.ai/gpt4all",
@@ -791,6 +1278,57 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://grok.com",
     "officialDomains": ["grok.com", "x.ai", "x.com"],
+    "strengthTags": ["web-search", "beginner-friendly", "reasoning"],
+    "strengthNotes": {
+      "web-search": "can draw on current posts and pages from the web and X",
+      "beginner-friendly": "is a plain chat you can use with an X account",
+      "reasoning": "can work through a problem in a chat"
+    },
+    "categoryNotes": {
+      "websites-and-apps": {
+        "text": "answers coding questions and drafts code in a chat",
+        "source": "editorial"
+      },
+      "games": {
+        "text": "helps brainstorm game ideas and rules in a chat",
+        "source": "editorial"
+      },
+      "writing": {
+        "text": "drafts and rewrites text in a chat",
+        "source": "editorial"
+      },
+      "study": {
+        "text": "explains topics in a chat",
+        "source": "editorial"
+      },
+      "research-and-reading": {
+        "text": "can draw on current posts from X, which are not a reliable source on their own",
+        "source": "editorial"
+      },
+      "media": {
+        "text": "can show what people on X are discussing about a topic",
+        "source": "editorial"
+      },
+      "business": {
+        "text": "can show current public conversation about a brand or topic on X",
+        "source": "editorial"
+      },
+      "data": {
+        "text": "answers questions about numbers you paste into the chat",
+        "source": "editorial"
+      }
+    },
+    "tips": [
+      {
+        "text": "Treat posts from X as leads, and check them against other sources."
+      }
+    ],
+    "freePlanTips": [
+      "Start a new chat for each task so a long history does not use up your limits.",
+      "Paste only the part you need rather than a whole document.",
+      "Draft with a quicker model when one is offered, and keep the most capable one for the final pass.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
     "getIt": {
       "web": {
         "url": "https://grok.com",
@@ -833,6 +1371,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://harpa.ai",
     "officialDomains": ["harpa.ai"],
+    "strengthTags": ["web-search", "integrations"],
+    "strengthNotes": {
+      "web-search": "chats with the page you are on",
+      "integrations": "runs ready-made commands for repeat web tasks"
+    },
     "getIt": {
       "web": {
         "url": "https://harpa.ai",
@@ -869,6 +1412,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://huggingface.co",
     "officialDomains": ["huggingface.co"],
+    "strengthTags": ["local-private", "integrations"],
+    "strengthNotes": {
+      "local-private": "hosts open model files you can download and run yourself",
+      "integrations": "lists each model's licence and files"
+    },
     "getIt": {
       "web": {
         "url": "https://huggingface.co/models",
@@ -904,6 +1452,16 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://jan.ai",
     "officialDomains": ["jan.ai", "github.com/janhq"],
+    "strengthTags": [
+      "local-private",
+      "beginner-friendly",
+      "free-tier-generous"
+    ],
+    "strengthNotes": {
+      "local-private": "runs models on your own computer",
+      "beginner-friendly": "has an app-style chat window",
+      "free-tier-generous": "is open source and free to use"
+    },
     "getIt": {
       "windows": {
         "url": "https://jan.ai/download",
@@ -947,6 +1505,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://github.com/ggml-org/llama.cpp",
     "officialDomains": ["github.com/ggml-org", "ggml.ai"],
+    "strengthTags": ["local-private", "speed", "integrations"],
+    "strengthNotes": {
+      "local-private": "runs models on your own computer without an account",
+      "speed": "runs models efficiently on ordinary processors and many graphics cards",
+      "integrations": "is the engine behind several friendlier apps"
+    },
     "getIt": {
       "cliInstall": "brew install llama.cpp"
     },
@@ -984,6 +1548,11 @@
       "meta.ai",
       "huggingface.co/meta-llama"
     ],
+    "strengthTags": ["local-private", "integrations"],
+    "strengthNotes": {
+      "local-private": "can run on your own computer at smaller sizes",
+      "integrations": "is supported by nearly every local runner"
+    },
     "getIt": {
       "modelPage": {
         "url": "https://huggingface.co/meta-llama",
@@ -1019,6 +1588,16 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://lmstudio.ai",
     "officialDomains": ["lmstudio.ai"],
+    "strengthTags": [
+      "local-private",
+      "beginner-friendly",
+      "free-tier-generous"
+    ],
+    "strengthNotes": {
+      "local-private": "runs models on your own computer with no account",
+      "beginner-friendly": "has a chat window and a model browser, with no command line",
+      "free-tier-generous": "is free to use with open models"
+    },
     "getIt": {
       "windows": {
         "url": "https://lmstudio.ai/download",
@@ -1063,6 +1642,37 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://lovable.dev",
     "officialDomains": ["lovable.dev"],
+    "strengthTags": [
+      "coding",
+      "beginner-friendly",
+      "integrations",
+      "templates"
+    ],
+    "strengthNotes": {
+      "coding": "turns a description into a working app draft",
+      "beginner-friendly": "needs no set-up on your computer",
+      "integrations": "connects to a database service for saved data",
+      "templates": "starts from a prompt and keeps editing in the same chat"
+    },
+    "tips": [
+      {
+        "text": "Describe one screen or feature at a time and test it before asking for the next."
+      },
+      {
+        "text": "Say what already works and what you want changed, so earlier work is not rewritten."
+      }
+    ],
+    "freePlanTips": [
+      "Work in small steps and review each change, so requests are not spent on rewrites.",
+      "Ask for a plan first and code second, so the answer is useful the first time.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "supabase",
+        "categories": ["websites-and-apps", "business"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://lovable.dev",
@@ -1099,6 +1709,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.meta.ai",
     "officialDomains": ["meta.ai", "meta.com", "facebook.com"],
+    "strengthTags": ["integrations", "images", "beginner-friendly"],
+    "strengthNotes": {
+      "integrations": "lives inside WhatsApp, Instagram and Facebook",
+      "images": "makes simple images in a chat",
+      "beginner-friendly": "is available inside apps you may already use"
+    },
     "getIt": {
       "web": {
         "url": "https://www.meta.ai",
@@ -1140,6 +1756,83 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://copilot.microsoft.com",
     "officialDomains": ["copilot.microsoft.com", "microsoft.com"],
+    "strengthTags": [
+      "integrations",
+      "images",
+      "web-search",
+      "beginner-friendly",
+      "documents"
+    ],
+    "strengthNotes": {
+      "integrations": "works inside Windows, Edge and Microsoft 365 apps",
+      "images": "creates pictures from a description",
+      "web-search": "searches the web and links to its sources",
+      "beginner-friendly": "needs only a Microsoft account to start",
+      "documents": "helps with Word, PowerPoint and Excel files"
+    },
+    "categoryNotes": {
+      "websites-and-apps": {
+        "text": "answers coding questions and drafts code in a chat",
+        "source": "editorial"
+      },
+      "games": {
+        "text": "helps brainstorm game ideas and make simple images",
+        "source": "editorial"
+      },
+      "writing": {
+        "text": "drafts and rewrites text, and helps inside Word and Outlook for Microsoft 365 users",
+        "source": "editorial"
+      },
+      "study": {
+        "text": "explains topics and helps summarise pages and documents",
+        "source": "editorial"
+      },
+      "research-and-reading": {
+        "text": "searches the web and links to the sources it used",
+        "source": "editorial"
+      },
+      "media": {
+        "text": "makes images from a description and helps plan video scripts",
+        "source": "editorial"
+      },
+      "business": {
+        "text": "helps with documents, slides and spreadsheets inside Microsoft 365 apps",
+        "source": "editorial"
+      },
+      "data": {
+        "text": "helps with formulas and analysis in Excel for Microsoft 365 users",
+        "source": "editorial"
+      }
+    },
+    "tips": [
+      {
+        "text": "Ask it to show its sources, then open them before you rely on an answer."
+      }
+    ],
+    "freePlanTips": [
+      "Start a new chat for each task so a long history does not use up your limits.",
+      "Paste only the part you need rather than a whole document.",
+      "Draft with a quicker model when one is offered, and keep the most capable one for the final pass.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "microsoft-word",
+        "categories": ["writing", "business"]
+      },
+      {
+        "toolId": "microsoft-excel",
+        "categories": ["data", "business"]
+      },
+      {
+        "toolId": "microsoft-powerpoint",
+        "categories": ["business", "study"]
+      },
+      {
+        "toolId": "clipchamp",
+        "categories": ["media"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://copilot.microsoft.com",
@@ -1175,6 +1868,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://mistral.ai",
     "officialDomains": ["mistral.ai", "huggingface.co/mistralai"],
+    "strengthTags": ["local-private", "multilingual", "integrations"],
+    "strengthNotes": {
+      "local-private": "includes efficient models that run well locally",
+      "multilingual": "supports several European languages",
+      "integrations": "is supported by most local runners"
+    },
     "getIt": {
       "modelPage": {
         "url": "https://huggingface.co/mistralai",
@@ -1214,6 +1913,69 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://mistral.ai",
     "officialDomains": ["mistral.ai"],
+    "strengthTags": [
+      "multilingual",
+      "coding",
+      "web-search",
+      "beginner-friendly"
+    ],
+    "strengthNotes": {
+      "multilingual": "supports many European and other languages",
+      "coding": "helps write and explain code in the same product",
+      "web-search": "can search the web in a chat",
+      "beginner-friendly": "has a plain chat window"
+    },
+    "categoryNotes": {
+      "websites-and-apps": {
+        "text": "helps write and explain code in the same product",
+        "source": "editorial"
+      },
+      "games": {
+        "text": "helps with game ideas and code",
+        "source": "editorial"
+      },
+      "writing": {
+        "text": "drafts and rewrites text, with good support for European languages",
+        "source": "editorial"
+      },
+      "study": {
+        "text": "explains topics in several languages",
+        "source": "editorial"
+      },
+      "research-and-reading": {
+        "text": "answers questions and can search the web, so check the sources",
+        "source": "editorial"
+      },
+      "media": {
+        "text": "writes scripts and can help create images",
+        "source": "editorial"
+      },
+      "business": {
+        "text": "drafts emails and documents in several languages",
+        "source": "editorial"
+      },
+      "data": {
+        "text": "helps with formulas and with tables you paste in",
+        "source": "editorial"
+      }
+    },
+    "tips": [
+      {
+        "text": "Give clear instructions and an example of the format you want."
+      }
+    ],
+    "freePlanTips": [
+      "Start a new chat for each task so a long history does not use up your limits.",
+      "Paste only the part you need rather than a whole document.",
+      "Draft with a quicker model when one is offered, and keep the most capable one for the final pass.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "mistral-models",
+        "categories": ["websites-and-apps", "data"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://mistral.ai/products/vibe",
@@ -1250,6 +2012,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://monica.im",
     "officialDomains": ["monica.im"],
+    "strengthTags": ["beginner-friendly", "integrations"],
+    "strengthNotes": {
+      "beginner-friendly": "puts several models in one browser sidebar",
+      "integrations": "helps write replies on any page"
+    },
     "getIt": {
       "web": {
         "url": "https://monica.im",
@@ -1286,6 +2053,18 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://ollama.com",
     "officialDomains": ["ollama.com", "github.com/ollama"],
+    "strengthTags": [
+      "local-private",
+      "beginner-friendly",
+      "integrations",
+      "free-tier-generous"
+    ],
+    "strengthNotes": {
+      "local-private": "runs models on your own computer, so your text stays there",
+      "beginner-friendly": "downloads and runs a model with one command",
+      "integrations": "offers a local API that other tools can use",
+      "free-tier-generous": "is free to use with open models"
+    },
     "getIt": {
       "windows": {
         "url": "https://ollama.com/download",
@@ -1331,6 +2110,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://openwebui.com",
     "officialDomains": ["openwebui.com", "github.com/open-webui"],
+    "strengthTags": ["local-private", "beginner-friendly", "documents"],
+    "strengthNotes": {
+      "local-private": "runs on your own machine or server",
+      "beginner-friendly": "gives local models a familiar chat page",
+      "documents": "can chat over your own documents"
+    },
     "getIt": {
       "web": {
         "url": "https://openwebui.com",
@@ -1367,6 +2152,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://poe.com",
     "officialDomains": ["poe.com"],
+    "strengthTags": ["beginner-friendly", "integrations"],
+    "strengthNotes": {
+      "beginner-friendly": "puts several assistants in one app",
+      "integrations": "lets you try different models side by side in one place"
+    },
     "getIt": {
       "web": {
         "url": "https://poe.com",
@@ -1407,6 +2197,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://qwen.ai",
     "officialDomains": ["qwen.ai", "huggingface.co/Qwen", "github.com/QwenLM"],
+    "strengthTags": ["multilingual", "coding", "local-private"],
+    "strengthNotes": {
+      "multilingual": "has good support for several languages",
+      "coding": "includes versions tuned for code",
+      "local-private": "comes in small sizes for laptops"
+    },
     "getIt": {
       "modelPage": {
         "url": "https://huggingface.co/Qwen",
@@ -1443,6 +2239,25 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://replit.com",
     "officialDomains": ["replit.com"],
+    "strengthTags": ["beginner-friendly", "coding", "integrations"],
+    "strengthNotes": {
+      "beginner-friendly": "lets you code and run a project in the browser",
+      "coding": "has an AI helper that writes and fixes code in the project",
+      "integrations": "hosts the project and shares it by link"
+    },
+    "tips": [
+      {
+        "text": "Describe one screen or feature at a time and test it before asking for the next."
+      },
+      {
+        "text": "Say what already works and what you want changed, so earlier work is not rewritten."
+      }
+    ],
+    "freePlanTips": [
+      "Work in small steps and review each change, so requests are not spent on rewrites.",
+      "Ask for a plan first and code second, so the answer is useful the first time.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
     "getIt": {
       "web": {
         "url": "https://replit.com",
@@ -1483,6 +2298,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://sider.ai",
     "officialDomains": ["sider.ai"],
+    "strengthTags": ["beginner-friendly", "multilingual"],
+    "strengthNotes": {
+      "beginner-friendly": "opens a chat sidebar next to the page you read",
+      "multilingual": "translates text in the same place"
+    },
     "getIt": {
       "web": {
         "url": "https://sider.ai",
@@ -1519,6 +2339,35 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://vercel.com",
     "officialDomains": ["v0.app", "v0.dev", "vercel.com"],
+    "strengthTags": ["coding", "design-polish", "templates"],
+    "strengthNotes": {
+      "coding": "generates interface code that fits React projects",
+      "design-polish": "turns a description into a styled page or component",
+      "templates": "gives a starting layout you can adapt"
+    },
+    "tips": [
+      {
+        "text": "Describe one screen or feature at a time and test it before asking for the next."
+      },
+      {
+        "text": "Say what already works and what you want changed, so earlier work is not rewritten."
+      }
+    ],
+    "freePlanTips": [
+      "Work in small steps and review each change, so requests are not spent on rewrites.",
+      "Ask for a plan first and code second, so the answer is useful the first time.",
+      "Check the official pricing page for the current limits before a long session."
+    ],
+    "enhancedBy": [
+      {
+        "toolId": "vercel",
+        "categories": ["websites-and-apps", "business"]
+      },
+      {
+        "toolId": "shadcn-ui",
+        "categories": ["websites-and-apps"]
+      }
+    ],
     "getIt": {
       "web": {
         "url": "https://v0.app",

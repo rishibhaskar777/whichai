@@ -284,6 +284,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.deepl.com",
     "officialDomains": ["deepl.com"],
+    "strengthTags": ["multilingual", "documents"],
+    "strengthNotes": {
+      "multilingual": "translates in a natural-sounding way",
+      "documents": "translates whole documents"
+    },
     "getIt": {
       "web": {
         "url": "https://www.deepl.com/translator",
@@ -358,6 +363,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://fathom.ai",
     "officialDomains": ["fathom.ai", "fathom.video"],
+    "strengthTags": ["voice", "integrations"],
+    "strengthNotes": {
+      "voice": "transcribes and summarises video calls",
+      "integrations": "highlights key moments you can share"
+    },
     "getIt": {
       "web": {
         "url": "https://fathom.ai",
@@ -393,6 +403,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://fireflies.ai",
     "officialDomains": ["fireflies.ai"],
+    "strengthTags": ["voice", "integrations"],
+    "strengthNotes": {
+      "voice": "records, transcribes and summarises calls",
+      "integrations": "connects to common work tools and keeps transcripts searchable"
+    },
     "getIt": {
       "web": {
         "url": "https://fireflies.ai",
@@ -427,6 +442,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://flowcv.com",
     "officialDomains": ["flowcv.com"],
+    "strengthTags": ["templates", "beginner-friendly"],
+    "strengthNotes": {
+      "templates": "has clean resume templates with PDF export",
+      "beginner-friendly": "is simple to edit"
+    },
     "getIt": {
       "web": {
         "url": "https://flowcv.com",
@@ -462,6 +482,12 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://gamma.app",
     "officialDomains": ["gamma.app"],
+    "strengthTags": ["templates", "design-polish", "beginner-friendly"],
+    "strengthNotes": {
+      "templates": "builds a full draft deck from a short prompt",
+      "design-polish": "restyles the whole deck quickly",
+      "beginner-friendly": "needs only a short prompt to start"
+    },
     "getIt": {
       "web": {
         "url": "https://gamma.app",
@@ -750,6 +776,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.grammarly.com",
     "officialDomains": ["grammarly.com"],
+    "strengthTags": ["beginner-friendly", "integrations"],
+    "strengthNotes": {
+      "beginner-friendly": "fixes grammar and tone as you type",
+      "integrations": "works in the browser, in email and in documents"
+    },
     "getIt": {
       "web": {
         "url": "https://www.grammarly.com",
@@ -863,6 +894,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.jobscan.co",
     "officialDomains": ["jobscan.co"],
+    "strengthTags": ["documents", "integrations"],
+    "strengthNotes": {
+      "documents": "compares a resume with a job post",
+      "integrations": "flags missing keywords and formatting problems"
+    },
     "getIt": {
       "web": {
         "url": "https://www.jobscan.co",
@@ -935,6 +971,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.kickresume.com",
     "officialDomains": ["kickresume.com"],
+    "strengthTags": ["templates", "beginner-friendly"],
+    "strengthNotes": {
+      "templates": "builds a resume and a cover letter from templates",
+      "beginner-friendly": "gives AI writing suggestions"
+    },
     "getIt": {
       "web": {
         "url": "https://www.kickresume.com",
@@ -1458,6 +1499,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://otter.ai",
     "officialDomains": ["otter.ai"],
+    "strengthTags": ["voice", "integrations"],
+    "strengthNotes": {
+      "voice": "transcribes meetings live and summarises them",
+      "integrations": "joins common meeting tools"
+    },
     "getIt": {
       "web": {
         "url": "https://otter.ai",
@@ -1632,6 +1678,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://quillbot.com",
     "officialDomains": ["quillbot.com"],
+    "strengthTags": ["beginner-friendly", "documents"],
+    "strengthNotes": {
+      "beginner-friendly": "paraphrases text in several modes",
+      "documents": "summarises passages and checks grammar"
+    },
     "getIt": {
       "web": {
         "url": "https://quillbot.com",
@@ -1703,6 +1754,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.reverso.net",
     "officialDomains": ["reverso.net"],
+    "strengthTags": ["multilingual", "beginner-friendly"],
+    "strengthNotes": {
+      "multilingual": "shows example sentences from real texts",
+      "beginner-friendly": "helps language learners see words in context"
+    },
     "getIt": {
       "web": {
         "url": "https://www.reverso.net",
@@ -1892,6 +1948,11 @@
     "scoreSource": "editorial-estimate",
     "officialUrl": "https://www.tealhq.com",
     "officialDomains": ["tealhq.com"],
+    "strengthTags": ["integrations", "templates"],
+    "strengthNotes": {
+      "integrations": "tracks job applications in one place with a browser extension",
+      "templates": "helps tailor a resume to a job post"
+    },
     "getIt": {
       "web": {
         "url": "https://www.tealhq.com",
