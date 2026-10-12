@@ -94,8 +94,8 @@ export function TextField({
 
 interface PasswordFieldProps extends Omit<TextFieldProps, "type"> {
   autoComplete: "current-password" | "new-password";
-  /** Sits at the right end of the label row, such as "Forgot password?". */
-  labelAction?: ReactNode;
+  /** Sits directly under the input, above any hint or error. */
+  belowInput?: ReactNode;
 }
 
 /** A password input with a show and hide button that has its own label. */
@@ -110,7 +110,7 @@ export function PasswordField({
   disabled,
   inputId,
   placeholder,
-  labelAction,
+  belowInput,
 }: PasswordFieldProps) {
   const { t } = useI18n();
   const generated = useId();
@@ -136,12 +136,9 @@ export function PasswordField({
 
   return (
     <div className={styles.field}>
-      <div className={styles.labelRow}>
-        <label htmlFor={id} className={styles.label}>
-          {label}
-        </label>
-        {labelAction}
-      </div>
+      <label htmlFor={id} className={styles.label}>
+        {label}
+      </label>
       <div className={styles.passwordWrap}>
         <input
           ref={inputRef}
@@ -173,6 +170,7 @@ export function PasswordField({
           <EyeIcon off={shown} />
         </button>
       </div>
+      {belowInput}
       <p id={capsId} role="status" className={styles.capsHint}>
         {capsOn ? t("auth.capsLock") : ""}
       </p>

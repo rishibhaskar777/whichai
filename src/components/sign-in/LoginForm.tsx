@@ -154,23 +154,27 @@ export function LoginForm({
           }));
         }}
         error={issueText(errors.password)}
-        labelAction={
-          <button
-            type="button"
-            className={styles.forgot}
-            aria-expanded={forgot}
-            aria-controls={`${ids.password}-forgot`}
-            onClick={() => setForgot((current) => !current)}
-          >
-            {t("signin.forgot")}
-          </button>
+        belowInput={
+          <div className={styles.forgotBlock}>
+            <button
+              type="button"
+              className={styles.forgot}
+              aria-expanded={forgot}
+              aria-controls={`${ids.password}-forgot`}
+              onClick={() => setForgot((current) => !current)}
+            >
+              {t("signin.forgot")}
+            </button>
+            <p
+              id={`${ids.password}-forgot`}
+              role="status"
+              className={styles.forgotNote}
+            >
+              {forgot ? t("signin.forgot.note") : ""}
+            </p>
+          </div>
         }
       />
-      <div id={`${ids.password}-forgot`} role="status">
-        {forgot ? (
-          <p className={styles.notice}>{t("signin.forgot.note")}</p>
-        ) : null}
-      </div>
 
       <button
         type="submit"

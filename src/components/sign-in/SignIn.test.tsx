@@ -268,9 +268,59 @@ describe("login view", () => {
 
     expect(
       host().getByText(
-        "Password reset arrives with accounts in an upcoming update.",
+        "Password reset is coming soon. Log in with Google or create a new account for now.",
       ),
     ).toBeInTheDocument();
+  });
+
+  it("puts Forgot password? after the password input, before the submit button", () => {
+    renderPanel();
+    const password = host().getByLabelText("Password");
+    const forgot = host().getByRole("button", { name: "Forgot password?" });
+    const submit = host().getByRole("button", { name: "Log in" });
+
+    expect(
+      password.compareDocumentPosition(forgot) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      forgot.compareDocumentPosition(submit) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
+  it("keeps the footer in the page, uncovered, while the note is open", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+    const forgot = host().getByRole("button", { name: "Forgot password?" });
+    expect(forgot).toHaveAttribute("aria-expanded", "false");
+
+    await user.click(forgot);
+
+    expect(forgot).toHaveAttribute("aria-expanded", "true");
+    const note = document.getElementById(
+      forgot.getAttribute("aria-controls") as string,
+    );
+    expect(note).toHaveTextContent(/Password reset is coming soon/);
+    const guest = host().getByRole("button", {
+      name: "Continue without signing in",
+    });
+    expect(guest).toBeVisible();
+    expect(host().getByText("Limited to 5 plans a day")).toBeVisible();
+    expect(note?.contains(guest)).toBe(false);
+    expect(guest.closest("form")).toBeNull();
+
+    await user.click(forgot);
+    expect(note).toBeEmptyDOMElement();
+    expect(guest).toBeVisible();
+  });
+
+  it("has no serious accessibility violations with the note closed or open", async () => {
+    const user = userEvent.setup();
+    const { container } = renderPanel();
+    expect(await seriousViolations(container)).toEqual([]);
+
+    await user.click(host().getByRole("button", { name: "Forgot password?" }));
+    expect(await seriousViolations(container)).toEqual([]);
   });
 
   it("explains each empty field and focuses the summary", async () => {

@@ -77,7 +77,7 @@ export function RegisterForm({
   const items: SummaryItem[] = FIELD_ORDER.flatMap((field) => {
     const message = issueText(errors[field]);
     if (!message) return [];
-    const label = field === "terms" ? message : t(LABELS[field]);
+    const label = field === "terms" ? t("terms.title") : t(LABELS[field]);
     return [{ fieldId: ids[field], text: label }];
   });
 
