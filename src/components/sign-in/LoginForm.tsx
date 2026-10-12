@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { useAccount } from "@/components/account/AccountProvider";
 import { useI18n } from "@/lib/i18n/provider";
 import { firstIssues, loginSchema } from "@/lib/auth/preview-schemas";
@@ -63,6 +63,13 @@ export function LoginForm({
   // A ref, so a second submit in the same tick cannot slip past a stale state.
   const inFlight = useRef(false);
   const [forgot, setForgot] = useState(false);
+  const [summaryFocus, setSummaryFocus] = useState(0);
+
+  // Runs in the commit that shows the summary, so focus moves there once and
+  // cannot land later, on top of what the person has started typing.
+  useEffect(() => {
+    if (summaryFocus > 0) summaryRef.current?.focus();
+  }, [summaryFocus]);
 
   const items: SummaryItem[] = (["email", "password"] as const).flatMap(
     (field) => {
@@ -74,8 +81,7 @@ export function LoginForm({
 
   function showProblems(next: FormState) {
     setForm(next);
-    // The summary mounts after this render, so focus it on the next frame.
-    requestAnimationFrame(() => summaryRef.current?.focus());
+    setSummaryFocus((count) => count + 1);
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
