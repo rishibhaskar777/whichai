@@ -88,6 +88,22 @@ describe("a failed login", () => {
     expect(form.password()).toHaveValue("");
   });
 
+  it("keeps the same password input element through a failed attempt", async () => {
+    const form = renderForm();
+    const input = form.password();
+    const forgot = screen.getByRole("button", { name: "Forgot password?" });
+    await form.user.click(forgot);
+
+    await failOnce(form, { ok: false, reason: "invalid" });
+    await screen.findByText("Email or password is incorrect.");
+    await form.user.type(form.password(), "again");
+    await flush();
+
+    expect(form.password()).toBe(input);
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveValue("again");
+  });
+
   it("keeps the next password that is typed", async () => {
     const form = renderForm();
     await failOnce(form, { ok: false, reason: "invalid" });
