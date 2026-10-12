@@ -1,6 +1,6 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { LoginResult } from "@/lib/auth/local-preview";
 import { I18nProvider } from "@/lib/i18n/provider";
 import { LoginForm } from "./LoginForm";
@@ -22,6 +22,10 @@ vi.mock("next/navigation", async () =>
 
 beforeEach(() => {
   login.mockReset();
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
 });
 
 function renderForm() {
@@ -50,6 +54,23 @@ async function failOnce(
   login.mockResolvedValueOnce(result);
   await form.user.type(form.password(), typed);
   await form.user.click(form.submit());
+}
+
+/**
+ * Waits until the failure message is shown and the password field accepts
+ * typing, so a keystroke is never aimed at a field that is not ready.
+ */
+async function untilReadyAfterFailure(
+  form: ReturnType<typeof renderForm>,
+  message: string,
+) {
+  await screen.findByText(message);
+  await waitFor(() => {
+    const input = form.password();
+    const state = `disabled=${input.disabled} readOnly=${input.readOnly} value=${JSON.stringify(input.value)}`;
+    expect(input.disabled, state).toBe(false);
+    expect(input.readOnly, state).toBe(false);
+  });
 }
 
 /** Lets every pending promise, timer and animation frame run. */
@@ -88,10 +109,44 @@ describe("a failed login", () => {
     expect(form.password()).toHaveValue("");
   });
 
+  it("keeps the same password input element through a failed attempt", async () => {
+    const form = renderForm();
+    const input = form.password();
+    const forgot = screen.getByRole("button", { name: "Forgot password?" });
+    await form.user.click(forgot);
+
+    await failOnce(form, { ok: false, reason: "invalid" });
+    await untilReadyAfterFailure(form, "Email or password is incorrect.");
+    await form.user.type(form.password(), "again");
+    await flush();
+
+    expect(form.password()).toBe(input);
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveValue("again");
+  });
+
+  it("does not take focus from a field the person has started typing in", async () => {
+    // A slow machine runs animation frames late, after typing has begun.
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) =>
+      window.setTimeout(() => callback(0), 80),
+    );
+    const form = renderForm();
+    await failOnce(form, { ok: false, reason: "invalid" });
+    await untilReadyAfterFailure(form, "Email or password is incorrect.");
+
+    await form.user.type(form.password(), "typed at once");
+    await flush();
+
+    expect(
+      form.password(),
+      JSON.stringify(document.activeElement?.tagName),
+    ).toHaveValue("typed at once");
+  });
+
   it("keeps the next password that is typed", async () => {
     const form = renderForm();
     await failOnce(form, { ok: false, reason: "invalid" });
-    await screen.findByText("Email or password is incorrect.");
+    await untilReadyAfterFailure(form, "Email or password is incorrect.");
 
     await form.user.type(form.password(), "second try");
 
@@ -108,7 +163,7 @@ describe("a failed login", () => {
   it("never clears a password typed after the failure, however long it waits", async () => {
     const form = renderForm();
     await failOnce(form, { ok: false, reason: "invalid" });
-    await screen.findByText("Email or password is incorrect.");
+    await untilReadyAfterFailure(form, "Email or password is incorrect.");
 
     await form.user.type(form.password(), "typed afterwards");
     await flush();

@@ -256,7 +256,8 @@ export const hi: Record<MessageKey, string> = {
   "signin.register.loginLink": "लॉग इन करें",
   "signin.register.success": "खाता बन गया। जारी रखने के लिए लॉग इन करें।",
   "signin.forgot": "पासवर्ड भूल गए?",
-  "signin.forgot.note": "पासवर्ड रीसेट आने वाले अपडेट में खातों के साथ आएगा।",
+  "signin.forgot.note":
+    "पासवर्ड रीसेट जल्द आ रहा है। अभी Google से लॉग इन करें या नया खाता बनाएँ।",
   "signin.preview": "खाते अभी सिर्फ़ इसी ब्राउज़र में सहेजे जाते हैं।",
   "signin.password.show": "पासवर्ड दिखाएँ",
   "signin.password.hide": "पासवर्ड छिपाएँ",

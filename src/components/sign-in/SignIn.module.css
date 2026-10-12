@@ -487,13 +487,6 @@
   display: none;
 }
 
-.labelRow {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
-
 .fieldError {
   color: var(--status-danger);
   font-size: var(--text-sm);
@@ -530,7 +523,27 @@
   font-weight: var(--weight-medium);
 }
 
-/* At the right end of the password label: small, muted, underlined on hover and focus only. */
+/*
+ * Under the password input, right-aligned: small, muted, underlined on hover
+ * and focus only. The note is one subtle line, empty until the link is used.
+ */
+.forgotBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.forgotNote {
+  color: var(--text-subtle);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  text-align: right;
+}
+
+.forgotNote:empty {
+  display: none;
+}
+
 .forgot {
   min-height: 1.5rem;
   padding: 0;
@@ -679,6 +692,60 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/*
+ * On short screens the popup tightens its spacing so the login view, with its
+ * errors, the forgot note and the Caps Lock hint all showing, still fits in
+ * full (1366x768 and 1280x720) with no scrolling.
+ */
+@media (min-width: 480px) and (max-height: 800px) {
+  .dialog .panel {
+    padding-block: var(--space-3);
+  }
+
+  .view {
+    gap: var(--space-2);
+  }
+
+  .form {
+    gap: var(--space-2);
+  }
+
+  .logo,
+  .lede {
+    display: none;
+  }
+
+  .input,
+  .submit {
+    height: 40px;
+    min-height: 40px;
+  }
+
+  .summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--space-2);
+    padding-block: var(--space-1);
+  }
+
+  .summaryList {
+    margin-top: 0;
+  }
+
+  .linkButton {
+    min-height: 1.5rem;
+  }
+
+  .footer {
+    margin-top: 0;
+  }
+
+  .dismiss {
+    min-height: 2rem;
+  }
 }
 
 /* Under 480px the dialog opens as a full-height sheet. */

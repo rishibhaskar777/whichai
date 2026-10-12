@@ -254,7 +254,7 @@ export const en = {
   "signin.register.success": "Account created. Log in to continue.",
   "signin.forgot": "Forgot password?",
   "signin.forgot.note":
-    "Password reset arrives with accounts in an upcoming update.",
+    "Password reset is coming soon. Log in with Google or create a new account for now.",
   "signin.preview": "Accounts are saved only in this browser for now.",
   "signin.password.show": "Show password",
   "signin.password.hide": "Hide password",

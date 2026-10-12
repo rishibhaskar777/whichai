@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { useAccount } from "@/components/account/AccountProvider";
 import {
   MAX_PASSWORD_LENGTH,
@@ -69,6 +69,13 @@ export function RegisterForm({
   const [errors, setErrors] = useState<Errors>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [summaryFocus, setSummaryFocus] = useState(0);
+
+  // Runs in the commit that shows the summary, so focus moves there once and
+  // cannot land later, on top of what the person has started typing.
+  useEffect(() => {
+    if (summaryFocus > 0) summaryRef.current?.focus();
+  }, [summaryFocus]);
 
   const clear = (field: Field) =>
     setErrors((current) => ({ ...current, [field]: undefined }));
@@ -77,14 +84,14 @@ export function RegisterForm({
   const items: SummaryItem[] = FIELD_ORDER.flatMap((field) => {
     const message = issueText(errors[field]);
     if (!message) return [];
-    const label = field === "terms" ? message : t(LABELS[field]);
+    const label = field === "terms" ? t("terms.title") : t(LABELS[field]);
     return [{ fieldId: ids[field], text: label }];
   });
 
   function showProblems(next: Errors, message: string | null) {
     setErrors(next);
     setFormError(message);
-    requestAnimationFrame(() => summaryRef.current?.focus());
+    setSummaryFocus((count) => count + 1);
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
